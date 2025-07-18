@@ -46,6 +46,3 @@ const footerStyle = css({
   padding: '10px',
   textAlign: 'center',
 })
-
-// Exporting the styles for potential reuse
-export { containerStyle, headerStyle, footerStyle }
