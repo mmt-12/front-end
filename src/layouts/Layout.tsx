@@ -11,7 +11,7 @@ export default function Layout() {
       <main css={[mainStyle]}>
         <Outlet />
       </main>
-      <footer css={footerStyle}>Naviation bar</footer>
+      <footer css={footerStyle}>Navigation bar</footer>
     </div>
   )
 }
