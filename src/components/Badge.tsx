@@ -1,26 +1,27 @@
-import { ACHIEVEMENTS } from '@/consts/ACHIEVEMENTS.tsx'
+import { BADGES } from '@/consts/BADGES'
 import { css } from '@emotion/react'
+import Medal from './Medal'
 
 export interface IBadgeProps {
   name: string
 }
 
 export default function Badge({ name }: IBadgeProps) {
-  if (!ACHIEVEMENTS[name]) return null
+  if (!BADGES[name]) return null
 
   return (
     <div
       css={[
         badgeStyle,
         {
-          backgroundColor: ACHIEVEMENTS[name].backgroundColor,
-          color: ACHIEVEMENTS[name].color,
-          border: `2px solid ${ACHIEVEMENTS[name].border}`,
+          backgroundColor: BADGES[name].backgroundColor,
+          color: BADGES[name].color,
+          border: `2px solid ${BADGES[name].border}`,
         },
       ]}
     >
-      <div>{ACHIEVEMENTS[name].icon}</div>
-      <span>{ACHIEVEMENTS[name].name}</span>
+      <Medal name={name} />
+      <span>{name}</span>
     </div>
   )
 }
