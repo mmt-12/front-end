@@ -1,6 +1,5 @@
 import { theme } from '@/styles/theme'
 import { css } from '@emotion/react'
-import React from 'react'
 
 interface Props {
   label: string
