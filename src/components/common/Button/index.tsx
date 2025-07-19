@@ -37,7 +37,6 @@ const buttonStyle = css({
   userSelect: 'none',
   border: 'none',
   fontFamily: 'inherit',
-  fontWeight: 600,
 })
 
 const sizeStyles = {
@@ -45,28 +44,28 @@ const sizeStyles = {
     padding: '10px 16px',
     borderRadius: '16px',
     fontSize: '14px',
-    fontWeight: '700',
+    fontWeight: 700,
   }),
   md: css({
     width: '100%',
     padding: '16px',
     borderRadius: '20px',
     fontSize: '14px',
-    fontWeight: '700',
+    fontWeight: 700,
   }),
   lg: css({
     width: '280px',
     height: '280px',
     borderRadius: '20px',
     fontSize: '14px',
-    fontWeight: '700',
+    fontWeight: 700,
   }),
   full: css({
     width: '100%',
     padding: '16px 22px',
     borderRadius: '12px',
     fontSize: '16px',
-    fontWeight: '500',
+    fontWeight: 500,
   }),
 }
 
@@ -84,7 +83,7 @@ const typeStyles = (type: Props['type'], size: Props['size']) => {
     return css({
       backgroundColor: 'white',
       color: theme.sky[500],
-      borderWidth: getBorderWidth(type, size),
+      borderWidth: size === 'lg' ? '3px' : '2px',
       borderStyle: 'solid',
       borderColor: theme.sky[500],
       '&:hover': {
@@ -100,11 +99,5 @@ const typeStyles = (type: Props['type'], size: Props['size']) => {
         backgroundColor: theme.stone[300],
       },
     })
-  }
-}
-
-const getBorderWidth = (type: Props['type'], size: Props['size']) => {
-  if (type === 'secondary') {
-    return size === 'lg' ? '3px' : '2px'
   }
 }
