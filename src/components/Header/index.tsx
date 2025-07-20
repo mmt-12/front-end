@@ -12,7 +12,7 @@ export default function Header() {
       />
       <div>
         <span css={{ fontSize: '16px', fontWeight: 'bold' }}>
-          {headerState.routeName}
+          {headerState.routeName || '페이지 제목'}
         </span>
       </div>
       <HeaderItem
@@ -34,13 +34,15 @@ const headerStyle = (theme: Theme) =>
     borderBottom: '1px solid #eee',
   })
 
-const ItemStyle = css({
-  width: '40px',
-  height: '40px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-})
+const ItemStyle = (theme: Theme) =>
+  css({
+    width: '40px',
+    height: '40px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: theme.stone[500],
+  })
 
 interface IHeaderItem {
   icon: React.ReactNode
