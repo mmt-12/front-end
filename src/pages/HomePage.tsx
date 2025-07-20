@@ -3,11 +3,14 @@ import BearCounter from '@/components/example/BearCounter'
 import { Box } from '@solar-icons/react'
 import { css, useTheme } from '@emotion/react'
 import Badge from '@/components/example/Badge'
+import { useHeaderStore } from '@/store/headerStore'
 
 export interface IHomePageProps {}
 
 export function HomePage() {
   const theme = useTheme()
+  const setRouteName = useHeaderStore(state => state.setRouteName)
+  setRouteName('홈')
   return (
     <div>
       <h1>Hello world!</h1>
