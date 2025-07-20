@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { IHeaderItem } from '@/types/IHeaderItem'
 import { create } from 'zustand'
 
 interface HeaderState {
@@ -10,11 +10,6 @@ interface HeaderState {
     left: IHeaderItem
     right: IHeaderItem
   }
-}
-
-interface IHeaderItem {
-  icon: ReactNode
-  onClick: () => void
 }
 
 export const useHeaderStore = create<HeaderState>()(set => ({

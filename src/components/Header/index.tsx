@@ -1,4 +1,5 @@
 import { useHeaderStore } from '@/store/headerStore'
+import type { IHeaderItem } from '@/types/IHeaderItem'
 import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 
@@ -43,11 +44,6 @@ const ItemStyle = (theme: Theme) =>
     justifyContent: 'center',
     color: theme.stone[500],
   })
-
-interface IHeaderItem {
-  icon: React.ReactNode
-  onClick: () => void
-}
 
 function HeaderItem({ icon, onClick }: IHeaderItem) {
   return (
