@@ -14,5 +14,17 @@ export const globalStyle = css({
 
   body: {
     fontFamily: 'Pretendard, sans-serif',
+    padding: 0,
+    margin: 0,
+  },
+
+  a: {
+    'text-decoration': 'none',
+  },
+
+  ':root': {
+    padding: 0,
+    margin: 0,
+    'background-color': 'black',
   },
 })
