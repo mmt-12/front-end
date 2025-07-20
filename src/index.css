@@ -1,5 +1,12 @@
 :root {
+  padding: 0;
+  margin: 0;
   background-color: black;
+}
+
+body {
+  padding: 0;
+  margin: 0;
 }
 
 a {
