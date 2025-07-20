@@ -1,3 +1,5 @@
+import Header from '@/components/Header'
+import NavBar from '@/components/NavBar'
 import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 import { Outlet } from 'react-router-dom'
@@ -7,11 +9,11 @@ export interface ILayoutProps {}
 export default function Layout() {
   return (
     <div css={containerStyle}>
-      <header css={headerStyle}>Header</header>
+      <Header />
       <main css={[mainStyle]}>
         <Outlet />
       </main>
-      <footer css={footerStyle}>Navigation bar</footer>
+      <NavBar />
     </div>
   )
 }
@@ -25,24 +27,7 @@ const containerStyle = css({
   backgroundColor: '#f0f0f0',
 })
 
-const headerStyle = (theme: Theme) =>
-  css({
-    backgroundColor: '#a33',
-    padding: '10px',
-    textAlign: 'center',
-    color: theme.sky[500],
-  })
-
 const mainStyle = (theme: Theme) =>
   css({
-    padding: '20px',
-    border: '4px solid #000',
-    color: theme.stone[900],
-    backgroundColor: theme.bg,
+    height: 'calc(100vh - 112px)', // 56px for header and 56px for NavBar
   })
-
-const footerStyle = css({
-  backgroundColor: '#a33',
-  padding: '10px',
-  textAlign: 'center',
-})
