@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import NavBar from '.'
 import { withRouter } from 'storybook-addon-react-router-v6'
+import { ROUTES } from '@/routes/ROUTES'
 
 const meta = {
   title: 'components/NavBar',
@@ -8,10 +9,17 @@ const meta = {
   tags: ['autodocs'],
   parameters: {
     reactRouter: {
-      routePath: '/memories',
+      routePath: ROUTES.MEMORY_LIST,
     },
   },
-  decorators: [withRouter],
+  decorators: [
+    withRouter,
+    Story => (
+      <div style={{ pointerEvents: 'none' }}>
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof NavBar>
 
 export default meta
@@ -22,54 +30,34 @@ export const MemoriesPage: Story = {
   args: {},
   parameters: {
     reactRouter: {
-      routePath: '/memories',
+      routePath: ROUTES.MEMORY_LIST,
     },
   },
-  render: () => (
-    <div style={{ pointerEvents: 'none' }}>
-      <NavBar />
-    </div>
-  ),
 }
 
 export const MapPage: Story = {
   args: {},
   parameters: {
     reactRouter: {
-      routePath: '/map',
+      routePath: ROUTES.MAP,
     },
   },
-  render: () => (
-    <div style={{ pointerEvents: 'none' }}>
-      <NavBar />
-    </div>
-  ),
 }
 
 export const CalendarPage: Story = {
   args: {},
   parameters: {
     reactRouter: {
-      routePath: '/calendar',
+      routePath: ROUTES.CALENDAR,
     },
   },
-  render: () => (
-    <div style={{ pointerEvents: 'none' }}>
-      <NavBar />
-    </div>
-  ),
 }
 
 export const GuestBookPage: Story = {
   args: {},
   parameters: {
     reactRouter: {
-      routePath: '/guest-book',
+      routePath: ROUTES.GUEST_BOOK,
     },
   },
-  render: () => (
-    <div style={{ pointerEvents: 'none' }}>
-      <NavBar />
-    </div>
-  ),
 }

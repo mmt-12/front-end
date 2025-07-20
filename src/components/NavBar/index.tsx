@@ -1,3 +1,4 @@
+import { ROUTES } from '@/routes/ROUTES'
 import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 import type { JSX } from '@emotion/react/jsx-runtime'
@@ -16,12 +17,12 @@ export default function NavBar() {
       <Navigation
         title='기억'
         icon={<Box weight='Bold' size={24} />}
-        to='/memories'
+        to={ROUTES.MEMORY_LIST}
       />
       <Navigation
         title='지도'
         icon={<PointOnMap weight='Bold' size={24} />}
-        to='/map'
+        to={ROUTES.MAP}
       />
       <button css={addButtonStyle}>
         <AddCircle size={40} />
@@ -29,12 +30,12 @@ export default function NavBar() {
       <Navigation
         title='달력'
         icon={<CalendarMinimalistic weight='Bold' size={24} />}
-        to='/calendar'
+        to={ROUTES.CALENDAR}
       />
       <Navigation
         title='방명록'
         icon={<BookBookmark weight='Bold' size={24} />}
-        to='/guest-book'
+        to={ROUTES.GUEST_BOOK}
       />
     </div>
   )
