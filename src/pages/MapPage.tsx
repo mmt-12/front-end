@@ -1,20 +1,18 @@
-import { useHeaderStore } from '@/store/headerStore'
+import useHeader from '@/hooks/useHeader'
 import { Bell } from '@solar-icons/react'
-import { useEffect } from 'react'
 
 export default function MapPage() {
-  const headerState = useHeaderStore(state => state)
-
-  useEffect(() => {
-    headerState.setRouteName('지도')
-    headerState.setRightItem({
+  useHeader({
+    routeName: '지도',
+    leftItem: {
       icon: <Bell weight='Bold' size={32} />,
       onClick: () => console.log('Bell clicked'),
-    })
-    headerState.setLeftItem({
+    },
+    rightItem: {
       icon: null,
       onClick: () => console.log('nothing happens'),
-    })
-  }, [])
+    },
+  })
+
   return <div>map page</div>
 }

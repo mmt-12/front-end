@@ -1,22 +1,18 @@
-import { useHeaderStore } from '@/store/headerStore'
+import useHeader from '@/hooks/useHeader'
 import { Bell } from '@solar-icons/react'
-import { useEffect } from 'react'
 
 export default function CalendarPage() {
-  const { setRouteName, setRightItem, setLeftItem } = useHeaderStore(
-    state => state,
-  )
-
-  useEffect(() => {
-    setRouteName('달력')
-    setRightItem({
-      icon: <Bell weight='Bold' size={32} />,
-      onClick: () => console.log('Bell clicked'),
-    })
-    setLeftItem({
+  useHeader({
+    routeName: '달력',
+    leftItem: {
       icon: null,
       onClick: () => console.log('nothing happens'),
-    })
-  }, [])
+    },
+    rightItem: {
+      icon: <Bell weight='Bold' size={32} />,
+      onClick: () => console.log('Bell clicked'),
+    },
+  })
+
   return <div>calendar page</div>
 }
