@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import NavBar from '.'
-import { withRouter } from 'storybook-addon-react-router-v6'
 import { ROUTES } from '@/routes/ROUTES'
+import { withRouter } from 'storybook-addon-remix-react-router'
 
 const meta = {
   title: 'components/NavBar',
@@ -31,33 +31,6 @@ export const MemoriesPage: Story = {
   parameters: {
     reactRouter: {
       routePath: ROUTES.MEMORY_LIST,
-    },
-  },
-}
-
-export const MapPage: Story = {
-  args: {},
-  parameters: {
-    reactRouter: {
-      routePath: ROUTES.MAP,
-    },
-  },
-}
-
-export const CalendarPage: Story = {
-  args: {},
-  parameters: {
-    reactRouter: {
-      routePath: ROUTES.CALENDAR,
-    },
-  },
-}
-
-export const GuestBookPage: Story = {
-  args: {},
-  parameters: {
-    reactRouter: {
-      routePath: ROUTES.GUEST_BOOK,
     },
   },
 }
