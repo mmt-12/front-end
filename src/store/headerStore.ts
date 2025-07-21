@@ -2,9 +2,9 @@ import type { IHeaderItem } from '@/types/IHeaderItem'
 import { create } from 'zustand'
 
 interface HeaderState {
-  setRouteName: (routeName: string) => void
-  setLeftItem: (item: IHeaderItem) => void
-  setRightItem: (item: IHeaderItem) => void
+  setRouteName: (_routeName: string) => void
+  setLeftItem: (_item: IHeaderItem) => void
+  setRightItem: (_item: IHeaderItem) => void
   routeName: string
   items: {
     left: IHeaderItem

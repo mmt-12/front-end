@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import NavBar from '.'
 import { withRouter } from 'storybook-addon-react-router-v6'
 import { ROUTES } from '@/routes/ROUTES'

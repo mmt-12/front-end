@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import Button from '.'
 import { Box, GalleryAdd } from '@solar-icons/react'
 import { theme } from '@/styles/theme'
