@@ -19,12 +19,12 @@ export const globalStyle = css({
   },
 
   a: {
-    'text-decoration': 'none',
+    textDecoration: 'none',
   },
 
   ':root': {
     padding: 0,
     margin: 0,
-    'background-color': 'black',
+    backgroundColor: 'black',
   },
 })

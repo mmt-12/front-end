@@ -34,30 +34,3 @@ export const MemoriesPage: Story = {
     },
   },
 }
-
-export const MapPage: Story = {
-  args: {},
-  parameters: {
-    reactRouter: {
-      routePath: ROUTES.MAP,
-    },
-  },
-}
-
-export const CalendarPage: Story = {
-  args: {},
-  parameters: {
-    reactRouter: {
-      routePath: ROUTES.CALENDAR,
-    },
-  },
-}
-
-export const GuestBookPage: Story = {
-  args: {},
-  parameters: {
-    reactRouter: {
-      routePath: ROUTES.GUEST_BOOK,
-    },
-  },
-}
