@@ -1,5 +1,3 @@
-// eslint.config.js
-
 import js from '@eslint/js'
 import globals from 'globals'
 import react from 'eslint-plugin-react'
@@ -8,11 +6,9 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import storybook from 'eslint-plugin-storybook'
 import tseslint from 'typescript-eslint'
 
-// ⬇️ Flat config export
 export default [
   { ignores: ['dist'] },
 
-  // ✅ TypeScript rules
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
