@@ -2,8 +2,8 @@ import Bears from '@/components/example/Bears'
 import BearCounter from '@/components/example/BearCounter'
 import { Box } from '@solar-icons/react'
 import { css, useTheme } from '@emotion/react'
-import Badge from '@/components/example/Badge'
 import { useHeaderStore } from '@/store/headerStore'
+import Badge from '@/components/common/Badge'
 
 export function HomePage() {
   const theme = useTheme()
@@ -25,7 +25,7 @@ export function HomePage() {
       <hr />
 
       <p>배지 컴포넌트 사용</p>
-      <Badge name='프로참석러' />
+      <Badge id={1} />
 
       <div>
         <p>전역 상태 관리</p>
