@@ -73,7 +73,7 @@ export default function DateRangeSelector({ onSelect }: Props) {
     if (!selectedStart) return 0
     if (date.getTime() === selectedStart.getTime()) return 2
     if (!selectedEnd) return 0
-    if (date.getTime() === selectedEnd.getTime()) return 2
+    if (date.getTime() === selectedEnd.getTime()) return 3
 
     if (date > selectedStart && date < selectedEnd) return 1
     return 0
@@ -145,23 +145,36 @@ export default function DateRangeSelector({ onSelect }: Props) {
                 <tr key={rowIdx}>
                   {calendarDays
                     .slice(rowIdx * 7, rowIdx * 7 + 7)
-                    .map((date, colIdx) => (
-                      <td
-                        key={colIdx}
-                        onClick={() => date && handleDateClick(date)}
-                      >
-                        <div
-                          css={dayContainerStyle(
-                            theme,
-                            date,
-                            getSelectedState,
-                            colIdx,
-                          )}
+                    .map((date, colIdx) =>
+                      date ? (
+                        <td
+                          key={colIdx}
+                          onClick={() => date && handleDateClick(date)}
                         >
-                          <span>{date ? date.getDate() : ''}</span>
-                        </div>
-                      </td>
-                    ))}
+                          <div
+                            css={dayWrapperStyle(
+                              theme,
+                              getSelectedState(date),
+                              selectedStart,
+                              selectedEnd,
+                            )}
+                          >
+                            <div
+                              css={dayContainerStyle(
+                                theme,
+                                date,
+                                getSelectedState(date),
+                                colIdx,
+                              )}
+                            >
+                              <span>{date ? date.getDate() : ''}</span>
+                            </div>
+                          </div>
+                        </td>
+                      ) : (
+                        <></>
+                      ),
+                    )}
                 </tr>
               ),
             )}
@@ -179,13 +192,17 @@ export default function DateRangeSelector({ onSelect }: Props) {
                 endDate: endDateString ? endDateString : startDateString,
                 toString: () =>
                   endDateString
-                    ? `${startDateString} - ${endDateString}`
-                    : startDateString,
+                    ? startDateString == endDateString
+                      ? `${startDateString}`
+                      : `${startDateString} - ${endDateString}`
+                    : `${startDateString}`,
               })
             }}
             label={
               endDateString
-                ? `${startDateString} - ${endDateString}으로 설정`
+                ? startDateString == endDateString
+                  ? `${startDateString}으로 설정`
+                  : `${startDateString} - ${endDateString}으로 설정`
                 : `${startDateString}으로 설정`
             }
           ></Button>
@@ -234,17 +251,17 @@ const navigationStyle = css({
 
 const tableStyle = css({
   borderCollapse: 'collapse',
-  aspectRatio: '3/2',
   width: '100%',
 })
 
 const dayContainerStyle = (
   theme: Theme,
   date: Date | null,
-  getSelectedState: (_date: Date) => number,
+  state: number,
   colIdx: number,
 ) =>
   css({
+    position: 'relative',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -253,14 +270,9 @@ const dayContainerStyle = (
     maxWidth: 52,
     margin: 'auto',
     padding: '6px',
-    background:
-      date && getSelectedState(date) === 2
-        ? theme.sky[300]
-        : date && getSelectedState(date) === 1
-        ? theme.stone[300]
-        : undefined,
+    background: date && state >= 2 ? theme.sky[300] : undefined,
     color:
-      date && getSelectedState(date) === 2
+      date && state >= 2
         ? theme.white
         : colIdx === 0
         ? theme.red
@@ -270,6 +282,7 @@ const dayContainerStyle = (
     fontWeight: 'bold',
     borderRadius: 8,
     textAlign: 'center',
+    zIndex: 1,
   })
 
 const tableHeaderStyle = (theme: Theme) =>
@@ -279,3 +292,33 @@ const tableHeaderStyle = (theme: Theme) =>
     textAlign: 'center',
     color: theme.stone[500],
   })
+
+const dayWrapperStyle = (
+  theme: Theme,
+  state: number,
+  selectedStart: Date | null,
+  selectedEnd: Date | null,
+) => {
+  let background: string | undefined = undefined
+
+  if (state === 1) {
+    background = theme.stone[200]
+  } else if (state === 2) {
+    background = `linear-gradient(to right, transparent 50%, ${theme.stone[200]} 50%)`
+  } else if (state === 3) {
+    background = `linear-gradient(to left, transparent 50%, ${theme.stone[200]} 50%)`
+  }
+
+  if (
+    (selectedStart && !selectedEnd) ||
+    selectedStart?.getDate() == selectedEnd?.getDate()
+  )
+    background = undefined
+
+  return {
+    width: '120%',
+    aspectRatio: '2/1',
+    background: background,
+    zIndex: 0,
+  }
+}
