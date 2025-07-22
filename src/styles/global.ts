@@ -12,6 +12,12 @@ export const globalStyle = css({
     },
   ],
 
+  ':root': {
+    padding: 0,
+    margin: 0,
+    backgroundColor: 'black',
+  },
+
   body: {
     fontFamily: 'Pretendard, sans-serif',
     padding: 0,
@@ -22,9 +28,11 @@ export const globalStyle = css({
     textDecoration: 'none',
   },
 
-  ':root': {
+  button: {
+    backgroundColor: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
     padding: 0,
     margin: 0,
-    backgroundColor: 'black',
   },
 })

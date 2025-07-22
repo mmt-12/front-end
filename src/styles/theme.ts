@@ -29,6 +29,8 @@ export const theme = {
   whiteBlur: 'rgba(255, 255, 255, 0.92)',
   white: '#FFFFFF',
   black: '#000000',
+  red: '#FF9292',
+  blue: '#6AB9FF',
   maxWidth: '720px',
 }
 export type ThemeType = typeof theme

@@ -2,7 +2,7 @@ import InputField from '@/components/common/InputField'
 import InputPopup from '@/components/popup/InputPopup'
 import DateRangeSelector from '@/components/popup/DateRangeSelector'
 import MapLocationSelector from '@/components/popup/MapLocationSelector'
-import ArraySelector from '@/components/popup/ArraySelector/ArraySelector'
+import ArraySelector from '@/components/popup/ArraySelector'
 import useHeader from '@/hooks/useHeader'
 import type { IDateRangeInput } from '@/types'
 import { useTheme } from '@emotion/react'
@@ -52,7 +52,7 @@ export default function MemoryListPage() {
         />
 
         <InputPopup
-          label='날짜'
+          label='달력'
           onChange={(val: IDateRangeInput) => console.log('선택된 날짜:', val)}
           content={
             <DateRangeSelector
@@ -77,7 +77,6 @@ export default function MemoryListPage() {
                 { id: '1', label: '멤버1' },
                 { id: '2', label: '멤버2' },
               ]}
-              onSelect={val => console.log('선택된 멤버:', val)}
             />
           }
           icon={
@@ -99,7 +98,6 @@ export default function MemoryListPage() {
                 { id: '2', label: '칭호2' },
                 { id: '3', label: '칭호3' },
               ]}
-              onSelect={val => console.log('선택된 칭호:', val)}
             />
           }
           icon={

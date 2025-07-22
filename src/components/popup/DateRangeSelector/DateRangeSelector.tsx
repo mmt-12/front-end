@@ -1,17 +1,17 @@
 import { useMemo, useState } from 'react'
 import Button from '@/components/common/Button'
 import type { IDateRangeInput } from '@/types'
+import { css, useTheme } from '@emotion/react'
+import type { Theme } from '@emotion/react'
+import { AltArrowLeft, AltArrowRight } from '@solar-icons/react'
 
 interface Props {
   onSelect: (_range: IDateRangeInput) => void
 }
 
-const titleStyle = {
-  fontWeight: 'bold',
-  marginBottom: '8px',
-}
-
 export default function DateRangeSelector({ onSelect }: Props) {
+  const theme = useTheme()
+
   const getDaysInMonth = (year: number, month: number) =>
     new Date(year, month + 1, 0).getDate()
 
@@ -69,17 +69,14 @@ export default function DateRangeSelector({ onSelect }: Props) {
   }
 
   // Check if date is selected
-  const isSelected = (date: Date) => {
-    if (!selectedStart) return false
-    if (selectedStart && !selectedEnd)
-      return date.getTime() === selectedStart.getTime()
-    if (selectedStart && selectedEnd)
-      return (
-        date.getTime() === selectedStart.getTime() ||
-        date.getTime() === selectedEnd.getTime() ||
-        (date > selectedStart && date < selectedEnd)
-      )
-    return false
+  const getSelectedState = (date: Date) => {
+    if (!selectedStart) return 0
+    if (date.getTime() === selectedStart.getTime()) return 2
+    if (!selectedEnd) return 0
+    if (date.getTime() === selectedEnd.getTime()) return 2
+
+    if (date > selectedStart && date < selectedEnd) return 1
+    return 0
   }
 
   // Handle month/year change
@@ -97,85 +94,188 @@ export default function DateRangeSelector({ onSelect }: Props) {
     setViewYear(newYear)
   }
 
-  // Handle year search
-  const handleYearInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = parseInt(e.target.value, 10)
-    if (!isNaN(val)) setViewYear(val)
-  }
-
   return (
-    <div>
-      <div style={titleStyle}>날짜 범위 선택</div>
-      <div>
-        <button onClick={() => handleMonthChange(-1)}>&lt;</button>
-        <span>
-          <input type='number' value={viewYear} onChange={handleYearInput} />
-          {viewMonth + 1}월
-        </span>
-        <button onClick={() => handleMonthChange(1)}>&gt;</button>
+    <div css={containerStyle}>
+      <div css={calendarWrapperStyle}>
+        <div css={headerStyle}>
+          <span css={headerTitleStyle}>
+            {viewYear + 1}년 {viewMonth + 1}월
+          </span>
+          <div css={navigationStyle}>
+            <button onClick={() => handleMonthChange(-1)}>
+              <AltArrowLeft
+                weight='Linear'
+                size={28}
+                color={theme.stone[400]}
+              />
+            </button>
+            <button onClick={() => handleMonthChange(1)}>
+              <AltArrowRight
+                weight='Linear'
+                size={28}
+                color={theme.stone[400]}
+              />
+            </button>
+          </div>
+        </div>
+        <table css={tableStyle}>
+          <thead>
+            <tr>
+              {['일', '월', '화', '수', '목', '금', '토'].map(day => (
+                <th
+                  key={day}
+                  css={tableHeaderStyle}
+                  style={{
+                    color:
+                      day === '일'
+                        ? theme.red
+                        : day === '토'
+                        ? theme.blue
+                        : theme.stone[500],
+                  }}
+                >
+                  {day}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {Array.from({ length: Math.ceil(calendarDays.length / 7) }).map(
+              (_, rowIdx) => (
+                <tr key={rowIdx}>
+                  {calendarDays
+                    .slice(rowIdx * 7, rowIdx * 7 + 7)
+                    .map((date, colIdx) => (
+                      <td
+                        key={colIdx}
+                        onClick={() => date && handleDateClick(date)}
+                      >
+                        <div
+                          css={dayContainerStyle(
+                            theme,
+                            date,
+                            getSelectedState,
+                            colIdx,
+                          )}
+                        >
+                          <span>{date ? date.getDate() : ''}</span>
+                        </div>
+                      </td>
+                    ))}
+                </tr>
+              ),
+            )}
+          </tbody>
+        </table>
       </div>
-      <table>
-        <thead>
-          <tr>
-            {['일', '월', '화', '수', '목', '금', '토'].map(day => (
-              <th key={day} style={{ padding: 4, fontWeight: 'bold' }}>
-                {day}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {Array.from({ length: Math.ceil(calendarDays.length / 7) }).map(
-            (_, rowIdx) => (
-              <tr key={rowIdx}>
-                {calendarDays
-                  .slice(rowIdx * 7, rowIdx * 7 + 7)
-                  .map((date, colIdx) => (
-                    <td
-                      key={colIdx}
-                      style={{
-                        padding: 4,
-                        textAlign: 'center',
-                        cursor: date ? 'pointer' : 'default',
-                        background:
-                          date && isSelected(date) ? '#28a745' : undefined,
-                        color: date && isSelected(date) ? 'white' : undefined,
-                        borderRadius: date && isSelected(date) ? 4 : undefined,
-                      }}
-                      onClick={() => date && handleDateClick(date)}
-                    >
-                      {date ? date.getDate() : ''}
-                    </td>
-                  ))}
-              </tr>
-            ),
-          )}
-        </tbody>
-      </table>
 
-      {selectedStart && selectedEnd ? (
-        <Button
-          type='secondary'
-          onClick={() => {
-            if (selectedStart && selectedEnd) {
+      <div>
+        {selectedStart ? (
+          <Button
+            type='secondary'
+            onClick={() => {
               onSelect({
                 startDate: startDateString,
-                endDate: endDateString,
-                toString: () => `${startDateString} - ${endDateString}`,
+                endDate: endDateString ? endDateString : startDateString,
+                toString: () =>
+                  endDateString
+                    ? `${startDateString} - ${endDateString}`
+                    : startDateString,
               })
+            }}
+            label={
+              endDateString
+                ? `${startDateString} - ${endDateString}으로 설정`
+                : `${startDateString}으로 설정`
             }
-          }}
-          label={`${selectedStart.getFullYear()}.${(
-            selectedStart.getMonth() + 1
-          ).toString()}.${selectedStart
-            .getDate()
-            .toString()} - ${selectedEnd.getFullYear()}.${(
-            selectedEnd.getMonth() + 1
-          ).toString()}.${selectedEnd.getDate().toString()}으로 설정`}
-        ></Button>
-      ) : (
-        <Button label='날짜를 선택하세요.' type='disabled' />
-      )}
+          ></Button>
+        ) : (
+          <Button label='날짜를 선택하세요.' type='disabled' />
+        )}
+      </div>
     </div>
   )
 }
+
+const containerStyle = css({
+  height: '100%',
+  padding: 16,
+})
+
+const calendarWrapperStyle = css({
+  display: 'flex',
+  padding: '4px',
+  margin: '0 auto',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: 16,
+})
+
+const headerStyle = (theme: Theme) =>
+  css({
+    width: '92%',
+    padding: '16px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottom: `1px solid ${theme.stone[300]}`,
+    letterSpacing: '0.04em',
+  })
+
+const headerTitleStyle = css({
+  fontSize: 20,
+  fontWeight: 'bold',
+})
+
+const navigationStyle = css({
+  display: 'flex',
+  gap: 16,
+})
+
+const tableStyle = css({
+  borderCollapse: 'collapse',
+  aspectRatio: '3/2',
+  width: '100%',
+})
+
+const dayContainerStyle = (
+  theme: Theme,
+  date: Date | null,
+  getSelectedState: (_date: Date) => number,
+  colIdx: number,
+) =>
+  css({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    aspectRatio: '1/1',
+    minWidth: 32,
+    maxWidth: 52,
+    margin: 'auto',
+    padding: '6px',
+    background:
+      date && getSelectedState(date) === 2
+        ? theme.sky[300]
+        : date && getSelectedState(date) === 1
+        ? theme.stone[300]
+        : undefined,
+    color:
+      date && getSelectedState(date) === 2
+        ? theme.white
+        : colIdx === 0
+        ? theme.red
+        : colIdx === 6
+        ? theme.blue
+        : theme.black,
+    fontWeight: 'bold',
+    borderRadius: 8,
+    textAlign: 'center',
+  })
+
+const tableHeaderStyle = (theme: Theme) =>
+  css({
+    padding: '8px 2px',
+    fontWeight: '500',
+    textAlign: 'center',
+    color: theme.stone[500],
+  })
