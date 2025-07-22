@@ -4,7 +4,6 @@ import PopupModal from '.'
 const meta = {
   title: 'components/PopupModal',
   component: PopupModal,
-  tags: ['autodocs'],
 } satisfies Meta<typeof PopupModal>
 
 export default meta

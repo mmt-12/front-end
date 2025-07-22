@@ -6,7 +6,6 @@ import { withRouter } from 'storybook-addon-remix-react-router'
 const meta = {
   title: 'components/NavBar',
   component: NavBar,
-  tags: ['autodocs'],
   parameters: {
     reactRouter: {
       routePath: ROUTES.MEMORY_LIST,

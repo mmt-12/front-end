@@ -7,7 +7,6 @@ import { Bell, UsersGroupRounded } from '@solar-icons/react'
 const meta = {
   title: 'components/Header',
   component: Header,
-  tags: ['autodocs'],
 } satisfies Meta<typeof Header>
 
 export default meta
