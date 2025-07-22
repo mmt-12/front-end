@@ -41,10 +41,11 @@ export default function DateRangeSelector({ onSelect }: Props) {
 
   // Handle date click
   const handleDateClick = (date: Date) => {
-    if (!selectedStart || (selectedStart && selectedEnd)) {
+    const isSameDate = startDateString === endDateString
+    if (!selectedStart || (selectedStart && selectedEnd && !isSameDate)) {
       setSelectedStart(date)
       setSelectedEnd(null)
-    } else if (selectedStart && !selectedEnd) {
+    } else if ((selectedStart && !selectedEnd) || isSameDate) {
       if (date >= selectedStart) {
         setSelectedEnd(date)
       } else {
@@ -155,8 +156,8 @@ export default function DateRangeSelector({ onSelect }: Props) {
                             css={dayWrapperStyle(
                               theme,
                               getSelectedState(date),
-                              selectedStart,
-                              selectedEnd,
+                              startDateString,
+                              endDateString,
                             )}
                           >
                             <div
@@ -172,7 +173,7 @@ export default function DateRangeSelector({ onSelect }: Props) {
                           </div>
                         </td>
                       ) : (
-                        <></>
+                        <td key={colIdx + rowIdx * 10}></td>
                       ),
                     )}
                 </tr>
@@ -280,9 +281,10 @@ const dayContainerStyle = (
         ? theme.blue
         : theme.black,
     fontWeight: 'bold',
-    borderRadius: 8,
+    borderRadius: 14,
     textAlign: 'center',
     zIndex: 1,
+    transform: 'translateX(-4%)',
   })
 
 const tableHeaderStyle = (theme: Theme) =>
@@ -296,8 +298,8 @@ const tableHeaderStyle = (theme: Theme) =>
 const dayWrapperStyle = (
   theme: Theme,
   state: number,
-  selectedStart: Date | null,
-  selectedEnd: Date | null,
+  selectedStart: string,
+  selectedEnd: string,
 ) => {
   let background: string | undefined = undefined
 
@@ -309,16 +311,15 @@ const dayWrapperStyle = (
     background = `linear-gradient(to left, transparent 50%, ${theme.stone[200]} 50%)`
   }
 
-  if (
-    (selectedStart && !selectedEnd) ||
-    selectedStart?.getDate() == selectedEnd?.getDate()
-  )
+  if ((selectedStart && !selectedEnd) || selectedStart == selectedEnd)
     background = undefined
 
   return {
-    width: '120%',
+    position: 'relative',
+    width: '106%',
     aspectRatio: '2/1',
     background: background,
+    transform: 'translateX(2%)',
     zIndex: 0,
   }
 }
