@@ -30,7 +30,7 @@ const buttonStyle = css({
   },
 })
 
-export default function MapPopupContent({ onSelect }: Props) {
+export default function MapLocationSelector({ onSelect }: Props) {
   const [region, setRegion] = useState('서울')
 
   return (

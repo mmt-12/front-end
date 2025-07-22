@@ -11,7 +11,7 @@ const titleStyle = {
   marginBottom: '8px',
 }
 
-export default function CalendarPopupContent({ onSelect }: Props) {
+export default function DateRangeSelector({ onSelect }: Props) {
   const getDaysInMonth = (year: number, month: number) =>
     new Date(year, month + 1, 0).getDate()
 
@@ -20,6 +20,7 @@ export default function CalendarPopupContent({ onSelect }: Props) {
   const [viewMonth, setViewMonth] = useState(today.getMonth())
   const [selectedStart, setSelectedStart] = useState<Date | null>(null)
   const [selectedEnd, setSelectedEnd] = useState<Date | null>(null)
+
   const startDateString = useMemo(() => {
     if (selectedStart) {
       return `${selectedStart.getFullYear()}.${(
@@ -28,6 +29,7 @@ export default function CalendarPopupContent({ onSelect }: Props) {
     }
     return ''
   }, [selectedStart])
+
   const endDateString = useMemo(() => {
     if (selectedEnd) {
       return `${selectedEnd.getFullYear()}.${(
