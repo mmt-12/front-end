@@ -4,6 +4,7 @@ import type { IDateRangeInput } from '@/types'
 import { css, useTheme } from '@emotion/react'
 import type { Theme } from '@emotion/react'
 import { AltArrowLeft, AltArrowRight } from '@solar-icons/react'
+import DayCell from './DayCell'
 
 interface Props {
   onSelect: (_range: IDateRangeInput) => void
@@ -69,7 +70,6 @@ export default function DateRangeSelector({ onSelect }: Props) {
     calendarDays.push(new Date(viewYear, viewMonth, d))
   }
 
-  // Check if date is selected
   const getSelectedState = (date: Date) => {
     if (!selectedStart) return 0
     if (date.getTime() === selectedStart.getTime()) return 2
@@ -148,30 +148,15 @@ export default function DateRangeSelector({ onSelect }: Props) {
                     .slice(rowIdx * 7, rowIdx * 7 + 7)
                     .map((date, colIdx) =>
                       date ? (
-                        <td
-                          key={colIdx}
-                          onClick={() => date && handleDateClick(date)}
-                        >
-                          <div
-                            css={dayWrapperStyle(
-                              theme,
-                              getSelectedState(date),
-                              startDateString,
-                              endDateString,
-                            )}
-                          >
-                            <div
-                              css={dayContainerStyle(
-                                theme,
-                                date,
-                                getSelectedState(date),
-                                colIdx,
-                              )}
-                            >
-                              <span>{date ? date.getDate() : ''}</span>
-                            </div>
-                          </div>
-                        </td>
+                        <DayCell
+                          key={colIdx + rowIdx * 10}
+                          date={date}
+                          state={getSelectedState(date)}
+                          onClick={() => handleDateClick(date)}
+                          selectedStart={startDateString}
+                          selectedEnd={endDateString}
+                          colIdx={colIdx}
+                        />
                       ) : (
                         <td key={colIdx + rowIdx * 10}></td>
                       ),
@@ -183,7 +168,14 @@ export default function DateRangeSelector({ onSelect }: Props) {
         </table>
       </div>
 
-      <div>
+      <div
+        style={{
+          position: 'fixed',
+          bottom: 20,
+          display: 'flex',
+          width: 'calc(100% - 32px)',
+        }}
+      >
         {selectedStart ? (
           <Button
             type='secondary'
@@ -216,7 +208,7 @@ export default function DateRangeSelector({ onSelect }: Props) {
 }
 
 const containerStyle = css({
-  height: '100%',
+  position: 'relative',
   padding: 16,
 })
 
@@ -255,38 +247,6 @@ const tableStyle = css({
   width: '100%',
 })
 
-const dayContainerStyle = (
-  theme: Theme,
-  date: Date | null,
-  state: number,
-  colIdx: number,
-) =>
-  css({
-    position: 'relative',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    aspectRatio: '1/1',
-    minWidth: 32,
-    maxWidth: 52,
-    margin: 'auto',
-    padding: '6px',
-    background: date && state >= 2 ? theme.sky[300] : undefined,
-    color:
-      date && state >= 2
-        ? theme.white
-        : colIdx === 0
-        ? theme.red
-        : colIdx === 6
-        ? theme.blue
-        : theme.black,
-    fontWeight: 'bold',
-    borderRadius: 14,
-    textAlign: 'center',
-    zIndex: 1,
-    transform: 'translateX(-4%)',
-  })
-
 const tableHeaderStyle = (theme: Theme) =>
   css({
     padding: '8px 2px',
@@ -294,32 +254,3 @@ const tableHeaderStyle = (theme: Theme) =>
     textAlign: 'center',
     color: theme.stone[500],
   })
-
-const dayWrapperStyle = (
-  theme: Theme,
-  state: number,
-  selectedStart: string,
-  selectedEnd: string,
-) => {
-  let background: string | undefined = undefined
-
-  if (state === 1) {
-    background = theme.stone[200]
-  } else if (state === 2) {
-    background = `linear-gradient(to right, transparent 50%, ${theme.stone[200]} 50%)`
-  } else if (state === 3) {
-    background = `linear-gradient(to left, transparent 50%, ${theme.stone[200]} 50%)`
-  }
-
-  if ((selectedStart && !selectedEnd) || selectedStart == selectedEnd)
-    background = undefined
-
-  return css({
-    position: 'relative',
-    width: '106%',
-    aspectRatio: '2/1',
-    background: background,
-    transform: 'translateX(2%)',
-    zIndex: 0,
-  })
-}
