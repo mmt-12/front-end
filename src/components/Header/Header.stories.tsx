@@ -33,11 +33,11 @@ export const Default: Story = {
     useEffect(() => {
       setRouteName('페이지 제목')
       setLeftItem({
-        icon: <UsersGroupRounded size={24} weight='Bold' />, // Replace with actual icon component
+        icon: UsersGroupRounded, // Replace with actual icon component
         onClick: () => console.log('Left clicked'),
       })
       setRightItem({
-        icon: <Bell size={24} weight='Bold' />, // Replace with actual icon component
+        icon: Bell, // Replace with actual icon component
         onClick: () => console.log('Right clicked'),
       })
     }, [])

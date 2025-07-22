@@ -5,6 +5,7 @@ import { css } from '@emotion/react'
 
 export default function Header() {
   const headerState = useHeaderStore(state => state)
+
   return (
     <div css={headerStyle}>
       <HeaderItem
@@ -46,9 +47,10 @@ const ItemStyle = (theme: Theme) =>
   })
 
 function HeaderItem({ icon, onClick }: IHeaderItem) {
+  const Icon = icon
   return (
     <div css={ItemStyle} onClick={onClick}>
-      {icon}
+      {Icon && <Icon size={32} weight='Bold' />}
     </div>
   )
 }
