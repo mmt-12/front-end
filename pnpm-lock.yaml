@@ -23,6 +23,9 @@ importers:
       '@types/node':
         specifier: ^24.0.14
         version: 24.0.14
+      '@vis.gl/react-google-maps':
+        specifier: ^1.5.4
+        version: 1.5.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       axios:
         specifier: ^1.10.0
         version: 1.10.0
@@ -1353,6 +1356,9 @@ packages:
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
+  '@types/google.maps@3.58.1':
+    resolution: {integrity: sha512-X9QTSvGJ0nCfMzYOnaVs/k6/4L+7F5uCS+4iUmkLEls6J9S/Phv+m/i3mDeyc49ZBgwab3EFO1HEoBY7k98EGQ==}
+
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
@@ -1437,6 +1443,12 @@ packages:
   '@typescript-eslint/visitor-keys@8.37.0':
     resolution: {integrity: sha512-YzfhzcTnZVPiLfP/oeKtDp2evwvHLMe0LOy7oe+hb9KKIumLNohYS9Hgp1ifwpu42YWxhZE8yieggz6JpqO/1w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@vis.gl/react-google-maps@1.5.4':
+    resolution: {integrity: sha512-pD3e2wDtOfd439mamkacRgrM6I2B/lue61QCR0pGQT8MVaG9pz9/LajHbsjZW2lms8Ao8mf2PQJeiGC2FxI0Fw==}
+    peerDependencies:
+      react: '>=16.8.0 || ^19.0 || ^19.0.0-rc'
+      react-dom: '>=16.8.0 || ^19.0 || ^19.0.0-rc'
 
   '@vitejs/plugin-react-swc@3.10.2':
     resolution: {integrity: sha512-xD3Rdvrt5LgANug7WekBn1KhcvLn1H3jNBfJRL3reeOIua/WnZOEV5qi5qIBq5T8R0jUDmRtxuvk4bPhzGHDWw==}
@@ -4786,6 +4798,8 @@ snapshots:
 
   '@types/estree@1.0.8': {}
 
+  '@types/google.maps@3.58.1': {}
+
   '@types/json-schema@7.0.15': {}
 
   '@types/mdx@2.0.13': {}
@@ -4900,6 +4914,13 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.37.0
       eslint-visitor-keys: 4.2.1
+
+  '@vis.gl/react-google-maps@1.5.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      '@types/google.maps': 3.58.1
+      fast-deep-equal: 3.1.3
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   '@vitejs/plugin-react-swc@3.10.2(vite@7.0.4(@types/node@24.0.14)(terser@5.43.1))':
     dependencies:

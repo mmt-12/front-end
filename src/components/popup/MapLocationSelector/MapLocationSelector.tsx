@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { css } from '@emotion/react'
+import { Map } from '@vis.gl/react-google-maps'
 
 interface Props {
   onSelect: (_region: string) => void
@@ -35,6 +36,13 @@ export default function MapLocationSelector({ onSelect }: Props) {
 
   return (
     <div>
+      <Map
+        style={{ width: '100vw', height: '100vh' }}
+        defaultCenter={{ lat: 22.54992, lng: 0 }}
+        defaultZoom={3}
+        gestureHandling={'greedy'}
+        disableDefaultUI={true}
+      />
       <h2 css={titleStyle}>지역 선택</h2>
       <select
         css={selectStyle}
