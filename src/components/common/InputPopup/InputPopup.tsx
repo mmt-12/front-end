@@ -35,7 +35,7 @@ export default function InputPopup<T extends IBaseInput>({
         {icon}
       </button>
       {showPopup && (
-        <PopupModal title='지도' onClose={() => setShowPopup(false)}>
+        <PopupModal title={label} onClose={() => setShowPopup(false)}>
           {cloneElement(
             content as React.ReactElement<{
               onSelect: (_value: T) => void
