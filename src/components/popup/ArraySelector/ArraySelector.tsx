@@ -1,19 +1,31 @@
 import type { IArrayInput, IArrayItem } from '@/types'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 interface Props {
   items: IArrayItem[]
-  onSelect: (_selectedItems: IArrayInput) => void
+  onSelect?: (_selectedItems: IArrayInput) => void
 }
 
 export default function ArraySelector({ items, onSelect }: Props) {
   const [selectedItems, setSelectedItems] = useState<IArrayItem[]>([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const filteredItems = useMemo(() => {
+    return items.filter(item =>
+      item.label.toLowerCase().includes(searchTerm.toLowerCase()),
+    )
+  }, [items, searchTerm])
 
   return (
     <div>
-      <h2>멤버 선택</h2>
+      <input
+        type='text'
+        placeholder='검색...'
+        onChange={e => {
+          setSearchTerm(e.target.value)
+        }}
+      />
       <ul>
-        {items.map(item => (
+        {filteredItems.map(item => (
           <li key={item.id}>
             <label>
               <input
@@ -35,7 +47,7 @@ export default function ArraySelector({ items, onSelect }: Props) {
       </ul>
       <button
         onClick={() =>
-          onSelect({
+          onSelect?.({
             items: selectedItems,
             toString: () => selectedItems.map(m => m.label).join(', '),
           })
