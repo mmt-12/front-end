@@ -314,12 +314,12 @@ const dayWrapperStyle = (
   if ((selectedStart && !selectedEnd) || selectedStart == selectedEnd)
     background = undefined
 
-  return {
+  return css({
     position: 'relative',
     width: '106%',
     aspectRatio: '2/1',
     background: background,
     transform: 'translateX(2%)',
     zIndex: 0,
-  }
+  })
 }
