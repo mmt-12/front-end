@@ -18,16 +18,16 @@ export default function Layout() {
   )
 }
 
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  minHeight: '100vh',
-  maxWidth: '720px',
-  margin: '0 auto',
-  backgroundColor: '#f0f0f0',
-})
-
-const mainStyle = (theme: Theme) =>
+const containerStyle = (theme: Theme) =>
   css({
-    height: 'calc(100vh - 112px)', // 56px for header and 56px for NavBar
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+    maxWidth: theme.maxWidth,
+    margin: '0 auto',
+    backgroundColor: theme.bg,
   })
+
+const mainStyle = css({
+  height: 'calc(100vh - 56px)',
+})
