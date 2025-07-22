@@ -26,7 +26,7 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const MemoriesPage: Story = {
+export const Default: Story = {
   args: {},
   parameters: {
     reactRouter: {

@@ -60,12 +60,18 @@ function Navigation(props: INavigationProps) {
   )
 }
 
-const navBarStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  backgroundColor: '#fff',
-  height: '56px',
-})
+const navBarStyle = (theme: Theme) =>
+  css({
+    position: 'fixed',
+    bottom: 0,
+    width: '100%',
+    maxWidth: theme.maxWidth,
+    display: 'flex',
+    alignItems: 'center',
+    backdropFilter: 'blur(3px)',
+    backgroundColor: theme.whiteBlur,
+    height: '56px',
+  })
 
 const navLinkStyle = (theme: Theme) =>
   css({
