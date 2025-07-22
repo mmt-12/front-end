@@ -1,5 +1,5 @@
 import { useHeaderStore } from '@/store/headerStore'
-import type { IHeaderItem } from '@/types/IHeaderItem'
+import type { IHeaderItem } from '@/types/common'
 import { useEffect } from 'react'
 
 interface Props {

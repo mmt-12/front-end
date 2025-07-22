@@ -1,4 +1,10 @@
-interface IBaseInput {
+import type { ReactNode } from 'react'
+
+export interface IHeaderItem {
+  icon: ReactNode
+  onClick: () => void
+}
+export interface IBaseInput {
   toString: () => string
 }
 

@@ -1,4 +1,4 @@
-import type { IHeaderItem } from '@/types/IHeaderItem'
+import type { IHeaderItem } from '@/types/common'
 import { create } from 'zustand'
 
 interface HeaderState {
