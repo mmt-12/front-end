@@ -1,8 +1,8 @@
 import InputField from '@/components/common/InputField'
-import InputPopup from '@/components/common/InputPopup'
+import InputPopup from '@/components/popup/InputPopup'
 import DateRangeSelector from '@/components/popup/DateRangeSelector'
 import MapLocationSelector from '@/components/popup/MapLocationSelector'
-import MemberSelector from '@/components/popup/MemberSelector/MemberSelector'
+import ArraySelector from '@/components/popup/ArraySelector/ArraySelector'
 import useHeader from '@/hooks/useHeader'
 import type { IDateRangeInput } from '@/types'
 import { useTheme } from '@emotion/react'
@@ -10,6 +10,7 @@ import {
   Bell,
   CalendarMinimalistic,
   Map,
+  MedalRibbonStar,
   SortByTime,
   UsersGroupTwoRounded,
 } from '@solar-icons/react'
@@ -71,7 +72,11 @@ export default function MemoryListPage() {
           label='멤버'
           onChange={(val: string[]) => console.log('선택된 멤버:', val)}
           content={
-            <MemberSelector
+            <ArraySelector
+              items={[
+                { id: '1', label: '멤버1' },
+                { id: '2', label: '멤버2' },
+              ]}
               onSelect={val => console.log('선택된 멤버:', val)}
             />
           }
@@ -81,6 +86,24 @@ export default function MemoryListPage() {
               size={24}
               color={theme.stone[400]}
             />
+          }
+        />
+
+        <InputPopup
+          label='칭호'
+          onChange={(val: string[]) => console.log('선택된 칭호:', val)}
+          content={
+            <ArraySelector
+              items={[
+                { id: '1', label: '칭호1' },
+                { id: '2', label: '칭호2' },
+                { id: '3', label: '칭호3' },
+              ]}
+              onSelect={val => console.log('선택된 칭호:', val)}
+            />
+          }
+          icon={
+            <MedalRibbonStar weight='Bold' size={24} color={theme.stone[400]} />
           }
         />
       </div>

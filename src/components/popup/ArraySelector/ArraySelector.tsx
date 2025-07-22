@@ -1,0 +1,48 @@
+import type { IArrayInput, IArrayItem } from '@/types'
+import { useState } from 'react'
+
+interface Props {
+  items: IArrayItem[]
+  onSelect: (_selectedItems: IArrayInput) => void
+}
+
+export default function ArraySelector({ items, onSelect }: Props) {
+  const [selectedItems, setSelectedItems] = useState<IArrayItem[]>([])
+
+  return (
+    <div>
+      <h2>멤버 선택</h2>
+      <ul>
+        {items.map(item => (
+          <li key={item.id}>
+            <label>
+              <input
+                type='checkbox'
+                value={item.id}
+                onChange={e => {
+                  const isChecked = e.target.checked
+                  setSelectedItems(prev =>
+                    isChecked
+                      ? [...prev, item]
+                      : prev.filter(m => m.id !== item.id),
+                  )
+                }}
+              />
+              {item.label}
+            </label>
+          </li>
+        ))}
+      </ul>
+      <button
+        onClick={() =>
+          onSelect({
+            items: selectedItems,
+            toString: () => selectedItems.map(m => m.label).join(', '),
+          })
+        }
+      >
+        선택 완료
+      </button>
+    </div>
+  )
+}

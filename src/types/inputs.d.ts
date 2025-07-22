@@ -1,5 +1,3 @@
-import type { IMember } from './IMember'
-
 interface IBaseInput {
   toString: () => string
 }
@@ -18,6 +16,11 @@ export interface ILocationInput extends IBaseInput {
   longitude: number
 }
 
-export interface IMemberArrayInput extends IBaseInput {
-  members: IMember[]
+export interface IArrayItem {
+  id: string
+  label: string
+}
+
+export interface IArrayInput extends IBaseInput {
+  items: IArrayItem[]
 }

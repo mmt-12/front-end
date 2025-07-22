@@ -1,7 +1,7 @@
 import { cloneElement, useState } from 'react'
 import { css } from '@emotion/react'
 import type { Theme } from '@emotion/react'
-import PopupModal from '../../popup/PopupModal'
+import PopupModal from '../PopupModal'
 import type { IBaseInput, IDateRangeInput, ITextInput } from '@/types'
 
 interface Props<T extends IBaseInput = ITextInput | IDateRangeInput> {
