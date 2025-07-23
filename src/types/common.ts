@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react'
+import type { Icon } from '@solar-icons/react/lib/types'
 
 export interface IHeaderItem {
-  icon: ReactNode
+  icon: Icon | null
   onClick: () => void
 }
 export interface IBaseInput {

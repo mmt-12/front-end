@@ -174,6 +174,8 @@ export default function DateRangeSelector({ onSelect }: Props) {
           bottom: 20,
           display: 'flex',
           width: 'calc(100% - 32px)',
+          maxWidth: `calc(${theme.maxWidth} - 32px)`,
+          zIndex: 1000,
         }}
       >
         {selectedStart ? (
@@ -207,10 +209,14 @@ export default function DateRangeSelector({ onSelect }: Props) {
   )
 }
 
-const containerStyle = css({
-  position: 'relative',
-  padding: 16,
-})
+const containerStyle = (theme: Theme) =>
+  css({
+    position: 'relative',
+    padding: 16,
+    backgroundColor: theme.white,
+    borderRadius: 16,
+    paddingBottom: '64px',
+  })
 
 const calendarWrapperStyle = css({
   display: 'flex',

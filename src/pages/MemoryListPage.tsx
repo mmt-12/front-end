@@ -5,7 +5,6 @@ import MapLocationSelector from '@/components/popup/MapLocationSelector'
 import ArraySelector from '@/components/popup/ArraySelector'
 import useHeader from '@/hooks/useHeader'
 import type { IDateRangeInput } from '@/types'
-import { useTheme } from '@emotion/react'
 import {
   Bell,
   CalendarMinimalistic,
@@ -19,15 +18,14 @@ export default function MemoryListPage() {
   useHeader({
     routeName: '기억',
     leftItem: {
-      icon: <SortByTime weight='Bold' size={32} />,
+      icon: SortByTime,
       onClick: () => console.log('list clicked'),
     },
     rightItem: {
-      icon: <Bell weight='Bold' size={32} />,
+      icon: Bell,
       onClick: () => console.log('Bell clicked'),
     },
   })
-  const theme = useTheme()
 
   return (
     <div>
@@ -48,7 +46,7 @@ export default function MemoryListPage() {
               onSelect={val => console.log('선택된 지역:', val)}
             />
           }
-          icon={<Map weight='Bold' size={24} color={theme.stone[400]} />}
+          icon={Map}
         />
 
         <InputPopup
@@ -59,13 +57,7 @@ export default function MemoryListPage() {
               onSelect={val => console.log('선택된 날짜:', val)}
             />
           }
-          icon={
-            <CalendarMinimalistic
-              weight='Bold'
-              size={24}
-              color={theme.stone[400]}
-            />
-          }
+          icon={CalendarMinimalistic}
         />
 
         <InputPopup
@@ -79,13 +71,7 @@ export default function MemoryListPage() {
               ]}
             />
           }
-          icon={
-            <UsersGroupTwoRounded
-              weight='Bold'
-              size={24}
-              color={theme.stone[400]}
-            />
-          }
+          icon={UsersGroupTwoRounded}
         />
 
         <InputPopup
@@ -100,9 +86,7 @@ export default function MemoryListPage() {
               ]}
             />
           }
-          icon={
-            <MedalRibbonStar weight='Bold' size={24} color={theme.stone[400]} />
-          }
+          icon={MedalRibbonStar}
         />
       </div>
     </div>

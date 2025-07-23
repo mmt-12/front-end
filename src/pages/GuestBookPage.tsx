@@ -5,11 +5,11 @@ export default function GuestBookPage() {
   useHeader({
     routeName: '방명록',
     leftItem: {
-      icon: <UsersGroupRounded weight='Bold' size={32} />,
+      icon: UsersGroupRounded,
       onClick: () => console.log('Group clicked'),
     },
     rightItem: {
-      icon: <Bell weight='Bold' size={32} />,
+      icon: Bell,
       onClick: () => console.log('Bell clicked'),
     },
   })

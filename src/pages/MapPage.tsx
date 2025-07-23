@@ -5,7 +5,7 @@ export default function MapPage() {
   useHeader({
     routeName: '지도',
     leftItem: {
-      icon: <Bell weight='Bold' size={32} />,
+      icon: Bell,
       onClick: () => console.log('Bell clicked'),
     },
     rightItem: {

@@ -93,10 +93,10 @@ const dayWrapperStyle = (
 
   return css({
     position: 'absolute',
-    width: '180%',
+    width: '190%',
     height: '80%',
     transform: 'translateY(-110%) translateX(-30%)',
     background: background,
-    zIndex: -1,
+    zIndex: 1,
   })
 }

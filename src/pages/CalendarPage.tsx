@@ -9,7 +9,7 @@ export default function CalendarPage() {
       onClick: () => console.log('nothing happens'),
     },
     rightItem: {
-      icon: <Bell weight='Bold' size={32} />,
+      icon: Bell,
       onClick: () => console.log('Bell clicked'),
     },
   })
