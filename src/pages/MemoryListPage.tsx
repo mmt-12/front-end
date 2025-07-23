@@ -4,7 +4,6 @@ import DateRangeSelector from '@/components/common/popup/DateRangeSelector'
 import MapLocationSelector from '@/components/common/popup/MapLocationSelector'
 import ArraySelector from '@/components/common/popup/ArraySelector'
 import useHeader from '@/hooks/useHeader'
-<<<<<<< HEAD
 import type { IDateRangeInput } from '@/types'
 import {
   Bell,
@@ -14,9 +13,6 @@ import {
   SortByTime,
   UsersGroupTwoRounded,
 } from '@solar-icons/react'
-=======
-import { SortByTime } from '@solar-icons/react'
->>>>>>> 01815eacaf2e912a3f7c9edcafba6f54e3e24038
 
 export default function MemoryListPage() {
   useHeader({
@@ -25,13 +21,10 @@ export default function MemoryListPage() {
       icon: SortByTime,
       onClick: () => console.log('list clicked'),
     },
-<<<<<<< HEAD
     rightItem: {
       icon: Bell,
       onClick: () => console.log('Bell clicked'),
     },
-=======
->>>>>>> 01815eacaf2e912a3f7c9edcafba6f54e3e24038
   })
 
   return (
