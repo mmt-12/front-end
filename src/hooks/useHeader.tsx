@@ -1,6 +1,6 @@
+import type { IHeaderItem } from '@/types'
 import { ROUTES } from '@/routes/ROUTES'
 import { useHeaderStore } from '@/store/headerStore'
-import type { IHeaderItem } from '@/types'
 import { ArrowLeft, Bell } from '@solar-icons/react'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
