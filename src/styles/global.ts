@@ -34,5 +34,9 @@ export const globalStyle = css({
     cursor: 'pointer',
     padding: 0,
     margin: 0,
+<<<<<<< HEAD
+=======
+    backgroundColor: 'black',
+>>>>>>> 01815eacaf2e912a3f7c9edcafba6f54e3e24038
   },
 })
