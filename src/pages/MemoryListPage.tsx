@@ -88,6 +88,93 @@ export default function MemoryListPage() {
           }
           icon={MedalRibbonStar}
         />
+
+        <InputPopup
+          label='멤버'
+          onChange={(val: string[]) => console.log('선택된 멤버:', val)}
+          content={
+            <ArraySelector
+              items={[
+                { id: '1', label: '멤버1' },
+                { id: '2', label: '멤버2' },
+              ]}
+            />
+          }
+          icon={UsersGroupTwoRounded}
+        />
+
+        <InputPopup
+          label='칭호'
+          onChange={(val: string[]) => console.log('선택된 칭호:', val)}
+          content={
+            <ArraySelector
+              items={[
+                { id: '1', label: '칭호1' },
+                { id: '2', label: '칭호2' },
+                { id: '3', label: '칭호3' },
+              ]}
+            />
+          }
+          icon={MedalRibbonStar}
+        />
+
+        <InputPopup
+          label='멤버'
+          onChange={(val: string[]) => console.log('선택된 멤버:', val)}
+          content={
+            <ArraySelector
+              items={[
+                { id: '1', label: '멤버1' },
+                { id: '2', label: '멤버2' },
+              ]}
+            />
+          }
+          icon={UsersGroupTwoRounded}
+        />
+
+        <InputPopup
+          label='칭호'
+          onChange={(val: string[]) => console.log('선택된 칭호:', val)}
+          content={
+            <ArraySelector
+              items={[
+                { id: '1', label: '칭호1' },
+                { id: '2', label: '칭호2' },
+                { id: '3', label: '칭호3' },
+              ]}
+            />
+          }
+          icon={MedalRibbonStar}
+        />
+
+        <InputPopup
+          label='멤버'
+          onChange={(val: string[]) => console.log('선택된 멤버:', val)}
+          content={
+            <ArraySelector
+              items={[
+                { id: '1', label: '멤버1' },
+                { id: '2', label: '멤버2' },
+              ]}
+            />
+          }
+          icon={UsersGroupTwoRounded}
+        />
+
+        <InputPopup
+          label='칭호'
+          onChange={(val: string[]) => console.log('선택된 칭호:', val)}
+          content={
+            <ArraySelector
+              items={[
+                { id: '1', label: '칭호1' },
+                { id: '2', label: '칭호2' },
+                { id: '3', label: '칭호3' },
+              ]}
+            />
+          }
+          icon={MedalRibbonStar}
+        />
       </div>
     </div>
   )

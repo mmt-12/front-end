@@ -12,22 +12,13 @@ interface Props {
   onClose: () => void
 }
 
-const modalStyle = (theme: Theme) =>
-  css({
-    position: 'fixed',
-    inset: 0,
-    width: '100vw',
-    height: '100vh',
-    margin: '0 auto',
-    maxWidth: theme.maxWidth,
-    overflowY: 'auto',
-    background: theme.bg,
-    zIndex: 1000,
-  })
-
 export default function PopupModal({ title, children, onClose }: Props) {
   const modal = (
-    <div css={modalStyle} onClick={e => e.stopPropagation()}>
+    <div
+      css={modalStyle}
+      onClick={e => e.stopPropagation()}
+      onScroll={e => e.stopPropagation()}
+    >
       <header css={headerStyle}>
         <HeaderItem onClick={onClose} icon={ArrowLeft} />
         <div>
@@ -36,9 +27,27 @@ export default function PopupModal({ title, children, onClose }: Props) {
 
         <HeaderItem onClick={() => {}} icon={null} />
       </header>
-      {children}
+      <div css={contentStyle}>{children}</div>
     </div>
   )
 
   return ReactDOM.createPortal(modal, document.body)
 }
+
+const contentStyle = css({
+  overflowY: 'auto',
+  height: 'calc(100vh - 60px)', // Adjust height to account for header
+})
+
+const modalStyle = (theme: Theme) =>
+  css({
+    position: 'fixed',
+    inset: 0,
+    width: '100vw',
+    height: '100vh',
+    margin: '0 auto',
+    maxWidth: theme.maxWidth,
+    overflowY: 'hidden',
+    background: theme.bg,
+    zIndex: 1000,
+  })

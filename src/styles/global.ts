@@ -1,4 +1,5 @@
 import { css } from '@emotion/react'
+import { theme } from './theme'
 
 export const globalStyle = css({
   '@font-face': [
@@ -12,9 +13,9 @@ export const globalStyle = css({
     },
   ],
 
-  ':root': {
-    padding: 0,
-    margin: 0,
+  html: {
+    maxWidth: theme.maxWidth,
+    margin: '0 auto',
     backgroundColor: 'black',
   },
 

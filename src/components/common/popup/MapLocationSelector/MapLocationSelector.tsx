@@ -1,61 +1,63 @@
-import { useState } from 'react'
-import { css } from '@emotion/react'
-import { Map } from '@vis.gl/react-google-maps'
+import { useEffect, useState } from 'react'
+import {
+  Map,
+  useMap,
+  useMapsLibrary,
+  type MapCameraChangedEvent,
+} from '@vis.gl/react-google-maps'
+import Button from '../../Button'
+import InputField from '../../InputField'
+import { fixedStyle } from '@/styles/absolute'
 
 interface Props {
   onSelect: (_region: string) => void
 }
 
-const titleStyle = css({
-  fontWeight: 'bold',
-  marginBottom: '8px',
-})
-
-const selectStyle = css({
-  width: '100%',
-  padding: '8px',
-  border: '1px solid #ccc',
-  borderRadius: '4px',
-  marginBottom: '12px',
-})
-
-const buttonStyle = css({
-  backgroundColor: '#0077cc',
-  color: 'white',
-  padding: '8px 12px',
-  border: 'none',
-  borderRadius: '4px',
-  cursor: 'pointer',
-  '&:hover': {
-    backgroundColor: '#005fa3',
-  },
-})
-
 export default function MapLocationSelector({ onSelect }: Props) {
+  const map = useMap()
+  const placesLib = useMapsLibrary('places')
+
   const [region, setRegion] = useState('서울')
+  const [searchKey, setSearchKey] = useState('')
+
+  useEffect(() => {
+    if (!placesLib || !map) return
+
+    // ...
+  }, [placesLib, map])
 
   return (
-    <div>
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+      }}
+    >
+      <div css={fixedStyle(0)}>
+        <InputField onChange={(val: string) => setSearchKey(val)} />
+      </div>
       <Map
-        style={{ width: '100vw', height: '100vh' }}
-        defaultCenter={{ lat: 22.54992, lng: 0 }}
-        defaultZoom={3}
-        gestureHandling={'greedy'}
+        style={{ width: '100%', height: '100%' }}
+        defaultCenter={{ lat: 37.5012, lng: 127.0396 }}
+        defaultZoom={18}
+        onCameraChanged={(ev: MapCameraChangedEvent) =>
+          console.log(
+            'camera changed:',
+            ev.detail.center,
+            'zoom:',
+            ev.detail.zoom,
+          )
+        }
         disableDefaultUI={true}
       />
-      <h2 css={titleStyle}>지역 선택</h2>
-      <select
-        css={selectStyle}
-        value={region}
-        onChange={e => setRegion(e.target.value)}
-      >
-        <option value='서울'>서울</option>
-        <option value='부산'>부산</option>
-        <option value='제주'>제주</option>
-      </select>
-      <button css={buttonStyle} onClick={() => onSelect(region)}>
-        선택 완료
-      </button>
+      <div css={[fixedStyle(16), { bottom: '16px' }]}>
+        <Button
+          label={`${region}로 설정`}
+          type='secondary'
+          onClick={() => onSelect(region)}
+        />
+      </div>
     </div>
   )
 }
