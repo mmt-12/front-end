@@ -6,6 +6,7 @@ import MemoryListPage from '@/pages/MemoryListPage'
 import MapPage from '@/pages/MapPage'
 import CalendarPage from '@/pages/CalendarPage'
 import GuestBookPage from '@/pages/GuestBookPage'
+import NotificationPage from '@/pages/NotificationPage'
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.GUEST_BOOK,
         element: <GuestBookPage />,
+      },
+      {
+        path: ROUTES.NOTIFICATION,
+        element: <NotificationPage />,
       },
     ],
   },

@@ -10,7 +10,6 @@ export default function MapPage() {
     },
     rightItem: {
       icon: null,
-      onClick: () => console.log('nothing happens'),
     },
   })
 
