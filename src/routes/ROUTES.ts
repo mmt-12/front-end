@@ -5,4 +5,5 @@ export const ROUTES = {
   MAP: '/map',
   CALENDAR: '/calendar',
   GUEST_BOOK: '/guest-book',
+  NOTIFICATION: '/notification',
 }
