@@ -1,5 +1,4 @@
-import { css, useTheme } from '@emotion/react'
-import type { Theme } from 'node_modules/@emotion/react/dist/declarations/src'
+import { css, useTheme, type Theme } from '@emotion/react'
 
 interface Props {
   date: Date | null

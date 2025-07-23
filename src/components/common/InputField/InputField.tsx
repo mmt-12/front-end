@@ -1,13 +1,11 @@
 import { useState } from 'react'
 import { css } from '@emotion/react'
 import type { Theme } from '@emotion/react'
-import type { IDateRangeInput } from '@/types/inputs'
+import type { IDateRangeInput } from '@/types'
 
 interface Props<T = string | IDateRangeInput> {
   label: string
   onChange: (_value: T) => void
-  icon?: React.ReactNode
-  children?: React.ReactNode
 }
 
 export default function InputField<T>({ label, onChange }: Props<T>) {
