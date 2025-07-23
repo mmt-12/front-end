@@ -1,5 +1,5 @@
-import Header from '@/components/Header'
-import NavBar from '@/components/NavBar'
+import Header from '@/components/common/Header'
+import NavBar from '@/components/common/NavBar'
 import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 import { Outlet } from 'react-router-dom'
