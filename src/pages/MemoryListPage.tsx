@@ -1,8 +1,8 @@
 import InputField from '@/components/common/InputField'
-import InputPopup from '@/components/popup/InputPopup'
-import DateRangeSelector from '@/components/popup/DateRangeSelector'
-import MapLocationSelector from '@/components/popup/MapLocationSelector'
-import ArraySelector from '@/components/popup/ArraySelector'
+import InputPopup from '@/components/common/popup/InputPopup'
+import DateRangeSelector from '@/components/common/popup/DateRangeSelector'
+import MapLocationSelector from '@/components/common/popup/MapLocationSelector'
+import ArraySelector from '@/components/common/popup/ArraySelector'
 import useHeader from '@/hooks/useHeader'
 import type { IDateRangeInput } from '@/types'
 import {
