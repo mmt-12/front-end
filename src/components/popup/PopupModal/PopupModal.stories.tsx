@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import PopupModal from '.'
 
 const meta = {
-  title: 'components/PopupModal',
+  title: 'components/popup/PopupModal',
   component: PopupModal,
 } satisfies Meta<typeof PopupModal>
 
