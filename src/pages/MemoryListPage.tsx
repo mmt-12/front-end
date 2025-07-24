@@ -4,7 +4,7 @@ import DateRangeSelector from '@/components/common/popup/DateRangeSelector'
 import MapLocationSelector from '@/components/common/popup/MapLocationSelector'
 import ArraySelector from '@/components/common/popup/ArraySelector'
 import useHeader from '@/hooks/useHeader'
-import type { IDateRangeInput } from '@/types'
+import type { IDateRangeInput, ILocationInput } from '@/types'
 import {
   Bell,
   CalendarMinimalistic,
@@ -40,7 +40,7 @@ export default function MemoryListPage() {
 
         <InputPopup
           label='장소'
-          onChange={(val: string) => console.log('선택된 지역:', val)}
+          onChange={(val: ILocationInput) => console.log('선택된 지역:', val)}
           content={
             <MapLocationSelector
               onSelect={val => console.log('선택된 지역:', val)}

@@ -18,8 +18,11 @@ export interface ITextInput extends IBaseInput {
 }
 
 export interface ILocationInput extends IBaseInput {
-  latitude: number
-  longitude: number
+  address: string
+  location: {
+    lat: number
+    lng: number
+  }
 }
 
 export interface IArrayItem {
