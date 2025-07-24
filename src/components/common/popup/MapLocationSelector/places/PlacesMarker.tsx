@@ -1,7 +1,7 @@
 import Button from '@/components/common/Button'
 import { theme } from '@/styles/theme'
 import { css } from '@emotion/react'
-import { CloseCircle } from '@solar-icons/react'
+import { CloseCircle, GalleryRemove } from '@solar-icons/react'
 import { AdvancedMarker, useMap } from '@vis.gl/react-google-maps'
 import React, { useEffect } from 'react'
 
@@ -11,7 +11,7 @@ interface Props {
   closeModal: () => void
 }
 
-const AutocompleteResult = ({ place, setSelectedPlace, closeModal }: Props) => {
+const PlacesMarker = ({ place, setSelectedPlace, closeModal }: Props) => {
   const map = useMap()
 
   // adjust the viewport of the map when the place is changed
@@ -27,11 +27,13 @@ const AutocompleteResult = ({ place, setSelectedPlace, closeModal }: Props) => {
         <div css={closeStyle} onClick={() => setSelectedPlace?.(null)}>
           <CloseCircle weight='Bold' size={36} color={theme.white} />
         </div>
-        <img
-          src={place.photos?.[0].getURI()}
-          alt={place.displayName as string}
-          css={imageStyle}
-        />
+        {place.photos?.[0]?.getURI?.() && (
+          <img
+            src={place.photos[0].getURI()}
+            alt={place.displayName as string}
+            css={imageStyle}
+          />
+        )}
         <div css={contentStyle}>
           <h3>{place.displayName}</h3>
           <p>{place.formattedAddress}</p>
@@ -48,7 +50,7 @@ const AutocompleteResult = ({ place, setSelectedPlace, closeModal }: Props) => {
     </AdvancedMarker>
   )
 }
-export default React.memo(AutocompleteResult)
+export default React.memo(PlacesMarker)
 
 const markerStyle = css({
   position: 'absolute',

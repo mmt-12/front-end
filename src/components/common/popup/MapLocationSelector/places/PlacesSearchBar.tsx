@@ -1,19 +1,18 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useMapsLibrary } from '@vis.gl/react-google-maps'
-import { useAutocompleteSuggestions } from '@/hooks/useAutocompleteSuggestions'
-import InputField from '@/components/common/InputField'
-import { css } from '@emotion/react'
-import type { Theme } from 'node_modules/@emotion/react/dist/declarations/src'
-import { fixedWithMargin } from '@/styles/fixed'
 import { MapPoint, RoundArrowDown } from '@solar-icons/react'
-import { theme } from '@/styles/theme'
 import { RoundArrowUp } from '@solar-icons/react/ssr'
+import { css, type Theme } from '@emotion/react'
+import { fixedWithMargin } from '@/styles/fixed'
+import { theme } from '@/styles/theme'
+import InputField from '@/components/common/InputField'
+import { useAutocompleteSuggestions } from '@/hooks/useAutocompleteSuggestions'
 
 interface Props {
   onPlaceSelect: (_place: google.maps.places.Place | null) => void
 }
 
-export const AutocompleteCustom = ({ onPlaceSelect }: Props) => {
+export const PlacesSearchBar = ({ onPlaceSelect }: Props) => {
   const places = useMapsLibrary('places')
 
   const [inputValue, setInputValue] = useState<string>('')

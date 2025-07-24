@@ -8,8 +8,8 @@ import {
 } from '@vis.gl/react-google-maps'
 import Button from '@/components/common/Button'
 import { fixedWithMargin } from '@/styles/fixed'
-import AutocompleteControl from './autoComplete/AutocompleteControl'
-import AutocompleteResult from './autoComplete/AutocompleteResult'
+import AutocompleteControl from './places/PlacesSearchControl'
+import PlacesMarker from './places/PlacesMarker'
 import type { ILocationInput } from '@/types'
 
 interface Props {
@@ -98,7 +98,7 @@ export default function MapLocationSelector({ onSelect }: Props) {
           onPlaceSelect={setSelectedPlace}
         />
 
-        <AutocompleteResult
+        <PlacesMarker
           place={selectedPlaceInfo}
           setSelectedPlace={setSelectedPlace}
           closeModal={() => {
