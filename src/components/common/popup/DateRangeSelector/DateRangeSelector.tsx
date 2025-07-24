@@ -5,7 +5,7 @@ import { css, useTheme } from '@emotion/react'
 import type { Theme } from '@emotion/react'
 import { AltArrowLeft, AltArrowRight } from '@solar-icons/react'
 import DayCell from './DayCell'
-import { fixedStyle } from '@/styles/absolute'
+import { fixedWithMargin } from '@/styles/fixed'
 
 interface Props {
   onSelect: (_range: IDateRangeInput) => void
@@ -169,7 +169,7 @@ export default function DateRangeSelector({ onSelect }: Props) {
         </table>
       </div>
 
-      <div css={[fixedStyle(16), { bottom: '20px' }]}>
+      <div css={[fixedWithMargin(16), { bottom: '20px' }]}>
         {selectedStart ? (
           <Button
             type='secondary'
