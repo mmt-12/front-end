@@ -15,7 +15,7 @@ import {
 import Badge from '@/components/common/Badge'
 import { BADGES } from '@/consts/BADGES'
 import Profile from '@/components/common/Profile'
-import { MEMBERS } from '@/consts/MEMBERS'
+import { MEMBERS } from '@/mocks/data/MEMBERS'
 
 export default function MemoryListPage() {
   useHeader({

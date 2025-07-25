@@ -12,7 +12,7 @@ import ArraySelector from '../ArraySelector'
 import Badge from '../../Badge'
 import { BADGES } from '@/consts/BADGES'
 import Profile from '../../Profile'
-import { MEMBERS } from '@/consts/MEMBERS'
+import { MEMBERS } from '@/mocks/data/MEMBERS'
 
 const meta = {
   title: 'components/popup/InputPopup',

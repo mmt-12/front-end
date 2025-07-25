@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import Profile from './Profile'
-import { MEMBERS } from '@/consts/MEMBERS'
+import { MEMBERS } from '@/mocks/data/MEMBERS'
 
 const meta = {
   title: 'components/Profile',
