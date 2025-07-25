@@ -112,7 +112,7 @@ export default function MapLocationSelector({ onSelect }: Props) {
                 lat: selectedPlaceInfo?.location?.lat() || DEFAULT_LOCATION.lat,
                 lng: selectedPlaceInfo?.location?.lng() || DEFAULT_LOCATION.lng,
               },
-              toString: () => `${address}`,
+              render: () => <span>{address}</span>,
             })
           }}
         />
@@ -137,7 +137,7 @@ export default function MapLocationSelector({ onSelect }: Props) {
                   lat: cameraLocation?.lat() || DEFAULT_LOCATION.lat,
                   lng: cameraLocation?.lng() || DEFAULT_LOCATION.lng,
                 },
-                toString: () => `${address}`,
+                render: () => <span>{address}</span>,
               })
             }
           />

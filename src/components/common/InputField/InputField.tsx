@@ -1,18 +1,19 @@
 import { useState } from 'react'
 import { css } from '@emotion/react'
-import type { Theme } from '@emotion/react'
+import type { CSSObject, Theme } from '@emotion/react'
 import type { IDateRangeInput } from '@/types'
 
 interface Props<T = string | IDateRangeInput> {
   label?: string
   onChange: (_value: T) => void
+  extraCss?: CSSObject
 }
 
-export default function InputField<T>({ label, onChange }: Props<T>) {
+export default function InputField<T>({ label, onChange, extraCss }: Props<T>) {
   const [value, setValue] = useState<T>('' as T)
 
   return (
-    <div css={containerStyle}>
+    <div css={[containerStyle, extraCss]}>
       {label && <label css={labelStyle}>{label}</label>}
 
       <input

@@ -1,6 +1,6 @@
 import { useHeaderStore } from '@/store/headerStore'
 import { headerStyle } from '@/styles/header'
-import HeaderItem from '../HeaderItem'
+import HeaderItem from './HeaderItem'
 
 export default function Header() {
   const headerState = useHeaderStore(state => state)

@@ -2,10 +2,17 @@ import { cloneElement, useState } from 'react'
 import { css, useTheme } from '@emotion/react'
 import type { Theme } from '@emotion/react'
 import PopupModal from '../PopupModal'
-import type { IBaseInput, IDateRangeInput, ITextInput } from '@/types'
+import type {
+  IArrayInput,
+  IBaseInput,
+  IDateRangeInput,
+  ITextInput,
+} from '@/types'
 import type { Icon } from '@solar-icons/react/lib/types'
 
-interface Props<T extends IBaseInput = ITextInput | IDateRangeInput> {
+interface Props<
+  T extends IBaseInput = ITextInput | IDateRangeInput | IArrayInput,
+> {
   label: string
   onChange: (_value: T) => void
   icon: Icon
@@ -36,7 +43,7 @@ export default function InputPopup<T extends IBaseInput>({
       <label css={labelStyle}>{label}</label>
 
       <button onClick={() => setShowPopup(true)} css={buttonStyle}>
-        <span>{value?.toString()}</span>
+        <div>{value?.render()}</div>
         {<Icon weight='Bold' size={24} color={theme.stone[400]} />}
       </button>
       {showPopup && (
