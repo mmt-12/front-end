@@ -86,7 +86,7 @@ export default function MapLocationSelector({ onSelect }: Props) {
       <Map
         style={{ width: '100%', height: '100%' }}
         mapId={'49ae42fed52588c3'}
-        defaultCenter={{ lat: 37.5012, lng: 127.0396 }}
+        defaultCenter={DEFAULT_LOCATION}
         defaultZoom={18}
         gestureHandling={'greedy'}
         disableDefaultUI={true}
