@@ -54,8 +54,10 @@ const sizeStyles = {
     fontWeight: 700,
   }),
   lg: css({
-    width: '280px',
-    height: '280px',
+    width: '40%',
+    padding: '16px',
+    display: 'flex',
+    flexGrow: 1,
     borderRadius: '20px',
     fontSize: '14px',
     fontWeight: 700,

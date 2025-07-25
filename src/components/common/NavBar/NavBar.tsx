@@ -8,36 +8,92 @@ import {
   Box,
   CalendarMinimalistic,
   PointOnMap,
+  SmileSquare,
+  Soundwave,
+  UsersGroupRounded,
 } from '@solar-icons/react'
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import BottomDrawer from '../BottomDrawer'
+import Button from '../Button'
+import { theme } from '@/styles/theme'
 
 export default function NavBar() {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   return (
-    <div css={navBarStyle}>
-      <Navigation
-        title='기억'
-        icon={<Box weight='Bold' size={24} />}
-        to={ROUTES.MEMORY_LIST}
-      />
-      <Navigation
-        title='지도'
-        icon={<PointOnMap weight='Bold' size={24} />}
-        to={ROUTES.MAP}
-      />
-      <button css={addButtonStyle}>
-        <AddCircle size={40} />
-      </button>
-      <Navigation
-        title='달력'
-        icon={<CalendarMinimalistic weight='Bold' size={24} />}
-        to={ROUTES.CALENDAR}
-      />
-      <Navigation
-        title='방명록'
-        icon={<BookBookmark weight='Bold' size={24} />}
-        to={ROUTES.GUEST_BOOK}
-      />
-    </div>
+    <>
+      <div css={navBarStyle}>
+        <Navigation
+          title='기억'
+          icon={<Box weight='Bold' size={24} />}
+          to={ROUTES.MEMORY_LIST}
+        />
+        <Navigation
+          title='지도'
+          icon={<PointOnMap weight='Bold' size={24} />}
+          to={ROUTES.MAP}
+        />
+        <button css={addButtonStyle} onClick={() => setIsDrawerOpen(true)}>
+          <AddCircle size={40} />
+        </button>
+        <Navigation
+          title='달력'
+          icon={<CalendarMinimalistic weight='Bold' size={24} />}
+          to={ROUTES.CALENDAR}
+        />
+        <Navigation
+          title='방명록'
+          icon={<BookBookmark weight='Bold' size={24} />}
+          to={ROUTES.GUEST_BOOK}
+        />
+      </div>
+      <BottomDrawer isOpen={isDrawerOpen} close={() => setIsDrawerOpen(false)}>
+        <span
+          style={{
+            fontWeight: 'bold',
+            fontSize: '16px',
+            color: theme.stone[800],
+          }}
+        >
+          생성하기
+        </span>
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '12px',
+            width: '100%',
+            padding: '0 16px',
+            justifyContent: 'center',
+          }}
+        >
+          <Button
+            type='primary'
+            size='lg'
+            label='기억'
+            icon={<Box weight='Bold' size={28} />}
+          />
+          <Button
+            type='secondary'
+            size='lg'
+            label='이모티콘'
+            icon={<SmileSquare weight='Bold' size={28} />}
+          />
+          <Button
+            type='disabled'
+            size='lg'
+            label='약속'
+            icon={<UsersGroupRounded weight='Bold' size={28} />}
+          />
+          <Button
+            type='secondary'
+            size='lg'
+            label='보이스'
+            icon={<Soundwave weight='Bold' size={28} />}
+          />
+        </div>
+      </BottomDrawer>
+    </>
   )
 }
 
