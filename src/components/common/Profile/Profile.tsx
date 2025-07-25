@@ -1,4 +1,4 @@
-import { css } from '@emotion/react'
+import { css, type Theme } from '@emotion/react'
 import Badge from '../Badge'
 
 export interface Props {
@@ -20,25 +20,26 @@ export default function Profile(props: Props) {
   )
 }
 
-const containerStyle = css({
-  padding: 8,
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '8px',
-  img: {
-    width: '40px',
-    height: '40px',
-    borderRadius: '50%',
-    objectFit: 'cover',
-  },
-  h2: {
-    margin: 0,
-    fontSize: '16px',
-    fontWeight: 'bold',
-  },
-  p: {
-    margin: 0,
-    fontSize: '14px',
-    color: '#666',
-  },
-})
+const containerStyle = (theme: Theme) =>
+  css({
+    padding: 8,
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    img: {
+      width: '40px',
+      height: '40px',
+      borderRadius: '50%',
+      objectFit: 'cover',
+    },
+    h2: {
+      margin: 0,
+      fontSize: '16px',
+      fontWeight: 'bold',
+    },
+    p: {
+      margin: 0,
+      fontSize: '14px',
+      color: theme.stone[500],
+    },
+  })
