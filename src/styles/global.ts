@@ -1,5 +1,4 @@
 import { css } from '@emotion/react'
-import { theme } from './theme'
 
 export const globalStyle = css({
   '@font-face': [
@@ -12,9 +11,10 @@ export const globalStyle = css({
       src: "url('@/assets/fonts/PFStardust.ttf') format('truetype')",
     },
   ],
-
-  body: {
+  html: {
     fontFamily: 'Pretendard, sans-serif',
+  },
+  body: {
     padding: 0,
     margin: 0,
   },

@@ -7,7 +7,6 @@ import useHeader from '@/hooks/useHeader'
 import type { IArrayInput, IDateRangeInput, ILocationInput } from '@/types'
 import {
   Bell,
-  Box,
   CalendarMinimalistic,
   Map,
   MedalRibbonStar,
@@ -17,7 +16,6 @@ import Badge from '@/components/common/Badge'
 import { BADGES } from '@/consts/BADGES'
 import Profile from '@/components/common/Profile'
 import { MEMBERS } from '@/consts/MEMBERS'
-import Button from '@/components/common/Button'
 
 export default function MemoryListPage() {
   useHeader({
@@ -41,6 +39,13 @@ export default function MemoryListPage() {
           onChange={(val: string) => {
             console.log('string 입력:', val)
           }}
+        />
+        <InputField
+          label='컨텐츠'
+          onChange={(val: string) => {
+            console.log('string 입력:', val)
+          }}
+          size='lg'
         />
 
         <InputPopup
