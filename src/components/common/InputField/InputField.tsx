@@ -4,7 +4,7 @@ import type { Theme } from '@emotion/react'
 import type { IDateRangeInput } from '@/types'
 
 interface Props<T = string | IDateRangeInput> {
-  label: string
+  label?: string
   onChange: (_value: T) => void
 }
 
@@ -13,7 +13,7 @@ export default function InputField<T>({ label, onChange }: Props<T>) {
 
   return (
     <div css={containerStyle}>
-      <label css={labelStyle}>{label}</label>
+      {label && <label css={labelStyle}>{label}</label>}
 
       <input
         css={inputStyle}
@@ -30,7 +30,7 @@ export default function InputField<T>({ label, onChange }: Props<T>) {
 }
 
 const containerStyle = css({
-  padding: '12px 16px',
+  margin: '12px 16px',
   display: 'flex',
   flexDirection: 'column',
   gap: '6px',

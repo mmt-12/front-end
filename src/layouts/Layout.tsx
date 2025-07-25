@@ -12,6 +12,7 @@ export default function Layout() {
       <Header />
       <main css={[mainStyle]}>
         <Outlet />
+        <div css={{ height: '56px' }}></div>
       </main>
       <NavBar />
     </div>
@@ -20,14 +21,12 @@ export default function Layout() {
 
 const containerStyle = (theme: Theme) =>
   css({
-    display: 'flex',
-    flexDirection: 'column',
-    minHeight: '100vh',
-    maxWidth: theme.maxWidth,
-    margin: '0 auto',
+    height: '100vh',
     backgroundColor: theme.bg,
+    overflowY: 'hidden',
   })
 
 const mainStyle = css({
   height: 'calc(100vh - 56px)',
+  overflowY: 'scroll',
 })

@@ -5,6 +5,7 @@ import { css, useTheme } from '@emotion/react'
 import type { Theme } from '@emotion/react'
 import { AltArrowLeft, AltArrowRight } from '@solar-icons/react'
 import DayCell from './DayCell'
+import { fixedWithMargin } from '@/styles/fixed'
 
 interface Props {
   onSelect: (_range: IDateRangeInput) => void
@@ -100,7 +101,7 @@ export default function DateRangeSelector({ onSelect }: Props) {
       <div css={calendarWrapperStyle}>
         <div css={headerStyle}>
           <span css={headerTitleStyle}>
-            {viewYear + 1}년 {viewMonth + 1}월
+            {viewYear}년 {viewMonth + 1}월
           </span>
           <div css={navigationStyle}>
             <button onClick={() => handleMonthChange(-1)}>
@@ -168,16 +169,7 @@ export default function DateRangeSelector({ onSelect }: Props) {
         </table>
       </div>
 
-      <div
-        style={{
-          position: 'fixed',
-          bottom: 20,
-          display: 'flex',
-          width: 'calc(100% - 32px)',
-          maxWidth: `calc(${theme.maxWidth} - 32px)`,
-          zIndex: 1000,
-        }}
-      >
+      <div css={[fixedWithMargin(16), { bottom: '20px' }]}>
         {selectedStart ? (
           <Button
             type='secondary'

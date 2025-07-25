@@ -1,6 +1,6 @@
+import type { IHeaderItem } from '@/types'
 import { ROUTES } from '@/routes/ROUTES'
 import { useHeaderStore } from '@/store/headerStore'
-import type { IHeaderItem } from '@/types/IHeaderItem'
 import { ArrowLeft, Bell } from '@solar-icons/react'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -14,12 +14,12 @@ interface Props {
 export default function useHeader(props: Props) {
   const navigate = useNavigate()
 
-  const DEFAULT_LEFT_ITEM = {
+  const DEFAULT_LEFT_ITEM: IHeaderItem = {
     icon: ArrowLeft,
     onClick: () => navigate(-1),
   }
 
-  const DEFAULT_RIGHT_ITEM = {
+  const DEFAULT_RIGHT_ITEM: IHeaderItem = {
     icon: Bell,
     onClick: () => navigate(ROUTES.NOTIFICATION),
   }

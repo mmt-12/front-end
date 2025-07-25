@@ -1,61 +1,148 @@
-import { useState } from 'react'
-import { css } from '@emotion/react'
-import { Map } from '@vis.gl/react-google-maps'
+import { useEffect, useState } from 'react'
+import {
+  ControlPosition,
+  Map,
+  Marker,
+  useMap,
+  useMapsLibrary,
+} from '@vis.gl/react-google-maps'
+import Button from '@/components/common/Button'
+import { fixedWithMargin } from '@/styles/fixed'
+import AutocompleteControl from './places/PlacesSearchControl'
+import PlacesMarker from './places/PlacesMarker'
+import type { ILocationInput } from '@/types'
 
 interface Props {
-  onSelect: (_region: string) => void
+  onSelect: (_region: ILocationInput) => void
 }
 
-const titleStyle = css({
-  fontWeight: 'bold',
-  marginBottom: '8px',
-})
-
-const selectStyle = css({
-  width: '100%',
-  padding: '8px',
-  border: '1px solid #ccc',
-  borderRadius: '4px',
-  marginBottom: '12px',
-})
-
-const buttonStyle = css({
-  backgroundColor: '#0077cc',
-  color: 'white',
-  padding: '8px 12px',
-  border: 'none',
-  borderRadius: '4px',
-  cursor: 'pointer',
-  '&:hover': {
-    backgroundColor: '#005fa3',
-  },
-})
+const DEFAULT_LOCATION = {
+  lat: 37.5012,
+  lng: 127.0396,
+}
 
 export default function MapLocationSelector({ onSelect }: Props) {
-  const [region, setRegion] = useState('서울')
+  const [address, setAddress] = useState('서울')
+
+  const [selectedPlace, setSelectedPlace] =
+    useState<google.maps.places.Place | null>(null)
+  const [selectedPlaceInfo, setSelectedPlaceInfo] =
+    useState<google.maps.places.Place | null>(null)
+
+  const [cameraLocation, setCameraLocation] =
+    useState<google.maps.LatLng | null>(
+      new google.maps.LatLng(DEFAULT_LOCATION.lat, DEFAULT_LOCATION.lng),
+    )
+
+  const map = useMap()
+  const geocodingLib = useMapsLibrary('geocoding')
+
+  useEffect(() => {
+    if (!map || !geocodingLib) return
+    const geocoder = new geocodingLib.Geocoder()
+
+    geocoder
+      .geocode({
+        location: cameraLocation,
+      })
+      .then(res => {
+        if (res.results.length > 0) {
+          setAddress(res.results[0].formatted_address)
+        } else {
+          console.error('Geocoding failed: ', res)
+          setAddress('주소를 찾을 수 없습니다.')
+        }
+      })
+  }, [address, setAddress, map, geocodingLib, cameraLocation])
+
+  useEffect(() => {
+    if (!selectedPlace) return setSelectedPlaceInfo(null)
+    selectedPlace
+      .fetchFields({
+        fields: ['location', 'id', 'photos', 'displayName', 'formattedAddress'],
+      })
+      .then(v => {
+        setSelectedPlaceInfo(v.place)
+      })
+  }, [selectedPlace])
+
+  const handleCenterChange = () => {
+    if (!map) return
+    const location = new google.maps.LatLng(
+      map.getCenter()?.lat() || DEFAULT_LOCATION.lat,
+      map.getCenter()?.lng() || DEFAULT_LOCATION.lng,
+    )
+    setCameraLocation(location)
+  }
 
   return (
-    <div>
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+      }}
+    >
       <Map
-        style={{ width: '100vw', height: '100vh' }}
-        defaultCenter={{ lat: 22.54992, lng: 0 }}
-        defaultZoom={3}
+        style={{ width: '100%', height: '100%' }}
+        mapId={'49ae42fed52588c3'}
+        defaultCenter={{ lat: 37.5012, lng: 127.0396 }}
+        defaultZoom={18}
         gestureHandling={'greedy'}
         disableDefaultUI={true}
-      />
-      <h2 css={titleStyle}>지역 선택</h2>
-      <select
-        css={selectStyle}
-        value={region}
-        onChange={e => setRegion(e.target.value)}
+        onIdle={handleCenterChange}
+        clickableIcons={false}
       >
-        <option value='서울'>서울</option>
-        <option value='부산'>부산</option>
-        <option value='제주'>제주</option>
-      </select>
-      <button css={buttonStyle} onClick={() => onSelect(region)}>
-        선택 완료
-      </button>
+        <AutocompleteControl
+          controlPosition={ControlPosition.TOP_LEFT}
+          onPlaceSelect={setSelectedPlace}
+        />
+
+        <PlacesMarker
+          place={selectedPlaceInfo}
+          setSelectedPlace={setSelectedPlace}
+          closeModal={() => {
+            const address =
+              selectedPlaceInfo?.displayName ||
+              selectedPlaceInfo?.formattedAddress ||
+              ''
+            onSelect({
+              address: address,
+              location: {
+                lat: selectedPlaceInfo?.location?.lat() || DEFAULT_LOCATION.lat,
+                lng: selectedPlaceInfo?.location?.lng() || DEFAULT_LOCATION.lng,
+              },
+              toString: () => `${address}`,
+            })
+          }}
+        />
+        {!selectedPlace && (
+          <Marker
+            position={
+              cameraLocation ||
+              new google.maps.LatLng(DEFAULT_LOCATION.lat, DEFAULT_LOCATION.lng)
+            }
+          />
+        )}
+      </Map>
+      {!selectedPlace && (
+        <div css={[fixedWithMargin(16), { bottom: '16px' }]}>
+          <Button
+            label={`${address}`}
+            type='secondary'
+            onClick={() =>
+              onSelect({
+                address,
+                location: {
+                  lat: cameraLocation?.lat() || DEFAULT_LOCATION.lat,
+                  lng: cameraLocation?.lng() || DEFAULT_LOCATION.lng,
+                },
+                toString: () => `${address}`,
+              })
+            }
+          />
+        </div>
+      )}
     </div>
   )
 }
