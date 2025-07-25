@@ -15,6 +15,7 @@ import {
 import Badge from '@/components/common/Badge'
 import { BADGES } from '@/consts/BADGES'
 import Profile from '@/components/common/Profile'
+import { MEMBERS } from '@/consts/MEMBERS'
 
 export default function MemoryListPage() {
   useHeader({
@@ -62,26 +63,12 @@ export default function MemoryListPage() {
           icon={CalendarMinimalistic}
         />
 
-        {/* <InputPopup
-          label='멤버'
-          onChange={(val: string[]) => console.log('선택된 멤버:', val)}
-          content={
-            <ArraySelector
-              items={[
-                { id: '1', label: '멤버1' },
-                { id: '2', label: '멤버2' },
-              ]}
-            />
-          }
-          icon={UsersGroupTwoRounded}
-        /> */}
-
         <InputPopup
           label='칭호'
           onChange={(val: IArrayInput) => console.log('선택된 칭호:', val)}
           content={
             <ArraySelector
-              render
+              renderPreview
               items={Object.entries(BADGES).map(([id, badge]) => ({
                 id,
                 label: badge.name,
@@ -118,41 +105,3 @@ export default function MemoryListPage() {
     </div>
   )
 }
-
-const MEMBERS = [
-  {
-    id: '1',
-    name: '멤버1',
-    imageUrl: 'test_images/image1.png',
-    badgeId: 1,
-    description: '설명1',
-  },
-  {
-    id: '2',
-    name: '멤버2',
-    imageUrl: 'test_images/image2.png',
-    badgeId: 2,
-    description: '설명2',
-  },
-  {
-    id: '3',
-    name: '멤버3',
-    imageUrl: 'test_images/image3.png',
-    badgeId: 3,
-    description: '설명3',
-  },
-  {
-    id: '4',
-    name: '멤버4',
-    imageUrl: 'test_images/image4.png',
-    badgeId: 4,
-    description: '설명4',
-  },
-  {
-    id: '5',
-    name: '멤버5',
-    imageUrl: 'test_images/image5.png',
-    badgeId: 5,
-    description: '설명5',
-  },
-]

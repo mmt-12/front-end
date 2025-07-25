@@ -8,16 +8,16 @@ import { theme } from '@/styles/theme'
 
 interface Props {
   items: IArrayItem[]
-  render?: boolean
+  renderPreview?: boolean
   multiple?: boolean
   onSelect?: (_selectedItems: IArrayInput) => void
 }
 
 export default function ArraySelector({
   items,
+  renderPreview,
   onSelect,
   multiple,
-  render,
 }: Props) {
   const [selectedItems, setSelectedItems] = useState<IArrayItem[]>([])
   const [searchTerm, setSearchTerm] = useState('')
@@ -79,7 +79,7 @@ export default function ArraySelector({
             items: selectedItems,
             render: () => (
               <>
-                {render ? (
+                {renderPreview ? (
                   selectedItems.map(m => m.render())
                 ) : (
                   <span>{selectedItems.map(m => m.label).join(', ')}</span>
