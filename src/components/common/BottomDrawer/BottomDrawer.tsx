@@ -24,26 +24,28 @@ const backgroundStyle = css({
   left: 0,
   width: '100%',
   height: '100%',
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  backgroundColor: 'rgba(0, 0, 0, 0.25)',
   zIndex: 1000,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'flex-end',
 })
 
-const containerStyle = css({
-  width: '100%',
-  padding: '14px 16px 48px 16px',
-  backgroundColor: 'white',
-  boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '18px',
-  borderTopLeftRadius: '24px',
-  borderTopRightRadius: '24px',
-  transform: 'translateY(16px)',
-})
+const containerStyle = (theme: Theme) =>
+  css({
+    width: '100%',
+    maxWidth: `calc(${theme.maxWidth} - 32px)`,
+    padding: '14px 16px 48px 16px',
+    backgroundColor: 'white',
+    boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '18px',
+    borderTopLeftRadius: '24px',
+    borderTopRightRadius: '24px',
+    transform: 'translateY(16px)',
+  })
 
 const barStyle = (theme: Theme) =>
   css({
