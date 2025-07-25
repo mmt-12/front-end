@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import InputPopup from './InputPopup'
-import { CalendarMinimalistic, Map, MedalRibbonStar } from '@solar-icons/react'
+import {
+  CalendarMinimalistic,
+  Map,
+  MedalRibbonStar,
+  UsersGroupTwoRounded,
+} from '@solar-icons/react'
 import DateRangeSelector from '../DateRangeSelector'
 import MapLocationSelector from '../MapLocationSelector'
 import ArraySelector from '../ArraySelector'
@@ -69,7 +74,7 @@ export const MultipleArray: Story = {
   args: {
     label: '다중 배열 선택',
     onChange: value => console.log('Input changed:', value),
-    icon: MedalRibbonStar,
+    icon: UsersGroupTwoRounded,
     content: (
       <ArraySelector
         multiple
