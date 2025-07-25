@@ -57,37 +57,28 @@ export default function NavBar() {
         >
           생성하기
         </span>
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '12px',
-            width: '100%',
-            padding: '0 16px',
-            justifyContent: 'center',
-          }}
-        >
+        <div css={contentStyle}>
           <Button
             type='primary'
-            size='lg'
+            size='md'
             label='기억'
             icon={<Box weight='Bold' size={28} />}
           />
           <Button
             type='secondary'
-            size='lg'
+            size='md'
             label='이모티콘'
             icon={<SmileSquare weight='Bold' size={28} />}
           />
           <Button
             type='disabled'
-            size='lg'
+            size='md'
             label='약속'
             icon={<UsersGroupRounded weight='Bold' size={28} />}
           />
           <Button
             type='secondary'
-            size='lg'
+            size='md'
             label='보이스'
             icon={<Soundwave weight='Bold' size={28} />}
           />
@@ -162,3 +153,10 @@ const addButtonStyle = (theme: Theme) =>
     color: theme.sky[500],
     backgroundColor: 'transparent',
   })
+
+const contentStyle = css({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(2, 1fr)',
+  gap: '16px',
+  width: '100%',
+})
