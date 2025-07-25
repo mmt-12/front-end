@@ -101,7 +101,7 @@ export default function DateRangeSelector({ onSelect }: Props) {
       <div css={calendarWrapperStyle}>
         <div css={headerStyle}>
           <span css={headerTitleStyle}>
-            {viewYear + 1}년 {viewMonth + 1}월
+            {viewYear}년 {viewMonth + 1}월
           </span>
           <div css={navigationStyle}>
             <button onClick={() => handleMonthChange(-1)}>
