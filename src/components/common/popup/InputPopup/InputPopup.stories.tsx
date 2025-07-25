@@ -17,12 +17,7 @@ import { MEMBERS } from '@/consts/MEMBERS'
 const meta = {
   title: 'components/popup/InputPopup',
   component: InputPopup,
-  args: {
-    label: 'Select Input',
-    onChange: '(_value: any) => void' as unknown as any,
-    icon: Map,
-    content: <></>,
-  },
+  tags: ['autodocs'],
 } satisfies Meta<typeof InputPopup>
 
 export default meta
