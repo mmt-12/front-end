@@ -1,5 +1,6 @@
 import { BADGES } from '@/consts/BADGES'
 import { css } from '@emotion/react'
+import WavyBox from '../WavyBox'
 
 interface Props {
   id: number
@@ -11,30 +12,29 @@ export default function Badge({ id }: Props) {
   const Icon = BADGES[id].icon
 
   return (
-    <div
-      css={[
-        badgeStyle,
-        {
-          backgroundColor: BADGES[id].backgroundColor,
-          color: BADGES[id].color,
-          border: `2px solid ${BADGES[id].border}`,
-        },
-      ]}
+    <WavyBox
+      strokeColor={BADGES[id].border}
+      strokeWidth={1.5}
+      backgroundColor={BADGES[id].backgroundColor}
+      borderRadius={20}
+      customCss={badgeStyle(BADGES[id].color)}
     >
       <Icon size={16} color={BADGES[id].color} weight='Bold' />
       <span>{BADGES[id].name}</span>
-    </div>
+    </WavyBox>
   )
 }
 
-const badgeStyle = css({
-  padding: '4px 8px',
-  display: 'inline-flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontSize: '12px',
-  fontWeight: 800,
-  fontFamily: 'PFStardust',
-  borderRadius: '20px',
-  gap: '4px',
-})
+const badgeStyle = (color: string) =>
+  css({
+    padding: '4px 10px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '12px',
+    fontWeight: 800,
+    fontFamily: 'PFStardust',
+    gap: '4px',
+    color,
+    borderRadius: '20px',
+  })
