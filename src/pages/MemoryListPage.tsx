@@ -4,15 +4,18 @@ import DateRangeSelector from '@/components/common/popup/DateRangeSelector'
 import MapLocationSelector from '@/components/common/popup/MapLocationSelector'
 import ArraySelector from '@/components/common/popup/ArraySelector'
 import useHeader from '@/hooks/useHeader'
-import type { IDateRangeInput, ILocationInput } from '@/types'
+import type { IArrayInput, IDateRangeInput, ILocationInput } from '@/types'
 import {
   Bell,
   CalendarMinimalistic,
   Map,
   MedalRibbonStar,
   SortByTime,
-  UsersGroupTwoRounded,
 } from '@solar-icons/react'
+import Badge from '@/components/common/Badge'
+import { BADGES } from '@/consts/BADGES'
+import Profile from '@/components/common/Profile'
+import { MEMBERS } from '@/mocks/data/MEMBERS'
 
 export default function MemoryListPage() {
   useHeader({
@@ -61,116 +64,39 @@ export default function MemoryListPage() {
         />
 
         <InputPopup
-          label='멤버'
-          onChange={(val: string[]) => console.log('선택된 멤버:', val)}
-          content={
-            <ArraySelector
-              items={[
-                { id: '1', label: '멤버1' },
-                { id: '2', label: '멤버2' },
-              ]}
-            />
-          }
-          icon={UsersGroupTwoRounded}
-        />
-
-        <InputPopup
           label='칭호'
-          onChange={(val: string[]) => console.log('선택된 칭호:', val)}
+          onChange={(val: IArrayInput) => console.log('선택된 칭호:', val)}
           content={
             <ArraySelector
-              items={[
-                { id: '1', label: '칭호1' },
-                { id: '2', label: '칭호2' },
-                { id: '3', label: '칭호3' },
-              ]}
+              renderPreview
+              items={Object.entries(BADGES).map(([id, badge]) => ({
+                id,
+                label: badge.name,
+                render: () => <Badge id={parseInt(id)} />,
+              }))}
             />
           }
           icon={MedalRibbonStar}
         />
-
         <InputPopup
           label='멤버'
-          onChange={(val: string[]) => console.log('선택된 멤버:', val)}
+          onChange={(val: IArrayInput) => console.log('선택된 멤버:', val)}
           content={
             <ArraySelector
-              items={[
-                { id: '1', label: '멤버1' },
-                { id: '2', label: '멤버2' },
-              ]}
-            />
-          }
-          icon={UsersGroupTwoRounded}
-        />
-
-        <InputPopup
-          label='칭호'
-          onChange={(val: string[]) => console.log('선택된 칭호:', val)}
-          content={
-            <ArraySelector
-              items={[
-                { id: '1', label: '칭호1' },
-                { id: '2', label: '칭호2' },
-                { id: '3', label: '칭호3' },
-              ]}
-            />
-          }
-          icon={MedalRibbonStar}
-        />
-
-        <InputPopup
-          label='멤버'
-          onChange={(val: string[]) => console.log('선택된 멤버:', val)}
-          content={
-            <ArraySelector
-              items={[
-                { id: '1', label: '멤버1' },
-                { id: '2', label: '멤버2' },
-              ]}
-            />
-          }
-          icon={UsersGroupTwoRounded}
-        />
-
-        <InputPopup
-          label='칭호'
-          onChange={(val: string[]) => console.log('선택된 칭호:', val)}
-          content={
-            <ArraySelector
-              items={[
-                { id: '1', label: '칭호1' },
-                { id: '2', label: '칭호2' },
-                { id: '3', label: '칭호3' },
-              ]}
-            />
-          }
-          icon={MedalRibbonStar}
-        />
-
-        <InputPopup
-          label='멤버'
-          onChange={(val: string[]) => console.log('선택된 멤버:', val)}
-          content={
-            <ArraySelector
-              items={[
-                { id: '1', label: '멤버1' },
-                { id: '2', label: '멤버2' },
-              ]}
-            />
-          }
-          icon={UsersGroupTwoRounded}
-        />
-
-        <InputPopup
-          label='칭호'
-          onChange={(val: string[]) => console.log('선택된 칭호:', val)}
-          content={
-            <ArraySelector
-              items={[
-                { id: '1', label: '칭호1' },
-                { id: '2', label: '칭호2' },
-                { id: '3', label: '칭호3' },
-              ]}
+              multiple
+              items={MEMBERS.map(member => ({
+                id: member.id,
+                label: member.name,
+                render: () => (
+                  <Profile
+                    id={member.id}
+                    name={member.name}
+                    imageUrl={member.imageUrl}
+                    badgeId={member.badgeId}
+                    description={member.description}
+                  />
+                ),
+              }))}
             />
           }
           icon={MedalRibbonStar}

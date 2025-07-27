@@ -1,11 +1,12 @@
 import type { Icon } from '@solar-icons/react/lib/types'
+import type { ReactNode } from 'react'
 
 export interface IHeaderItem {
   icon: Icon | null
   onClick?: () => void
 }
 export interface IBaseInput {
-  toString: () => string
+  render: () => ReactNode
 }
 
 export interface IDateRangeInput extends IBaseInput {
@@ -25,9 +26,10 @@ export interface ILocationInput extends IBaseInput {
   }
 }
 
-export interface IArrayItem {
+export interface IArrayItem extends IBaseInput {
   id: string
   label: string
+  selected?: boolean
 }
 
 export interface IArrayInput extends IBaseInput {

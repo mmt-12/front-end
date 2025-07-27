@@ -177,12 +177,15 @@ export default function DateRangeSelector({ onSelect }: Props) {
               onSelect({
                 startDate: startDateString,
                 endDate: endDateString ? endDateString : startDateString,
-                toString: () =>
-                  endDateString
-                    ? startDateString == endDateString
-                      ? `${startDateString}`
-                      : `${startDateString} - ${endDateString}`
-                    : `${startDateString}`,
+                render: () => (
+                  <span>
+                    {endDateString
+                      ? startDateString == endDateString
+                        ? `${startDateString}`
+                        : `${startDateString} - ${endDateString}`
+                      : `${startDateString}`}
+                  </span>
+                ),
               })
             }}
             label={

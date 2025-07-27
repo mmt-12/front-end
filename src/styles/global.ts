@@ -13,12 +13,6 @@ export const globalStyle = css({
     },
   ],
 
-  html: {
-    maxWidth: theme.maxWidth,
-    margin: '0 auto',
-    backgroundColor: 'black',
-  },
-
   body: {
     fontFamily: 'Pretendard, sans-serif',
     padding: 0,
