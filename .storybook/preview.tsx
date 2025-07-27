@@ -3,6 +3,8 @@ import type { Preview } from '@storybook/react-vite'
 import { globalStyle } from '../src/styles/global'
 import { theme } from '../src/styles/theme'
 import { APIProvider } from '@vis.gl/react-google-maps'
+import { INITIAL_VIEWPORTS } from 'storybook/viewport'
+import { storybookStyle } from './style.ts'
 
 const preview: Preview = {
   parameters: {
@@ -12,17 +14,22 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    viewport: {
+      options: INITIAL_VIEWPORTS,
+    },
+  },
+  initialGlobals: {
+    backgrounds: { value: 'light' },
+    viewport: { value: 'galaxys9', isRotated: false },
   },
   decorators: [
     Story => (
       <ThemeProvider theme={theme}>
-        <Global styles={globalStyle} />
+        <Global styles={[globalStyle, storybookStyle]} />
         <APIProvider
           apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string}
         >
-          <div style={{ maxWidth: theme.maxWidth, margin: '0 auto' }}>
-            <Story />
-          </div>
+          <Story />
         </APIProvider>
       </ThemeProvider>
     ),

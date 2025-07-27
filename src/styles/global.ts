@@ -10,6 +10,12 @@ export const globalStyle = css({
       fontFamily: 'PFStardust',
       src: "url('@/assets/fonts/PFStardust.ttf') format('truetype')",
     },
+    {
+      fontFamily: 'PressStart2P',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      src: "url('https://fonts.gstatic.com/s/pressstart2p/v14/e3t4euO8T-267oIAQAu6jDQyK3nVivM.woff2') format('woff2')",
+    },
   ],
   html: {
     fontFamily: 'Pretendard, sans-serif',
