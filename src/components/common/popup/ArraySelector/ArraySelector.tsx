@@ -33,7 +33,7 @@ export default function ArraySelector({
         onChange={(v: string) => {
           setSearchTerm(v)
         }}
-        extraCss={{ margin: 0 }}
+        style={{ margin: 0 }}
       />
       <ul css={listStyle}>
         {searchedItems.map(item => (

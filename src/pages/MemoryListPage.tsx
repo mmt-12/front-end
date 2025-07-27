@@ -40,6 +40,13 @@ export default function MemoryListPage() {
             console.log('string 입력:', val)
           }}
         />
+        <InputField
+          label='컨텐츠'
+          onChange={(val: string) => {
+            console.log('string 입력:', val)
+          }}
+          size='lg'
+        />
 
         <InputPopup
           label='장소'

@@ -1,7 +1,7 @@
 import Button from '@/components/common/Button'
 import { theme } from '@/styles/theme'
-import { css } from '@emotion/react'
-import { CloseCircle, GalleryRemove } from '@solar-icons/react'
+import { css, type Theme } from '@emotion/react'
+import { CloseCircle } from '@solar-icons/react'
 import { AdvancedMarker, useMap } from '@vis.gl/react-google-maps'
 import React, { useEffect } from 'react'
 
@@ -74,24 +74,25 @@ const imageStyle = css({
   objectFit: 'cover',
 })
 
-const contentStyle = css({
-  width: 'calc(100% - 32px)',
-  padding: '16px',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '8px',
-  h3: {
-    width: '100%',
-    margin: '0',
-    fontSize: '16px',
-    fontWeight: 'bold',
-  },
-  p: {
-    margin: '0',
-    fontSize: '14px',
-    color: '#666',
-  },
-})
+const contentStyle = (theme: Theme) =>
+  css({
+    width: 'calc(100% - 32px)',
+    padding: '16px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+    h3: {
+      width: '100%',
+      margin: '0',
+      fontSize: '16px',
+      fontWeight: 'bold',
+    },
+    p: {
+      margin: '0',
+      fontSize: '14px',
+      color: theme.stone[500],
+    },
+  })
 
 const buttonWrapperStyle = css({
   display: 'flex',

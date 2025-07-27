@@ -4,28 +4,44 @@ import type { CSSObject, Theme } from '@emotion/react'
 import type { IDateRangeInput } from '@/types'
 
 interface Props<T = string | IDateRangeInput> {
-  label?: string
   onChange: (_value: T) => void
-  extraCss?: CSSObject
+  size?: 'md' | 'lg'
+  label?: string
+  style?: CSSObject
 }
 
-export default function InputField<T>({ label, onChange, extraCss }: Props<T>) {
+export default function InputField<T>({
+  label,
+  onChange,
+  style,
+  size = 'md',
+}: Props<T>) {
   const [value, setValue] = useState<T>('' as T)
-
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const newValue = e.target.value as T
+    setValue(newValue)
+    onChange(newValue)
+  }
   return (
-    <div css={[containerStyle, extraCss]}>
+    <div css={[containerStyle, style]}>
       {label && <label css={labelStyle}>{label}</label>}
-
-      <input
-        css={inputStyle}
-        type='text'
-        value={value as string}
-        onChange={e => {
-          const newValue = e.target.value as T
-          setValue(newValue)
-          onChange(newValue)
-        }}
-      />
+      {size === 'lg' ? (
+        <textarea
+          css={inputStyle}
+          rows={3}
+          value={value as string}
+          onChange={handleChange}
+        />
+      ) : (
+        <input
+          css={inputStyle}
+          type='text'
+          value={value as string}
+          onChange={handleChange}
+        />
+      )}
     </div>
   )
 }
@@ -45,7 +61,7 @@ const labelStyle = (theme: Theme) =>
     color: theme.stone[700],
     transition: 'color 0.1s ease-in-out',
 
-    '&:has(+ input:focus)': {
+    '&:has(+ input:focus), &:has(+ textarea:focus)': {
       color: theme.sky[500],
     },
   })
@@ -56,10 +72,12 @@ const inputStyle = (theme: Theme) =>
     padding: '14px 12px',
     border: 'none',
     borderRadius: '12px',
-    fontSize: '14px',
     color: theme.black,
     outline: `2px solid ${theme.stone[400]}`,
     transition: 'outline 0.1s ease-in-out',
+    fontFamily: 'inherit',
+    fontSize: '16px',
+    letterSpacing: '0.5px',
 
     '&:focus': {
       outline: `2px solid ${theme.sky[400]}`,
