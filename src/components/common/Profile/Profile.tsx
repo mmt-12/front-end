@@ -17,16 +17,14 @@ export default function Profile({
 }: Props) {
   return (
     <div css={containerStyle}>
-      {imageUrl && (
-        <img
-          src={imageUrl}
-          alt={name}
-          onError={e => {
-            e.currentTarget.src = defaultImageUrl
-          }}
-          css={imageStyle}
-        />
-      )}
+      <img
+        src={imageUrl ? imageUrl : defaultImageUrl}
+        alt={name}
+        onError={e => {
+          e.currentTarget.src = defaultImageUrl
+        }}
+        css={imageStyle}
+      />
       <div css={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
         <div css={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <h2 css={nameStyle}>{name}</h2>
