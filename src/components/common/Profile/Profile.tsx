@@ -37,7 +37,7 @@ export default function Profile({
 }
 
 const containerStyle = css({
-  width: '100%',
+  width: 'calc(100% - 16px)',
   padding: 8,
   display: 'inline-flex',
   alignItems: 'center',
