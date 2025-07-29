@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "storybook": "storybook dev -p 6006"
+    "storybook": "storybook dev -p 6006",
+    "test": "vitest",
+    "test-storybook": "vitest --project=storybook"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
