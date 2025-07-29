@@ -6,6 +6,12 @@ import { expect } from 'storybook/test'
 const meta = {
   title: 'components/Profile',
   component: Profile,
+  parameters: {
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/kxbeh4EkC4NhVPkWIdGo9V/MEMENTO?node-id=217-6296&t=5Vamg9HKbWn370H8-1',
+    },
+  },
 } satisfies Meta<typeof Profile>
 
 export default meta
