@@ -9,7 +9,7 @@ interface Props {
 export default function BottomDrawer({ children, isOpen, close }: Props) {
   if (!isOpen) return null
   return (
-    <div css={backgroundStyle} onClick={close}>
+    <div css={backgroundStyle} onClick={close} data-testid='modal-background'>
       <div css={containerStyle} onClick={e => e.stopPropagation()}>
         <div css={barStyle} />
         {children}

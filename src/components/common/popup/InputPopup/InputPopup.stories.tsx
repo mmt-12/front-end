@@ -9,9 +9,9 @@ import {
 import DateRangeSelector from '../DateRangeSelector'
 import MapLocationSelector from '../MapLocationSelector'
 import ArraySelector from '../ArraySelector'
-import Badge from '../../Badge'
+import Badge from '@/components/common/Badge'
+import Profile from '@/components/common/Profile'
 import { BADGES } from '@/consts/BADGES'
-import Profile from '../../Profile'
 import { MEMBERS } from '@/mocks/data/MEMBERS'
 
 const meta = {

@@ -17,6 +17,7 @@ interface Props<
   onChange: (_value: T) => void
   icon: Icon
   content: React.ReactNode
+  placeholder?: string
 }
 
 export default function InputPopup<T extends IBaseInput>({
@@ -24,6 +25,7 @@ export default function InputPopup<T extends IBaseInput>({
   onChange,
   content,
   icon,
+  placeholder = '',
 }: Props<T>) {
   const [value, setValue] = useState<T | null>(null)
   const [showPopup, setShowPopup] = useState(false)
@@ -43,7 +45,11 @@ export default function InputPopup<T extends IBaseInput>({
       <label css={labelStyle}>{label}</label>
 
       <button onClick={() => setShowPopup(true)} css={buttonStyle}>
-        <div>{value?.render()}</div>
+        <div>
+          {value?.render() || (
+            <span style={{ color: theme.stone[400] }}>{placeholder}</span>
+          )}
+        </div>
         {<Icon weight='Bold' size={24} color={theme.stone[400]} />}
       </button>
       {showPopup && (

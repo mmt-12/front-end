@@ -18,7 +18,7 @@ export default function WavyBox({
   customCss,
 }: Props) {
   return (
-    <div css={containerStyle}>
+    <div css={containerStyle} className='wavy-box'>
       <svg width='0' height='0'>
         <filter id='wavy-border'>
           <feTurbulence
@@ -35,9 +35,12 @@ export default function WavyBox({
           />
         </filter>
       </svg>
-      <div css={[{ zIndex: 1 }, customCss]}>{children}</div>
+      <div css={[{ zIndex: 1 }, customCss]} className='wavy-wrapper'>
+        {children}
+      </div>
       <svg css={borderOverlayStyle} overflow='visible'>
         <rect
+          className='wavy-rect'
           x='0'
           y='0'
           width='100%'
