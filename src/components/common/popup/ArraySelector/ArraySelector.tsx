@@ -5,6 +5,7 @@ import { css } from '@emotion/react'
 import InputField from '../../InputField'
 import { AddCircle, CheckCircle } from '@solar-icons/react'
 import { theme } from '@/styles/theme'
+import { fixedWithMargin } from '@/styles/fixed'
 
 interface Props {
   items: IArrayItem[]
@@ -53,6 +54,7 @@ export default function ArraySelector({
                   onClick={() =>
                     setSelectedItems(prev => prev.filter(m => m.id !== item.id))
                   }
+                  css={buttonStyle}
                 />
               </label>
             ) : (
@@ -65,30 +67,37 @@ export default function ArraySelector({
                 }
               >
                 {item.render()}
-                <AddCircle weight='Bold' size={40} color={theme.stone[300]} />
+                <AddCircle
+                  weight='Bold'
+                  size={40}
+                  color={theme.stone[300]}
+                  css={buttonStyle}
+                />
               </label>
             )}
           </li>
         ))}
       </ul>
-      <Button
-        type='secondary'
-        label='선택 완료'
-        onClick={() =>
-          onSelect?.({
-            items: selectedItems,
-            render: () => (
-              <>
-                {renderPreview ? (
-                  selectedItems.map(m => m.render())
-                ) : (
-                  <span>{selectedItems.map(m => m.label).join(', ')}</span>
-                )}
-              </>
-            ),
-          })
-        }
-      />
+      <div css={[fixedWithMargin(16), { bottom: '20px' }]}>
+        <Button
+          type='secondary'
+          label='선택 완료'
+          onClick={() =>
+            onSelect?.({
+              items: selectedItems,
+              render: () => (
+                <>
+                  {renderPreview ? (
+                    selectedItems.map(m => m.render())
+                  ) : (
+                    <span>{selectedItems.map(m => m.label).join(', ')}</span>
+                  )}
+                </>
+              ),
+            })
+          }
+        />
+      </div>
     </div>
   )
 }
@@ -102,6 +111,7 @@ const containerStyle = css({
 
 const listStyle = css({
   padding: 0,
+  paddingBottom: 72,
   margin: 0,
   display: 'flex',
   flexDirection: 'column',
@@ -113,4 +123,8 @@ const itemStyle = css({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+})
+
+const buttonStyle = css({
+  flexShrink: 0,
 })
