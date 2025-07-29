@@ -25,8 +25,8 @@ export default function Profile({
         }}
         css={imageStyle}
       />
-      <div css={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-        <div css={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div>
+        <div>
           <h2 css={nameStyle}>{name}</h2>
           {badgeId && <Badge id={badgeId} />}
         </div>
@@ -37,12 +37,25 @@ export default function Profile({
 }
 
 const containerStyle = css({
+  width: 'calc(100% - 16px)',
   padding: 8,
   display: 'inline-flex',
   alignItems: 'center',
   gap: '10px',
   overflow: 'hidden',
   whiteSpace: 'nowrap',
+  '>div': {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '6px',
+    overflow: 'hidden',
+    '>div': {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: '8px',
+    },
+  },
 })
 
 const nameStyle = css({

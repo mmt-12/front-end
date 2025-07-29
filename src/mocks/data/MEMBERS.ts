@@ -5,15 +5,14 @@ export const MEMBERS = [
     imageUrl: 'test_images/image1.png',
     badgeId: 1,
     description:
-      '멤버1의 상세한 정보를 30자 이상으로 설명합니다. 멤버1은 팀의 중요한 역할을 맡고 있습니다.',
+      '아주 긴 설명입니다. 이 멤버는 팀에서 중요한 역할을 하고 있습니다. 이 설명은 테스트용으로 작성되었습니다. 이 멤버는 프로젝트의 성공에 큰 기여를 하고 있습니다.',
   },
   {
     id: '2',
     name: '멤버2',
     imageUrl: 'asdas',
     badgeId: 2,
-    description:
-      '멤버2에 대한 자세한 설명입니다. 멤버2는 프로젝트의 핵심 멤버로 다양한 업무를 수행합니다.',
+    description: '짧은 설명입니다.',
   },
   {
     id: '3',
@@ -29,12 +28,12 @@ export const MEMBERS = [
     imageUrl: 'test_images/image4.png',
     badgeId: 4,
     description:
-      '멤버4에 관한 추가 설명입니다. 멤버4는 다양한 프로젝트 경험을 가지고 있습니다.',
+      '안녕화살법! 이 멤버는 팀에서 중요한 역할을 하고 있습니다. 이 설명은 테스트용으로 작성되었습니다.',
   },
   {
     id: '5',
     name: '멤버5',
-    imageUrl: null,
+    imageUrl: undefined,
     badgeId: 5,
     description:
       '멤버5의 상세 설명을 확인하세요. 멤버5는 창의적인 아이디어로 팀에 기여합니다.',

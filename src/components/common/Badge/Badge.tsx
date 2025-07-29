@@ -20,7 +20,7 @@ export default function Badge({ id }: Props) {
       customCss={badgeStyle(BADGES[id].color)}
     >
       <Icon size={16} color={BADGES[id].color} weight='Bold' />
-      <span>{BADGES[id].name}</span>
+      <span data-testid={`badge-${id}`}>{BADGES[id].name}</span>
     </WavyBox>
   )
 }

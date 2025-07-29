@@ -9,15 +9,20 @@ import {
 import DateRangeSelector from '../DateRangeSelector'
 import MapLocationSelector from '../MapLocationSelector'
 import ArraySelector from '../ArraySelector'
-import Badge from '../../Badge'
+import Badge from '@/components/common/Badge'
+import Profile from '@/components/common/Profile'
 import { BADGES } from '@/consts/BADGES'
-import Profile from '../../Profile'
 import { MEMBERS } from '@/mocks/data/MEMBERS'
+import { expect } from 'storybook/test'
 
 const meta = {
   title: 'components/popup/InputPopup',
   component: InputPopup,
   tags: ['autodocs'],
+  play: async ({ canvas, args }) => {
+    const label = await canvas.findByText(args.label)
+    expect(label).toBeInTheDocument()
+  },
 } satisfies Meta<typeof InputPopup>
 
 export default meta
@@ -78,7 +83,6 @@ export const MultipleArray: Story = {
           label: member.name,
           render: () => (
             <Profile
-              id={member.id}
               name={member.name}
               imageUrl={member.imageUrl}
               badgeId={member.badgeId}

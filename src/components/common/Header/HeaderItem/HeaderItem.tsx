@@ -15,8 +15,8 @@ const ItemStyle = (theme: Theme) =>
 export default function HeaderItem({ icon, onClick }: IHeaderItem) {
   const Icon = icon
   return (
-    <div css={ItemStyle} onClick={onClick}>
+    <button css={ItemStyle} onClick={onClick} data-testid='header-item'>
       {Icon && <Icon size={32} weight='Bold' />}
-    </div>
+    </button>
   )
 }
