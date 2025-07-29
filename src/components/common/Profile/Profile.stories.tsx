@@ -14,7 +14,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    id: MEMBERS[0].id,
     name: MEMBERS[0].name,
     imageUrl: MEMBERS[0].imageUrl,
     badgeId: MEMBERS[0].badgeId,

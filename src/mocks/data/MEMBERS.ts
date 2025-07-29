@@ -33,7 +33,7 @@ export const MEMBERS = [
   {
     id: '5',
     name: '멤버5',
-    imageUrl: null,
+    imageUrl: undefined,
     badgeId: 5,
     description:
       '멤버5의 상세 설명을 확인하세요. 멤버5는 창의적인 아이디어로 팀에 기여합니다.',

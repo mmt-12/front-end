@@ -41,6 +41,7 @@ export default function WavyBox({
       <svg css={borderOverlayStyle} overflow='visible'>
         <rect
           className='wavy-rect'
+          data-testid='wavy-rect'
           x='0'
           y='0'
           width='100%'
