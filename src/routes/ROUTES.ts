@@ -1,5 +1,5 @@
 export const ROUTES = {
-  HOME: '/',
+  LOGIN: '/',
   MEMORY_LIST: '/memories',
   MEMORY_DETAIL: '/memories/:id',
   MAP: '/map',
