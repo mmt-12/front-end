@@ -1,5 +1,5 @@
 import { theme } from '@/styles/theme'
-import { css } from '@emotion/react'
+import { css, type SerializedStyles } from '@emotion/react'
 
 interface Props {
   label: string
@@ -7,6 +7,7 @@ interface Props {
   type?: 'primary' | 'secondary' | 'disabled'
   size?: 'sm' | 'md' | 'lg' | 'full'
   onClick?: () => void
+  customCss?: SerializedStyles
 }
 
 export default function Button({
@@ -15,10 +16,11 @@ export default function Button({
   type = 'primary',
   size = 'full',
   onClick,
+  customCss,
 }: Props) {
   return (
     <button
-      css={[buttonStyle, sizeStyles[size], typeStyles(type, size)]}
+      css={[buttonStyle, sizeStyles[size], typeStyles(type, size), customCss]}
       onClick={onClick}
       disabled={type === 'disabled'}
     >

@@ -8,6 +8,7 @@ import CalendarPage from '@/pages/CalendarPage'
 import GuestBookPage from '@/pages/GuestBookPage'
 import NotificationPage from '@/pages/NotificationPage'
 import PlainLayout from '@/layouts/PlainLayout'
+import SignupPage from '@/pages/SignupPage'
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <LoginPage />,
+      },
+      {
+        path: ROUTES.SIGNUP,
+        element: <SignupPage />,
       },
     ],
   },

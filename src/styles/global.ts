@@ -36,4 +36,9 @@ export const globalStyle = css({
     padding: 0,
     margin: 0,
   },
+
+  p: {
+    margin: 0,
+    padding: 0,
+  },
 })

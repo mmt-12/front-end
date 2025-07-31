@@ -1,19 +1,17 @@
 import { useState } from 'react'
 import { css } from '@emotion/react'
-import type { CSSObject, Theme } from '@emotion/react'
+import type { Theme } from '@emotion/react'
 import type { IDateRangeInput } from '@/types'
 
 interface Props<T = string | IDateRangeInput> {
   onChange: (_value: T) => void
   size?: 'md' | 'lg'
   label?: string
-  style?: CSSObject
 }
 
 export default function InputField<T>({
   label,
   onChange,
-  style,
   size = 'md',
 }: Props<T>) {
   const [value, setValue] = useState<T>('' as T)
@@ -25,7 +23,7 @@ export default function InputField<T>({
     onChange(newValue)
   }
   return (
-    <div css={[containerStyle, style]}>
+    <div css={containerStyle}>
       {label && <label css={labelStyle}>{label}</label>}
       {size === 'lg' ? (
         <textarea
@@ -76,8 +74,9 @@ const inputStyle = (theme: Theme) =>
     outline: `2px solid ${theme.stone[400]}`,
     transition: 'outline 0.1s ease-in-out',
     fontFamily: 'inherit',
-    fontSize: '16px',
+    fontSize: '18px',
     letterSpacing: '0.5px',
+    fontWeight: '500',
 
     '&:focus': {
       outline: `2px solid ${theme.sky[400]}`,
