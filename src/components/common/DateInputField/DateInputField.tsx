@@ -26,7 +26,7 @@ export default function DateInputField({ label, onChange }: Props) {
   const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDay = parseInt(e.target.value, 10)
     const daysInMonth = new Date(year, month + 1, 0).getDate()
-    if (isNaN(newDay)) return setDay(1)
+    if (isNaN(newDay)) return setDay(0)
     if (newDay < 1 || newDay > daysInMonth) return
     setDay(newDay)
   }
@@ -98,7 +98,6 @@ const labelStyle = (theme: Theme) =>
 const inputsWrapperStyle = (theme: Theme) =>
   css({
     display: 'flex',
-    gap: '2px',
     flexDirection: 'row',
     alignItems: 'center',
 
@@ -114,7 +113,7 @@ const inputsWrapperStyle = (theme: Theme) =>
       textAlign: 'end',
     },
     '>p': {
-      marginRight: '8px',
+      marginRight: '4px',
     },
   })
 
