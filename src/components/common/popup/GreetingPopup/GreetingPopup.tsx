@@ -3,7 +3,6 @@ import { css, type Theme } from '@emotion/react'
 import { useEffect, useState } from 'react'
 import greetingMascot from '@/assets/mascot/greeting.png'
 import { MEMBERS } from '@/consts/SSAFY_12_MEMBERS'
-import { dateToId } from '@/utils/date'
 import { signupTitleStyle } from '@/styles/signupTitle'
 
 export default function GreetingPopup() {
@@ -25,7 +24,7 @@ export default function GreetingPopup() {
       <div css={signupTitleStyle}>
         <h1>환영합니다!</h1>
         <p>
-          {MEMBERS[dateToId(userStore.birthDate)]?.greeting ||
+          {MEMBERS[userStore.birthDate]?.greeting ||
             '우리 소중한 기억을 간직해보아요.'}
         </p>
       </div>
