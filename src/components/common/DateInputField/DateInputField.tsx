@@ -14,7 +14,7 @@ export default function DateInputField({ label, onChange }: Props) {
   const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newYear = parseInt(e.target.value, 10)
     if (isNaN(newYear)) return setYear(0)
-    if (newYear < 0 || newYear > 2002) return
+    if (newYear < 0 || newYear > new Date().getFullYear()) return
     setYear(newYear)
   }
   const handleMonthChange = (e: React.ChangeEvent<HTMLInputElement>) => {

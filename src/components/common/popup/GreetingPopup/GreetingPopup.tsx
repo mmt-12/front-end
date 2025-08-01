@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import greetingMascot from '@/assets/mascot/greeting.png'
 import { MEMBERS } from '@/consts/SSAFY_12_MEMBERS'
 import { dateToId } from '@/utils/date'
+import { signupTitleStyle } from '@/styles/signupTitle'
 
 export default function GreetingPopup() {
   const userStore = useUserStore()
@@ -21,9 +22,9 @@ export default function GreetingPopup() {
 
   return (
     <div css={containerStyle} style={{ opacity }}>
-      <div css={titlesStyle}>
-        <h1 css={h1Style}>환영합니다!</h1>
-        <p css={descriptionStyle}>
+      <div css={signupTitleStyle}>
+        <h1>환영합니다!</h1>
+        <p>
           {MEMBERS[dateToId(userStore.birthDate)]?.greeting ||
             '우리 소중한 기억을 간직해보아요.'}
         </p>
@@ -37,6 +38,7 @@ export default function GreetingPopup() {
 
 const containerStyle = (theme: Theme) =>
   css({
+    zIndex: 2,
     position: 'fixed',
     width: '100vw',
     height: '100vh',
@@ -45,32 +47,10 @@ const containerStyle = (theme: Theme) =>
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: theme.bg,
-    zIndex: 2,
     pointerEvents: 'none',
     transition: 'opacity 1s ease-in-out',
   })
 
-const titlesStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  padding: '10px 28px',
-  marginTop: '48px',
-  gap: '8px',
-})
-
-const h1Style = (theme: Theme) =>
-  css({
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: theme.stone[700],
-    margin: '0',
-  })
-
-const descriptionStyle = (theme: Theme) =>
-  css({
-    fontSize: 18,
-    color: theme.stone[600],
-  })
 const mascotWrapperStyle = css({
   width: '100%',
   maxHeight: '400px',

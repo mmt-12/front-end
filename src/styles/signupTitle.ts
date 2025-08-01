@@ -1,0 +1,20 @@
+import { css, type Theme } from '@emotion/react'
+
+export const signupTitleStyle = (theme: Theme) =>
+  css({
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '10px 28px',
+    marginTop: '48px',
+    gap: '8px',
+    h1: {
+      fontSize: 26,
+      fontWeight: 'bold',
+      color: theme.stone[700],
+      margin: '0',
+    },
+    p: {
+      fontSize: 18,
+      color: theme.stone[600],
+    },
+  })

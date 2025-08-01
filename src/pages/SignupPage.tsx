@@ -1,4 +1,4 @@
-import { css, type Theme } from '@emotion/react'
+import { css } from '@emotion/react'
 import { ROUTES } from '@/routes/ROUTES'
 import { useNavigate } from 'react-router-dom'
 import InputField from '@/components/common/InputField'
@@ -8,6 +8,7 @@ import Button from '@/components/common/Button'
 import { useUserStore } from '@/store/userStore'
 import { dateToId } from '@/utils/date'
 import { MEMBERS } from '@/consts/SSAFY_12_MEMBERS'
+import { signupTitleStyle } from '@/styles/signupTitle'
 
 export default function SignupPage() {
   const navigate = useNavigate()
@@ -28,9 +29,9 @@ export default function SignupPage() {
 
   return (
     <div css={containerStyle}>
-      <div css={titlesStyle}>
-        <h1 css={h1Style}>당신은 누구인가요?</h1>
-        <p css={descriptionStyle}>지금은 싸피 12기 12반만 가입할 수 있어요.</p>
+      <div css={signupTitleStyle}>
+        <h1>당신은 누구인가요?</h1>
+        <p>지금은 싸피 12기 12반만 가입할 수 있어요.</p>
       </div>
       <div css={inputsStyle}>
         <InputField
@@ -71,28 +72,6 @@ const containerStyle = css({
   flexDirection: 'column',
   height: '100vh',
 })
-
-const titlesStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  padding: '10px 28px',
-  marginTop: '48px',
-  gap: '8px',
-})
-
-const h1Style = (theme: Theme) =>
-  css({
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: theme.stone[700],
-    margin: '0',
-  })
-
-const descriptionStyle = (theme: Theme) =>
-  css({
-    fontSize: 18,
-    color: theme.stone[600],
-  })
 
 const inputsStyle = css({
   margin: '32px 0px',
