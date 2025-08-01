@@ -111,6 +111,7 @@ const inputsWrapperStyle = (theme: Theme) =>
       outline: 'none',
       fontSize: '18px',
       textAlign: 'end',
+      backgroundColor: 'transparent',
     },
     '>p': {
       marginRight: '4px',
