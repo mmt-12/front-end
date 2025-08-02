@@ -26,11 +26,11 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: ROUTES.LOGIN,
+    path: ROUTES.MEMORY_LIST,
     Component: () => <Layout />,
     children: [
       {
-        path: ROUTES.MEMORY_LIST,
+        index: true,
         element: <MemoryListPage />,
       },
       {
