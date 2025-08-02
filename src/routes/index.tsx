@@ -1,22 +1,34 @@
 import Layout from '@/layouts/Layout'
-import { HomePage } from '@/pages/HomePage'
 import { createBrowserRouter } from 'react-router-dom'
 import { ROUTES } from './ROUTES'
+import LoginPage from '@/pages/LoginPage'
 import MemoryListPage from '@/pages/MemoryListPage'
 import MapPage from '@/pages/MapPage'
 import CalendarPage from '@/pages/CalendarPage'
 import GuestBookPage from '@/pages/GuestBookPage'
 import NotificationPage from '@/pages/NotificationPage'
+import PlainLayout from '@/layouts/PlainLayout'
+import SignupPage from '@/pages/SignupPage'
 
 const router = createBrowserRouter([
   {
-    path: ROUTES.HOME,
-    Component: () => <Layout />,
+    path: ROUTES.LOGIN,
+    Component: () => <PlainLayout />,
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: <LoginPage />,
       },
+      {
+        path: ROUTES.SIGNUP,
+        element: <SignupPage />,
+      },
+    ],
+  },
+  {
+    path: ROUTES.LOGIN,
+    Component: () => <Layout />,
+    children: [
       {
         path: ROUTES.MEMORY_LIST,
         element: <MemoryListPage />,

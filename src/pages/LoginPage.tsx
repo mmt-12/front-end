@@ -1,0 +1,119 @@
+import mainMascot from '../assets/mascot/main.png'
+import { css, useTheme, type Theme } from '@emotion/react'
+import { ROUTES } from '@/routes/ROUTES'
+import { useNavigate } from 'react-router-dom'
+import kakaoIcon from '../assets/icons/kakao.png'
+import { QuestionCircle } from '@solar-icons/react'
+
+export default function LoginPage() {
+  const navigate = useNavigate()
+  const theme = useTheme()
+  return (
+    <div css={containerStyle}>
+      <div css={titlesStyle}>
+        <p css={subTitleStyle}>우리의 추억을 위한 공간</p>
+        <p css={titleStyle}>Memento</p>
+      </div>
+      <div css={mascotWrapperStyle}>
+        <img src={mainMascot} alt='memento mascot main' css={mascotStyle} />
+      </div>
+      <div css={buttonsContainerStyle}>
+        <button
+          css={[buttonStyle, kakaoButtonStyle]}
+          onClick={() => navigate(ROUTES.SIGNUP)}
+        >
+          <img src={kakaoIcon} alt='kakao icon' css={kakaoIconStyle} />
+          <p>카카오 로그인</p>
+        </button>
+        <button css={buttonStyle}>
+          <QuestionCircle
+            weight='Bold'
+            size={24}
+            color={theme.stone[400]}
+            width={16}
+          />
+          <span css={smallLabelStyle}>관리자에게 문의하기</span>
+        </button>
+      </div>
+    </div>
+  )
+}
+
+const containerStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  height: '100vh',
+})
+
+const titlesStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '108px 16px 4px 16px',
+})
+
+const subTitleStyle = css({ fontSize: 18, padding: 0, margin: 0 })
+
+const titleStyle = (theme: Theme) =>
+  css({
+    fontSize: '48px',
+    color: theme.stone[700],
+    margin: '0',
+    fontFamily: 'Pacifico, cursive',
+  })
+
+const buttonsContainerStyle = css({
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '20px',
+  padding: '32px 0px',
+})
+
+const buttonStyle = css({
+  width: 'calc(100% - 72px)',
+  maxWidth: '360px',
+  padding: '4px 20px',
+  margin: '0 16px',
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '4px',
+  borderRadius: '12px',
+})
+
+const kakaoButtonStyle = css({
+  backgroundColor: '#FFEB3B',
+  gap: '24px',
+  fontSize: '16px',
+  height: '60px',
+})
+
+const mascotWrapperStyle = css({
+  width: '76%',
+  maxHeight: '400px',
+  height: 'auto',
+})
+
+const mascotStyle = css({
+  width: '100%',
+  height: '100%',
+  objectFit: 'contain',
+})
+
+const kakaoIconStyle = css({
+  width: '24px',
+  height: '24px',
+})
+
+const smallLabelStyle = (theme: Theme) =>
+  css({
+    color: theme.stone[600],
+    fontSize: 13,
+    paddingTop: 2,
+  })
