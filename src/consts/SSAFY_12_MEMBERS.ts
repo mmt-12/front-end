@@ -15,6 +15,10 @@ export const MEMBERS: Record<string, { greeting: string; name: string }> = {
     greeting: '현우님, 반갑습니다. 오늘도 득근하세요!',
     name: '천현우',
   },
+  '970320': {
+    greeting: '김영한의 아들 민우님, 어서오세요.',
+    name: '정민우',
+  },
   '970520': {
     greeting: '12반 웃음 담당 경완님! 빨리 와주세요~!',
     name: '박경완',
@@ -27,10 +31,6 @@ export const MEMBERS: Record<string, { greeting: string; name: string }> = {
     greeting: '정문님, 어서오세요! 오늘도 알고리즘 푸셨나요?',
     name: '차정문',
   },
-  '980320': {
-    greeting: '김영한의 아들 민우님, 어서오세요.',
-    name: '정민우',
-  },
   '980422': {
     greeting: '성환님 어서오세요! 꿀보이스 들려주실거죠?',
     name: '최성환',
@@ -42,10 +42,6 @@ export const MEMBERS: Record<string, { greeting: string; name: string }> = {
   '980818': {
     greeting: '선우님, 몬스터는 끊으셨죠?',
     name: '유선우',
-  },
-  '990125': {
-    greeting: '효선님! 반가워요. 아, 쿠로네코님인가요?',
-    name: '장효선',
   },
   '990319': {
     greeting: '대산님, 재택 근무 너무 부러워요?',
@@ -78,6 +74,10 @@ export const MEMBERS: Record<string, { greeting: string; name: string }> = {
   '991202': {
     greeting: '🐱 어서오라냥~',
     name: '이현지',
+  },
+  '000125': {
+    greeting: '효선님! 반가워요. 아, 쿠로네코님인가요?',
+    name: '장효선',
   },
   '001230': {
     greeting: 'CA님 오셨군요! 반갑습니다.',
