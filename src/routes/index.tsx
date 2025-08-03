@@ -12,6 +12,7 @@ import GuestBookPage from '@/pages/GuestBookPage'
 import NotificationPage from '@/pages/NotificationPage'
 import SignupPage from '@/pages/SignupPage'
 import EditProfilePage from '@/pages/EditProfilePage'
+import AddProfileImagePage from '@/pages/AddProfileImagePage'
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.EDIT_PROFILE,
         element: <EditProfilePage />,
+      },
+      {
+        path: ROUTES.ADD_PROFILE_IMAGE,
+        element: <AddProfileImagePage />,
       },
     ],
   },

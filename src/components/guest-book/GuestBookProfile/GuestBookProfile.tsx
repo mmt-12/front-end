@@ -3,6 +3,9 @@ import WavyBox from '@/components/common/WavyBox'
 import { css, type Theme } from '@emotion/react'
 import defaultImageUrl from '@/assets/mascot/default-profile.png'
 import { formatDate } from '@/utils/date'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '@/routes/ROUTES'
+import { GalleryAdd } from '@solar-icons/react'
 
 interface Props {
   nickname: string
@@ -10,6 +13,7 @@ interface Props {
   imagePath: string
   introduction: string
   birthday: string
+  isMyProfile: boolean
 }
 
 export default function GuestBookProfile({
@@ -18,24 +22,38 @@ export default function GuestBookProfile({
   imagePath,
   introduction,
   birthday,
+  isMyProfile,
 }: Props) {
+  const navigate = useNavigate()
+
+  const handleButtonClick = () => {
+    navigate(ROUTES.ADD_PROFILE_IMAGE)
+  }
+
   return (
     <div css={containerStyle}>
-      <WavyBox
-        strokeColor='white'
-        strokeWidth={8}
-        borderRadius={8}
-        childrenOnTop={false}
-      >
-        <img
-          src={imagePath ? imagePath : defaultImageUrl}
-          alt={nickname}
-          onError={e => {
-            e.currentTarget.src = defaultImageUrl
-          }}
-          css={imageStyle}
-        />
-      </WavyBox>
+      <div css={imageWrapperStyle}>
+        <WavyBox
+          strokeColor='white'
+          strokeWidth={8}
+          borderRadius={8}
+          childrenOnTop={false}
+        >
+          <img
+            src={imagePath || defaultImageUrl}
+            alt={nickname}
+            onError={e => {
+              e.currentTarget.src = defaultImageUrl
+            }}
+            css={imageStyle}
+          />
+        </WavyBox>
+        {!isMyProfile && (
+          <button css={buttonStyle} onClick={handleButtonClick}>
+            <GalleryAdd size={26} color='white' weight='Bold' />
+          </button>
+        )}
+      </div>
       <div css={contentStyle}>
         <div css={headerStyle}>
           <p css={nameStyle}>{nickname}</p>
@@ -75,12 +93,32 @@ const nameStyle = css({
   letterSpacing: '0.12em',
 })
 
+const imageWrapperStyle = css({
+  position: 'relative',
+})
+
 const imageStyle = css({
   width: '115px',
   height: '115px',
   objectFit: 'cover',
   borderRadius: '8px',
 })
+
+const buttonStyle = (theme: Theme) =>
+  css({
+    position: 'absolute',
+    top: '-4px',
+    right: '-4px',
+    background: theme.stone[700],
+    border: 'none',
+    borderRadius: '14px',
+    padding: '6px 6px 4px',
+    boxShadow: '0 0 4px rgba(0, 0, 0, 0.15)',
+    transition: 'background 0.2s ease',
+    '&:hover': {
+      background: theme.stone[500],
+    },
+  })
 
 const birthdayStyle = (theme: Theme) =>
   css({
