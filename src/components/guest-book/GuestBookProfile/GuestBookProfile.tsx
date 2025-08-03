@@ -35,7 +35,7 @@ export default function GuestBookProfile({
       <div css={imageWrapperStyle}>
         <WavyBox
           strokeColor='white'
-          strokeWidth={8}
+          strokeWidth={3}
           borderRadius={8}
           childrenOnTop={false}
         >
@@ -84,7 +84,7 @@ const headerStyle = css({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
-  gap: '12px',
+  gap: '8px',
 })
 
 const nameStyle = css({
