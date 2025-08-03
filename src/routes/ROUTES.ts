@@ -7,4 +7,5 @@ export const ROUTES = {
   CALENDAR: '/calendar',
   GUEST_BOOK: '/guest-book',
   NOTIFICATION: '/notification',
+  EDIT_PROFILE: '/edit-profile',
 }
