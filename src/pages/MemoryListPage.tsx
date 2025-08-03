@@ -1,6 +1,6 @@
 import GreetingPopup from '@/components/common/popup/GreetingPopup'
 import useHeader from '@/hooks/useHeader'
-import { Bell, SortByTime } from '@solar-icons/react'
+import { SortByTime } from '@solar-icons/react'
 
 export default function MemoryListPage() {
   useHeader({
@@ -8,10 +8,6 @@ export default function MemoryListPage() {
     leftItem: {
       icon: SortByTime,
       onClick: () => console.log('list clicked'),
-    },
-    rightItem: {
-      icon: Bell,
-      onClick: () => console.log('Bell clicked'),
     },
   })
 

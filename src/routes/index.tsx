@@ -47,15 +47,15 @@ const router = createBrowserRouter([
         path: ROUTES.GUEST_BOOK,
         element: <GuestBookPage />,
       },
-      {
-        path: ROUTES.NOTIFICATION,
-        element: <NotificationPage />,
-      },
     ],
   },
   {
     Component: () => <Layout />,
     children: [
+      {
+        path: ROUTES.NOTIFICATION,
+        element: <NotificationPage />,
+      },
       {
         path: ROUTES.EDIT_PROFILE,
         element: <EditProfilePage />,
