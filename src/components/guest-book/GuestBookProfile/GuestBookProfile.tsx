@@ -69,7 +69,7 @@ export default function GuestBookProfile({
 const containerStyle = css({
   padding: '0 4px',
   display: 'inline-flex',
-  gap: '16px',
+  gap: '18px',
   fontFamily: 'PFStardust',
   whiteSpace: 'nowrap',
 })
@@ -107,8 +107,8 @@ const imageStyle = css({
 const buttonStyle = (theme: Theme) =>
   css({
     position: 'absolute',
-    top: '-4px',
-    right: '-4px',
+    top: '-8px',
+    right: '-8px',
     background: theme.stone[700],
     border: 'none',
     borderRadius: '14px',
