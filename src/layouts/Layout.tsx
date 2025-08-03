@@ -4,8 +4,6 @@ import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 import { Outlet } from 'react-router-dom'
 
-export interface ILayoutProps {}
-
 export default function Layout() {
   return (
     <div css={containerStyle}>

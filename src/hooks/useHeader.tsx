@@ -24,9 +24,7 @@ const DEFAULT_RIGHT_ITEM: IHeaderItem = {
 export default function useHeader({ routeName, leftItem, rightItem }: Props) {
   const navigate = useNavigate()
 
-  const { setRouteName, setLeftItem, setRightItem } = useHeaderStore(
-    state => state,
-  )
+  const { setRouteName, setLeftItem, setRightItem } = useHeaderStore()
 
   useEffect(() => {
     DEFAULT_LEFT_ITEM.onClick = () => {

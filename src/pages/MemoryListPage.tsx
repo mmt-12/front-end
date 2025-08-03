@@ -1,6 +1,8 @@
 import GreetingPopup from '@/components/common/popup/GreetingPopup'
+import MemoryListItem from '@/components/memory/MemoryListItem'
 import useHeader from '@/hooks/useHeader'
-import { IHeaderItem } from '@/types'
+import { MEMORIES } from '@/mocks/data/MEMORIES'
+import { type IHeaderItem } from '@/types'
 import { Album, SortByTime } from '@solar-icons/react'
 import { useEffect, useState } from 'react'
 
@@ -31,8 +33,10 @@ export default function MemoryListPage() {
 
   return (
     <div>
-      memory list page
       <GreetingPopup />
+      {MEMORIES.map(memory => (
+        <MemoryListItem key={memory.id} {...memory} />
+      ))}
     </div>
   )
 }

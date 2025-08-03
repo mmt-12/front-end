@@ -6,38 +6,38 @@ interface HeaderState {
   setLeftItem: (_item: IHeaderItem) => void
   setRightItem: (_item: IHeaderItem) => void
   routeName: string
-  items: {
-    left: IHeaderItem
-    right: IHeaderItem
-  }
+  leftItem: IHeaderItem
+  rightItem: IHeaderItem
 }
 
-export const useHeaderStore = create<HeaderState>()(set => ({
-  routeName: '',
-  items: {
-    left: {
-      icon: null,
-      onClick: () => console.log('Left clicked'),
-    },
-    right: {
-      icon: null,
-      onClick: () => console.log('Right clicked'),
-    },
-  },
+const isEqualItem = (oldItem: IHeaderItem, newItem: IHeaderItem): boolean => {
+  return oldItem.icon === newItem.icon
+}
 
-  setRouteName: (routeName: string) => set(() => ({ routeName })),
-  setLeftItem: (item: IHeaderItem) =>
-    set(state => ({
-      items: {
-        ...state.items,
-        left: item,
-      },
-    })),
-  setRightItem: (item: IHeaderItem) =>
-    set(state => ({
-      items: {
-        ...state.items,
-        right: item,
-      },
-    })),
+export const useHeaderStore = create<HeaderState>()((set, get) => ({
+  routeName: '',
+  leftItem: {
+    icon: null,
+    onClick: () => console.log('Left clicked'),
+  },
+  rightItem: {
+    icon: null,
+    onClick: () => console.log('Right clicked'),
+  },
+  setRouteName: (routeName: string) => {
+    if (get().routeName === routeName) return
+    set(() => ({ routeName }))
+  },
+  setLeftItem: (leftItem: IHeaderItem) => {
+    if (isEqualItem(get().leftItem, leftItem)) return
+    set(() => ({
+      leftItem,
+    }))
+  },
+  setRightItem: (rightItem: IHeaderItem) => {
+    if (isEqualItem(get().rightItem, rightItem)) return
+    set(() => ({
+      rightItem,
+    }))
+  },
 }))

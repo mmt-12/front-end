@@ -9,6 +9,8 @@ import GuestBookPage from '@/pages/GuestBookPage'
 import NotificationPage from '@/pages/NotificationPage'
 import PlainLayout from '@/layouts/PlainLayout'
 import SignupPage from '@/pages/SignupPage'
+import NavbarLayout from '@/layouts/NavbarLayout'
+import MemoryDetailPage from '@/pages/MemoryDetailPage'
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,16 @@ const router = createBrowserRouter([
       {
         path: ROUTES.SIGNUP,
         element: <SignupPage />,
+      },
+    ],
+  },
+  {
+    path: ROUTES.MEMORY_DETAIL(':id'),
+    Component: () => <NavbarLayout />,
+    children: [
+      {
+        index: true,
+        element: <MemoryDetailPage />,
       },
     ],
   },
