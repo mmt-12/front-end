@@ -17,14 +17,20 @@ export default function Card({ title, children }: Props) {
       borderRadius={16}
       customCss={containerStyle}
     >
-      <p css={cardTitleStyle}>{`#${title}`}</p>
-      {children}
+      <div css={contentStyle}>
+        <p css={cardTitleStyle}>{`#${title}`}</p>
+        {children}
+      </div>
     </WavyBox>
   )
 }
 
 const containerStyle = css({
-  flex: 1,
+  width: '100%',
+})
+
+const contentStyle = css({
+  width: '100%',
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',

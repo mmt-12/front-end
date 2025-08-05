@@ -19,7 +19,6 @@ const preview: Preview = {
     },
   },
   initialGlobals: {
-    backgrounds: { value: 'light' },
     viewport: { value: 'galaxys9', isRotated: false },
   },
   decorators: [

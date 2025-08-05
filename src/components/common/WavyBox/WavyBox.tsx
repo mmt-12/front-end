@@ -7,6 +7,7 @@ interface Props {
   borderRadius?: number
   customCss?: SerializedStyles
   children: React.ReactNode
+  childrenOnTop?: boolean
 }
 
 export default function WavyBox({
@@ -16,9 +17,10 @@ export default function WavyBox({
   borderRadius = 0,
   children,
   customCss,
+  childrenOnTop = true,
 }: Props) {
   return (
-    <div css={containerStyle} className='wavy-box'>
+    <div css={[containerStyle, customCss]} className='wavy-box'>
       <svg width='0' height='0'>
         <filter id='wavy-border'>
           <feTurbulence
@@ -35,7 +37,14 @@ export default function WavyBox({
           />
         </filter>
       </svg>
-      <div css={[{ zIndex: 1 }, customCss]} className='wavy-wrapper'>
+      <div
+        style={{
+          zIndex: childrenOnTop ? 1 : 0,
+          display: 'flex',
+          width: '100%',
+        }}
+        className='wavy-wrapper'
+      >
         {children}
       </div>
       <svg css={borderOverlayStyle} overflow='visible'>

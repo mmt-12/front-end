@@ -1,14 +1,18 @@
+import NavBarLayout from '@/layouts/NavBarLayout'
 import Layout from '@/layouts/Layout'
+import PlainLayout from '@/layouts/PlainLayout'
 import { createBrowserRouter } from 'react-router-dom'
 import { ROUTES } from './ROUTES'
+
 import LoginPage from '@/pages/LoginPage'
 import MemoryListPage from '@/pages/MemoryListPage'
 import MapPage from '@/pages/MapPage'
 import CalendarPage from '@/pages/CalendarPage'
 import GuestBookPage from '@/pages/GuestBookPage'
 import NotificationPage from '@/pages/NotificationPage'
-import PlainLayout from '@/layouts/PlainLayout'
 import SignupPage from '@/pages/SignupPage'
+import EditProfilePage from '@/pages/EditProfilePage'
+import AddProfileImagePage from '@/pages/AddProfileImagePage'
 
 const router = createBrowserRouter([
   {
@@ -26,8 +30,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: ROUTES.LOGIN,
-    Component: () => <Layout />,
+    Component: () => <NavBarLayout />,
     children: [
       {
         path: ROUTES.MEMORY_LIST,
@@ -45,9 +48,22 @@ const router = createBrowserRouter([
         path: ROUTES.GUEST_BOOK,
         element: <GuestBookPage />,
       },
+    ],
+  },
+  {
+    Component: () => <Layout />,
+    children: [
       {
         path: ROUTES.NOTIFICATION,
         element: <NotificationPage />,
+      },
+      {
+        path: ROUTES.EDIT_PROFILE,
+        element: <EditProfilePage />,
+      },
+      {
+        path: ROUTES.ADD_PROFILE_IMAGE,
+        element: <AddProfileImagePage />,
       },
     ],
   },
