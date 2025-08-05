@@ -1,5 +1,5 @@
 import Layout from '@/layouts/Layout'
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { ROUTES } from './ROUTES'
 import LoginPage from '@/pages/LoginPage'
 import MemoryListPage from '@/pages/MemoryListPage'
@@ -38,11 +38,12 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: ROUTES.MEMORY_LIST,
+    path: '/',
     Component: () => <Layout />,
     children: [
+      { index: true, element: <Navigate to={ROUTES.MEMORY_LIST} replace /> },
       {
-        index: true,
+        path: ROUTES.MEMORY_LIST,
         element: <MemoryListPage />,
       },
       {

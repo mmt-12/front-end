@@ -4,11 +4,11 @@ import { Bell } from '@solar-icons/react'
 export default function MapPage() {
   useHeader({
     routeName: '지도',
-    leftItem: {
+    rightItem: {
       icon: Bell,
       onClick: () => console.log('Bell clicked'),
     },
-    rightItem: {
+    leftItem: {
       icon: null,
     },
   })
