@@ -4,7 +4,7 @@ import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 import { Outlet } from 'react-router-dom'
 
-export default function Layout() {
+export default function DefaultLayout() {
   return (
     <div css={containerStyle}>
       <Header />

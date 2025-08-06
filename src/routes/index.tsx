@@ -1,16 +1,21 @@
-import Layout from '@/layouts/Layout'
+import PlainLayout from '@/layouts/PlainLayout'
+import DefaultLayout from '@/layouts/DefaultLayout'
+import HeaderLayout from '@/layouts/HeaderLayout'
+import NavBarLayout from '@/layouts/NavBarLayout'
+
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { ROUTES } from './ROUTES'
+
 import LoginPage from '@/pages/LoginPage'
 import MemoryListPage from '@/pages/MemoryListPage'
 import MapPage from '@/pages/MapPage'
 import CalendarPage from '@/pages/CalendarPage'
 import GuestBookPage from '@/pages/GuestBookPage'
 import NotificationPage from '@/pages/NotificationPage'
-import PlainLayout from '@/layouts/PlainLayout'
 import SignupPage from '@/pages/SignupPage'
-import NavbarLayout from '@/layouts/NavbarLayout'
 import MemoryDetailPage from '@/pages/MemoryDetailPage'
+import EditProfilePage from '@/pages/EditProfilePage'
+import AddProfileImagePage from '@/pages/AddProfileImagePage'
 
 const router = createBrowserRouter([
   {
@@ -29,7 +34,7 @@ const router = createBrowserRouter([
   },
   {
     path: ROUTES.MEMORY_DETAIL(':id'),
-    Component: () => <NavbarLayout />,
+    Component: () => <NavBarLayout />,
     children: [
       {
         index: true,
@@ -39,7 +44,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/',
-    Component: () => <Layout />,
+    Component: () => <DefaultLayout />,
     children: [
       { index: true, element: <Navigate to={ROUTES.MEMORY_LIST} replace /> },
       {
@@ -58,9 +63,22 @@ const router = createBrowserRouter([
         path: ROUTES.GUEST_BOOK,
         element: <GuestBookPage />,
       },
+    ],
+  },
+  {
+    Component: () => <HeaderLayout />,
+    children: [
       {
         path: ROUTES.NOTIFICATION,
         element: <NotificationPage />,
+      },
+      {
+        path: ROUTES.EDIT_PROFILE,
+        element: <EditProfilePage />,
+      },
+      {
+        path: ROUTES.ADD_PROFILE_IMAGE,
+        element: <AddProfileImagePage />,
       },
     ],
   },

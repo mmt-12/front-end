@@ -17,10 +17,11 @@ export default function Badge({ id }: Props) {
       strokeWidth={1.5}
       backgroundColor={BADGES[id].backgroundColor}
       borderRadius={20}
-      customCss={badgeStyle(BADGES[id].color)}
     >
-      <Icon size={16} color={BADGES[id].color} weight='Bold' />
-      <span data-testid={`badge-${id}`}>{BADGES[id].name}</span>
+      <div css={badgeStyle(BADGES[id].color)}>
+        <Icon size={16} color={BADGES[id].color} weight='Bold' />
+        <span data-testid={`badge-${id}`}>{BADGES[id].name}</span>
+      </div>
     </WavyBox>
   )
 }

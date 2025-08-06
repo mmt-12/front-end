@@ -1,5 +1,8 @@
 export const MEMBERS: Record<string, { greeting: string; name: string }> = {
-  '960823': { greeting: '승근님, 오늘도 노브랜드로 드셨나요?', name: '조승근' },
+  '960823': {
+    greeting: '승근님, 오늘도 노브랜드로 드셨나요?',
+    name: '조승근',
+  },
   '961216': {
     greeting: '반가워요, 반장님! 좋은 아침입니다.',
     name: '신현진',
@@ -11,6 +14,10 @@ export const MEMBERS: Record<string, { greeting: string; name: string }> = {
   '970218': {
     greeting: '현우님, 반갑습니다. 오늘도 득근하세요!',
     name: '천현우',
+  },
+  '970320': {
+    greeting: '김영한의 아들 민우님, 어서오세요.',
+    name: '정민우',
   },
   '970520': {
     greeting: '12반 웃음 담당 경완님! 빨리 와주세요~!',
@@ -24,19 +31,26 @@ export const MEMBERS: Record<string, { greeting: string; name: string }> = {
     greeting: '정문님, 어서오세요! 오늘도 알고리즘 푸셨나요?',
     name: '차정문',
   },
-  '980320': { greeting: '김영한의 아들 민우님, 어서오세요.', name: '정민우' },
   '980422': {
     greeting: '성환님 어서오세요! 꿀보이스 들려주실거죠?',
     name: '최성환',
   },
-  '980716': { greeting: '오셨군요, 도영 갓. 기다렸습니다.', name: '신도영' },
-  '980818': { greeting: '선우님, 몬스터는 끊으셨죠?', name: '유선우' },
-  '990125': {
-    greeting: '효선님! 반가워요. 아, 쿠로네코님인가요?',
-    name: '장효선',
+  '980716': {
+    greeting: '오셨군요, 도영 갓. 기다렸습니다.',
+    name: '신도영',
   },
-  '990319': { greeting: '대산님, 재택 근무 너무 부러워요?', name: '이대산' },
-  '990424': { greeting: '주빈님, 클라이밍 잘 하고 계신가요?', name: '강주빈' },
+  '980818': {
+    greeting: '선우님, 몬스터는 끊으셨죠?',
+    name: '유선우',
+  },
+  '990319': {
+    greeting: '대산님, 재택 근무 너무 부러워요?',
+    name: '이대산',
+  },
+  '990424': {
+    greeting: '주빈님, 클라이밍 잘 하고 계신가요?',
+    name: '강주빈',
+  },
   '990810': {
     greeting: '현지! 어서오라냥~ 🐱. 아니, 류현이시군요!',
     name: '류현지',
@@ -45,10 +59,32 @@ export const MEMBERS: Record<string, { greeting: string; name: string }> = {
     greeting: '헌터kill님, 메멘토에 오신 걸 환영합니다.',
     name: '이정현',
   },
-  '991012': { greeting: '마! 오세학이! 어서오라!', name: '오세학' },
-  '991013': { greeting: '징-징- 준수님 어서오세요?', name: '오준수' },
-  '991108': { greeting: '중혁님 어서오세요!', name: '이중혁' },
-  '991202': { greeting: '🐱 어서오라냥~', name: '이현지' },
-  '991230': { greeting: 'CA님 오셨군요! 반갑습니다.', name: '조예슬' },
-  '000519': { greeting: '막내님 오셨네요! 환영합니다.', name: '김률아' },
+  '991012': {
+    greeting: '마! 오세학이! 어서오라!',
+    name: '오세학',
+  },
+  '991013': {
+    greeting: '징-징- 준수님 어서오세요?',
+    name: '오준수',
+  },
+  '991108': {
+    greeting: '중혁님 어서오세요!',
+    name: '이중혁',
+  },
+  '991202': {
+    greeting: '🐱 어서오라냥~',
+    name: '이현지',
+  },
+  '000125': {
+    greeting: '효선님! 반가워요. 아, 쿠로네코님인가요?',
+    name: '장효선',
+  },
+  '001230': {
+    greeting: 'CA님 오셨군요! 반갑습니다.',
+    name: '조예슬',
+  },
+  '010519': {
+    greeting: '막내님 오셨네요! 환영합니다.',
+    name: '김률아',
+  },
 }

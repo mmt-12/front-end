@@ -1,16 +1,15 @@
-import NavBar from '@/components/common/NavBar'
+import Header from '@/components/common/Header'
 import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 import { Outlet } from 'react-router-dom'
 
-export default function NavBarLayout() {
+export default function HeaderLayout() {
   return (
     <div css={containerStyle}>
+      <Header />
       <main css={[mainStyle]}>
         <Outlet />
-        <div css={{ height: '56px' }}></div>
       </main>
-      <NavBar />
     </div>
   )
 }
