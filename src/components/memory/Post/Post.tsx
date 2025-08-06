@@ -1,5 +1,6 @@
 import Album from '@/components/common/Album/Album'
-import { formatDate, formatDateTime } from '@/utils/date'
+import Voice from '@/components/common/Voice'
+import { formatDateTime } from '@/utils/date'
 import { css, type Theme } from '@emotion/react'
 
 export interface Props {
@@ -24,7 +25,11 @@ export default function Post({ images, content, author, createdAt }: Props) {
         <Album images={images} />
         <p css={contentStyle}>{content}</p>
       </div>
-      <div css={reactionsStyle}></div>
+      <div css={reactionsStyle} className='no-scrollbar'>
+        <Voice url='/test_voices/voice1.mp3' content='하.하.하.하.하.' />
+        <Voice url='/test_voices/voice2.mp3' content='뭐라는거야~' />
+        <Voice url='/test_voices/voice3.mp3' content='인지용~?' amount={12} />
+      </div>
     </div>
   )
 }
@@ -66,7 +71,9 @@ const contentStyle = css({
 })
 
 const reactionsStyle = css({
+  padding: '4px 16px',
   display: 'flex',
   alignItems: 'center',
   gap: '8px',
+  overflowX: 'auto',
 })

@@ -71,4 +71,8 @@ export const globalStyle = css({
     scrollbarWidth: 'none',
     msOverflowStyle: 'none',
   },
+
+  '.stardust': {
+    fontFamily: 'PFStardust, sans-serif',
+  },
 })
