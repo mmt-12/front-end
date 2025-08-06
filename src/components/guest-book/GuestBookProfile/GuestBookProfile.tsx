@@ -43,7 +43,7 @@ export default function GuestBookProfile() {
   }
 
   return (
-    <div css={containerStyle}>
+    <div css={containerStyle} className='stardust'>
       <div css={imageWrapperStyle}>
         <WavyBox
           strokeColor='white'
@@ -82,7 +82,6 @@ const containerStyle = css({
   padding: '0 4px',
   display: 'inline-flex',
   gap: '18px',
-  fontFamily: 'PFStardust',
   whiteSpace: 'nowrap',
 })
 

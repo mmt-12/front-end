@@ -30,7 +30,11 @@ export default function Profile({
           <h2 css={nameStyle}>{name}</h2>
           {badgeId && <Badge id={badgeId} />}
         </div>
-        {description && <p css={descriptionStyle}>{description}</p>}
+        {description && (
+          <p css={descriptionStyle} className='stardust'>
+            {description}
+          </p>
+        )}
       </div>
     </div>
   )
@@ -80,5 +84,4 @@ const descriptionStyle = (theme: Theme) =>
     fontSize: '14px',
     color: theme.stone[500],
     textOverflow: 'ellipsis',
-    fontFamily: 'PFStardust',
   })
