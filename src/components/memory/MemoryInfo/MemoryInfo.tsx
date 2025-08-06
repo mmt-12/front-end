@@ -1,5 +1,5 @@
-import { css, useTheme, type Theme } from '@emotion/react'
-import { GalleryCircle, UserCircle } from '@solar-icons/react'
+import { css, type Theme } from '@emotion/react'
+import MemberImageCountChips from '../MemberImageCountChips/MemberImageCountChips'
 
 interface Props {
   title: string
@@ -11,21 +11,14 @@ interface Props {
 }
 
 export default function MemoryInfo(props: Props) {
-  const theme = useTheme()
   return (
     <div css={infoStyle}>
       <div css={titleRowStyle}>
         <h2>{props.title}</h2>
-        <div css={countChipsStyle}>
-          <div>
-            <UserCircle weight='Bold' size={19} color={theme.stone[600]} />
-            <p>{props.memberCount}</p>
-          </div>
-          <div>
-            <GalleryCircle weight='Bold' size={19} color={theme.stone[600]} />
-            <p>{props.imageCount}</p>
-          </div>
-        </div>
+        <MemberImageCountChips
+          memberCount={props.memberCount}
+          imageCount={props.imageCount}
+        />
       </div>
       <div css={metaRowStyle}>
         <p className='location'>{props.location}</p>
@@ -55,26 +48,6 @@ const titleRowStyle = (theme: Theme) =>
     h2: {
       fontSize: '20px',
       color: theme.sky[600],
-    },
-  })
-
-const countChipsStyle = (theme: Theme) =>
-  css({
-    display: 'flex',
-    gap: '8px',
-    alignItems: 'center',
-    div: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '4px',
-      padding: '3px 6px',
-      borderRadius: '20px',
-      backgroundColor: theme.stone[150],
-
-      p: {
-        color: theme.stone[900],
-        fontSize: '13px',
-      },
     },
   })
 

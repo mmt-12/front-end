@@ -51,4 +51,13 @@ export const globalStyle = css({
     margin: 0,
     padding: 0,
   },
+
+  li: {
+    listStyle: 'none',
+  },
+
+  ol: {
+    padding: 0,
+    margin: 0,
+  },
 })
