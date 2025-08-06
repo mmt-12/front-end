@@ -7,7 +7,7 @@ export default function MemoryDetailPage() {
   const memoryId = 'some-id'
   const theme = useTheme()
   return (
-    <div>
+    <div className='no-scrollbar'>
       <header css={headerStyle}>
         <div css={titleRowStyle}>
           <div className='left-info'>
@@ -49,7 +49,21 @@ export default function MemoryDetailPage() {
             createdAt={new Date('2025-06-20T12:00:00')}
           />
         </li>
-        <li>post2</li>
+        <li>
+          <Post
+            images={[
+              '/test_images/image1.png',
+              '/test_images/image1.png',
+              '/test_images/image1.png',
+            ]}
+            content='두 번째 포스트 내용입니다.'
+            author={{
+              name: '홍길동',
+              imageUrl: '/test_images/image5.png',
+            }}
+            createdAt={new Date('2025-06-20T12:00:00')}
+          />
+        </li>
       </ol>
     </div>
   )

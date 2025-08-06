@@ -1,5 +1,6 @@
 import Album from '@/components/common/Album/Album'
-import { css } from '@emotion/react'
+import { formatDate, formatDateTime } from '@/utils/date'
+import { css, type Theme } from '@emotion/react'
 
 export interface Props {
   images: string[]
@@ -14,15 +15,16 @@ export interface Props {
 export default function Post({ images, content, author, createdAt }: Props) {
   return (
     <div css={containerStyle}>
-      <header css={headerStyle}>
-        <img src={author.imageUrl} alt={author.name} />
-        <p>{author.name}</p>
-        <time dateTime={createdAt.toISOString()}>
-          {createdAt.toLocaleString()}
-        </time>
-      </header>
-      <Album images={images} />
-      <p>{content}</p>
+      <div>
+        <header css={headerStyle}>
+          <img src={author.imageUrl} alt={author.name} />
+          <p>{author.name}</p>
+          <time>{formatDateTime(createdAt)}</time>
+        </header>
+        <Album images={images} />
+        <p css={contentStyle}>{content}</p>
+      </div>
+      <div css={reactionsStyle}></div>
     </div>
   )
 }
@@ -34,24 +36,37 @@ const containerStyle = css({
   gap: '10px',
 })
 
-const headerStyle = css({
-  padding: '0px 12px',
+const headerStyle = (theme: Theme) =>
+  css({
+    padding: '6px 12px',
 
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1rem',
+    img: {
+      width: '40px',
+      aspectRatio: '1 / 1',
+      objectFit: 'cover',
+      borderRadius: '50%',
+    },
+    h2: {
+      margin: 0,
+      fontSize: '1.5rem',
+    },
+    time: {
+      fontSize: '15px',
+      color: theme.stone[500],
+      marginLeft: 'auto',
+    },
+  })
+
+const contentStyle = css({
+  padding: '4px 16px',
+  fontSize: '16px',
+})
+
+const reactionsStyle = css({
   display: 'flex',
   alignItems: 'center',
-  gap: '1rem',
-  img: {
-    width: '40px',
-    aspectRatio: '1 / 1',
-    objectFit: 'cover',
-    borderRadius: '50%',
-  },
-  h2: {
-    margin: 0,
-    fontSize: '1.5rem',
-  },
-  time: {
-    fontSize: '14px',
-    marginLeft: 'auto',
-  },
+  gap: '8px',
 })

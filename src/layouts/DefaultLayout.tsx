@@ -8,7 +8,7 @@ export default function DefaultLayout() {
   return (
     <div css={containerStyle}>
       <Header />
-      <main css={[mainStyle]}>
+      <main css={mainStyle} className='no-scrollbar'>
         <Outlet />
         <div css={{ height: '56px' }}></div>
       </main>

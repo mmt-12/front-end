@@ -63,4 +63,12 @@ export const globalStyle = css({
   div: {
     boxSizing: 'border-box',
   },
+
+  '.no-scrollbar': {
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+    scrollbarWidth: 'none',
+    msOverflowStyle: 'none',
+  },
 })
