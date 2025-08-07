@@ -32,6 +32,7 @@ export const theme = {
   black: '#000000',
   red: '#FF9292',
   blue: '#6AB9FF',
+  yellow: '#FFCC00',
   maxWidth: '720px',
 }
 export type ThemeType = typeof theme

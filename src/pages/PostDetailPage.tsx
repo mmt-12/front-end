@@ -2,6 +2,7 @@ import Emoji from '@/components/common/Emoji'
 import Profile from '@/components/common/Profile'
 import Voice from '@/components/common/Voice'
 import PostContent from '@/components/memory/PostContent/PostContent'
+import ReactBar from '@/components/memory/ReactBar/ReactBar'
 import ReactionList from '@/components/memory/ReactionList'
 import useHeader from '@/hooks/useHeader'
 import { MEMBERS } from '@/mocks/data/members'
@@ -65,6 +66,7 @@ export default function PostDetailPage() {
         <Profile {...MEMBERS[1]} size='sm' description={undefined} />
         <Profile {...MEMBERS[2]} size='sm' description={undefined} />
       </div>
+      <ReactBar />
     </div>
   )
 }
@@ -81,7 +83,7 @@ const reactionsStyle = css({
 
   display: 'flex',
   flexDirection: 'column',
-  gap: '8px',
+  gap: '0px',
 })
 
 const reactionNameStyle = (theme: Theme) => ({

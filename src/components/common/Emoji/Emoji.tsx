@@ -38,12 +38,18 @@ const containerStyle = (
     justifyContent: 'center',
     flexShrink: 0,
     gap: '6px',
-    outline: iReacted ? `3px solid ${theme.sky[300]}` : 'none',
+    outline: iReacted
+      ? isAmount
+        ? 'none'
+        : `3px solid ${theme.sky[300]}`
+      : 'none',
     borderRadius: '16px',
     backgroundColor: isActive ? theme.stone[200] : 'transparent',
 
     p: {
       marginRight: '6px',
+      fontWeight: iReacted ? 'bold' : 'normal',
+      color: iReacted ? theme.sky[500] : theme.black,
     },
   })
 
