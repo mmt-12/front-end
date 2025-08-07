@@ -31,13 +31,12 @@ export default function Voice({
         </button>
         <p className='stardust'>{content}</p>
       </div>
-      {amount && <span className='amount'>{amount}</span>}
+      {amount && <span>{amount}</span>}
     </div>
   )
 }
 
 const containerStyle = css({
-  height: '40px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
