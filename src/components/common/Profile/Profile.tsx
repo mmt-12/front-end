@@ -1,12 +1,9 @@
 import { css, type Theme } from '@emotion/react'
 import Badge from '../Badge'
 import defaultImageUrl from '@/assets/mascot/default-profile.png'
+import type { IMember } from '@/types'
 
-export interface Props {
-  name: string
-  imageUrl?: string
-  badgeId?: number
-  description?: string
+export interface Props extends IMember {
   size?: 'sm' | 'md'
 }
 
@@ -76,8 +73,8 @@ const nameStyle = (size: 'sm' | 'md') =>
 
 const imageWrapperStyle = (size: 'sm' | 'md') =>
   css({
-    width: size === 'sm' ? '48px' : '64px',
-    height: size === 'sm' ? '48px' : '64px',
+    width: size === 'sm' ? '36px' : '64px',
+    height: size === 'sm' ? '36px' : '64px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

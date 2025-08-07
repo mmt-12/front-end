@@ -1,17 +1,14 @@
 import Album from '@/components/common/Album'
 import Profile from '@/components/common/Profile'
 import { ROUTES } from '@/routes/ROUTES'
+import type { IMember } from '@/types'
 import { formatDateTime } from '@/utils/date'
 import { css, type Theme } from '@emotion/react'
 import { Link } from 'react-router-dom'
 
 export interface Props {
   id: string | number
-  author: {
-    id: string | number
-    name: string
-    imageUrl: string
-  }
+  author: IMember
   createdAt: Date
   images: string[]
   content: string
@@ -27,8 +24,8 @@ export default function PostContent({
   return (
     <div>
       <header css={headerStyle}>
-        <Link to={`/guest-book/${author.id}`}>
-          <Profile name={author.name} imageUrl={author.imageUrl} size='sm' />
+        <Link to={ROUTES.GUEST_BOOK(author.id)} css={profileLinkStyle}>
+          <Profile {...author} size='sm' description='' />
         </Link>
         <time>{formatDateTime(createdAt)}</time>
       </header>
@@ -42,7 +39,7 @@ export default function PostContent({
 
 const headerStyle = (theme: Theme) =>
   css({
-    padding: '6px 12px',
+    padding: '8px 12px',
 
     display: 'flex',
     alignItems: 'center',
@@ -67,4 +64,9 @@ const headerStyle = (theme: Theme) =>
 const contentStyle = css({
   padding: '4px 16px',
   fontSize: '16px',
+})
+
+const profileLinkStyle = css({
+  display: 'flex',
+  alignItems: 'center',
 })

@@ -1,20 +1,17 @@
 import Emoji from '@/components/common/Emoji'
 import Voice from '@/components/common/Voice'
-import { css } from '@emotion/react'
+import { css, type Theme } from '@emotion/react'
 import PostContent from '../PostContent/PostContent'
 import ReactionList from '../ReactionList'
 import type { MouseEvent } from 'react'
 import { emojies, voices } from '@/mocks/data/reaction'
+import type { IMember } from '@/types'
 
 export interface Props {
   id: string
   images: string[]
   content: string
-  author: {
-    id: string
-    name: string
-    imageUrl: string
-  }
+  author: IMember
   createdAt: Date
 }
 
@@ -50,9 +47,11 @@ export default function Post(props: Props) {
   )
 }
 
-const containerStyle = css({
-  padding: '12px 0px',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '10px',
-})
+const containerStyle = (theme: Theme) =>
+  css({
+    margin: '20px 0',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+    borderTop: `1px solid ${theme.stone[150]}`,
+  })

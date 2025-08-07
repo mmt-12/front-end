@@ -1,5 +1,6 @@
 import MemberImageCountChips from '@/components/memory/MemberImageCountChips'
 import Post from '@/components/memory/Post'
+import { MEMBERS } from '@/mocks/data/members'
 import { css, useTheme, type Theme } from '@emotion/react'
 import { DownloadSquare } from '@solar-icons/react'
 
@@ -42,11 +43,7 @@ export default function MemoryDetailPage() {
               '/test_images/image3.png',
             ]}
             content='첫 번째 포스트 내용입니다.'
-            author={{
-              id: '1',
-              name: '홍길동',
-              imageUrl: '/test_images/image5.png',
-            }}
+            author={MEMBERS[4]}
             createdAt={new Date('2025-06-20T12:00:00')}
           />
         </li>

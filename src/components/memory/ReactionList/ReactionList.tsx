@@ -16,6 +16,6 @@ const reactionsStyle = css({
   padding: '4px 16px',
   display: 'flex',
   alignItems: 'center',
-  gap: '12px',
+  gap: '18px',
   overflowX: 'auto',
 })
