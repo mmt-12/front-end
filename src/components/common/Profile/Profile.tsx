@@ -7,6 +7,7 @@ export interface Props {
   imageUrl?: string
   badgeId?: number
   description?: string
+  size?: 'sm' | 'md'
 }
 
 export default function Profile({
@@ -14,20 +15,23 @@ export default function Profile({
   imageUrl,
   badgeId,
   description,
+  size = 'md',
 }: Props) {
   return (
-    <div css={containerStyle}>
-      <img
-        src={imageUrl ? imageUrl : defaultImageUrl}
-        alt={name}
-        onError={e => {
-          e.currentTarget.src = defaultImageUrl
-        }}
-        css={imageStyle}
-      />
+    <div css={containerStyle(size)}>
+      <div css={imageWrapperStyle(size)}>
+        <img
+          src={imageUrl ? imageUrl : defaultImageUrl}
+          alt={name}
+          onError={e => {
+            e.currentTarget.src = defaultImageUrl
+          }}
+          css={imageStyle}
+        />
+      </div>
       <div>
         <div>
-          <h2 css={nameStyle}>{name}</h2>
+          <p css={nameStyle(size)}>{name}</p>
           {badgeId && <Badge id={badgeId} />}
         </div>
         {description && (
@@ -40,39 +44,51 @@ export default function Profile({
   )
 }
 
-const containerStyle = css({
-  width: 'calc(100% - 16px)',
-  padding: 8,
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '10px',
-  overflow: 'hidden',
-  whiteSpace: 'nowrap',
-  '>div': {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '6px',
+const containerStyle = (size: 'sm' | 'md') =>
+  css({
+    width: size === 'md' ? 'calc(100% - 16px)' : 'auto',
+    padding: size === 'md' ? 8 : 0,
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '10px',
     overflow: 'hidden',
+    whiteSpace: 'nowrap',
     '>div': {
       display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: '8px',
+      flexDirection: 'column',
+      gap: '6px',
+      overflow: 'hidden',
+      '>div': {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: '8px',
+      },
     },
-  },
-})
+  })
 
-const nameStyle = css({
-  margin: 0,
-  fontSize: '16px',
-  fontWeight: 'bold',
-})
+const nameStyle = (size: 'sm' | 'md') =>
+  css({
+    margin: 0,
+    fontSize: '16px',
+    fontWeight: size === 'md' ? 'bold' : '500',
+  })
+
+const imageWrapperStyle = (size: 'sm' | 'md') =>
+  css({
+    width: size === 'sm' ? '48px' : '64px',
+    height: size === 'sm' ? '48px' : '64px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+    borderRadius: '50%',
+    overflow: 'hidden',
+  })
 
 const imageStyle = css({
-  width: '64px',
-  height: '64px',
-  flexShrink: 0,
-  borderRadius: '50%',
+  width: '100%',
+  aspectRatio: '1 / 1',
   objectFit: 'cover',
 })
 
