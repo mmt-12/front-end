@@ -1,7 +1,7 @@
 import type { IReaction } from '@/types/reaction'
 import { css, useTheme, type Theme } from '@emotion/react'
 import { PauseCircle, PlayCircle } from '@solar-icons/react'
-import { useRef, useState } from 'react'
+import { useRef, useState, type MouseEvent } from 'react'
 
 interface Props extends IReaction {
   content: string
@@ -20,12 +20,15 @@ export default function Voice({
   const theme = useTheme()
   const [isPlaying, setIsPlaying] = useState(false)
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
     if (audioRef.current) {
       if (audioRef.current.paused) {
+        console.log(`Clicked Play for id: ${id}`)
         setIsPlaying(true)
         audioRef.current.play()
       } else {
+        console.log(`Clicked Pause for id: ${id}`)
         setIsPlaying(false)
         audioRef.current.pause()
       }
@@ -54,6 +57,8 @@ export default function Voice({
 
 const containerStyle = (theme: Theme, iReacted: boolean, isActive: boolean) =>
   css({
+    width: 'fit-content',
+
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

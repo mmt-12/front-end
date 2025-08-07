@@ -31,6 +31,7 @@ const containerStyle = (
   isAmount: boolean,
 ) =>
   css({
+    width: 'fit-content',
     padding: isAmount ? '6px' : 0,
     display: 'flex',
     alignItems: 'center',
