@@ -2,15 +2,21 @@ import type { IReaction } from '@/types/reaction'
 import { css, useTheme, type Theme } from '@emotion/react'
 
 export default function Emoji({
+  id,
   url: imageUrl,
   size = 'md',
   amount,
-  isActive,
+  isActive = false,
+  iReacted = false,
+  onClick,
 }: IReaction) {
   const theme = useTheme()
   return (
-    <div css={containerStyle(theme, isActive)}>
-      <div css={imageWrapperStyle(isActive, size)}>
+    <div
+      onClick={e => onClick(e, id)}
+      css={containerStyle(theme, iReacted, isActive, !!amount)}
+    >
+      <div css={imageWrapperStyle(size, !!amount)}>
         <img src={imageUrl} alt='Emoji' css={imageStyle} />
       </div>
       {amount != null && <p>{amount}</p>}
@@ -18,26 +24,32 @@ export default function Emoji({
   )
 }
 
-const containerStyle = (theme: Theme, isActive: boolean | undefined) =>
+const containerStyle = (
+  theme: Theme,
+  iReacted: boolean,
+  isActive: boolean,
+  isAmount: boolean,
+) =>
   css({
+    padding: isAmount ? '6px' : 0,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexShrink: 0,
-    gap: '4px',
-    outline: isActive ? `3px solid ${theme.sky[300]}` : 'none',
-    borderRadius: '12px',
+    gap: '6px',
+    outline: iReacted ? `3px solid ${theme.sky[300]}` : 'none',
+    borderRadius: '16px',
+    backgroundColor: isActive ? theme.stone[200] : 'transparent',
 
     p: {
       marginRight: '6px',
-      fontWeight: 300,
     },
   })
 
-const imageWrapperStyle = (isActive: boolean | undefined, size: 'md' | 'lg') =>
+const imageWrapperStyle = (size: 'md' | 'lg', isAmount: boolean) =>
   css({
-    width: size === 'md' ? '44px' : '120px',
-    height: size === 'md' ? '44px' : '120px',
+    width: size === 'md' ? (isAmount ? '40px' : '48px') : '120px',
+    height: size === 'md' ? (isAmount ? '40px' : '48px') : '120px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

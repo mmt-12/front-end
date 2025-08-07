@@ -4,7 +4,6 @@ import { css, useTheme, type Theme } from '@emotion/react'
 import { DownloadSquare } from '@solar-icons/react'
 
 export default function MemoryDetailPage() {
-  const memoryId = 'some-id'
   const theme = useTheme()
   return (
     <div className='no-scrollbar'>

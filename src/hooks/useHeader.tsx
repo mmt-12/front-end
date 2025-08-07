@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 interface Props {
-  routeName: string
+  routeName?: string
   leftItem?: IHeaderItem
   rightItem?: IHeaderItem
 }
@@ -36,7 +36,7 @@ export default function useHeader({ routeName, leftItem, rightItem }: Props) {
   }, [navigate])
 
   useEffect(() => {
-    setRouteName(routeName)
+    setRouteName(routeName || '')
     setLeftItem(leftItem || DEFAULT_LEFT_ITEM)
     setRightItem(rightItem || DEFAULT_RIGHT_ITEM)
   }, [routeName, setRouteName, setLeftItem, setRightItem, leftItem, rightItem])

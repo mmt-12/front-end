@@ -1,7 +1,19 @@
+import Emoji from '@/components/common/Emoji'
+import Voice from '@/components/common/Voice'
 import PostContent from '@/components/memory/PostContent/PostContent'
+import ReactionList from '@/components/memory/ReactionList'
+import useHeader from '@/hooks/useHeader'
+import { emojies, voices } from '@/mocks/data/reaction'
+import { css } from '@emotion/react'
 
 export default function PostDetailPage() {
+  useHeader({
+    rightItem: {
+      icon: null,
+    },
+  })
   const postContent = {
+    id: '1',
     images: [
       '/test_images/image1.png',
       '/test_images/image2.png',
@@ -15,10 +27,48 @@ export default function PostDetailPage() {
     },
     createdAt: new Date('2025-06-20T12:00:00'),
   }
+
+  const handleReactionClick = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation()
+    console.log(`Reaction clicked: ${id}`)
+  }
+
   return (
-    <div>
+    <div css={containerStyle}>
       <PostContent {...postContent} />
-      <p>reactions here</p>
+      <ReactionList>
+        {emojies.map(emoji => (
+          <Emoji
+            key={emoji.id}
+            id={emoji.id}
+            url={emoji.url}
+            amount={emoji.amount}
+            iReacted={emoji.iReacted}
+            isActive={emoji.isActive}
+            onClick={handleReactionClick}
+          />
+        ))}
+      </ReactionList>
+      <ReactionList>
+        {voices.map(voice => (
+          <Voice
+            key={voice.id}
+            id={voice.id}
+            url={voice.url}
+            content={voice.content}
+            amount={voice.amount}
+            iReacted={voice.iReacted}
+            isActive={voice.isActive}
+            onClick={handleReactionClick}
+          />
+        ))}
+      </ReactionList>
     </div>
   )
 }
+
+const containerStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '6px',
+})

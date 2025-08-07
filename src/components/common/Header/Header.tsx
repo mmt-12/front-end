@@ -8,9 +8,7 @@ export default function Header() {
     <div css={headerStyle}>
       <HeaderItem icon={leftItem.icon} onClick={leftItem.onClick} />
       <div>
-        <span css={{ fontSize: '16px', fontWeight: 'bold' }}>
-          {routeName || '페이지 제목'}
-        </span>
+        <span css={{ fontSize: '16px', fontWeight: 'bold' }}>{routeName}</span>
       </div>
       <HeaderItem icon={rightItem.icon} onClick={rightItem.onClick} />
     </div>

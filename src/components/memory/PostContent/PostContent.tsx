@@ -1,10 +1,12 @@
 import Album from '@/components/common/Album'
 import Profile from '@/components/common/Profile'
+import { ROUTES } from '@/routes/ROUTES'
 import { formatDateTime } from '@/utils/date'
 import { css, type Theme } from '@emotion/react'
 import { Link } from 'react-router-dom'
 
 export interface Props {
+  id: string | number
   author: {
     id: string | number
     name: string
@@ -16,6 +18,7 @@ export interface Props {
 }
 
 export default function PostContent({
+  id,
   author,
   createdAt,
   images,
@@ -29,8 +32,10 @@ export default function PostContent({
         </Link>
         <time>{formatDateTime(createdAt)}</time>
       </header>
-      <Album images={images} />
-      <p css={contentStyle}>{content}</p>
+      <Link to={ROUTES.POST_DETAIL(id)}>
+        <Album images={images} />
+        <p css={contentStyle}>{content}</p>
+      </Link>
     </div>
   )
 }
