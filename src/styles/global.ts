@@ -27,6 +27,7 @@ export const globalStyle = css({
 
   a: {
     textDecoration: 'none',
+    color: 'inherit',
   },
 
   button: {

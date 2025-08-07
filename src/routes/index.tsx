@@ -16,6 +16,7 @@ import SignupPage from '@/pages/SignupPage'
 import MemoryDetailPage from '@/pages/MemoryDetailPage'
 import EditProfilePage from '@/pages/EditProfilePage'
 import AddProfileImagePage from '@/pages/AddProfileImagePage'
+import PostDetailPage from '@/pages/PostDetailPage'
 
 const router = createBrowserRouter([
   {
@@ -60,7 +61,7 @@ const router = createBrowserRouter([
         element: <CalendarPage />,
       },
       {
-        path: ROUTES.GUEST_BOOK,
+        path: ROUTES.GUEST_BOOK(':id'),
         element: <GuestBookPage />,
       },
     ],
@@ -79,6 +80,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.ADD_PROFILE_IMAGE,
         element: <AddProfileImagePage />,
+      },
+      {
+        path: ROUTES.POST_DETAIL(':id'),
+        element: <PostDetailPage />,
       },
     ],
   },
