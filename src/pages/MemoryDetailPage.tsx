@@ -36,6 +36,7 @@ export default function MemoryDetailPage() {
       <ol>
         <li>
           <Post
+            id={'1'}
             images={[
               '/test_images/image1.png',
               '/test_images/image2.png',
@@ -43,6 +44,7 @@ export default function MemoryDetailPage() {
             ]}
             content='첫 번째 포스트 내용입니다.'
             author={{
+              id: '1',
               name: '홍길동',
               imageUrl: '/test_images/image5.png',
             }}
@@ -51,6 +53,7 @@ export default function MemoryDetailPage() {
         </li>
         <li>
           <Post
+            id={'2'}
             images={[
               '/test_images/image1.png',
               '/test_images/image1.png',
@@ -58,8 +61,9 @@ export default function MemoryDetailPage() {
             ]}
             content='두 번째 포스트 내용입니다.'
             author={{
-              name: '홍길동',
-              imageUrl: '/test_images/image5.png',
+              id: '2',
+              name: '김철수',
+              imageUrl: '/test_images/image4.png',
             }}
             createdAt={new Date('2025-06-20T12:00:00')}
           />
