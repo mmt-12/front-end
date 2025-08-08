@@ -1,10 +1,10 @@
 import GreetingPopup from '@/components/common/popup/GreetingPopup'
 import MemoryListItem from '@/components/memory/MemoryListItem'
 import useHeader from '@/hooks/useHeader'
-import { MEMORIES } from '@/mocks/data/MEMORIES'
+import { MEMORIES } from '@/mocks/data/memories'
 import { type IHeaderItem } from '@/types'
 import { Album, SortByTime } from '@solar-icons/react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 export default function MemoryListPage() {
   const [isGrid, setIsGrid] = useState(false)
@@ -18,9 +18,11 @@ export default function MemoryListPage() {
     leftItem: leftItem,
   })
 
-  const toggleViewMode = () => {
+  const toggleViewMode = useCallback(() => {
+    console.log('toggleViewMode')
+    console.log('isGrid', isGrid)
     setIsGrid(isGrid => !isGrid)
-  }
+  }, [isGrid])
 
   useEffect(() => {
     if (!setLeftItem) return
@@ -29,7 +31,7 @@ export default function MemoryListPage() {
       icon: isGrid ? Album : SortByTime,
       onClick: () => toggleViewMode(),
     })
-  }, [isGrid, setLeftItem])
+  }, [isGrid, setLeftItem, toggleViewMode])
 
   return (
     <div>

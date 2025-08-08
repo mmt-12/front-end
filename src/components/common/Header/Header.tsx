@@ -1,9 +1,20 @@
 import { useHeaderStore } from '@/store/headerStore'
 import { headerStyle } from '@/styles/header'
 import HeaderItem from './HeaderItem'
+import { useEffect } from 'react'
 
 export default function Header() {
   const { leftItem, rightItem, routeName } = useHeaderStore()
+  useEffect(() => {
+    return () => {
+      console.log('Header unmounted')
+      useHeaderStore.setState({
+        leftItem: { icon: null, onClick: () => {} },
+        rightItem: { icon: null, onClick: () => {} },
+        routeName: '',
+      })
+    }
+  }, [])
   return (
     <div css={headerStyle}>
       <HeaderItem icon={leftItem.icon} onClick={leftItem.onClick} />
