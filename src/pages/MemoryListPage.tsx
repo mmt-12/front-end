@@ -7,7 +7,7 @@ import { Album, SortByTime } from '@solar-icons/react'
 import { useCallback, useEffect, useState } from 'react'
 
 export default function MemoryListPage() {
-  const [isGrid, setIsGrid] = useState(false)
+  const [isGrid, setIsGrid] = useState(true)
   const [leftItem, setLeftItem] = useState<IHeaderItem>({
     icon: SortByTime,
     onClick: () => toggleViewMode(),
@@ -19,16 +19,14 @@ export default function MemoryListPage() {
   })
 
   const toggleViewMode = useCallback(() => {
-    console.log('toggleViewMode')
-    console.log('isGrid', isGrid)
     setIsGrid(isGrid => !isGrid)
-  }, [isGrid])
+  }, [])
 
   useEffect(() => {
     if (!setLeftItem) return
 
     setLeftItem({
-      icon: isGrid ? Album : SortByTime,
+      icon: isGrid ? SortByTime : Album,
       onClick: () => toggleViewMode(),
     })
   }, [isGrid, setLeftItem, toggleViewMode])
@@ -37,7 +35,7 @@ export default function MemoryListPage() {
     <div>
       <GreetingPopup />
       {MEMORIES.map(memory => (
-        <MemoryListItem key={memory.id} {...memory} />
+        <MemoryListItem key={memory.id} {...memory} isGrid={isGrid} />
       ))}
     </div>
   )

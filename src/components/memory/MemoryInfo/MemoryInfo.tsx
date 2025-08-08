@@ -1,11 +1,13 @@
 import { css, type Theme } from '@emotion/react'
 import MemberImageCountChips from '../MemberImageCountChips/MemberImageCountChips'
+import { color } from 'storybook/internal/theming'
 
 interface Props {
   title: string
   location: string
   memberCount: number
   imageCount: number
+  description?: string
   startDate?: string
   endDate?: string
 }
@@ -30,6 +32,7 @@ export default function MemoryInfo(props: Props) {
           </p>
         )}
       </div>
+      <p css={descriptionStyle}>{props.description}</p>
     </div>
   )
 }
@@ -68,3 +71,9 @@ const metaRowStyle = (theme: Theme) =>
       fontSize: '14px',
     },
   })
+
+const descriptionStyle = (theme: Theme) => ({
+  padding: '8px 0',
+  color: theme.stone[800],
+  fontSize: '14px',
+})

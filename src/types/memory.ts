@@ -4,6 +4,7 @@ export interface IMemoryInfo {
   location: string
   memberCount: number
   imageCount: number
+  description?: string
   startDate?: string
   endDate?: string
   images?: string[]
