@@ -1,7 +1,9 @@
-import NavBarLayout from '@/layouts/NavBarLayout'
-import Layout from '@/layouts/Layout'
 import PlainLayout from '@/layouts/PlainLayout'
-import { createBrowserRouter } from 'react-router-dom'
+import DefaultLayout from '@/layouts/DefaultLayout'
+import HeaderLayout from '@/layouts/HeaderLayout'
+import NavBarLayout from '@/layouts/NavBarLayout'
+
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { ROUTES } from './ROUTES'
 
 import LoginPage from '@/pages/LoginPage'
@@ -11,8 +13,10 @@ import CalendarPage from '@/pages/CalendarPage'
 import GuestBookPage from '@/pages/GuestBookPage'
 import NotificationPage from '@/pages/NotificationPage'
 import SignupPage from '@/pages/SignupPage'
+import MemoryDetailPage from '@/pages/MemoryDetailPage'
 import EditProfilePage from '@/pages/EditProfilePage'
 import AddProfileImagePage from '@/pages/AddProfileImagePage'
+import PostDetailPage from '@/pages/PostDetailPage'
 
 const router = createBrowserRouter([
   {
@@ -30,8 +34,20 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: ROUTES.MEMORY_DETAIL(':id'),
     Component: () => <NavBarLayout />,
     children: [
+      {
+        index: true,
+        element: <MemoryDetailPage />,
+      },
+    ],
+  },
+  {
+    path: '/',
+    Component: () => <DefaultLayout />,
+    children: [
+      { index: true, element: <Navigate to={ROUTES.MEMORY_LIST} replace /> },
       {
         path: ROUTES.MEMORY_LIST,
         element: <MemoryListPage />,
@@ -45,13 +61,13 @@ const router = createBrowserRouter([
         element: <CalendarPage />,
       },
       {
-        path: ROUTES.GUEST_BOOK,
+        path: ROUTES.GUEST_BOOK(':id'),
         element: <GuestBookPage />,
       },
     ],
   },
   {
-    Component: () => <Layout />,
+    Component: () => <HeaderLayout />,
     children: [
       {
         path: ROUTES.NOTIFICATION,
@@ -64,6 +80,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.ADD_PROFILE_IMAGE,
         element: <AddProfileImagePage />,
+      },
+      {
+        path: ROUTES.POST_DETAIL(':id'),
+        element: <PostDetailPage />,
       },
     ],
   },

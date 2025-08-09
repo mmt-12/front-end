@@ -20,6 +20,10 @@ import { theme } from '@/styles/theme'
 
 export default function NavBar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const user = {
+    id: 'user-id',
+    name: '사용자 이름',
+  }
   return (
     <>
       <div css={navBarStyle}>
@@ -44,7 +48,7 @@ export default function NavBar() {
         <Navigation
           title='방명록'
           icon={<BookBookmark weight='Bold' size={24} />}
-          to={ROUTES.GUEST_BOOK}
+          to={ROUTES.GUEST_BOOK(user.id)}
         />
       </div>
       <BottomDrawer isOpen={isDrawerOpen} close={() => setIsDrawerOpen(false)}>

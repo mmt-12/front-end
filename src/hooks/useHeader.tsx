@@ -6,33 +6,38 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 interface Props {
-  routeName: string
+  routeName?: string
   leftItem?: IHeaderItem
   rightItem?: IHeaderItem
 }
 
-export default function useHeader(props: Props) {
+const DEFAULT_LEFT_ITEM: IHeaderItem = {
+  icon: ArrowLeft,
+  onClick: () => {},
+}
+
+const DEFAULT_RIGHT_ITEM: IHeaderItem = {
+  icon: Bell,
+  onClick: () => {},
+}
+
+export default function useHeader({ routeName, leftItem, rightItem }: Props) {
   const navigate = useNavigate()
 
-  const DEFAULT_LEFT_ITEM: IHeaderItem = {
-    icon: ArrowLeft,
-    onClick: () => navigate(-1),
-  }
-
-  const DEFAULT_RIGHT_ITEM: IHeaderItem = {
-    icon: Bell,
-    onClick: () => navigate(ROUTES.NOTIFICATION),
-  }
-
-  const headerState = useHeaderStore(state => state)
+  const { setRouteName, setLeftItem, setRightItem } = useHeaderStore()
 
   useEffect(() => {
-    headerState.setRouteName(props.routeName)
-    headerState.setLeftItem(props.leftItem || DEFAULT_LEFT_ITEM)
-    headerState.setRightItem(props.rightItem || DEFAULT_RIGHT_ITEM)
-  }, [])
+    DEFAULT_LEFT_ITEM.onClick = () => {
+      navigate(-1)
+    }
+    DEFAULT_RIGHT_ITEM.onClick = () => {
+      navigate(ROUTES.NOTIFICATION)
+    }
+  }, [navigate])
 
-  return {
-    headerState,
-  }
+  useEffect(() => {
+    setRouteName(routeName || '')
+    setLeftItem(leftItem || DEFAULT_LEFT_ITEM)
+    setRightItem(rightItem || DEFAULT_RIGHT_ITEM)
+  }, [routeName, setRouteName, setLeftItem, setRightItem, leftItem, rightItem])
 }

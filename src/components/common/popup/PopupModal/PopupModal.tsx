@@ -1,10 +1,10 @@
 import ReactDOM from 'react-dom'
 import { css } from '@emotion/react'
 import { ArrowLeft } from '@solar-icons/react'
-import type { Theme } from '@emotion/react'
 import { headerStyle } from '@/styles/header'
 import HeaderItem from '@/components/common/Header/HeaderItem'
 import type { ReactNode } from 'react'
+import { modalStyle } from '@/styles/modal'
 
 interface Props {
   title: string
@@ -38,16 +38,3 @@ const contentStyle = css({
   overflowY: 'auto',
   height: 'calc(100vh - 60px)', // Adjust height to account for header
 })
-
-const modalStyle = (theme: Theme) =>
-  css({
-    position: 'fixed',
-    inset: 0,
-    width: '100vw',
-    height: '100vh',
-    margin: '0 auto',
-    maxWidth: theme.maxWidth,
-    overflowY: 'hidden',
-    background: theme.bg,
-    zIndex: 10,
-  })

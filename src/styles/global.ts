@@ -27,6 +27,7 @@ export const globalStyle = css({
 
   a: {
     textDecoration: 'none',
+    color: 'inherit',
   },
 
   button: {
@@ -42,7 +43,37 @@ export const globalStyle = css({
     padding: 0,
   },
 
+  h1: {
+    margin: 0,
+    padding: 0,
+  },
+
+  h2: {
+    margin: 0,
+    padding: 0,
+  },
+
+  li: {
+    listStyle: 'none',
+  },
+
+  ol: {
+    padding: 0,
+    margin: 0,
+  },
   div: {
     boxSizing: 'border-box',
+  },
+
+  '.no-scrollbar': {
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+    scrollbarWidth: 'none',
+    msOverflowStyle: 'none',
+  },
+
+  '.stardust': {
+    fontFamily: 'PFStardust, sans-serif',
   },
 })

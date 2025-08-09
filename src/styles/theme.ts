@@ -15,6 +15,7 @@ export const theme = {
   stone: {
     50: '#FAFAF9',
     100: '#F5F5F4',
+    150: '#F0EFEE',
     200: '#E7E5E4',
     300: '#D6D3D1',
     400: '#A6A09B',
@@ -31,6 +32,7 @@ export const theme = {
   black: '#000000',
   red: '#FF9292',
   blue: '#6AB9FF',
+  yellow: '#FFCC00',
   maxWidth: '720px',
 }
 export type ThemeType = typeof theme

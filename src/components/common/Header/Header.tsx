@@ -1,24 +1,27 @@
 import { useHeaderStore } from '@/store/headerStore'
 import { headerStyle } from '@/styles/header'
 import HeaderItem from './HeaderItem'
+import { useEffect } from 'react'
 
 export default function Header() {
-  const headerState = useHeaderStore(state => state)
+  const { leftItem, rightItem, routeName } = useHeaderStore()
+  useEffect(() => {
+    return () => {
+      console.log('Header unmounted')
+      useHeaderStore.setState({
+        leftItem: { icon: null, onClick: () => {} },
+        rightItem: { icon: null, onClick: () => {} },
+        routeName: '',
+      })
+    }
+  }, [])
   return (
     <div css={headerStyle}>
-      <HeaderItem
-        icon={headerState.items.left.icon}
-        onClick={headerState.items.left.onClick}
-      />
+      <HeaderItem icon={leftItem.icon} onClick={leftItem.onClick} />
       <div>
-        <span css={{ fontSize: '16px', fontWeight: 'bold' }}>
-          {headerState.routeName || '페이지 제목'}
-        </span>
+        <span css={{ fontSize: '16px', fontWeight: 'bold' }}>{routeName}</span>
       </div>
-      <HeaderItem
-        icon={headerState.items.right.icon}
-        onClick={headerState.items.right.onClick}
-      />
+      <HeaderItem icon={rightItem.icon} onClick={rightItem.onClick} />
     </div>
   )
 }

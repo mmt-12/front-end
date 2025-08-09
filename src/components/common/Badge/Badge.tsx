@@ -18,7 +18,7 @@ export default function Badge({ id }: Props) {
       backgroundColor={BADGES[id].backgroundColor}
       borderRadius={20}
     >
-      <div css={badgeStyle(BADGES[id].color)}>
+      <div css={badgeStyle(BADGES[id].color)} className='stardust'>
         <Icon size={16} color={BADGES[id].color} weight='Bold' />
         <span data-testid={`badge-${id}`}>{BADGES[id].name}</span>
       </div>
@@ -34,7 +34,6 @@ const badgeStyle = (color: string) =>
     justifyContent: 'center',
     fontSize: '12px',
     fontWeight: 800,
-    fontFamily: 'PFStardust',
     gap: '4px',
     color,
     borderRadius: '20px',

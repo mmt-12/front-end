@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import Profile from './Profile'
-import { MEMBERS } from '@/mocks/data/MEMBERS'
 import { expect } from 'storybook/test'
+import { MEMBERS } from '@/mocks/data/members'
 
 const meta = {
   title: 'components/Profile',
@@ -37,5 +37,14 @@ export const Default: Story = {
       const badge = canvas.getByTestId(`badge-${args.badgeId}`)
       expect(badge).toBeInTheDocument()
     }
+  },
+}
+
+export const Small: Story = {
+  args: {
+    name: MEMBERS[1].name,
+    imageUrl: MEMBERS[1].imageUrl,
+    badgeId: MEMBERS[1].badgeId,
+    size: 'sm',
   },
 }

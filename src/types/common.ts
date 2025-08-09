@@ -35,3 +35,11 @@ export interface IArrayItem extends IBaseInput {
 export interface IArrayInput extends IBaseInput {
   items: IArrayItem[]
 }
+
+export interface IMember {
+  id: string
+  name: string
+  imageUrl?: string
+  badgeId?: string
+  description?: string
+}

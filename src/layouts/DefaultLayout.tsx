@@ -1,13 +1,18 @@
+import Header from '@/components/common/Header'
+import NavBar from '@/components/common/NavBar'
 import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 import { Outlet } from 'react-router-dom'
 
-export default function PlainLayout() {
+export default function DefaultLayout() {
   return (
     <div css={containerStyle}>
-      <main css={[mainStyle]}>
+      <Header />
+      <main css={mainStyle} className='no-scrollbar'>
         <Outlet />
+        <div css={{ height: '56px' }}></div>
       </main>
+      <NavBar />
     </div>
   )
 }
@@ -20,6 +25,6 @@ const containerStyle = (theme: Theme) =>
   })
 
 const mainStyle = css({
-  height: '100vh',
+  height: 'calc(100vh - 56px)',
   overflowY: 'scroll',
 })
