@@ -1,25 +1,7 @@
 import ReactECharts from 'echarts-for-react'
 import { MBTI } from '@/mocks/data/guestBook'
 import { useTheme } from '@emotion/react'
-
-const mbtiColors: Record<string, string> = {
-  INFP: '#7A9EFF',
-  INFJ: '#FF9F6A',
-  INTP: '#A463C9',
-  INTJ: '#3FA36D',
-  ISFP: '#FF7FCF',
-  ISFJ: '#B5D53E',
-  ISTP: '#3ED3D3',
-  ISTJ: '#4A90E2',
-  ENFP: '#FFDD95',
-  ENFJ: '#61C4B7',
-  ENTP: '#FF6B35',
-  ENTJ: '#B47ED8',
-  ESFP: '#C074F8',
-  ESFJ: '#FBBF4B',
-  ESTP: '#E9DAC3',
-  ESTJ: '#8F8F8F',
-}
+import { MBTI_COLOR, type MbtiType } from '@/consts/MBTI'
 
 export default function MbtiChart() {
   const theme = useTheme()
@@ -43,11 +25,12 @@ export default function MbtiChart() {
         type: 'pie',
         silent: true,
         radius: ['30%', '100%'],
-        avoidLabelOverlap: true,
+        avoidLabelOverlap: false,
         label: {
           show: true,
           position: 'inside',
           formatter: (params: any) => {
+            if (params.value === 0) return ''
             const percentage = ((params.value / total) * 100).toFixed(1)
             return `{label|${params.name}}\n{percent|${percentage}%}`
           },
@@ -79,7 +62,7 @@ export default function MbtiChart() {
           name: label,
           value: values[idx],
           itemStyle: {
-            color: mbtiColors[label],
+            color: MBTI_COLOR[label as MbtiType],
           },
         })),
       },
