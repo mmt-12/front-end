@@ -6,15 +6,15 @@ import { formatDate } from '@/utils/date'
 import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '@/routes/ROUTES'
 import { GalleryAdd, PenNewSquare, UsersGroupRounded } from '@solar-icons/react'
-import { Profile } from '@/mocks/data/guestBook'
 import { useUserStore } from '@/store/userStore'
 import useHeader from '@/hooks/useHeader'
+import { PROFILE } from '@/mocks/data/guestBook'
 
 export default function GuestBookProfile() {
   const { birthDate } = useUserStore()
   const navigate = useNavigate()
 
-  const profileData = Profile
+  const profileData = PROFILE
   const {
     nickname,
     birthday,
@@ -79,6 +79,7 @@ export default function GuestBookProfile() {
 }
 
 const containerStyle = css({
+  width: '100%',
   padding: '0 4px',
   display: 'inline-flex',
   gap: '18px',

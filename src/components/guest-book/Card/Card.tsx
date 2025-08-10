@@ -1,12 +1,20 @@
 import WavyBox from '@/components/common/WavyBox'
-import { css, useTheme } from '@emotion/react'
+import { css, useTheme, type SerializedStyles } from '@emotion/react'
+import { Widget } from '@solar-icons/react'
 
 interface Props {
   title: string
+  onButtonClick?: () => void
   children: React.ReactNode
+  customCss?: SerializedStyles
 }
 
-export default function Card({ title, children }: Props) {
+export default function Card({
+  title,
+  onButtonClick,
+  children,
+  customCss,
+}: Props) {
   const theme = useTheme()
 
   return (
@@ -15,10 +23,23 @@ export default function Card({ title, children }: Props) {
       strokeWidth={2.5}
       backgroundColor='white'
       borderRadius={16}
-      customCss={containerStyle}
+      customCss={css([containerStyle, customCss])}
     >
       <div css={contentStyle}>
-        <p css={cardTitleStyle}>{`#${title}`}</p>
+        <div css={headerStyle}>
+          <div css={sideAreaStyle} />
+          <p css={cardTitleStyle}>{`#${title}`}</p>
+          <div css={sideAreaStyle}>
+            {onButtonClick && (
+              <Widget
+                size={24}
+                color={theme.stone[700]}
+                weight='Bold'
+                onClick={onButtonClick}
+              />
+            )}
+          </div>
+        </div>
         {children}
       </div>
     </WavyBox>
@@ -38,8 +59,24 @@ const contentStyle = css({
   padding: '18px 16px',
 })
 
+const headerStyle = css({
+  width: '100%',
+  padding: '4px 4px 24px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+})
+
+const sideAreaStyle = css({
+  width: 24,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+})
+
 const cardTitleStyle = css({
   fontFamily: 'PressStart2P',
-  fontSize: '14px',
-  margin: '4px 0 24px',
+  fontSize: 14,
+  textAlign: 'center',
+  flex: 1,
 })
