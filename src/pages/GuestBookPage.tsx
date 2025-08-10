@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import useHeader from '@/hooks/useHeader'
 import { PenNewSquare, UsersGroupRounded } from '@solar-icons/react'
 import { ROUTES } from '@/routes/ROUTES'
+import MbtiTest from '@/components/guest-book/MbtiTest'
 
 export default function GuestBookPage() {
   const [mode, setMode] = useState<'MBTI' | 'MEDALS' | 'GUEST BOOK' | null>(
@@ -68,6 +69,9 @@ export default function GuestBookPage() {
       ) : (
         <Card title={mode} onButtonClick={() => setMode(null)}>
           {mode === 'MEDALS' && <BadgeList isExpanded />}
+          {mode === 'MBTI' && (
+            <MbtiTest isMyPage={isMyPage} name={profileData.nickname} />
+          )}
         </Card>
       )}
     </div>
