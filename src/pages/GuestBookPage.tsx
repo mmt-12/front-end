@@ -2,6 +2,7 @@ import { css } from '@emotion/react'
 import Card from '@/components/guest-book/Card'
 import GuestBookProfile from '@/components/guest-book/GuestBookProfile'
 import { useState } from 'react'
+import BadgeList from '@/components/guest-book/BadgeList'
 
 export default function GuestBookPage() {
   const [mode, setMode] = useState<'MBTI' | 'MEDALS' | 'GUEST BOOK' | null>(
@@ -17,10 +18,12 @@ export default function GuestBookPage() {
         <>
           <div css={rowStyle}>
             <Card title='MBTI'>
-              <p onClick={() => setMode('MBTI')}>MBTI content</p>
+              <div onClick={() => setMode('MBTI')}>MBTI content</div>
             </Card>
             <Card title='MEDALS'>
-              <p onClick={() => setMode('MEDALS')}>medals content</p>
+              <div onClick={() => setMode('MEDALS')}>
+                <BadgeList />
+              </div>
             </Card>
           </div>
           <Card title='GUEST BOOK'>
@@ -29,7 +32,7 @@ export default function GuestBookPage() {
         </>
       ) : (
         <Card title={mode} onButtonClick={() => setMode(null)}>
-          <p>확장된 컨텐츠입니다</p>
+          {mode === 'MEDALS' && <BadgeList isExpanded />}
         </Card>
       )}
     </div>
@@ -37,7 +40,6 @@ export default function GuestBookPage() {
 }
 
 const containerStyle = css({
-  height: 'calc(100% - 56px)',
   padding: '16px',
   display: 'flex',
   flexDirection: 'column',

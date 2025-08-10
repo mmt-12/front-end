@@ -4,19 +4,12 @@ export const PROFILE = {
     id: 1,
     name: '시간빌게이츠',
   },
-  imagePath: 'test_images/image1.png',
+  imagePath: '/test_images/image1.png',
   introduction: '짧은 설명입니다. 짧은 설명입니다. 짧은 설명입니다.',
   birthday: '2000-01-01T00:30:00',
 } as const
 
 export const ACHIEVEMENTS = [
-  {
-    id: 1,
-    name: '시간빌게이츠',
-    condition: '연속 출석 수 15일 이상',
-    isObtained: true,
-    type: 'OPEN',
-  },
   {
     id: 2,
     name: '관상가',
@@ -36,12 +29,26 @@ export const ACHIEVEMENTS = [
     name: 'FFFFFF',
     condition: 'F가 들어간 모든 MBTI 획득',
     isObtained: true,
-    type: 'HIDDEN',
+    type: 'RESTRICTED',
   },
   {
     id: 5,
     name: 'T발 C야?',
     condition: 'T가 들어간 모든 MBTI 획득',
+    isObtained: true,
+    type: 'RESTRICTED',
+  },
+  {
+    id: 13,
+    name: 'GMG',
+    condition: '참가한 기억 12개 이상',
+    isObtained: true,
+    type: 'OPEN',
+  },
+  {
+    id: 18,
+    name: '씽씽씽',
+    condition: '이모티콘 등록 시 “씽씽씽” 이름으로 등록',
     isObtained: true,
     type: 'HIDDEN',
   },

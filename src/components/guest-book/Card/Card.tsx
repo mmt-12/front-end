@@ -27,18 +27,16 @@ export default function Card({
     >
       <div css={contentStyle}>
         <div css={headerStyle}>
-          <div css={sideAreaStyle} />
+          {onButtonClick && <div css={sideAreaStyle} />}
           <p css={cardTitleStyle}>{`#${title}`}</p>
-          <div css={sideAreaStyle}>
-            {onButtonClick && (
-              <Widget
-                size={24}
-                color={theme.stone[700]}
-                weight='Bold'
-                onClick={onButtonClick}
-              />
-            )}
-          </div>
+          {onButtonClick && (
+            <Widget
+              size={24}
+              color={theme.stone[700]}
+              weight='Bold'
+              onClick={onButtonClick}
+            />
+          )}
         </div>
         {children}
       </div>
@@ -61,7 +59,7 @@ const contentStyle = css({
 
 const headerStyle = css({
   width: '100%',
-  padding: '4px 4px 24px',
+  padding: '4px 4px 18px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
