@@ -4,16 +4,45 @@ import GuestBookProfile from '@/components/guest-book/GuestBookProfile'
 import { useState } from 'react'
 import BadgeList from '@/components/guest-book/BadgeList'
 import MbtiChart from '@/components/guest-book/MbtiChart'
+import { PROFILE } from '@/mocks/data/guestBook'
+import { useUserStore } from '@/store/userStore'
+import { useNavigate } from 'react-router-dom'
+import useHeader from '@/hooks/useHeader'
+import { PenNewSquare, UsersGroupRounded } from '@solar-icons/react'
+import { ROUTES } from '@/routes/ROUTES'
 
 export default function GuestBookPage() {
   const [mode, setMode] = useState<'MBTI' | 'MEDALS' | 'GUEST BOOK' | null>(
     null,
   )
+  const { birthDate } = useUserStore()
+  const navigate = useNavigate()
+
+  const profileData = PROFILE
+  const isMyPage = birthDate === profileData.birthday
+
+  useHeader({
+    routeName: '방명록',
+    leftItem: {
+      icon: UsersGroupRounded,
+      onClick: () => console.log('Group clicked'),
+    },
+    rightItem: isMyPage
+      ? {
+          icon: PenNewSquare,
+          onClick: () => navigate(ROUTES.EDIT_PROFILE),
+        }
+      : undefined,
+  })
 
   return (
     <div css={containerStyle}>
       <Card title='PROFILE'>
-        <GuestBookProfile />
+        <GuestBookProfile
+          achievementId={profileData.achievement.id}
+          isMyProfile={isMyPage}
+          {...profileData}
+        />
       </Card>
       {mode === null ? (
         <>
