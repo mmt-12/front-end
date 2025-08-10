@@ -3,6 +3,7 @@ import Card from '@/components/guest-book/Card'
 import GuestBookProfile from '@/components/guest-book/GuestBookProfile'
 import { useState } from 'react'
 import BadgeList from '@/components/guest-book/BadgeList'
+import MbtiChart from '@/components/guest-book/MbtiChart'
 
 export default function GuestBookPage() {
   const [mode, setMode] = useState<'MBTI' | 'MEDALS' | 'GUEST BOOK' | null>(
@@ -18,7 +19,12 @@ export default function GuestBookPage() {
         <>
           <div css={rowStyle}>
             <Card title='MBTI'>
-              <div onClick={() => setMode('MBTI')}>MBTI content</div>
+              <div
+                onClick={() => setMode('MBTI')}
+                style={{ width: '100%', height: '140px' }}
+              >
+                <MbtiChart />
+              </div>
             </Card>
             <Card title='MEDALS'>
               <div onClick={() => setMode('MEDALS')}>
