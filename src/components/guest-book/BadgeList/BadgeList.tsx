@@ -35,7 +35,9 @@ export default function BadgeList({ isExpanded = false }: Props) {
           <div css={medalInfoStyle} className='stardust'>
             <Badge key={badge.id} id={badge.id} />
             <p css={conditionStyle}>
-              {badge.type === 'RESTRICTED' ? '???' : badge.condition}
+              {badge.type === 'RESTRICTED' && !badge.isObtained
+                ? '???'
+                : badge.condition}
             </p>
           </div>
         ))}

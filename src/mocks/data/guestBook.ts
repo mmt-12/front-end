@@ -28,7 +28,7 @@ export const ACHIEVEMENTS = [
     id: 4,
     name: 'FFFFFF',
     condition: 'F가 들어간 모든 MBTI 획득',
-    isObtained: true,
+    isObtained: false,
     type: 'RESTRICTED',
   },
   {
