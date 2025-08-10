@@ -24,14 +24,12 @@ export interface Choice {
 }
 
 export interface Question {
-  id: string
   question: string
   choices: Choice[]
 }
 
 export const MBTI_TEST_DATA: Question[] = [
   {
-    id: 'q1',
     question: '{name}는(은) 회식에 참석하여 주로',
     choices: [
       { text: '점점 신이 나서 거의 끝까지 남는 편이다', code: 'E' },
@@ -39,7 +37,6 @@ export const MBTI_TEST_DATA: Question[] = [
     ],
   },
   {
-    id: 'q2',
     question: '{name}는(은) 주로',
     choices: [
       { text: '생각하고 나서 말한다', code: 'I' },
@@ -47,7 +44,6 @@ export const MBTI_TEST_DATA: Question[] = [
     ],
   },
   {
-    id: 'q3',
     question: '{name}는(은) 남들과 연극을 함께 만든다면',
     choices: [
       { text: '주인공을 하고 싶어할 것 같다', code: 'E' },
@@ -58,7 +54,6 @@ export const MBTI_TEST_DATA: Question[] = [
     ],
   },
   {
-    id: 'q4',
     question: '{name}는(은) 친구가 이직을 고민한다고 할 때',
     choices: [
       { text: '지금 회사의 구체적인 조건을 먼저 따져본다', code: 'S' },
@@ -66,7 +61,6 @@ export const MBTI_TEST_DATA: Question[] = [
     ],
   },
   {
-    id: 'q5',
     question: '{name}는(은) 남을 볼 때',
     choices: [
       { text: '그 사람의 유능한 점을 본다', code: 'N' },
@@ -74,7 +68,6 @@ export const MBTI_TEST_DATA: Question[] = [
     ],
   },
   {
-    id: 'q6',
     question: '{name}는(은) 새로운 프로젝트를 할 때',
     choices: [
       { text: '전체적인 큰 그림부터 떠올릴 것 같다', code: 'N' },
@@ -82,7 +75,6 @@ export const MBTI_TEST_DATA: Question[] = [
     ],
   },
   {
-    id: 'q7',
     question: '{name}는(은) 무엇을 결정할 때',
     choices: [
       { text: '원칙에 근거하여 판단한다', code: 'T' },
@@ -90,7 +82,6 @@ export const MBTI_TEST_DATA: Question[] = [
     ],
   },
   {
-    id: 'q8',
     question: '{name}는 친구가 슬퍼할 때',
     choices: [
       { text: '상황을 분석하고 해결 방법을 제시한다.', code: 'T' },
@@ -98,7 +89,6 @@ export const MBTI_TEST_DATA: Question[] = [
     ],
   },
   {
-    id: 'q9',
     question: '친구가 갑자기 “우리 얘기 좀 해”라고 했을 때',
     choices: [
       { text: '뭘 잘못했는지 먼저 머릿속으로 정리한다.', code: 'T' },
@@ -106,7 +96,6 @@ export const MBTI_TEST_DATA: Question[] = [
     ],
   },
   {
-    id: 'q10',
     question: '{name}은 새 드라마나 넷플릭스 시리즈를 볼 때',
     choices: [
       { text: '끝까지 다 볼 시간 있을지 고려하고 시작한다.', code: 'J' },
@@ -114,7 +103,6 @@ export const MBTI_TEST_DATA: Question[] = [
     ],
   },
   {
-    id: 'q11',
     question: '{name}은 사이드 프로젝트에 새로운 기능을 추가할 때 먼저',
     choices: [
       { text: '목업을 구현한다.', code: 'P' },
@@ -122,7 +110,6 @@ export const MBTI_TEST_DATA: Question[] = [
     ],
   },
   {
-    id: 'q12',
     question: '{name}는(은) 여행 떠나기 전날 밤',
     choices: [
       {
