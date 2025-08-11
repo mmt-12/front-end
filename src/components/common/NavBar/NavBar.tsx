@@ -122,6 +122,7 @@ const navBarStyle = (theme: Theme) =>
     backdropFilter: 'blur(3px)',
     backgroundColor: theme.whiteBlur,
     height: '56px',
+    zIndex: 10,
   })
 
 const navLinkStyle = (theme: Theme) =>

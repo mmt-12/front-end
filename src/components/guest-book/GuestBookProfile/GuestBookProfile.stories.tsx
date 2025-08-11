@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Profile } from '@/mocks/data/guestBook'
 import GuestBookProfile from './GuestBookProfile'
 import { withRouter } from 'storybook-addon-remix-react-router'
+import { PROFILE } from '@/mocks/data/guestBook'
 
 const meta = {
   title: 'components/guest book/GuestBookProfile',
   component: GuestBookProfile,
   tags: ['autodocs'],
   args: {
-    nickname: Profile.nickname,
-    achievementId: Profile.achievement.id,
-    imagePath: Profile.imagePath,
-    introduction: Profile.introduction,
-    birthday: Profile.birthday,
+    nickname: PROFILE.nickname,
+    achievementId: PROFILE.achievement.id,
+    imagePath: PROFILE.imagePath,
+    introduction: PROFILE.introduction,
+    birthday: PROFILE.birthday,
   },
   decorators: [withRouter],
 } satisfies Meta<typeof GuestBookProfile>
