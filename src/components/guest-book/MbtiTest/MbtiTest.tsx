@@ -1,4 +1,4 @@
-import { css, type Theme } from '@emotion/react'
+import { css } from '@emotion/react'
 import MbtiChart from '../MbtiChart'
 import WavyButton from '../WavyButton/WavyButton'
 import { useState } from 'react'
