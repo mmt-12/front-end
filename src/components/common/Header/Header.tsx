@@ -7,7 +7,6 @@ export default function Header() {
   const { leftItem, rightItem, routeName } = useHeaderStore()
   useEffect(() => {
     return () => {
-      console.log('Header unmounted')
       useHeaderStore.setState({
         leftItem: { icon: null, onClick: () => {} },
         rightItem: { icon: null, onClick: () => {} },
