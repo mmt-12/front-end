@@ -5,38 +5,26 @@ import defaultImageUrl from '@/assets/mascot/default-profile.png'
 import { formatDate } from '@/utils/date'
 import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '@/routes/ROUTES'
-import { GalleryAdd, PenNewSquare, UsersGroupRounded } from '@solar-icons/react'
-import { useUserStore } from '@/store/userStore'
-import useHeader from '@/hooks/useHeader'
-import { PROFILE } from '@/mocks/data/guestBook'
+import { GalleryAdd } from '@solar-icons/react'
 
-export default function GuestBookProfile() {
-  const { birthDate } = useUserStore()
+interface Props {
+  nickname: string
+  achievementId: number
+  imagePath: string
+  introduction: string
+  birthday: string
+  isMyProfile: boolean
+}
+
+export default function GuestBookProfile({
+  nickname,
+  achievementId,
+  imagePath,
+  introduction,
+  birthday,
+  isMyProfile,
+}: Props) {
   const navigate = useNavigate()
-
-  const profileData = PROFILE
-  const {
-    nickname,
-    birthday,
-    imagePath,
-    introduction,
-    achievement: { id: achievementId },
-  } = profileData
-  const isMyPage = birthDate === birthday
-
-  useHeader({
-    routeName: '방명록',
-    leftItem: {
-      icon: UsersGroupRounded,
-      onClick: () => console.log('Group clicked'),
-    },
-    rightItem: isMyPage
-      ? {
-          icon: PenNewSquare,
-          onClick: () => navigate(ROUTES.EDIT_PROFILE),
-        }
-      : undefined,
-  })
 
   const handleButtonClick = () => {
     navigate(ROUTES.ADD_PROFILE_IMAGE)
@@ -60,7 +48,7 @@ export default function GuestBookProfile() {
             css={imageStyle}
           />
         </WavyBox>
-        {!isMyPage && (
+        {!isMyProfile && (
           <button css={buttonStyle} onClick={handleButtonClick}>
             <GalleryAdd size={26} color='white' weight='Bold' />
           </button>

@@ -28,7 +28,7 @@ export const ACHIEVEMENTS = [
     id: 4,
     name: 'FFFFFF',
     condition: 'F가 들어간 모든 MBTI 획득',
-    isObtained: true,
+    isObtained: false,
     type: 'RESTRICTED',
   },
   {
@@ -53,3 +53,22 @@ export const ACHIEVEMENTS = [
     type: 'HIDDEN',
   },
 ] as const
+
+export const MBTI = {
+  INFP: 0,
+  INFJ: 0,
+  INTP: 4,
+  INTJ: 5,
+  ISFP: 0,
+  ISFJ: 0,
+  ISTP: 3,
+  ISTJ: 10,
+  ENFP: 0,
+  ENFJ: 0,
+  ENTP: 2,
+  ENTJ: 1,
+  ESFP: 0,
+  ESFJ: 0,
+  ESTP: 0,
+  ESTJ: 0,
+} as const

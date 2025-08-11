@@ -25,9 +25,9 @@ export default function WavyBox({
         <filter id='wavy-border'>
           <feTurbulence
             type='turbulence'
-            baseFrequency='0.15'
-            numOctaves='2'
-            seed='1'
+            baseFrequency='0.06'
+            numOctaves='1'
+            seed='2'
             stitchTiles='stitch'
           />
           <feDisplacementMap
