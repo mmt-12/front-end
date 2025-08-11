@@ -20,7 +20,7 @@ export default function Card({
   return (
     <WavyBox
       strokeColor={theme.stone[600]}
-      strokeWidth={2.5}
+      strokeWidth={2.2}
       backgroundColor='white'
       borderRadius={16}
       customCss={css([containerStyle, customCss])}

@@ -16,7 +16,7 @@ export default function Badge({ id }: Props) {
       strokeColor={BADGES[id].border}
       strokeWidth={1.5}
       backgroundColor={BADGES[id].backgroundColor}
-      borderRadius={20}
+      borderRadius={16}
     >
       <div css={badgeStyle(BADGES[id].color)} className='stardust'>
         <Icon size={16} color={BADGES[id].color} weight='Bold' />
