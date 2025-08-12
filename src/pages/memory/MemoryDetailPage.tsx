@@ -1,8 +1,8 @@
 import Chip from '@/components/common/Chip'
 import MemoryInfo from '@/components/memory/MemoryInfo'
 import Post from '@/components/memory/Post'
-import { MEMBERS } from '@/mocks/data/members'
 import { MEMORIES } from '@/mocks/data/memories'
+import { POST } from '@/mocks/data/post'
 import { css } from '@emotion/react'
 import { DownloadSquare } from '@solar-icons/react'
 
@@ -26,34 +26,7 @@ export default function MemoryDetailPage() {
       </header>
       <ol>
         <li>
-          <Post
-            id={'1'}
-            images={[
-              '/test_images/image1.png',
-              '/test_images/image2.png',
-              '/test_images/image3.png',
-            ]}
-            content='첫 번째 포스트 내용입니다.'
-            author={MEMBERS[4]}
-            createdAt={new Date('2025-06-20T12:00:00')}
-          />
-        </li>
-        <li>
-          <Post
-            id={'2'}
-            images={[
-              '/test_images/image1.png',
-              '/test_images/image1.png',
-              '/test_images/image1.png',
-            ]}
-            content='두 번째 포스트 내용입니다.'
-            author={{
-              id: '2',
-              name: '김철수',
-              imageUrl: '/test_images/image4.png',
-            }}
-            createdAt={new Date('2025-06-20T12:00:00')}
-          />
+          <Post {...POST} />
         </li>
       </ol>
     </div>
