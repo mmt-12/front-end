@@ -8,15 +8,10 @@ import {
   Box,
   CalendarMinimalistic,
   PointOnMap,
-  SmileSquare,
-  Soundwave,
-  UsersGroupRounded,
 } from '@solar-icons/react'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import BottomDrawer from '../BottomDrawer'
-import Button from '../Button'
-import { theme } from '@/styles/theme'
+import CreateButtonsModal from '../CreateButtonsModal/CreateButtonsModal'
 
 export default function NavBar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -51,43 +46,10 @@ export default function NavBar() {
           to={ROUTES.GUEST_BOOK(user.id)}
         />
       </div>
-      <BottomDrawer isOpen={isDrawerOpen} close={() => setIsDrawerOpen(false)}>
-        <span
-          style={{
-            fontWeight: 'bold',
-            fontSize: '16px',
-            color: theme.stone[800],
-          }}
-        >
-          생성하기
-        </span>
-        <div css={contentStyle}>
-          <Button
-            type='primary'
-            size='md'
-            label='기억'
-            icon={<Box weight='Bold' size={28} />}
-          />
-          <Button
-            type='secondary'
-            size='md'
-            label='이모티콘'
-            icon={<SmileSquare weight='Bold' size={28} />}
-          />
-          <Button
-            type='disabled'
-            size='md'
-            label='약속'
-            icon={<UsersGroupRounded weight='Bold' size={28} />}
-          />
-          <Button
-            type='secondary'
-            size='md'
-            label='보이스'
-            icon={<Soundwave weight='Bold' size={28} />}
-          />
-        </div>
-      </BottomDrawer>
+      <CreateButtonsModal
+        isDrawerOpen={isDrawerOpen}
+        setIsDrawerOpen={setIsDrawerOpen}
+      />
     </>
   )
 }
@@ -158,10 +120,3 @@ const addButtonStyle = (theme: Theme) =>
     color: theme.sky[500],
     backgroundColor: 'transparent',
   })
-
-const contentStyle = css({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
-  gap: '16px',
-  width: '100%',
-})
