@@ -1,7 +1,7 @@
 import { useUserStore } from '@/store/userStore'
 import { css } from '@emotion/react'
 import { useEffect, useState } from 'react'
-import greetingMascot from '@/assets/mascot/greeting.png'
+import greetingMascot from '@/assets/images/mascot/greeting.png'
 import { MEMBERS } from '@/consts/SSAFY_12_MEMBERS'
 import { signupTitleStyle } from '@/styles/signupTitle'
 import { modalStyle } from '@/styles/modal'

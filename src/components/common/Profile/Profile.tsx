@@ -1,6 +1,6 @@
 import { css, type Theme } from '@emotion/react'
 import Badge from '../Badge'
-import defaultImageUrl from '@/assets/mascot/default-profile.png'
+import defaultImageUrl from '@/assets/images/mascot/default-profile.png'
 import type { IMember } from '@/types'
 
 export interface Props extends IMember {
