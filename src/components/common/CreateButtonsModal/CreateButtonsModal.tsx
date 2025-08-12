@@ -7,6 +7,7 @@ import {
 import BottomDrawer from '../BottomDrawer'
 import Button from '../Button'
 import { css, useTheme } from '@emotion/react'
+import { useCelebration } from '@/hooks/useCelebration'
 
 interface Props {
   isDrawerOpen: boolean
@@ -18,6 +19,7 @@ export default function CreateButtonsModal({
   setIsDrawerOpen,
 }: Props) {
   const theme = useTheme()
+  const { triggerCelebration } = useCelebration()
   return (
     <BottomDrawer isOpen={isDrawerOpen} close={() => setIsDrawerOpen(false)}>
       <span
@@ -35,6 +37,13 @@ export default function CreateButtonsModal({
           size='md'
           label='기억'
           icon={<Box weight='Bold' size={28} />}
+          onClick={async () => {
+            await triggerCelebration({
+              title: '업적 달성!',
+              message: '축하드립니다. 첫 기억 생성 업적을 달성했어요!',
+            })
+            console.log('팝업 닫힘')
+          }}
         />
         <Button
           type='secondary'

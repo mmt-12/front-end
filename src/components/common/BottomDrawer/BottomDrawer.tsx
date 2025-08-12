@@ -25,7 +25,7 @@ const backgroundStyle = css({
   width: '100%',
   height: '100%',
   backgroundColor: 'rgba(0, 0, 0, 0.25)',
-  zIndex: 1000,
+  zIndex: 10,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'flex-end',
