@@ -1,36 +1,27 @@
-import MemberImageCountChips from '@/components/memory/MemberImageCountChips'
+import Chip from '@/components/common/Chip'
+import MemoryInfo from '@/components/memory/MemoryInfo'
 import Post from '@/components/memory/Post'
 import { MEMBERS } from '@/mocks/data/members'
-import { css, useTheme, type Theme } from '@emotion/react'
+import { MEMORIES } from '@/mocks/data/memories'
+import { css } from '@emotion/react'
 import { DownloadSquare } from '@solar-icons/react'
 
+const MEMORY = MEMORIES[0]
 export default function MemoryDetailPage() {
-  const theme = useTheme()
   return (
     <div className='no-scrollbar'>
       <header css={headerStyle}>
-        <div css={titleRowStyle}>
-          <div className='left-info'>
-            <h1>양평 엠티</h1>
-            <div css={metaStyle}>
-              <p>경기도 양평시 양평군</p>
-              <p>2025.06.20 - 2025.06.21</p>
-            </div>
+        <MemoryInfo {...MEMORY} />
+        <div css={descriptionRowStyle}>
+          <div>
+            <p>우리가 함께 마신 소주와 수영장 물을 기억하며</p>
           </div>
-          <div className='right-info'>
-            <MemberImageCountChips memberCount={5} imageCount={10} />
-            <button css={chipStyle}>
-              <DownloadSquare
-                weight='Bold'
-                color={theme.stone[700]}
-                size={20}
-              />
-              사진 모두 저장
-            </button>
-          </div>
-        </div>
-        <div>
-          <p>우리가 함께 마신 소주와 수영장 물을 기억하며</p>
+          <Chip
+            Icon={DownloadSquare}
+            label='사진 모두 저장'
+            onClick={() => console.log('save all')}
+            customCss={chipCustomStyle}
+          />
         </div>
       </header>
       <ol>
@@ -76,46 +67,12 @@ const headerStyle = css({
   gap: '8px',
 })
 
-const titleRowStyle = css({
+const descriptionRowStyle = css({
   display: 'flex',
+  alignItems: 'center',
   justifyContent: 'space-between',
-  marginBottom: '1rem',
-  h1: {
-    fontSize: '22px',
-  },
-  '.left-info': {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    gap: '12px',
-  },
-  '.right-info': {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'end',
-  },
 })
 
-const metaStyle = (theme: Theme) =>
-  css({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '2px',
-    p: {
-      fontSize: '14px',
-      color: theme.stone[700],
-    },
-  })
-
-const chipStyle = (theme: Theme) =>
-  css({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '4px',
-    padding: '5px 10px',
-    borderRadius: '16px',
-    backgroundColor: theme.stone[150],
-    color: theme.stone[900],
-    border: `1px solid ${theme.stone[600]}`,
-  })
+const chipCustomStyle = css({
+  padding: '6px 12px',
+})

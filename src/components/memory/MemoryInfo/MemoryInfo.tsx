@@ -1,6 +1,6 @@
 import { css, type Theme } from '@emotion/react'
-import MemberImageCountChips from '../MemberImageCountChips/MemberImageCountChips'
-import { color } from 'storybook/internal/theming'
+import Chip from '@/components/common/Chip'
+import { GalleryCircle, UserCircle } from '@solar-icons/react'
 
 interface Props {
   title: string
@@ -17,10 +17,10 @@ export default function MemoryInfo(props: Props) {
     <div css={infoStyle}>
       <div css={titleRowStyle}>
         <h2>{props.title}</h2>
-        <MemberImageCountChips
-          memberCount={props.memberCount}
-          imageCount={props.imageCount}
-        />
+        <div css={countChipsStyle}>
+          <Chip Icon={UserCircle} label={props.memberCount} />
+          <Chip Icon={GalleryCircle} label={props.imageCount} />
+        </div>
       </div>
       <div css={metaRowStyle}>
         <p className='location'>{props.location}</p>
@@ -71,6 +71,12 @@ const metaRowStyle = (theme: Theme) =>
       fontSize: '14px',
     },
   })
+
+const countChipsStyle = css({
+  display: 'flex',
+  gap: '8px',
+  alignItems: 'center',
+})
 
 const descriptionStyle = (theme: Theme) => ({
   padding: '8px 0',
