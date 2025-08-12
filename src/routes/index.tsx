@@ -7,17 +7,17 @@ import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { ROUTES } from './ROUTES'
 
 import LoginPage from '@/pages/LoginPage'
-import MemoryListPage from '@/pages/MemoryListPage'
+import MemoryListPage from '@/pages/memory/MemoryListPage'
 import MapPage from '@/pages/MapPage'
 import CalendarPage from '@/pages/CalendarPage'
-import GuestBookPage from '@/pages/GuestBookPage'
+import GuestBookPage from '@/pages/guest-book/GuestBookPage'
 import NotificationPage from '@/pages/NotificationPage'
 import SignupPage from '@/pages/SignupPage'
-import MemoryDetailPage from '@/pages/MemoryDetailPage'
-import EditProfilePage from '@/pages/EditProfilePage'
-import AddProfileImagePage from '@/pages/AddProfileImagePage'
-import PostDetailPage from '@/pages/PostDetailPage'
+import MemoryDetailPage from '@/pages/memory/MemoryDetailPage'
+import EditProfilePage from '@/pages/guest-book/EditProfilePage'
+import AddProfileImagePage from '@/pages/guest-book/AddProfileImagePage'
 import { ErrorBoundary } from '@/pages/ErrorBoundary'
+import PostDetailPage from '@/pages/memory/PostDetailPage'
 
 const router = createBrowserRouter([
   {
