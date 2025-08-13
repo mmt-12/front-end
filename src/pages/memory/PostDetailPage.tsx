@@ -17,7 +17,7 @@ export default function PostDetailPage() {
     },
   })
   const postContent = {
-    id: '1',
+    id: 1,
     images: [
       '/test_images/image1.png',
       '/test_images/image2.png',
@@ -28,13 +28,13 @@ export default function PostDetailPage() {
     createdAt: new Date('2025-06-20T12:00:00'),
   }
 
-  const handleReactionClick = (e: React.MouseEvent, id: string) => {
+  const handleReactionClick = (e: React.MouseEvent, id: number) => {
     e.stopPropagation()
     console.log(`Reaction clicked: ${id}`)
   }
 
   const selectedReaction = {
-    id: '1',
+    id: 1,
     name: 'like',
     url: '/test_images/image1.png',
     amount: 15,

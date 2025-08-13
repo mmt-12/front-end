@@ -16,7 +16,7 @@ import CreateButtonsModal from '../CreateButtonsModal/CreateButtonsModal'
 export default function NavBar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const user = {
-    id: 'user-id',
+    id: 123,
     name: '사용자 이름',
   }
   return (

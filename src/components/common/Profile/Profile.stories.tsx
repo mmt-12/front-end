@@ -19,12 +19,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    name: MEMBERS[0].name,
-    imageUrl: MEMBERS[0].imageUrl,
-    badgeId: MEMBERS[0].badgeId,
-    description: MEMBERS[0].description,
-  },
+  args: MEMBERS[0],
   play: async ({ args, canvas }) => {
     expect(canvas.getByText(args.name)).toBeInTheDocument()
 
@@ -42,9 +37,7 @@ export const Default: Story = {
 
 export const Small: Story = {
   args: {
-    name: MEMBERS[1].name,
-    imageUrl: MEMBERS[1].imageUrl,
-    badgeId: MEMBERS[1].badgeId,
+    ...MEMBERS[1],
     size: 'sm',
   },
 }

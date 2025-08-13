@@ -1,24 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import MemoryListItem from './MemoryListItem'
 import { withRouter } from 'storybook-addon-remix-react-router'
+import { MEMORIES } from '@/mocks/data/memories'
 
 const meta = {
   title: 'components/memory/MemoryListItem',
   component: MemoryListItem,
-  args: {
-    id: 'memory-1',
-    title: '양평 엠티',
-    location: '경기도 양평시 양평군',
-    startDate: '2025.06.20',
-    endDate: '2025.06.21',
-    images: [
-      '/test_images/image1.png',
-      '/test_images/image2.png',
-      '/test_images/image3.png',
-    ],
-    memberCount: 5,
-    imageCount: 10,
-  },
+  args: MEMORIES[0],
   decorators: [withRouter],
 } satisfies Meta<typeof MemoryListItem>
 

@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     size: 'md',
-    id: '1',
+    id: 1,
     url: '/test_images/image1.png',
     name: 'Smile',
     amount: undefined,
@@ -28,7 +28,7 @@ export const Default: Story = {
 export const Reacted: Story = {
   args: {
     size: 'md',
-    id: '2',
+    id: 2,
     url: '/test_images/image2.png',
     name: 'Laugh',
     iReacted: true,
@@ -42,7 +42,7 @@ export const Reacted: Story = {
 export const WithAmount: Story = {
   args: {
     size: 'md',
-    id: '3',
+    id: 3,
     url: '/test_images/image3.png',
     name: 'Heart',
     amount: 10,
@@ -56,7 +56,7 @@ export const WithAmount: Story = {
 export const Active: Story = {
   args: {
     size: 'md',
-    id: '3',
+    id: 3,
     url: '/test_images/image3.png',
     name: 'Heart',
     amount: 5,

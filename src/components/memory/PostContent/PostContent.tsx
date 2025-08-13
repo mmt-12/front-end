@@ -7,7 +7,7 @@ import { css, type Theme } from '@emotion/react'
 import { Link } from 'react-router-dom'
 
 export interface Props {
-  id: string | number
+  id: number
   author: IMember
   createdAt: Date
   images: string[]
