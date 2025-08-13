@@ -16,7 +16,10 @@ export interface Props {
 }
 
 export default function Post(props: Props) {
-  const handleReactionClick = (e: MouseEvent<HTMLDivElement>, id: number) => {
+  const handleReactionClick = (
+    e: MouseEvent<HTMLButtonElement>,
+    id: number,
+  ) => {
     e.stopPropagation()
     console.log(`Reaction clicked: ${id}`)
   }

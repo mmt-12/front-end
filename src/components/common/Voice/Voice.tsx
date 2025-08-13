@@ -35,7 +35,7 @@ export default function Voice({
     }
   }
   return (
-    <div
+    <button
       css={containerStyle(theme, iReacted, isActive, !!amount)}
       onClick={e => onClick(e, id)}
     >
@@ -51,7 +51,7 @@ export default function Voice({
       </div>
       {amount && <span>{amount}</span>}
       <audio src={audioUrl} ref={audioRef} />
-    </div>
+    </button>
   )
 }
 
