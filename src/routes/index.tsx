@@ -17,11 +17,13 @@ import MemoryDetailPage from '@/pages/MemoryDetailPage'
 import EditProfilePage from '@/pages/EditProfilePage'
 import AddProfileImagePage from '@/pages/AddProfileImagePage'
 import PostDetailPage from '@/pages/PostDetailPage'
+import { ErrorBoundary } from '@/pages/ErrorBoundary'
 
 const router = createBrowserRouter([
   {
     path: ROUTES.LOGIN,
     Component: () => <PlainLayout />,
+    errorElement: <ErrorBoundary />,
     children: [
       {
         index: true,
@@ -36,6 +38,7 @@ const router = createBrowserRouter([
   {
     path: ROUTES.MEMORY_DETAIL(':id'),
     Component: () => <NavBarLayout />,
+    errorElement: <ErrorBoundary />,
     children: [
       {
         index: true,
@@ -46,6 +49,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     Component: () => <DefaultLayout />,
+    errorElement: <ErrorBoundary />,
     children: [
       { index: true, element: <Navigate to={ROUTES.MEMORY_LIST} replace /> },
       {
@@ -68,6 +72,7 @@ const router = createBrowserRouter([
   },
   {
     Component: () => <HeaderLayout />,
+    errorElement: <ErrorBoundary />,
     children: [
       {
         path: ROUTES.NOTIFICATION,

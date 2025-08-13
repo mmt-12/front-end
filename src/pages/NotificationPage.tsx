@@ -8,5 +8,7 @@ export default function NotificationPage() {
     },
   })
 
-  return <div>notification page</div>
+  throw new Error('(test) 알림함 페이지는 아직 개발 중입니다.')
+
+  return <div>notification pages</div>
 }
