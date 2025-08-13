@@ -12,7 +12,7 @@ import ArraySelector from '../ArraySelector'
 import Badge from '@/components/common/Badge'
 import Profile from '@/components/common/Profile'
 import { BADGES } from '@/consts/BADGES'
-import { MEMBERS } from '@/mocks/data/MEMBERS'
+import { MEMBERS } from '@/mocks/data/members'
 import { expect } from 'storybook/test'
 
 const meta = {
@@ -60,9 +60,9 @@ export const Array: Story = {
       <ArraySelector
         renderPreview
         items={Object.entries(BADGES).map(([id, badge]) => ({
-          id,
+          id: Number(id),
           label: badge.name,
-          render: () => <Badge id={parseInt(id)} />,
+          render: () => <Badge id={Number(id)} />,
         }))}
         onSelect={val => console.log('선택된 아이템:', val)}
       />
@@ -83,6 +83,7 @@ export const MultipleArray: Story = {
           label: member.name,
           render: () => (
             <Profile
+              id={member.id}
               name={member.name}
               imageUrl={member.imageUrl}
               badgeId={member.badgeId}

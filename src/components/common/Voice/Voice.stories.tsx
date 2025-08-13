@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     size: 'md',
-    id: '1',
+    id: 1,
     url: '/test_voices/voice1.mp3',
     content: '하.하.하.하.하',
     name: 'Smile',
@@ -29,7 +29,7 @@ export const Default: Story = {
 export const Reacted: Story = {
   args: {
     size: 'md',
-    id: '2',
+    id: 2,
     url: '/test_voices/voice2.mp3',
     content: '하.하.하.하.하',
     name: 'Laugh',
@@ -44,7 +44,7 @@ export const Reacted: Story = {
 export const WithAmount: Story = {
   args: {
     size: 'md',
-    id: '3',
+    id: 3,
     url: '/test_voices/voice3.mp3',
     name: 'Heart',
     amount: 10,
@@ -59,7 +59,7 @@ export const WithAmount: Story = {
 export const Active: Story = {
   args: {
     size: 'md',
-    id: '3',
+    id: 3,
     url: '/test_voices/voice3.mp3',
     name: 'Heart',
     amount: 5,

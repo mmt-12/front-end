@@ -2,7 +2,7 @@ import type { IMemoryInfo } from '@/types/memory'
 
 export const MEMORIES: IMemoryInfo[] = [
   {
-    id: '1',
+    id: 1,
     title: '양평 엠티',
     location: '경기도 양평시 양평군',
     description: '2023년 양평에서의 멋진 MT',
@@ -23,7 +23,7 @@ export const MEMORIES: IMemoryInfo[] = [
     ],
   },
   {
-    id: '2',
+    id: 2,
     title: '강남 치킨',
     location: '서울특별시 강남구 강남대로',
     description: '강남에서의 치킨 파티',

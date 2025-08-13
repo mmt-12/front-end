@@ -2,7 +2,7 @@ import Button from '@/components/common/Button'
 import { ROUTES } from '@/routes/ROUTES'
 import { css, type Theme } from '@emotion/react'
 import { Link, useRouteError } from 'react-router-dom'
-import errorImage from '@/assets/mascot/error.png'
+import errorImage from '@/assets/images/mascot/error.png'
 
 export function ErrorBoundary() {
   const error = useRouteError() as Error

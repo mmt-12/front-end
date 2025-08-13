@@ -12,7 +12,7 @@ export default function MemoryListItem(props: Props) {
   return (
     <Link
       to={ROUTES.MEMORY_DETAIL(props.id)}
-      css={containerStyle(props.isGrid)}
+      css={containerStyle(!!props.isGrid)}
     >
       <MemoryInfo
         {...props}

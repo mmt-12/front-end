@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import MemoryListItem from './MemoryListItem'
+import Post from './Post'
 import { withRouter } from 'storybook-addon-remix-react-router'
-import { MEMORIES } from '@/mocks/data/memories'
+import { POST } from '@/mocks/data/post'
 
 const meta = {
-  title: 'components/memory/MemoryListItem',
-  component: MemoryListItem,
-  args: MEMORIES[0],
+  title: 'components/memory/Post',
+  component: Post,
+  args: POST,
   decorators: [withRouter],
-} satisfies Meta<typeof MemoryListItem>
+} satisfies Meta<typeof Post>
 
 export default meta
 

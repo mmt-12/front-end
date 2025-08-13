@@ -8,7 +8,7 @@ import { emojies, voices } from '@/mocks/data/reaction'
 import type { IMember } from '@/types'
 
 export interface Props {
-  id: string
+  id: number
   images: string[]
   content: string
   author: IMember
@@ -16,7 +16,7 @@ export interface Props {
 }
 
 export default function Post(props: Props) {
-  const handleReactionClick = (e: MouseEvent<HTMLDivElement>, id: string) => {
+  const handleReactionClick = (e: MouseEvent<HTMLDivElement>, id: number) => {
     e.stopPropagation()
     console.log(`Reaction clicked: ${id}`)
   }

@@ -13,15 +13,16 @@ export default function ReactBar() {
 
 const containerStyle = (theme: Theme) =>
   css({
-    position: 'fixed',
-    bottom: '16px',
-    right: '20px',
     zIndex: 20,
+    position: 'fixed',
+    bottom: '24px',
+    right: '0%',
+    marginRight: `calc(calc(calc(100vw - min(${theme.maxWidth}, 100vw)) / 2) + 24px)`,
 
-    padding: '10px 12px',
+    padding: '10px 16px',
 
     display: 'flex',
-    gap: '20px',
+    gap: '24px',
 
     backgroundColor: theme.white,
     borderRadius: '24px',

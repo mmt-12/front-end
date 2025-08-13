@@ -1,7 +1,7 @@
 import Badge from '@/components/common/Badge'
 import WavyBox from '@/components/common/WavyBox'
 import { css, type Theme } from '@emotion/react'
-import defaultImageUrl from '@/assets/mascot/default-profile.png'
+import defaultImageUrl from '@/assets/images/mascot/default-profile.png'
 import { formatDate } from '@/utils/date'
 import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '@/routes/ROUTES'

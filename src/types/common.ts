@@ -27,7 +27,7 @@ export interface ILocationInput extends IBaseInput {
 }
 
 export interface IArrayItem extends IBaseInput {
-  id: string
+  id: number
   label: string
   selected?: boolean
 }
@@ -37,9 +37,9 @@ export interface IArrayInput extends IBaseInput {
 }
 
 export interface IMember {
-  id: string
+  id: number
   name: string
   imageUrl?: string
-  badgeId?: string
+  badgeId?: number
   description?: string
 }

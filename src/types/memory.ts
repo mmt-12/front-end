@@ -1,5 +1,5 @@
 export interface IMemoryInfo {
-  id: string
+  id: number
   title: string
   location: string
   memberCount: number
