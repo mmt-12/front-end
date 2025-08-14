@@ -8,5 +8,5 @@ export interface IReaction {
   amount?: number
   isActive?: boolean
   iReacted?: boolean
-  onClick: (_e: MouseEvent<HTMLButtonElement>, _id: number) => void
+  onClick: (_e: MouseEvent<HTMLDivElement>, _id: number) => void
 }
