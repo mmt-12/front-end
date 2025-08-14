@@ -12,7 +12,7 @@ export default function Emoji({
 }: IReaction) {
   const theme = useTheme()
   return (
-    <button
+    <div
       onClick={e => onClick(e, id)}
       css={containerStyle(theme, iReacted, isActive, !!amount)}
     >
@@ -20,7 +20,7 @@ export default function Emoji({
         <img src={imageUrl} alt='Emoji' css={imageStyle} />
       </div>
       {amount != null && <p>{amount}</p>}
-    </button>
+    </div>
   )
 }
 
