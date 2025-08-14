@@ -24,18 +24,16 @@ export default function Voice({
     e.stopPropagation()
     if (audioRef.current) {
       if (audioRef.current.paused) {
-        console.log(`Clicked Play for id: ${id}`)
         setIsPlaying(true)
         audioRef.current.play()
       } else {
-        console.log(`Clicked Pause for id: ${id}`)
         setIsPlaying(false)
         audioRef.current.pause()
       }
     }
   }
   return (
-    <button
+    <div
       css={containerStyle(theme, iReacted, isActive, !!amount)}
       onClick={e => onClick(e, id)}
     >
@@ -50,8 +48,12 @@ export default function Voice({
         <p className='stardust'>{content}</p>
       </div>
       {amount && <span>{amount}</span>}
-      <audio src={audioUrl} ref={audioRef} />
-    </button>
+      <audio
+        src={audioUrl}
+        ref={audioRef}
+        onEnded={() => setIsPlaying(false)}
+      />
+    </div>
   )
 }
 
