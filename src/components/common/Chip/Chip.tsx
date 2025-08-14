@@ -33,7 +33,7 @@ const chipStyle = (theme: Theme, clickable: boolean) =>
     gap: '4px',
     flexShrink: 0,
 
-    borderRadius: '20px',
+    borderRadius: '14px',
     backgroundColor: theme.stone[150],
     border: clickable ? `1px solid ${theme.stone[800]}` : 'none',
 
