@@ -26,11 +26,13 @@ export default function Chip({ label, onClick, Icon, customCss }: Props) {
 const chipStyle = (theme: Theme, clickable: boolean) =>
   css({
     width: 'fit-content',
+    padding: '3px 6px',
 
     display: 'flex',
     alignItems: 'center',
     gap: '4px',
-    padding: '3px 6px',
+    flexShrink: 0,
+
     borderRadius: '20px',
     backgroundColor: theme.stone[150],
     border: clickable ? `1px solid ${theme.stone[800]}` : 'none',

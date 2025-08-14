@@ -1,7 +1,6 @@
 import PlainLayout from '@/layouts/PlainLayout'
 import DefaultLayout from '@/layouts/DefaultLayout'
 import HeaderLayout from '@/layouts/HeaderLayout'
-import NavBarLayout from '@/layouts/NavBarLayout'
 
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { ROUTES } from './ROUTES'
@@ -36,17 +35,6 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: ROUTES.MEMORY_DETAIL(':id'),
-    Component: () => <NavBarLayout />,
-    errorElement: <ErrorBoundary />,
-    children: [
-      {
-        index: true,
-        element: <MemoryDetailPage />,
-      },
-    ],
-  },
-  {
     path: '/',
     Component: () => <DefaultLayout />,
     errorElement: <ErrorBoundary />,
@@ -55,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.MEMORY_LIST,
         element: <MemoryListPage />,
+      },
+      {
+        path: ROUTES.MEMORY_DETAIL(':id'),
+        element: <MemoryDetailPage />,
       },
       {
         path: ROUTES.MAP,

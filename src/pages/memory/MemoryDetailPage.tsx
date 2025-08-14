@@ -1,6 +1,7 @@
 import Chip from '@/components/common/Chip'
 import MemoryInfo from '@/components/memory/MemoryInfo'
 import Post from '@/components/memory/Post'
+import useHeader from '@/hooks/useHeader'
 import { MEMORIES } from '@/mocks/data/memories'
 import { POST } from '@/mocks/data/post'
 import { css } from '@emotion/react'
@@ -8,14 +9,14 @@ import { DownloadSquare } from '@solar-icons/react'
 
 const MEMORY = MEMORIES[0]
 export default function MemoryDetailPage() {
+  useHeader({
+    routeName: MEMORY.title,
+  })
   return (
     <div className='no-scrollbar'>
       <header css={headerStyle}>
         <MemoryInfo {...MEMORY} />
-        <div css={descriptionRowStyle}>
-          <div>
-            <p>우리가 함께 마신 소주와 수영장 물을 기억하며</p>
-          </div>
+        <div css={saveButtonRowStyle}>
           <Chip
             Icon={DownloadSquare}
             label='사진 모두 저장'
@@ -25,9 +26,9 @@ export default function MemoryDetailPage() {
         </div>
       </header>
       <ol>
-        <li>
-          <Post {...POST} />
-        </li>
+        <Post {...POST} />
+        <Post {...POST} />
+        <Post {...POST} />
       </ol>
     </div>
   )
@@ -40,10 +41,13 @@ const headerStyle = css({
   gap: '8px',
 })
 
-const descriptionRowStyle = css({
+const saveButtonRowStyle = css({
+  padding: '3px 6px',
+
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between',
+  justifyContent: 'flex-end',
+  gap: '12px',
 })
 
 const chipCustomStyle = css({
