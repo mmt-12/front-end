@@ -1,14 +1,6 @@
 import { theme } from '@/styles/theme'
-import { css, type SerializedStyles } from '@emotion/react'
-
-interface Props {
-  label: string
-  icon?: React.ReactNode
-  type?: 'primary' | 'secondary' | 'disabled'
-  size?: 'sm' | 'md' | 'lg' | 'full'
-  onClick?: () => void
-  customCss?: SerializedStyles
-}
+import type { ButtonProps } from '@/types'
+import { css } from '@emotion/react'
 
 export default function Button({
   label,
@@ -17,7 +9,7 @@ export default function Button({
   size = 'full',
   onClick,
   customCss,
-}: Props) {
+}: ButtonProps) {
   return (
     <button
       css={[buttonStyle, sizeStyles[size], typeStyles(type, size), customCss]}
@@ -71,7 +63,7 @@ const sizeStyles = {
   }),
 }
 
-const typeStyles = (type: Props['type'], size: Props['size']) => {
+const typeStyles = (type: ButtonProps['type'], size: ButtonProps['size']) => {
   if (type === 'primary') {
     return css({
       backgroundColor: theme.sky[500],

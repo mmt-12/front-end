@@ -52,6 +52,7 @@ export default function InputPopup<T extends IBaseInput>({
         </div>
         {<Icon weight='Bold' size={24} color={theme.stone[400]} />}
       </button>
+
       {showPopup && (
         <PopupModal title={label} onClose={() => setShowPopup(false)}>
           {cloneElement(
@@ -90,17 +91,20 @@ const labelStyle = (theme: Theme) =>
 
 const buttonStyle = (theme: Theme) =>
   css({
+    padding: '14px 12px',
+
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '14px 12px',
+
+    color: theme.stone[700],
+    fontSize: '15px',
     border: 'none',
     borderRadius: '12px',
-    backgroundColor: theme.white,
-    color: theme.stone[700],
-    fontSize: '14px',
-    cursor: 'pointer',
     outline: `2px solid ${theme.stone[400]}`,
+    backgroundColor: theme.white,
+    cursor: 'pointer',
+
     transition: 'outline 0.1s ease-in-out',
 
     '&:hover': {

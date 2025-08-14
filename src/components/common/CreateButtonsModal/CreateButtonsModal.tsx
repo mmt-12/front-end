@@ -7,7 +7,8 @@ import {
 import BottomDrawer from '../BottomDrawer'
 import Button from '../Button'
 import { css, useTheme } from '@emotion/react'
-import { useCelebration } from '@/hooks/useCelebration'
+import { Link } from 'react-router-dom'
+import { ROUTES } from '@/routes/ROUTES'
 
 interface Props {
   isDrawerOpen: boolean
@@ -19,7 +20,6 @@ export default function CreateButtonsModal({
   setIsDrawerOpen,
 }: Props) {
   const theme = useTheme()
-  const { triggerCelebration } = useCelebration()
   return (
     <BottomDrawer isOpen={isDrawerOpen} close={() => setIsDrawerOpen(false)}>
       <span
@@ -32,19 +32,14 @@ export default function CreateButtonsModal({
         생성하기
       </span>
       <div css={contentStyle}>
-        <Button
-          type='primary'
-          size='md'
-          label='기억'
-          icon={<Box weight='Bold' size={28} />}
-          onClick={async () => {
-            await triggerCelebration({
-              title: '업적 달성!',
-              message: '축하드립니다. 첫 기억 생성 업적을 달성했어요!',
-            })
-            console.log('팝업 닫힘')
-          }}
-        />
+        <Link to={ROUTES.MEMORY_REGISTER}>
+          <Button
+            type='primary'
+            size='md'
+            label='기억'
+            icon={<Box weight='Bold' size={28} />}
+          />
+        </Link>
         <Button
           type='secondary'
           size='md'

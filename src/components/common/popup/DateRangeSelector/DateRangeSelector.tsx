@@ -1,14 +1,13 @@
 import { useMemo, useState } from 'react'
-import Button from '@/components/common/Button'
 import type { IDateRangeInput } from '@/types'
 import { css, useTheme } from '@emotion/react'
 import type { Theme } from '@emotion/react'
 import { AltArrowLeft, AltArrowRight } from '@solar-icons/react'
 import DayCell from './DayCell'
-import { fixedWithMargin } from '@/styles/fixed'
+import BottomButton from '../../BottomButton'
 
 interface Props {
-  onSelect: (_range: IDateRangeInput) => void
+  onSelect?: (_range: IDateRangeInput) => void
 }
 
 export default function DateRangeSelector({ onSelect }: Props) {
@@ -169,37 +168,35 @@ export default function DateRangeSelector({ onSelect }: Props) {
         </table>
       </div>
 
-      <div css={[fixedWithMargin(16), { bottom: '20px' }]}>
-        {selectedStart ? (
-          <Button
-            type='secondary'
-            onClick={() => {
-              onSelect({
-                startDate: startDateString,
-                endDate: endDateString ? endDateString : startDateString,
-                render: () => (
-                  <span>
-                    {endDateString
-                      ? startDateString == endDateString
-                        ? `${startDateString}`
-                        : `${startDateString} - ${endDateString}`
-                      : `${startDateString}`}
-                  </span>
-                ),
-              })
-            }}
-            label={
-              endDateString
-                ? startDateString == endDateString
-                  ? `${startDateString}으로 설정`
-                  : `${startDateString} - ${endDateString}으로 설정`
-                : `${startDateString}으로 설정`
-            }
-          ></Button>
-        ) : (
-          <Button label='날짜를 선택하세요.' type='disabled' />
-        )}
-      </div>
+      {selectedStart ? (
+        <BottomButton
+          type='secondary'
+          onClick={() => {
+            onSelect?.({
+              startDate: startDateString,
+              endDate: endDateString ? endDateString : startDateString,
+              render: () => (
+                <span>
+                  {endDateString
+                    ? startDateString == endDateString
+                      ? `${startDateString}`
+                      : `${startDateString} - ${endDateString}`
+                    : `${startDateString}`}
+                </span>
+              ),
+            })
+          }}
+          label={
+            endDateString
+              ? startDateString == endDateString
+                ? `${startDateString}으로 설정`
+                : `${startDateString} - ${endDateString}으로 설정`
+              : `${startDateString}으로 설정`
+          }
+        ></BottomButton>
+      ) : (
+        <BottomButton label='날짜를 선택하세요.' type='disabled' />
+      )}
     </div>
   )
 }

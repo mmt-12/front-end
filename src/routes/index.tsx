@@ -17,6 +17,7 @@ import EditProfilePage from '@/pages/guest-book/EditProfilePage'
 import AddProfileImagePage from '@/pages/guest-book/AddProfileImagePage'
 import { ErrorBoundary } from '@/pages/ErrorBoundary'
 import PostDetailPage from '@/pages/memory/PostDetailPage'
+import MemoryRegisterPage from '@/pages/memory/MemoryRegisterPage'
 
 const router = createBrowserRouter([
   {
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.POST_DETAIL(':id'),
         element: <PostDetailPage />,
+      },
+      {
+        path: ROUTES.MEMORY_REGISTER,
+        element: <MemoryRegisterPage />,
       },
     ],
   },
