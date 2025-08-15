@@ -18,6 +18,7 @@ import AddProfileImagePage from '@/pages/guest-book/AddProfileImagePage'
 import { ErrorBoundary } from '@/pages/ErrorBoundary'
 import PostDetailPage from '@/pages/memory/PostDetailPage'
 import MemoryRegisterPage from '@/pages/memory/MemoryRegisterPage'
+import { RouterProvider } from 'react-router-dom'
 
 const router = createBrowserRouter([
   {
@@ -91,4 +92,6 @@ const router = createBrowserRouter([
   },
 ])
 
-export default router
+export default function Routes() {
+  return <RouterProvider router={router} />
+}
