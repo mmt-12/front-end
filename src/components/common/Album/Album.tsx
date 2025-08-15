@@ -1,11 +1,11 @@
 import { css, type Theme } from '@emotion/react'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, Children } from 'react'
 
 export interface Props {
-  images: string[]
+  children: React.ReactNode
 }
 
-export default function Album({ images }: Props) {
+export default function Album({ children }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const albumContainerRef = useRef<HTMLDivElement>(null)
 
@@ -35,14 +35,10 @@ export default function Album({ images }: Props) {
         css={albumContainerStyle}
         className='no-scrollbar'
       >
-        {images.map((image, index) => (
-          <div key={index}>
-            <img src={image} alt={`Album image ${index}`} />
-          </div>
-        ))}
+        {children}
       </div>
       <div css={dotContainerStyle}>
-        {images.map((_, index) => {
+        {Children.map(children, (_, index) => {
           return (
             <div
               key={index}
@@ -89,6 +85,12 @@ const albumContainerStyle = (theme: Theme) =>
       overflow: 'hidden',
       scrollSnapAlign: 'center',
       backgroundColor: theme.stone[150],
+    },
+    'div.action-wrapper': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: theme.bg,
     },
     img: {
       width: '100%',
