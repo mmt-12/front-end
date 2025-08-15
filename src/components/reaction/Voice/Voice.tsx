@@ -35,7 +35,7 @@ export default function Voice({
   return (
     <div
       css={containerStyle(theme, iReacted, isActive, !!amount)}
-      onClick={e => onClick(e, id)}
+      onClick={e => onClick?.(e, id)}
     >
       <div css={playButtonWrapperStyle}>
         <button onClick={handleButtonClick} css={playButtonStyle}>

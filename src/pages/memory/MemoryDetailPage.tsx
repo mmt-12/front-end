@@ -3,7 +3,6 @@ import Post from '@/components/memory/Post'
 import useHeader from '@/hooks/useHeader'
 import { MEMORIES } from '@/mocks/data/memories'
 import { POST } from '@/mocks/data/post'
-import { css } from '@emotion/react'
 
 const MEMORY = MEMORIES[0]
 export default function MemoryDetailPage() {
@@ -12,7 +11,7 @@ export default function MemoryDetailPage() {
   })
   return (
     <div className='no-scrollbar'>
-      <header css={headerStyle}>
+      <header css={{ padding: '16px 12px' }}>
         <MemoryInfo {...MEMORY} saveEnabled />
       </header>
       <ol>
@@ -23,10 +22,3 @@ export default function MemoryDetailPage() {
     </div>
   )
 }
-
-const headerStyle = css({
-  padding: '16px 12px',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '8px',
-})
