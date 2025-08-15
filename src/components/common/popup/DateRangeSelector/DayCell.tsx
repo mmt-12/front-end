@@ -4,8 +4,8 @@ interface Props {
   date: Date | null
   state: number
   onClick: () => void
-  selectedStart: string
-  selectedEnd: string
+  startDate: string
+  endDate: string
   colIdx: number
 }
 
@@ -22,16 +22,16 @@ export default function DayCell(props: Props) {
         css={dayWrapperStyle(
           theme,
           props.state,
-          props.selectedStart,
-          props.selectedEnd,
+          props.startDate,
+          props.endDate,
         )}
       ></div>
       <div
         css={dayWrapperStyle(
           theme,
           props.state,
-          props.selectedStart,
-          props.selectedEnd,
+          props.startDate,
+          props.endDate,
         )}
       ></div>
     </td>
@@ -73,8 +73,8 @@ const dayContainerStyle = (
 const dayWrapperStyle = (
   theme: Theme,
   state: number,
-  selectedStart: string,
-  selectedEnd: string,
+  startDate: string,
+  endDate: string,
 ) => {
   let background: string | undefined = undefined
 
@@ -87,8 +87,7 @@ const dayWrapperStyle = (
   //   background = `linear-gradient(to left, transparent 50%, ${theme.stone[200]} 50%)`
   // }
 
-  if ((selectedStart && !selectedEnd) || selectedStart == selectedEnd)
-    background = undefined
+  if ((startDate && !endDate) || startDate == endDate) background = undefined
 
   return css({
     position: 'absolute',

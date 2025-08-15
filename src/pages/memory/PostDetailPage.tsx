@@ -8,7 +8,7 @@ import { MEMBERS } from '@/mocks/data/members'
 import { emojies, voices } from '@/mocks/data/reaction'
 import { css, type Theme } from '@emotion/react'
 import { MagniferZoomIn } from '@solar-icons/react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export default function PostDetailPage() {
   useHeader({
