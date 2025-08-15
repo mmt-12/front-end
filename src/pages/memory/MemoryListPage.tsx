@@ -1,4 +1,4 @@
-import GreetingPopup from '@/components/common/popup/GreetingPopup'
+import GreetingPopup from '@/components/popup/GreetingPopup'
 import MemoryListItem from '@/components/memory/MemoryListItem'
 import useHeader from '@/hooks/useHeader'
 import { MEMORIES } from '@/mocks/data/memories'

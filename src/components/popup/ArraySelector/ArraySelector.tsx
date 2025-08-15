@@ -1,10 +1,10 @@
 import type { IArrayInput, IArrayItem } from '@/types'
 import { useMemo, useState } from 'react'
 import { css } from '@emotion/react'
-import InputField from '../../InputField'
+import InputField from '@/components/common/InputField'
 import { AddCircle, CheckCircle } from '@solar-icons/react'
 import { theme } from '@/styles/theme'
-import BottomButton from '../../BottomButton'
+import BottomButton from '@/components/common/BottomButton'
 
 interface Props {
   items: IArrayItem[]

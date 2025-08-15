@@ -1,5 +1,5 @@
 import Badge from '@/components/common/Badge'
-import WavyBox from '@/components/common/WavyBox'
+import WavyBox from '@/components/guest-book/WavyBox'
 import { css, type Theme } from '@emotion/react'
 import defaultImageUrl from '@/assets/images/mascot/default-profile.png'
 import { formatDateString } from '@/utils/date'

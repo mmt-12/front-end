@@ -1,4 +1,4 @@
-import WavyBox from '@/components/common/WavyBox'
+import WavyBox from '@/components/guest-book/WavyBox'
 import { css, useTheme, type SerializedStyles } from '@emotion/react'
 import { Widget } from '@solar-icons/react'
 

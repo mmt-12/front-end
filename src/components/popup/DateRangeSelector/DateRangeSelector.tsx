@@ -4,7 +4,7 @@ import { css, useTheme } from '@emotion/react'
 import type { Theme } from '@emotion/react'
 import { AltArrowLeft, AltArrowRight } from '@solar-icons/react'
 import DayCell from './DayCell'
-import BottomButton from '../../BottomButton'
+import BottomButton from '@/components/common/BottomButton'
 import { formatDate, formatDateRange } from '@/utils/date'
 
 interface Props {

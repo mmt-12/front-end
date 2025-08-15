@@ -14,7 +14,7 @@ import { NavLink } from 'react-router-dom'
 import CreateButtonsModal from '../CreateButtonsModal/CreateButtonsModal'
 
 export default function NavBar() {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const user = {
     id: 123,
     name: '사용자 이름',
@@ -32,7 +32,7 @@ export default function NavBar() {
           icon={<PointOnMap weight='Bold' size={24} />}
           to={ROUTES.MAP}
         />
-        <button css={addButtonStyle} onClick={() => setIsDrawerOpen(true)}>
+        <button css={addButtonStyle} onClick={() => setIsModalOpen(true)}>
           <AddCircle size={40} />
         </button>
         <Navigation
@@ -47,8 +47,8 @@ export default function NavBar() {
         />
       </div>
       <CreateButtonsModal
-        isDrawerOpen={isDrawerOpen}
-        setIsDrawerOpen={setIsDrawerOpen}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
       />
     </>
   )

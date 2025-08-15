@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom'
 import { css } from '@emotion/react'
 import { ArrowLeft } from '@solar-icons/react'
 import { headerStyle } from '@/styles/header'
-import HeaderItem from '@/components/common/Header/HeaderItem'
+import HeaderItem from '@/components/layout/Header/HeaderItem'
 import type { ReactNode } from 'react'
 import { modalStyle } from '@/styles/modal'
 
