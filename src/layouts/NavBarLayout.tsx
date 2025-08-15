@@ -1,4 +1,4 @@
-import NavBar from '@/components/common/NavBar'
+import NavBar from '@/components/layout/NavBar'
 import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 import { Outlet } from 'react-router-dom'

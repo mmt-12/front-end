@@ -4,24 +4,24 @@ import {
   Soundwave,
   UsersGroupRounded,
 } from '@solar-icons/react'
-import BottomDrawer from '../BottomDrawer'
-import Button from '../Button'
+import BottomDrawer from '../../common/BottomDrawer'
+import Button from '../../common/Button'
 import { css, useTheme } from '@emotion/react'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '@/routes/ROUTES'
 
 interface Props {
-  isDrawerOpen: boolean
-  setIsDrawerOpen: (_isOpen: boolean) => void
+  isModalOpen: boolean
+  setIsModalOpen: (_isOpen: boolean) => void
 }
 
 export default function CreateButtonsModal({
-  isDrawerOpen,
-  setIsDrawerOpen,
+  isModalOpen,
+  setIsModalOpen,
 }: Props) {
   const theme = useTheme()
   return (
-    <BottomDrawer isOpen={isDrawerOpen} close={() => setIsDrawerOpen(false)}>
+    <BottomDrawer isOpen={isModalOpen} close={() => setIsModalOpen(false)}>
       <span
         style={{
           fontWeight: 'bold',

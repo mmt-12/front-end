@@ -9,7 +9,7 @@ import {
 import AutocompleteControl from './places/PlacesSearchControl'
 import PlacesMarker from './places/PlacesMarker'
 import type { ILocationInput } from '@/types'
-import BottomButton from '../../BottomButton'
+import BottomButton from '@/components/common/BottomButton'
 
 interface Props {
   onSelect?: (_region: ILocationInput) => void

@@ -1,7 +1,7 @@
 import { CelebrationContext } from '@/contexts/CelebrationProvider'
 import { css, type Theme } from '@emotion/react'
 import { useContext } from 'react'
-import Button from '../../Button'
+import Button from '@/components/common/Button'
 
 export default function Celebration() {
   const { config, isOpen, close } = useContext(CelebrationContext)

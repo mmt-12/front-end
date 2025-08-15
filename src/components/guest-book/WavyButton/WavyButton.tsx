@@ -1,4 +1,4 @@
-import WavyBox from '@/components/common/WavyBox'
+import WavyBox from '@/components/guest-book/WavyBox'
 import { css, useTheme, type Theme } from '@emotion/react'
 
 interface Props {

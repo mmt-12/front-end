@@ -4,7 +4,7 @@ import { Global, ThemeProvider } from '@emotion/react'
 import { theme } from '@/styles/theme'
 import { globalStyle } from '@/styles/global'
 import { APIProvider } from '@vis.gl/react-google-maps'
-import CelebrationRoot from './components/common/popup/Celebration'
+import CelebrationRoot from './components/popup/Celebration'
 import { CelebrationProvider } from './contexts/CelebrationProvider'
 
 function App() {
