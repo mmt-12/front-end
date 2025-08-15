@@ -1,9 +1,8 @@
+import { RouterProvider } from 'react-router-dom'
+
 import PlainLayout from '@/layouts/PlainLayout'
 import DefaultLayout from '@/layouts/DefaultLayout'
 import HeaderLayout from '@/layouts/HeaderLayout'
-
-import { createBrowserRouter, Navigate } from 'react-router-dom'
-import { ROUTES } from './ROUTES'
 
 import LoginPage from '@/pages/LoginPage'
 import MemoryListPage from '@/pages/memory/MemoryListPage'
@@ -15,9 +14,13 @@ import SignupPage from '@/pages/SignupPage'
 import MemoryDetailPage from '@/pages/memory/MemoryDetailPage'
 import EditProfilePage from '@/pages/guest-book/EditProfilePage'
 import AddProfileImagePage from '@/pages/guest-book/AddProfileImagePage'
-import { ErrorBoundary } from '@/pages/ErrorBoundary'
 import PostDetailPage from '@/pages/memory/PostDetailPage'
 import MemoryRegisterPage from '@/pages/memory/MemoryRegisterPage'
+import ErrorBoundary from '@/pages/ErrorBoundary'
+
+import { createBrowserRouter, Navigate } from 'react-router-dom'
+import { ROUTES } from './ROUTES'
+import PostRegisterPage from '@/pages/memory/PostRegisterPage'
 
 const router = createBrowserRouter([
   {
@@ -44,10 +47,6 @@ const router = createBrowserRouter([
       {
         path: ROUTES.MEMORY_LIST,
         element: <MemoryListPage />,
-      },
-      {
-        path: ROUTES.MEMORY_DETAIL(':id'),
-        element: <MemoryDetailPage />,
       },
       {
         path: ROUTES.MAP,
@@ -80,15 +79,25 @@ const router = createBrowserRouter([
         element: <AddProfileImagePage />,
       },
       {
+        path: ROUTES.MEMORY_REGISTER,
+        element: <MemoryRegisterPage />,
+      },
+      {
+        path: ROUTES.MEMORY_DETAIL(':id'),
+        element: <MemoryDetailPage />,
+      },
+      {
         path: ROUTES.POST_DETAIL(':id'),
         element: <PostDetailPage />,
       },
       {
-        path: ROUTES.MEMORY_REGISTER,
-        element: <MemoryRegisterPage />,
+        path: ROUTES.POST_REGISTER,
+        element: <PostRegisterPage />,
       },
     ],
   },
 ])
 
-export default router
+export default function Routes() {
+  return <RouterProvider router={router} />
+}

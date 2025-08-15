@@ -4,7 +4,7 @@ import { css, type Theme } from '@emotion/react'
 import { Link, useNavigate, useRouteError } from 'react-router-dom'
 import errorImage from '@/assets/images/mascot/error.jpeg'
 
-export function ErrorBoundary() {
+export default function ErrorBoundary() {
   const error = useRouteError() as Error
   const navigate = useNavigate()
   return (
