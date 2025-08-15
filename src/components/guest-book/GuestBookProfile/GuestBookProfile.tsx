@@ -2,7 +2,7 @@ import Badge from '@/components/common/Badge'
 import WavyBox from '@/components/common/WavyBox'
 import { css, type Theme } from '@emotion/react'
 import defaultImageUrl from '@/assets/images/mascot/default-profile.png'
-import { formatDate } from '@/utils/date'
+import { formatDateString } from '@/utils/date'
 import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '@/routes/ROUTES'
 import { GalleryAdd } from '@solar-icons/react'
@@ -59,7 +59,7 @@ export default function GuestBookProfile({
           <p css={nameStyle}>{nickname}</p>
           {achievementId && <Badge id={achievementId} />}
         </div>
-        <p css={birthdayStyle}>{formatDate(birthday)}</p>
+        <p css={birthdayStyle}>{formatDateString(birthday)}</p>
         {introduction && <p css={introductionStyle}>{introduction}</p>}
       </div>
     </div>

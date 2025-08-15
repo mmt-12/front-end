@@ -13,7 +13,7 @@ export default function Emoji({
   const theme = useTheme()
   return (
     <div
-      onClick={e => onClick(e, id)}
+      onClick={e => onClick?.(e, id)}
       css={containerStyle(theme, iReacted, isActive, !!amount)}
     >
       <div css={imageWrapperStyle(size, !!amount)}>

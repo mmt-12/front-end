@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react'
 import {
+  AdvancedMarker,
   ControlPosition,
   Map,
-  Marker,
   useMap,
   useMapsLibrary,
 } from '@vis.gl/react-google-maps'
-import Button from '@/components/common/Button'
-import { fixedWithMargin } from '@/styles/fixed'
 import AutocompleteControl from './places/PlacesSearchControl'
 import PlacesMarker from './places/PlacesMarker'
 import type { ILocationInput } from '@/types'
+import BottomButton from '../../BottomButton'
 
 interface Props {
-  onSelect: (_region: ILocationInput) => void
+  onSelect?: (_region: ILocationInput) => void
 }
 
 const DEFAULT_LOCATION = {
@@ -106,7 +105,7 @@ export default function MapLocationSelector({ onSelect }: Props) {
               selectedPlaceInfo?.displayName ||
               selectedPlaceInfo?.formattedAddress ||
               ''
-            onSelect({
+            onSelect?.({
               address: address,
               location: {
                 lat: selectedPlaceInfo?.location?.lat() || DEFAULT_LOCATION.lat,
@@ -117,7 +116,7 @@ export default function MapLocationSelector({ onSelect }: Props) {
           }}
         />
         {!selectedPlace && (
-          <Marker
+          <AdvancedMarker
             position={
               cameraLocation ||
               new google.maps.LatLng(DEFAULT_LOCATION.lat, DEFAULT_LOCATION.lng)
@@ -126,22 +125,20 @@ export default function MapLocationSelector({ onSelect }: Props) {
         )}
       </Map>
       {!selectedPlace && (
-        <div css={[fixedWithMargin(16), { bottom: '16px' }]}>
-          <Button
-            label={`${address}`}
-            type='secondary'
-            onClick={() =>
-              onSelect({
-                address,
-                location: {
-                  lat: cameraLocation?.lat() || DEFAULT_LOCATION.lat,
-                  lng: cameraLocation?.lng() || DEFAULT_LOCATION.lng,
-                },
-                render: () => <span>{address}</span>,
-              })
-            }
-          />
-        </div>
+        <BottomButton
+          label={`${address}`}
+          type='secondary'
+          onClick={() =>
+            onSelect?.({
+              address,
+              location: {
+                lat: cameraLocation?.lat() || DEFAULT_LOCATION.lat,
+                lng: cameraLocation?.lng() || DEFAULT_LOCATION.lng,
+              },
+              render: () => <span>{address}</span>,
+            })
+          }
+        />
       )}
     </div>
   )

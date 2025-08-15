@@ -8,5 +8,14 @@ export interface IReaction {
   amount?: number
   isActive?: boolean
   iReacted?: boolean
-  onClick: (_e: MouseEvent<HTMLDivElement>, _id: number) => void
+  onClick?: (_e: MouseEvent<HTMLDivElement>, _id: number) => void
+}
+
+export interface IVoice extends IReaction {
+  content: string
+}
+
+export interface ReactionListProps {
+  onClick: (_e: React.MouseEvent<HTMLDivElement>, _id: number) => void
+  selectedId?: number
 }

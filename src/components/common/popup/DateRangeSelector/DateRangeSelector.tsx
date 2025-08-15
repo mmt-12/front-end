@@ -1,14 +1,14 @@
-import { useMemo, useState } from 'react'
-import Button from '@/components/common/Button'
+import { useState } from 'react'
 import type { IDateRangeInput } from '@/types'
 import { css, useTheme } from '@emotion/react'
 import type { Theme } from '@emotion/react'
 import { AltArrowLeft, AltArrowRight } from '@solar-icons/react'
 import DayCell from './DayCell'
-import { fixedWithMargin } from '@/styles/fixed'
+import BottomButton from '../../BottomButton'
+import { formatDate, formatDateRange } from '@/utils/date'
 
 interface Props {
-  onSelect: (_range: IDateRangeInput) => void
+  onSelect?: (_range: IDateRangeInput) => void
 }
 
 export default function DateRangeSelector({ onSelect }: Props) {
@@ -20,39 +20,25 @@ export default function DateRangeSelector({ onSelect }: Props) {
   const today = new Date()
   const [viewYear, setViewYear] = useState(today.getFullYear())
   const [viewMonth, setViewMonth] = useState(today.getMonth())
-  const [selectedStart, setSelectedStart] = useState<Date | null>(null)
-  const [selectedEnd, setSelectedEnd] = useState<Date | null>(null)
+  const [startDate, setStartDate] = useState<Date>()
+  const [endDate, setEndDate] = useState<Date>()
 
-  const startDateString = useMemo(() => {
-    if (selectedStart) {
-      return `${selectedStart.getFullYear()}.${(
-        selectedStart.getMonth() + 1
-      ).toString()}.${selectedStart.getDate().toString()}`
-    }
-    return ''
-  }, [selectedStart])
+  const startDateString = startDate ? formatDate(startDate) : ''
 
-  const endDateString = useMemo(() => {
-    if (selectedEnd) {
-      return `${selectedEnd.getFullYear()}.${(
-        selectedEnd.getMonth() + 1
-      ).toString()}.${selectedEnd.getDate().toString()}`
-    }
-    return ''
-  }, [selectedEnd])
+  const endDateString = endDate ? formatDate(endDate) : ''
 
   // Handle date click
   const handleDateClick = (date: Date) => {
-    const isSameDate = startDateString === endDateString
-    if (!selectedStart || (selectedStart && selectedEnd && !isSameDate)) {
-      setSelectedStart(date)
-      setSelectedEnd(null)
-    } else if ((selectedStart && !selectedEnd) || isSameDate) {
-      if (date >= selectedStart) {
-        setSelectedEnd(date)
+    const isSameDate = startDate?.getTime() === endDate?.getTime()
+    if (!startDate || (startDate && endDate && !isSameDate)) {
+      setStartDate(date)
+      setEndDate(undefined)
+    } else if ((startDate && !endDate) || isSameDate) {
+      if (date >= startDate) {
+        setEndDate(date)
       } else {
-        setSelectedStart(date)
-        setSelectedEnd(null)
+        setStartDate(date)
+        setEndDate(undefined)
       }
     }
   }
@@ -72,12 +58,12 @@ export default function DateRangeSelector({ onSelect }: Props) {
   }
 
   const getSelectedState = (date: Date) => {
-    if (!selectedStart) return 0
-    if (date.getTime() === selectedStart.getTime()) return 2
-    if (!selectedEnd) return 0
-    if (date.getTime() === selectedEnd.getTime()) return 3
+    if (!startDate) return 0
+    if (date.getTime() === startDate.getTime()) return 2
+    if (!endDate) return 0
+    if (date.getTime() === endDate.getTime()) return 3
 
-    if (date > selectedStart && date < selectedEnd) return 1
+    if (date > startDate && date < endDate) return 1
     return 0
   }
 
@@ -154,8 +140,8 @@ export default function DateRangeSelector({ onSelect }: Props) {
                           date={date}
                           state={getSelectedState(date)}
                           onClick={() => handleDateClick(date)}
-                          selectedStart={startDateString}
-                          selectedEnd={endDateString}
+                          startDate={startDateString}
+                          endDate={endDateString}
                           colIdx={colIdx}
                         />
                       ) : (
@@ -169,37 +155,21 @@ export default function DateRangeSelector({ onSelect }: Props) {
         </table>
       </div>
 
-      <div css={[fixedWithMargin(16), { bottom: '20px' }]}>
-        {selectedStart ? (
-          <Button
-            type='secondary'
-            onClick={() => {
-              onSelect({
-                startDate: startDateString,
-                endDate: endDateString ? endDateString : startDateString,
-                render: () => (
-                  <span>
-                    {endDateString
-                      ? startDateString == endDateString
-                        ? `${startDateString}`
-                        : `${startDateString} - ${endDateString}`
-                      : `${startDateString}`}
-                  </span>
-                ),
-              })
-            }}
-            label={
-              endDateString
-                ? startDateString == endDateString
-                  ? `${startDateString}으로 설정`
-                  : `${startDateString} - ${endDateString}으로 설정`
-                : `${startDateString}으로 설정`
-            }
-          ></Button>
-        ) : (
-          <Button label='날짜를 선택하세요.' type='disabled' />
-        )}
-      </div>
+      {startDate ? (
+        <BottomButton
+          type='secondary'
+          onClick={() => {
+            onSelect?.({
+              startDate: startDateString,
+              endDate: endDateString ? endDateString : startDateString,
+              render: () => <span>{formatDateRange(startDate, endDate)}</span>,
+            })
+          }}
+          label={`${formatDateRange(startDate, endDate)} 으로 설정`}
+        ></BottomButton>
+      ) : (
+        <BottomButton label='날짜를 선택하세요.' type='disabled' />
+      )}
     </div>
   )
 }

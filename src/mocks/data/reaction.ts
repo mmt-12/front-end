@@ -1,4 +1,6 @@
-export const voices = [
+import type { IVoice } from '@/types/reaction'
+
+export const voices: IVoice[] = [
   {
     id: 1,
     url: '/test_voices/voice1.mp3',
@@ -12,7 +14,6 @@ export const voices = [
     url: '/test_voices/voice2.mp3',
     content: '뭐라는거야~',
     amount: 12,
-    isActive: true,
     name: 'mworana',
   },
   {
@@ -26,30 +27,29 @@ export const voices = [
 
 export const emojies = [
   {
-    id: 1,
+    id: 10000,
     url: '/test_images/image1.png',
     amount: 15,
     iReacted: true,
-    isActive: true,
     name: 'like',
   },
-  { id: 2, url: '/test_images/image2.png', amount: 15, name: 'love' },
+  { id: 20000, url: '/test_images/image2.png', amount: 15, name: 'love' },
   {
-    id: 3,
+    id: 30000,
     url: '/test_images/image1.png',
     amount: 14,
     iReacted: true,
     name: 'haha',
   },
   {
-    id: 4,
+    id: 40000,
     url: '/test_images/image1.png',
     amount: 13,
     iReacted: true,
     name: 'sad',
   },
-  { id: 5, url: '/test_images/image2.png', amount: 11, name: 'angry' },
-  { id: 6, url: '/test_images/image1.png', amount: 10, name: 'surprised' },
-  { id: 7, url: '/test_images/image1.png', amount: 12, name: 'neutral' },
-  { id: 11, url: '/test_images/image3.png', amount: 5, name: 'confused' },
+  { id: 50000, url: '/test_images/image2.png', amount: 11, name: 'angry' },
+  { id: 60000, url: '/test_images/image1.png', amount: 10, name: 'surprised' },
+  { id: 70000, url: '/test_images/image1.png', amount: 12, name: 'neutral' },
+  { id: 110000, url: '/test_images/image3.png', amount: 5, name: 'confused' },
 ]

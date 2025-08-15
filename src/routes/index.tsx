@@ -1,7 +1,6 @@
 import PlainLayout from '@/layouts/PlainLayout'
 import DefaultLayout from '@/layouts/DefaultLayout'
 import HeaderLayout from '@/layouts/HeaderLayout'
-import NavBarLayout from '@/layouts/NavBarLayout'
 
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { ROUTES } from './ROUTES'
@@ -18,6 +17,7 @@ import EditProfilePage from '@/pages/guest-book/EditProfilePage'
 import AddProfileImagePage from '@/pages/guest-book/AddProfileImagePage'
 import { ErrorBoundary } from '@/pages/ErrorBoundary'
 import PostDetailPage from '@/pages/memory/PostDetailPage'
+import MemoryRegisterPage from '@/pages/memory/MemoryRegisterPage'
 
 const router = createBrowserRouter([
   {
@@ -36,17 +36,6 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: ROUTES.MEMORY_DETAIL(':id'),
-    Component: () => <NavBarLayout />,
-    errorElement: <ErrorBoundary />,
-    children: [
-      {
-        index: true,
-        element: <MemoryDetailPage />,
-      },
-    ],
-  },
-  {
     path: '/',
     Component: () => <DefaultLayout />,
     errorElement: <ErrorBoundary />,
@@ -55,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.MEMORY_LIST,
         element: <MemoryListPage />,
+      },
+      {
+        path: ROUTES.MEMORY_DETAIL(':id'),
+        element: <MemoryDetailPage />,
       },
       {
         path: ROUTES.MAP,
@@ -89,6 +82,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.POST_DETAIL(':id'),
         element: <PostDetailPage />,
+      },
+      {
+        path: ROUTES.MEMORY_REGISTER,
+        element: <MemoryRegisterPage />,
       },
     ],
   },

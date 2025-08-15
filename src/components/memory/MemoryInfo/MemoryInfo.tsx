@@ -1,6 +1,6 @@
-import { css, type Theme } from '@emotion/react'
+import { css, useTheme, type Theme } from '@emotion/react'
 import Chip from '@/components/common/Chip'
-import { GalleryCircle, UserCircle } from '@solar-icons/react'
+import { DownloadSquare, GalleryCircle, UserCircle } from '@solar-icons/react'
 
 interface Props {
   title: string
@@ -10,9 +10,26 @@ interface Props {
   description?: string
   startDate?: string
   endDate?: string
+  saveEnabled?: boolean
 }
 
 export default function MemoryInfo(props: Props) {
+  const theme = useTheme()
+
+  const renderMeta = () => {
+    return (
+      <>
+        <p className='location'>{props.location}</p>
+        {!!props.startDate && (
+          <p className='date'>
+            {props.startDate}
+            {!!props.endDate && ` - ${props.endDate}`}
+          </p>
+        )}
+      </>
+    )
+  }
+
   return (
     <div css={infoStyle}>
       <div css={titleRowStyle}>
@@ -22,14 +39,19 @@ export default function MemoryInfo(props: Props) {
           <Chip Icon={GalleryCircle} label={props.imageCount} />
         </div>
       </div>
-      <div css={metaRowStyle}>
-        <p className='location'>{props.location}</p>
-
-        {!!props.startDate && (
-          <p className='date'>
-            {props.startDate}
-            {!!props.endDate && ` - ${props.endDate}`}
-          </p>
+      <div css={metaRowStyle(theme, !!props.saveEnabled)}>
+        {props.saveEnabled ? (
+          <>
+            <div>{renderMeta()}</div>
+            <Chip
+              Icon={DownloadSquare}
+              label='사진 모두 저장'
+              onClick={() => console.log('save all')}
+              customCss={chipCustomStyle}
+            />
+          </>
+        ) : (
+          <>{renderMeta()}</>
         )}
       </div>
       <p css={descriptionStyle}>{props.description}</p>
@@ -54,12 +76,14 @@ const titleRowStyle = (theme: Theme) =>
     },
   })
 
-const metaRowStyle = (theme: Theme) =>
+const metaRowStyle = (theme: Theme, saveEnabled: boolean) =>
   css({
+    padding: saveEnabled ? '8px 0' : '4px 0',
+
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '4px 0',
+
     fontWeight: '400',
 
     'p.location': {
@@ -82,4 +106,8 @@ const descriptionStyle = (theme: Theme) => ({
   padding: '8px 0',
   color: theme.stone[800],
   fontSize: '14px',
+})
+
+const chipCustomStyle = css({
+  padding: '6px 12px',
 })

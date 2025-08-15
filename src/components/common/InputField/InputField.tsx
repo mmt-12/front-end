@@ -68,15 +68,18 @@ const inputStyle = (theme: Theme) =>
   css({
     margin: '0px',
     padding: '14px 12px',
+
     border: 'none',
     borderRadius: '12px',
-    color: theme.black,
     outline: `2px solid ${theme.stone[400]}`,
-    transition: 'outline 0.1s ease-in-out',
+
+    color: theme.black,
     fontFamily: 'inherit',
-    fontSize: '18px',
+    fontSize: '16px',
+    fontWeight: '400',
     letterSpacing: '0.5px',
-    fontWeight: '500',
+
+    transition: 'outline 0.1s ease-in-out',
 
     '&:focus': {
       outline: `2px solid ${theme.sky[400]}`,

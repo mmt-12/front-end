@@ -1,11 +1,10 @@
 import type { IArrayInput, IArrayItem } from '@/types'
 import { useMemo, useState } from 'react'
-import Button from '../../Button'
 import { css } from '@emotion/react'
 import InputField from '../../InputField'
 import { AddCircle, CheckCircle } from '@solar-icons/react'
 import { theme } from '@/styles/theme'
-import { fixedWithMargin } from '@/styles/fixed'
+import BottomButton from '../../BottomButton'
 
 interface Props {
   items: IArrayItem[]
@@ -77,26 +76,24 @@ export default function ArraySelector({
           </li>
         ))}
       </ul>
-      <div css={[fixedWithMargin(16), { bottom: '20px' }]}>
-        <Button
-          type='secondary'
-          label='선택 완료'
-          onClick={() =>
-            onSelect?.({
-              items: selectedItems,
-              render: () => (
-                <>
-                  {renderPreview ? (
-                    selectedItems.map(m => m.render())
-                  ) : (
-                    <span>{selectedItems.map(m => m.label).join(', ')}</span>
-                  )}
-                </>
-              ),
-            })
-          }
-        />
-      </div>
+      <BottomButton
+        type='secondary'
+        label='선택 완료'
+        onClick={() =>
+          onSelect?.({
+            items: selectedItems,
+            render: () => (
+              <>
+                {renderPreview ? (
+                  selectedItems.map(m => m.render())
+                ) : (
+                  <span>{selectedItems.map(m => m.label).join(', ')}</span>
+                )}
+              </>
+            ),
+          })
+        }
+      />
     </div>
   )
 }

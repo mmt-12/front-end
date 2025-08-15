@@ -1,3 +1,4 @@
+import type { SerializedStyles } from '@emotion/react'
 import type { Icon } from '@solar-icons/react/lib/types'
 import type { ReactNode } from 'react'
 
@@ -42,4 +43,13 @@ export interface IMember {
   imageUrl?: string
   badgeId?: number
   description?: string
+}
+
+export interface ButtonProps {
+  label: string
+  icon?: React.ReactNode
+  type?: 'primary' | 'secondary' | 'disabled'
+  size?: 'sm' | 'md' | 'lg' | 'full'
+  onClick?: () => void
+  customCss?: SerializedStyles
 }
