@@ -9,19 +9,17 @@ import Button from '../../common/Button'
 import { css, useTheme } from '@emotion/react'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '@/routes/ROUTES'
+import { useModal } from '@/hooks/useModal'
 
 interface Props {
-  isModalOpen: boolean
-  setIsModalOpen: (_isOpen: boolean) => void
+  id: string
 }
 
-export default function CreateButtonsModal({
-  isModalOpen,
-  setIsModalOpen,
-}: Props) {
+export default function CreateButtonsModal({ id }: Props) {
   const theme = useTheme()
+  const { closeModal } = useModal()
   return (
-    <BottomDrawer isOpen={isModalOpen} close={() => setIsModalOpen(false)}>
+    <BottomDrawer close={() => closeModal(id)}>
       <span
         style={{
           fontWeight: 'bold',
@@ -34,6 +32,7 @@ export default function CreateButtonsModal({
       <div css={contentStyle}>
         <Link to={ROUTES.MEMORY_REGISTER}>
           <Button
+            onClick={() => closeModal(id)}
             type='primary'
             size='md'
             label='기억'

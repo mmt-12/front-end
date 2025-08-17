@@ -9,12 +9,12 @@ import {
   CalendarMinimalistic,
   PointOnMap,
 } from '@solar-icons/react'
-import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import CreateButtonsModal from '../CreateButtonsModal/CreateButtonsModal'
+import { useModal } from '@/hooks/useModal'
 
 export default function NavBar() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { openModal } = useModal()
   const user = {
     id: 123,
     name: '사용자 이름',
@@ -32,7 +32,15 @@ export default function NavBar() {
           icon={<PointOnMap weight='Bold' size={24} />}
           to={ROUTES.MAP}
         />
-        <button css={addButtonStyle} onClick={() => setIsModalOpen(true)}>
+        <button
+          css={addButtonStyle}
+          onClick={() =>
+            openModal(
+              'create-buttons',
+              <CreateButtonsModal id='create-buttons' />,
+            )
+          }
+        >
           <AddCircle size={40} />
         </button>
         <Navigation
@@ -46,10 +54,6 @@ export default function NavBar() {
           to={ROUTES.GUEST_BOOK(user.id)}
         />
       </div>
-      <CreateButtonsModal
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-      />
     </>
   )
 }

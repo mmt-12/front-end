@@ -1,35 +1,18 @@
 import { css, type Theme } from '@emotion/react'
 
 interface Props {
-  isOpen: boolean
   children: React.ReactNode
   close: () => void
 }
 
-export default function BottomDrawer({ children, isOpen, close }: Props) {
-  if (!isOpen) return null
+export default function BottomDrawer({ children }: Props) {
   return (
-    <div css={backgroundStyle} onClick={close} data-testid='modal-background'>
-      <div css={containerStyle} onClick={e => e.stopPropagation()}>
-        <div css={barStyle} />
-        {children}
-      </div>
+    <div css={containerStyle} onClick={e => e.stopPropagation()}>
+      <div css={barStyle} />
+      {children}
     </div>
   )
 }
-
-const backgroundStyle = css({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  backgroundColor: 'rgba(0, 0, 0, 0.25)',
-  zIndex: 10,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'flex-end',
-})
 
 const containerStyle = (theme: Theme) =>
   css({

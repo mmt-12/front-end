@@ -3,21 +3,17 @@ import { Global, ThemeProvider } from '@emotion/react'
 import { theme } from '@/styles/theme'
 import { globalStyle } from '@/styles/global'
 import { APIProvider } from '@vis.gl/react-google-maps'
-import CelebrationRoot from './components/popup/Celebration'
-import { CelebrationProvider } from './contexts/CelebrationProvider'
+import { ModalProvider } from './contexts/ModalProvider'
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <CelebrationProvider>
-        <Global styles={globalStyle} />
-        <APIProvider
-          apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string}
-        >
+      <Global styles={globalStyle} />
+      <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string}>
+        <ModalProvider>
           <Routes />
-        </APIProvider>
-        <CelebrationRoot />
-      </CelebrationProvider>
+        </ModalProvider>
+      </APIProvider>
     </ThemeProvider>
   )
 }
