@@ -1,9 +1,9 @@
-import kakaoIcon from '../assets/images/icons/kakao.png'
-import mainMascot from '../assets/images/mascot/main.png'
 import { ROUTES } from '@/routes/ROUTES'
-import { type Theme, css, useTheme } from '@emotion/react'
+import { css, useTheme, type Theme } from '@emotion/react'
 import { QuestionCircle } from '@solar-icons/react'
 import { useNavigate } from 'react-router-dom'
+import kakaoIcon from '../assets/images/icons/kakao.png'
+import mainMascot from '../assets/images/mascot/main.png'
 
 export default function LoginPage() {
   const navigate = useNavigate()

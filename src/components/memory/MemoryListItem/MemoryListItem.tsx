@@ -1,8 +1,8 @@
-import { css } from '@emotion/react'
-import MemoryInfo from '../MemoryInfo'
-import type { IMemoryInfo } from '@/types/memory'
-import { Link } from 'react-router-dom'
 import { ROUTES } from '@/routes/ROUTES'
+import type { IMemoryInfo } from '@/types/memory'
+import { css } from '@emotion/react'
+import { Link } from 'react-router-dom'
+import MemoryInfo from '../MemoryInfo'
 
 interface Props extends IMemoryInfo {
   isGrid?: boolean

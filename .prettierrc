@@ -3,8 +3,10 @@
     "@ianvs/prettier-plugin-sort-imports"
   ],
   "importOrder": [
-    "<BUILTIN_MODULES>",
-    "<THIRD_PARTY_MODULES>",
+    "^react$",
+    "^(?!@/)(@\\w+|[a-zA-Z0-9])",
+    "",
+    "^@/",
     "^[.]"
   ],
   "arrowParens": "avoid",
