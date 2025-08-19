@@ -2,6 +2,7 @@ import { css, useTheme, type Theme } from '@emotion/react'
 import { SoundwaveSquare, StickerSmileSquare } from '@solar-icons/react'
 
 import EmojiPickerModal from '@/components/reaction/EmojiPickerModal'
+import VoicePickerModal from '@/components/reaction/VoicePickerModal'
 import { useModal } from '@/hooks/useModal'
 
 export default function ReactBar() {
@@ -12,6 +13,10 @@ export default function ReactBar() {
     openModal('emoji-picker', <EmojiPickerModal id='emoji-picker' />)
   }
 
+  const handleVoiceClick = () => {
+    openModal('voice-picker', <VoicePickerModal id='voice-picker' />)
+  }
+
   return (
     <div css={containerStyle}>
       <StickerSmileSquare
@@ -20,7 +25,12 @@ export default function ReactBar() {
         color={theme.yellow}
         onClick={handleEmojiClick}
       />
-      <SoundwaveSquare weight='Bold' size={44} color={theme.sky[400]} />
+      <SoundwaveSquare
+        weight='Bold'
+        size={44}
+        color={theme.sky[400]}
+        onClick={handleVoiceClick}
+      />
     </div>
   )
 }

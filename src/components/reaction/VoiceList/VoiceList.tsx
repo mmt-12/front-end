@@ -1,6 +1,7 @@
+import { css } from '@emotion/react'
+
 import Voice from '@/components/reaction/Voice'
 import type { IVoice, ReactionListProps } from '@/types/reaction'
-import { css } from '@emotion/react'
 
 interface Props extends ReactionListProps {
   reactions: Array<IVoice>
@@ -15,6 +16,7 @@ export default function VoiceList(props: Props) {
           {...voice}
           onClick={e => props.onClick(e, voice.id)}
           isActive={voice.id === props.selectedId}
+          amount={props.showAmount ? voice.amount : undefined}
         />
       ))}
     </div>
@@ -25,6 +27,6 @@ const reactionsStyle = css({
   padding: '4px 16px',
   display: 'flex',
   alignItems: 'center',
-  gap: '18px',
+  gap: '12px',
   overflowX: 'auto',
 })

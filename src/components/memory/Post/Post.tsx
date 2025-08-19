@@ -1,6 +1,7 @@
 import type { MouseEvent } from 'react'
-import { css, type Theme } from '@emotion/react'
 
+import Border from '@/components/common/Border/Border'
+import Spacing from '@/components/common/Spacing'
 import { emojies, voices } from '@/mocks/data/reaction'
 import type { IMember } from '@/types'
 import EmojiList from '../../reaction/EmojiList'
@@ -21,19 +22,15 @@ export default function Post(props: Props) {
     console.log(`Reaction clicked: ${id}`)
   }
   return (
-    <div css={containerStyle}>
+    <>
+      <Border />
+      <Spacing height={10} />
       <PostContent {...props} />
+      <Spacing height={10} />
       <EmojiList reactions={emojies} onClick={handleReactionClick} />
+      <Spacing height={10} />
       <VoiceList reactions={voices} onClick={handleReactionClick} />
-    </div>
+      <Spacing height={20} />
+    </>
   )
 }
-
-const containerStyle = (theme: Theme) =>
-  css({
-    margin: '20px 0',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
-    borderTop: `1px solid ${theme.stone[150]}`,
-  })

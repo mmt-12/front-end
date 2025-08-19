@@ -1,14 +1,15 @@
+import { useState } from 'react'
+import { css, type Theme } from '@emotion/react'
+import { MagniferZoomIn } from '@solar-icons/react'
+
 import Profile from '@/components/common/Profile'
-import EmojiList from '@/components/reaction/EmojiList'
 import PostContent from '@/components/memory/PostContent/PostContent'
 import ReactBar from '@/components/memory/ReactBar/ReactBar'
+import EmojiList from '@/components/reaction/EmojiList'
 import VoiceList from '@/components/reaction/VoiceList'
 import useHeader from '@/hooks/useHeader'
 import { MEMBERS } from '@/mocks/data/members'
 import { emojies, voices } from '@/mocks/data/reaction'
-import { css, type Theme } from '@emotion/react'
-import { MagniferZoomIn } from '@solar-icons/react'
-import { useState } from 'react'
 
 export default function PostDetailPage() {
   useHeader({
@@ -52,11 +53,13 @@ export default function PostDetailPage() {
           reactions={emojies}
           onClick={handleReactionClick}
           selectedId={selectedReactionId}
+          showAmount
         />
         <VoiceList
           reactions={voices}
           onClick={handleReactionClick}
           selectedId={selectedReactionId}
+          showAmount
         />
       </div>
       {selectedReaction && (

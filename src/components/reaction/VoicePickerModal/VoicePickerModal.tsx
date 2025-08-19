@@ -8,20 +8,20 @@ import InputField from '@/components/common/InputField'
 import Spacing from '@/components/common/Spacing'
 import Text from '@/components/common/Text'
 import { useModal } from '@/hooks/useModal'
-import { emojies } from '@/mocks/data/reaction'
-import Emoji from '../Emoji/Emoji'
-import EmojiRegisterModal from '../EmojiRegisterModal'
+import { voices } from '@/mocks/data/reaction'
+import Voice from '../Voice'
+import VoiceRegisterModal from '../VoiceRegisterModal/VoiceRegisterModal'
 
 interface Props {
   id: string
 }
 
-export default function EmojiPickerModal({ id }: Props) {
+export default function VoicePickerModal({ id }: Props) {
   const { closeModal, openModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
 
-  const handleRegisterEmojiClick = () => {
-    openModal('emoji-register', <EmojiRegisterModal id='emoji-add' />)
+  const handleRegisterVoiceClick = () => {
+    openModal('voice-register', <VoiceRegisterModal id='voice-add' />)
   }
 
   return (
@@ -29,23 +29,23 @@ export default function EmojiPickerModal({ id }: Props) {
       <Text customCss={spanStyle} withPadding>
         최근 사용
       </Text>
-      <div css={emojiListStyle}>
-        {emojies.slice(0, 6).map(emoji => (
-          <Emoji key={emoji.id} {...emoji} amount={undefined} />
+      <div css={voiceListStyle} className='no-scrollbar'>
+        {voices.slice(0, 6).map(voice => (
+          <Voice key={voice.id} {...voice} amount={undefined} />
         ))}
       </div>
       <Spacing height={4} />
       <InputField label='검색' onChange={(v: string) => setSearchKey(v)} />
       <Spacing height={6} />
-      <div css={[emojiListStyle, { flexWrap: 'wrap' }]}>
-        {emojies.map(emoji => (
-          <Emoji key={emoji.id} {...emoji} amount={undefined} />
+      <div css={[voiceListStyle, { flexWrap: 'wrap' }]}>
+        {voices.map(voice => (
+          <Voice key={voice.id} {...voice} amount={undefined} />
         ))}
       </div>
       <BottomButton
         type='secondary'
-        label='이모티콘 만들기'
-        onClick={handleRegisterEmojiClick}
+        label='보이스 만들기'
+        onClick={handleRegisterVoiceClick}
       />
     </BottomDrawer>
   )
@@ -59,12 +59,10 @@ const spanStyle = (theme: Theme) =>
     color: theme.stone[600],
   })
 
-const emojiListStyle = css({
-  padding: '0px 16px',
+const voiceListStyle = css({
+  padding: '4px 16px',
 
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(40px, 1fr))',
-  gap: '16px',
-
-  overflow: 'visible',
+  display: 'flex',
+  gap: '8px',
+  overflowX: 'auto',
 })

@@ -47,9 +47,7 @@ function ModalRenderer({
       onClick={() => closeModal(topModal.id)}
       data-testid='modal-background'
     >
-      {modals.map(({ id, content }) => (
-        <Fragment key={id}>{content}</Fragment>
-      ))}
+      {modals[modals.length - 1].content}
     </div>,
     modalRoot,
   )

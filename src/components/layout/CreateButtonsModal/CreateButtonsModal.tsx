@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom'
 import BottomDrawer from '@/components/common/BottomDrawer'
 import Button from '@/components/common/Button'
 import EmojiRegisterModal from '@/components/reaction/EmojiRegisterModal'
+import VoiceRegisterModal from '@/components/reaction/VoiceRegisterModal/VoiceRegisterModal'
 import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 
@@ -22,7 +23,12 @@ export default function CreateButtonsModal({ id }: Props) {
   const { closeModal, openModal } = useModal()
 
   const handleEmojiClick = () => {
-    openModal('emoji-register', <EmojiRegisterModal id='emoji-add' />)
+    openModal('emoji-register', <EmojiRegisterModal id='emoji-register' />)
+    closeModal(id)
+  }
+
+  const handleVoiceClick = () => {
+    openModal('voice-register', <VoiceRegisterModal id='voice-register' />)
     closeModal(id)
   }
 
@@ -67,6 +73,7 @@ export default function CreateButtonsModal({ id }: Props) {
           size='md'
           label='보이스'
           icon={<Soundwave weight='Bold' size={28} />}
+          onClick={handleVoiceClick}
         />
       </div>
     </BottomDrawer>
