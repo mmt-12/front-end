@@ -1,6 +1,11 @@
 {
   "plugins": [
-    "@trivago/prettier-plugin-sort-imports"
+    "@ianvs/prettier-plugin-sort-imports"
+  ],
+  "importOrder": [
+    "<BUILTIN_MODULES>",
+    "<THIRD_PARTY_MODULES>",
+    "^[.]"
   ],
   "arrowParens": "avoid",
   "bracketSpacing": true,
@@ -16,7 +21,5 @@
   "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "all",
-  "useTabs": false,
-  "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+  "useTabs": false
 }
