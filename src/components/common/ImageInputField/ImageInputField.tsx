@@ -1,15 +1,23 @@
-import { GalleryAdd } from '@solar-icons/react'
-import Button from '../Button'
-import { useTheme } from '@emotion/react'
 import { useRef } from 'react'
+import { useTheme, type SerializedStyles } from '@emotion/react'
+import { GalleryAdd } from '@solar-icons/react'
+
 import Album from '../Album'
+import Button from '../Button'
 
 interface Props {
   images: File[]
+  maxLength: number
   onChange: (_files: File[]) => void
+  customImageCss?: SerializedStyles
 }
 
-export default function ImageInputField({ images, onChange }: Props) {
+export default function ImageInputField({
+  images,
+  onChange,
+  maxLength,
+  customImageCss,
+}: Props) {
   const theme = useTheme()
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -17,7 +25,7 @@ export default function ImageInputField({ images, onChange }: Props) {
     <>
       <Album>
         {images.map((image, index) => (
-          <div key={index}>
+          <div key={index} css={customImageCss}>
             <img
               src={URL.createObjectURL(image)}
               alt={`Album image ${index}`}
@@ -44,7 +52,7 @@ export default function ImageInputField({ images, onChange }: Props) {
         hidden
         multiple
         onChange={e => {
-          const files = Array.from(e.target.files || [])
+          const files = Array.from(e.target.files || []).slice(0, maxLength)
           onChange(files)
         }}
       />

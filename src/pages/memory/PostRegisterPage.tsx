@@ -1,9 +1,10 @@
+import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
+
 import BottomButton from '@/components/common/BottomButton'
 import ImageInputField from '@/components/common/ImageInputField/ImageInputField'
 import InputField from '@/components/common/InputField'
 import useHeader from '@/hooks/useHeader'
-import { useState } from 'react'
-import { useLocation } from 'react-router-dom'
 
 export default function PostRegisterPage() {
   useHeader({
@@ -27,7 +28,11 @@ export default function PostRegisterPage() {
         </h1>
         <p css={{ fontSize: 16 }}>에서 있었던 일을 공유해요.</p>
       </div>
-      <ImageInputField images={images} onChange={is => setImages(is)} />
+      <ImageInputField
+        maxLength={10}
+        images={images}
+        onChange={is => setImages(is)}
+      />
       <InputField
         label='어떤 상황이었나요?'
         size='lg'
