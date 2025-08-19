@@ -9,6 +9,7 @@ import type {
   ITextInput,
 } from '@/types'
 import type { Icon } from '@solar-icons/react/lib/types'
+import { inputContainerStyle } from '@/styles/input'
 
 interface Props<
   T extends IBaseInput = ITextInput | IDateRangeInput | IArrayInput,
@@ -41,7 +42,7 @@ export default function InputPopup<T extends IBaseInput>({
   const theme = useTheme()
 
   return (
-    <div css={containerStyle}>
+    <div css={inputContainerStyle}>
       <label css={labelStyle}>{label}</label>
 
       <button onClick={() => setShowPopup(true)} css={buttonStyle}>
@@ -68,13 +69,6 @@ export default function InputPopup<T extends IBaseInput>({
     </div>
   )
 }
-
-const containerStyle = css({
-  padding: '12px 16px',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '6px',
-})
 
 const labelStyle = (theme: Theme) =>
   css({

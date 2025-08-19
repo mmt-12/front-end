@@ -1,6 +1,6 @@
 // contexts/ModalProvider.tsx
-import { css } from '@emotion/react'
 import { createContext, Fragment, useState, type ReactNode } from 'react'
+import { css } from '@emotion/react'
 import { createPortal } from 'react-dom'
 
 type Modal = { id: string; content: ReactNode }
@@ -63,7 +63,7 @@ const backgroundStyle = css({
   width: '100%',
   height: '100%',
   backgroundColor: 'rgba(0, 0, 0, 0.25)',
-  zIndex: 10,
+  zIndex: 30,
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'flex-end',

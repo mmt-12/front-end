@@ -1,10 +1,11 @@
-import { css, type Theme } from '@emotion/react'
-import PostContent from '../PostContent/PostContent'
 import type { MouseEvent } from 'react'
+import { css, type Theme } from '@emotion/react'
+
 import { emojies, voices } from '@/mocks/data/reaction'
 import type { IMember } from '@/types'
 import EmojiList from '../../reaction/EmojiList'
 import VoiceList from '../../reaction/VoiceList'
+import PostContent from '../PostContent/PostContent'
 
 export interface Props {
   id: number
@@ -15,7 +16,7 @@ export interface Props {
 }
 
 export default function Post(props: Props) {
-  const handleReactionClick = (e: MouseEvent<HTMLDivElement>, id: number) => {
+  const handleReactionClick = (e: MouseEvent, id: number) => {
     e.stopPropagation()
     console.log(`Reaction clicked: ${id}`)
   }
