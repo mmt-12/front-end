@@ -55,7 +55,6 @@ const containerStyle = (size: 'sm' | 'md') =>
       display: 'flex',
       flexDirection: 'column',
       gap: '6px',
-      overflow: 'hidden',
       '>div': {
         display: 'flex',
         flexDirection: 'row',
