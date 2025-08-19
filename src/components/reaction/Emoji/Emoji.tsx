@@ -1,5 +1,6 @@
-import type { IReaction } from '@/types/reaction'
 import { css, useTheme, type Theme } from '@emotion/react'
+
+import type { IReaction } from '@/types/reaction'
 
 export default function Emoji({
   id,
