@@ -1,5 +1,5 @@
-import GreetingPopup from '@/components/popup/GreetingPopup'
 import MemoryListItem from '@/components/memory/MemoryListItem'
+import GreetingPopup from '@/components/popup/GreetingPopup'
 import useHeader from '@/hooks/useHeader'
 import { MEMORIES } from '@/mocks/data/memories'
 import { useSettingStore } from '@/store/settingStore'
