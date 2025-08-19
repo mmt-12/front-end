@@ -38,9 +38,11 @@ export default function EmojiPickerModal({ id }: Props) {
       <InputField label='검색' onChange={(v: string) => setSearchKey(v)} />
       <Spacing height={6} />
       <div css={[emojiListStyle, { flexWrap: 'wrap' }]}>
-        {emojies.map(emoji => (
-          <Emoji key={emoji.id} {...emoji} amount={undefined} />
-        ))}
+        {emojies
+          .filter(emoji => emoji.name.includes(searchKey))
+          .map(emoji => (
+            <Emoji key={emoji.id} {...emoji} amount={undefined} />
+          ))}
       </div>
       <BottomButton
         type='secondary'

@@ -1,5 +1,5 @@
 // contexts/ModalProvider.tsx
-import { createContext, Fragment, useState, type ReactNode } from 'react'
+import { createContext, useState, type ReactNode } from 'react'
 import { css } from '@emotion/react'
 import { createPortal } from 'react-dom'
 
