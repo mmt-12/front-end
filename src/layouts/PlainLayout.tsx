@@ -1,25 +1,12 @@
-import type { Theme } from '@emotion/react'
-import { css } from '@emotion/react'
+import { mainStyle } from '@/styles/layout'
 import { Outlet } from 'react-router-dom'
 
 export default function PlainLayout() {
   return (
-    <div css={containerStyle}>
-      <main css={[mainStyle]}>
+    <>
+      <main css={[mainStyle, { height: '100vh' }]}>
         <Outlet />
       </main>
-    </div>
+    </>
   )
 }
-
-const containerStyle = (theme: Theme) =>
-  css({
-    height: '100vh',
-    backgroundColor: theme.bg,
-    overflowY: 'hidden',
-  })
-
-const mainStyle = css({
-  height: '100vh',
-  overflowY: 'scroll',
-})
