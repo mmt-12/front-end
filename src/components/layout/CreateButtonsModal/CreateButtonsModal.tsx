@@ -1,15 +1,17 @@
+import { css, useTheme } from '@emotion/react'
 import {
   Box,
   SmileSquare,
   Soundwave,
   UsersGroupRounded,
 } from '@solar-icons/react'
-import BottomDrawer from '../../common/BottomDrawer'
-import Button from '../../common/Button'
-import { css, useTheme } from '@emotion/react'
 import { Link } from 'react-router-dom'
-import { ROUTES } from '@/routes/ROUTES'
+
+import BottomDrawer from '@/components/common/BottomDrawer'
+import Button from '@/components/common/Button'
+import EmojiRegisterModal from '@/components/reaction/EmojiRegisterModal'
 import { useModal } from '@/hooks/useModal'
+import { ROUTES } from '@/routes/ROUTES'
 
 interface Props {
   id: string
@@ -17,11 +19,19 @@ interface Props {
 
 export default function CreateButtonsModal({ id }: Props) {
   const theme = useTheme()
-  const { closeModal } = useModal()
+  const { closeModal, openModal } = useModal()
+
+  const handleEmojiClick = () => {
+    openModal('emoji-register', <EmojiRegisterModal id='emoji-add' />)
+    closeModal(id)
+  }
+
   return (
     <BottomDrawer close={() => closeModal(id)}>
       <span
         style={{
+          display: 'block',
+          textAlign: 'center',
           fontWeight: 'bold',
           fontSize: '16px',
           color: theme.stone[800],
@@ -40,6 +50,7 @@ export default function CreateButtonsModal({ id }: Props) {
           />
         </Link>
         <Button
+          onClick={handleEmojiClick}
           type='secondary'
           size='md'
           label='이모티콘'
@@ -63,8 +74,9 @@ export default function CreateButtonsModal({ id }: Props) {
 }
 
 const contentStyle = css({
+  width: '100%',
+  padding: '16px',
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
-  gap: '16px',
-  width: '100%',
+  gap: '12px',
 })

@@ -51,7 +51,7 @@ const labelStyle = (theme: Theme) =>
     fontSize: '14px',
     fontWeight: '500',
     letterSpacing: '0.5px',
-    color: theme.stone[700],
+    color: theme.stone[600],
     transition: 'color 0.1s ease-in-out',
 
     '&:has(+ input:focus), &:has(+ textarea:focus)': {

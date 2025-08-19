@@ -1,15 +1,16 @@
 import { cloneElement, useState } from 'react'
 import { css, useTheme } from '@emotion/react'
 import type { Theme } from '@emotion/react'
-import PopupModal from '../PopupModal'
+import type { Icon } from '@solar-icons/react/lib/types'
+
+import { inputContainerStyle } from '@/styles/input'
 import type {
   IArrayInput,
   IBaseInput,
   IDateRangeInput,
   ITextInput,
 } from '@/types'
-import type { Icon } from '@solar-icons/react/lib/types'
-import { inputContainerStyle } from '@/styles/input'
+import PopupModal from '../PopupModal'
 
 interface Props<
   T extends IBaseInput = ITextInput | IDateRangeInput | IArrayInput,
@@ -75,7 +76,7 @@ const labelStyle = (theme: Theme) =>
     fontSize: '14px',
     fontWeight: '500',
     letterSpacing: '0.5px',
-    color: theme.stone[700],
+    color: theme.stone[600],
     transition: 'color 0.1s ease-in-out',
 
     '&:has(+ input:focus)': {

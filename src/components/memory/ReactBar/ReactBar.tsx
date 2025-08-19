@@ -1,11 +1,25 @@
 import { css, useTheme, type Theme } from '@emotion/react'
 import { SoundwaveSquare, StickerSmileSquare } from '@solar-icons/react'
 
+import EmojiPickerModal from '@/components/reaction/EmojiPickerModal'
+import { useModal } from '@/hooks/useModal'
+
 export default function ReactBar() {
   const theme = useTheme()
+  const { openModal } = useModal()
+
+  const handleEmojiClick = () => {
+    openModal('emoji-picker', <EmojiPickerModal id='emoji-picker' />)
+  }
+
   return (
     <div css={containerStyle}>
-      <StickerSmileSquare weight='Bold' size={44} color={theme.yellow} />
+      <StickerSmileSquare
+        weight='Bold'
+        size={44}
+        color={theme.yellow}
+        onClick={handleEmojiClick}
+      />
       <SoundwaveSquare weight='Bold' size={44} color={theme.sky[400]} />
     </div>
   )

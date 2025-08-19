@@ -19,14 +19,13 @@ const containerStyle = (theme: Theme) =>
     position: 'fixed',
     width: '100%',
     maxWidth: `calc(${theme.maxWidth} - 32px)`,
-    padding: '0px 2px 36px 2px',
+    padding: '0px 2px 8px 2px',
 
     backgroundColor: 'white',
     boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)',
 
     borderTopLeftRadius: '24px',
     borderTopRightRadius: '24px',
-    transform: 'translateY(16px)',
   })
 
 const barStyle = (theme: Theme) =>
