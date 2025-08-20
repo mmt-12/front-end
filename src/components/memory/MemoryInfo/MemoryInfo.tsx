@@ -1,10 +1,13 @@
 import { css, useTheme, type Theme } from '@emotion/react'
-import Chip from '@/components/common/Chip'
 import { DownloadSquare, GalleryCircle, UserCircle } from '@solar-icons/react'
+
+import Chip from '@/components/common/Chip'
+import Spacing from '@/components/common/Spacing'
+import type { locationType } from '@/types/memory'
 
 interface Props {
   title: string
-  location: string
+  location: locationType
   memberCount: number
   imageCount: number
   description?: string
@@ -19,7 +22,7 @@ export default function MemoryInfo(props: Props) {
   const renderMeta = () => {
     return (
       <>
-        <p className='location'>{props.location}</p>
+        <p className='location'>{props.location.name}</p>
         {!!props.startDate && (
           <p className='date'>
             {props.startDate}
@@ -54,7 +57,11 @@ export default function MemoryInfo(props: Props) {
           <>{renderMeta()}</>
         )}
       </div>
-      <p css={descriptionStyle}>{props.description}</p>
+      {props.description ? (
+        <p css={descriptionStyle}>{props.description}</p>
+      ) : (
+        <Spacing height={8} />
+      )}
     </div>
   )
 }

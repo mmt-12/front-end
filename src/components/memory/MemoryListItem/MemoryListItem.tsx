@@ -1,7 +1,8 @@
-import { ROUTES } from '@/routes/ROUTES'
-import type { IMemoryInfo } from '@/types/memory'
 import { css } from '@emotion/react'
 import { Link } from 'react-router-dom'
+
+import { ROUTES } from '@/routes/ROUTES'
+import type { IMemoryInfo } from '@/types/memory'
 import MemoryInfo from '../MemoryInfo'
 
 interface Props extends IMemoryInfo {
@@ -20,13 +21,13 @@ export default function MemoryListItem(props: Props) {
       />
       {props.isGrid ? (
         <div css={imagesGridStyle}>
-          {props.images?.map((image, index) => (
+          {props.images.map((image, index) => (
             <img key={index} src={image} alt={`Memory image ${index + 1}`} />
           ))}
         </div>
       ) : (
         <div css={imagesListStyle}>
-          {props.images?.slice(0, 3).map((image, index) => (
+          {props.images.slice(0, 3).map((image, index) => (
             <img key={index} src={image} alt={`Memory image ${index + 1}`} />
           ))}
         </div>
