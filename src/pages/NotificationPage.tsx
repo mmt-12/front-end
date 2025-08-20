@@ -1,4 +1,6 @@
+import NotificationItem from '@/components/notification/NotificationItem'
 import useHeader from '@/hooks/useHeader'
+import { NOTIFICATIONS } from '@/mocks/data/notifications'
 
 export default function NotificationPage() {
   useHeader({
@@ -8,7 +10,13 @@ export default function NotificationPage() {
     },
   })
 
-  throw new Error('(test) 알림함 페이지는 아직 개발 중입니다.')
+  const notifications = NOTIFICATIONS
 
-  return <div>notification pages</div>
+  return (
+    <>
+      {notifications.map(notification => (
+        <NotificationItem key={notification.id} {...notification} />
+      ))}
+    </>
+  )
 }
