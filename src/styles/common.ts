@@ -1,4 +1,5 @@
 import { css } from '@emotion/react'
+
 import { theme } from './theme'
 
 export const fixedWithMargin = (margin: number) =>
@@ -9,4 +10,11 @@ export const fixedWithMargin = (margin: number) =>
     maxWidth: `calc(${theme.maxWidth} - ${margin * 2}px)`,
     margin: '0 auto',
     zIndex: 10,
+  })
+
+export const flexGap = (gap: number = 0) =>
+  css({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: `${gap}px`,
   })

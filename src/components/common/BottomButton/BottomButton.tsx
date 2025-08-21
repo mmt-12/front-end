@@ -1,4 +1,4 @@
-import { fixedWithMargin } from '@/styles/fixed'
+import { fixedWithMargin } from '@/styles/common'
 import type { ButtonProps } from '@/types'
 import Button from '../Button'
 

@@ -13,8 +13,8 @@ import {
 import { Link } from 'react-router-dom'
 
 import Border from '@/components/common/Border'
-import Spacing from '@/components/common/Spacing'
 import { ROUTES } from '@/routes/ROUTES'
+import { flexGap } from '@/styles/common'
 import type { INotification, NotificationType } from '@/types/notification'
 import { formatTimeAgo } from '@/utils/date'
 
@@ -38,12 +38,11 @@ export default function NotificationItem({
         <div css={iconWrapperStyle}>
           <Icon weight='Bold' color={theme.stone[500]} size={22} />
         </div>
-        <div css={{ width: '100%' }}>
+        <div css={[{ width: '100%' }, flexGap(10)]}>
           <div css={infoRowStyle}>
             <span>{title}</span>
             <span>{formatTimeAgo(createdAt)}</span>
           </div>
-          <Spacing height={10} />
           <p css={{ fontColor: theme.stone[900] }}>{content}</p>
         </div>
       </Link>

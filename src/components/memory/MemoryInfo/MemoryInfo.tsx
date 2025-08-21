@@ -2,7 +2,6 @@ import { css, useTheme, type Theme } from '@emotion/react'
 import { DownloadSquare, GalleryCircle, UserCircle } from '@solar-icons/react'
 
 import Chip from '@/components/common/Chip'
-import Spacing from '@/components/common/Spacing'
 import type { locationType } from '@/types/memory'
 
 interface Props {
@@ -60,7 +59,7 @@ export default function MemoryInfo(props: Props) {
       {props.description ? (
         <p css={descriptionStyle}>{props.description}</p>
       ) : (
-        <Spacing height={8} />
+        <div style={{ height: 8 }} />
       )}
     </div>
   )
