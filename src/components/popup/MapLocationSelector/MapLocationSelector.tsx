@@ -6,20 +6,16 @@ import {
   useMap,
   useMapsLibrary,
 } from '@vis.gl/react-google-maps'
-import AutocompleteControl from './places/PlacesSearchControl'
-import PlacesMarker from './places/PlacesMarker'
-import type { ILocationInput } from '@/types'
+
 import BottomButton from '@/components/common/BottomButton'
+import { DEFAULT_LOCATION } from '@/consts/MAP'
+import type { ILocationInput } from '@/types'
+import PlacesMarker from './places/PlacesMarker'
+import AutocompleteControl from './places/PlacesSearchControl'
 
 interface Props {
   onSelect?: (_region: ILocationInput) => void
 }
-
-const DEFAULT_LOCATION = {
-  lat: 37.5012,
-  lng: 127.0396,
-}
-
 export default function MapLocationSelector({ onSelect }: Props) {
   const [address, setAddress] = useState('서울')
 

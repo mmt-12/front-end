@@ -15,6 +15,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@googlemaps/markerclusterer": "^2.6.2",
     "@solar-icons/react": "^1.0.1",
     "@tanstack/react-query": "^5.83.0",
     "@types/node": "^24.0.14",

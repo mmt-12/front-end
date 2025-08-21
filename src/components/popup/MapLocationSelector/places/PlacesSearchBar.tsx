@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useMapsLibrary } from '@vis.gl/react-google-maps'
+import { css, type Theme } from '@emotion/react'
 import { MapPoint, RoundArrowDown } from '@solar-icons/react'
 import { RoundArrowUp } from '@solar-icons/react/ssr'
-import { css, type Theme } from '@emotion/react'
-import { fixedWithMargin } from '@/styles/fixed'
-import { theme } from '@/styles/theme'
+import { useMapsLibrary } from '@vis.gl/react-google-maps'
+
 import InputField from '@/components/common/InputField'
 import { useAutocompleteSuggestions } from '@/hooks/useAutocompleteSuggestions'
+import { fixedWithMargin } from '@/styles/common'
+import { theme } from '@/styles/theme'
 
 interface Props {
   onPlaceSelect: (_place: google.maps.places.Place | null) => void

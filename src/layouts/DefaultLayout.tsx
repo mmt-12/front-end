@@ -1,7 +1,8 @@
+import { Outlet } from 'react-router-dom'
+
 import Header from '@/components/layout/Header'
 import NavBar from '@/components/layout/NavBar'
 import { mainStyle } from '@/styles/layout'
-import { Outlet } from 'react-router-dom'
 
 export default function DefaultLayout() {
   return (

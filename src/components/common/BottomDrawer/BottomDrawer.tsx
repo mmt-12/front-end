@@ -21,7 +21,7 @@ const containerStyle = (theme: Theme) =>
     maxWidth: `calc(${theme.maxWidth} - 32px)`,
     padding: '0px 2px 8px 2px',
 
-    backgroundColor: 'white',
+    backgroundColor: theme.white,
     boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)',
 
     borderTopLeftRadius: '24px',

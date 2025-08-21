@@ -5,7 +5,6 @@ import { css } from '@emotion/react'
 import BottomButton from '@/components/common/BottomButton'
 import BottomDrawer from '@/components/common/BottomDrawer'
 import InputField from '@/components/common/InputField'
-import Spacing from '@/components/common/Spacing'
 import Text from '@/components/common/Text'
 import { useModal } from '@/hooks/useModal'
 import { emojies } from '@/mocks/data/reaction'
@@ -29,15 +28,13 @@ export default function EmojiPickerModal({ id }: Props) {
       <Text customCss={spanStyle} withPadding>
         최근 사용
       </Text>
-      <div css={emojiListStyle}>
+      <div css={[emojiListStyle, { marginBottom: '4px' }]}>
         {emojies.slice(0, 6).map(emoji => (
           <Emoji key={emoji.id} {...emoji} amount={undefined} />
         ))}
       </div>
-      <Spacing height={4} />
       <InputField label='검색' onChange={(v: string) => setSearchKey(v)} />
-      <Spacing height={6} />
-      <div css={[emojiListStyle, { flexWrap: 'wrap' }]}>
+      <div css={[emojiListStyle, { flexWrap: 'wrap', marginTop: '6px' }]}>
         {emojies
           .filter(emoji => emoji.name.includes(searchKey))
           .map(emoji => (

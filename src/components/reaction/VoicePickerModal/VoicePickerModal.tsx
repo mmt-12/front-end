@@ -5,7 +5,6 @@ import { css } from '@emotion/react'
 import BottomButton from '@/components/common/BottomButton'
 import BottomDrawer from '@/components/common/BottomDrawer'
 import InputField from '@/components/common/InputField'
-import Spacing from '@/components/common/Spacing'
 import Text from '@/components/common/Text'
 import { useModal } from '@/hooks/useModal'
 import { voices } from '@/mocks/data/reaction'
@@ -29,15 +28,16 @@ export default function VoicePickerModal({ id }: Props) {
       <Text customCss={spanStyle} withPadding>
         최근 사용
       </Text>
-      <div css={voiceListStyle} className='no-scrollbar'>
+      <div
+        css={[voiceListStyle, { marginBottom: '4px' }]}
+        className='no-scrollbar'
+      >
         {voices.slice(0, 6).map(voice => (
           <Voice key={voice.id} {...voice} amount={undefined} />
         ))}
       </div>
-      <Spacing height={4} />
       <InputField label='검색' onChange={(v: string) => setSearchKey(v)} />
-      <Spacing height={6} />
-      <div css={[voiceListStyle, { flexWrap: 'wrap' }]}>
+      <div css={[voiceListStyle, { flexWrap: 'wrap', marginTop: '6px' }]}>
         {voices
           .filter(voice => voice.name.includes(searchKey))
           .map(voice => (
