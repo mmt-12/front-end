@@ -1,27 +1,24 @@
-import { RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
-import PlainLayout from '@/layouts/PlainLayout'
 import DefaultLayout from '@/layouts/DefaultLayout'
 import HeaderLayout from '@/layouts/HeaderLayout'
-
-import LoginPage from '@/pages/LoginPage'
-import MemoryListPage from '@/pages/memory/MemoryListPage'
-import MapPage from '@/pages/MapPage'
+import PlainLayout from '@/layouts/PlainLayout'
+import RootLayout from '@/layouts/RootLayout'
 import CalendarPage from '@/pages/CalendarPage'
+import ErrorBoundary from '@/pages/ErrorBoundary'
+import AddProfileImagePage from '@/pages/guest-book/AddProfileImagePage'
+import EditProfilePage from '@/pages/guest-book/EditProfilePage'
 import GuestBookPage from '@/pages/guest-book/GuestBookPage'
+import LoginPage from '@/pages/LoginPage'
+import MapPage from '@/pages/MapPage'
+import MemoryDetailPage from '@/pages/memory/MemoryDetailPage'
+import MemoryListPage from '@/pages/memory/MemoryListPage'
+import MemoryRegisterPage from '@/pages/memory/MemoryRegisterPage'
+import PostDetailPage from '@/pages/memory/PostDetailPage'
+import PostRegisterPage from '@/pages/memory/PostRegisterPage'
 import NotificationPage from '@/pages/NotificationPage'
 import SignupPage from '@/pages/SignupPage'
-import MemoryDetailPage from '@/pages/memory/MemoryDetailPage'
-import EditProfilePage from '@/pages/guest-book/EditProfilePage'
-import AddProfileImagePage from '@/pages/guest-book/AddProfileImagePage'
-import PostDetailPage from '@/pages/memory/PostDetailPage'
-import MemoryRegisterPage from '@/pages/memory/MemoryRegisterPage'
-import ErrorBoundary from '@/pages/ErrorBoundary'
-
-import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { ROUTES } from './ROUTES'
-import PostRegisterPage from '@/pages/memory/PostRegisterPage'
-import RootLayout from '@/layouts/RootLayout'
 
 const router = createBrowserRouter([
   {
@@ -73,7 +70,7 @@ const router = createBrowserRouter([
         Component: () => <HeaderLayout />,
         children: [
           {
-            path: ROUTES.NOTIFICATION,
+            path: ROUTES.NOTIFICATION_LIST,
             element: <NotificationPage />,
           },
           {

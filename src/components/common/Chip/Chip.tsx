@@ -1,10 +1,10 @@
+import type { JSX } from 'react'
 import {
   css,
   useTheme,
   type SerializedStyles,
   type Theme,
 } from '@emotion/react'
-import type { JSX } from '@emotion/react/jsx-runtime'
 
 interface Props {
   label: string | number

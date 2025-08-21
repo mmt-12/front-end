@@ -9,7 +9,7 @@ export const ROUTES = {
   MAP: '/map',
   CALENDAR: '/calendar',
   GUEST_BOOK: (id: string | number) => `/guest-book/${id}`,
-  NOTIFICATION: '/notification',
+  NOTIFICATION_LIST: '/notification',
   EDIT_PROFILE: '/edit-profile',
   ADD_PROFILE_IMAGE: '/add-profile-image',
 }

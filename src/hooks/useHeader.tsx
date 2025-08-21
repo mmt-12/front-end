@@ -1,9 +1,10 @@
-import type { IHeaderItem } from '@/types'
+import { useEffect } from 'react'
+import { ArrowLeft, Bell } from '@solar-icons/react'
+import { useNavigate } from 'react-router-dom'
+
 import { ROUTES } from '@/routes/ROUTES'
 import { useHeaderStore } from '@/store/headerStore'
-import { ArrowLeft, Bell } from '@solar-icons/react'
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import type { IHeaderItem } from '@/types'
 
 interface Props {
   routeName?: string
@@ -31,7 +32,7 @@ export default function useHeader({ routeName, leftItem, rightItem }: Props) {
       navigate(-1)
     }
     DEFAULT_RIGHT_ITEM.onClick = () => {
-      navigate(ROUTES.NOTIFICATION)
+      navigate(ROUTES.NOTIFICATION_LIST)
     }
   }, [navigate])
 
