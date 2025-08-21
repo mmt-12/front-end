@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import Badge from '.'
 import { expect } from 'storybook/test'
+
 import { BADGES } from '@/consts/BADGES'
+import Badge from '.'
 
 const meta = {
   title: 'components/Badge',
@@ -47,9 +48,7 @@ export const AllBadges: Story = {
       // 해당 id의 Badge 가져오기
       const badge = canvas.getByTestId(`badge-${id}`)
       expect(badge).toBeInTheDocument()
-      expect(badge).toHaveStyle({
-        fontFamily: 'PFStardust',
-      })
+      expect(badge).toHaveStyle('font-family: PFStardust, sans-serif')
 
       //Badge의 텍스트 일치하는지 확인
       expect(badge).toHaveTextContent(BADGES[id].name)

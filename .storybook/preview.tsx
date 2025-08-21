@@ -1,9 +1,11 @@
 import { Global, ThemeProvider } from '@emotion/react'
 import type { Preview } from '@storybook/react-vite'
-import { globalStyle } from '../src/styles/global'
-import { theme } from '../src/styles/theme'
 import { APIProvider } from '@vis.gl/react-google-maps'
 import { INITIAL_VIEWPORTS } from 'storybook/viewport'
+
+import { ModalProvider } from '../src/contexts/ModalProvider'
+import { globalStyle } from '../src/styles/global'
+import { theme } from '../src/styles/theme'
 import { storybookStyle } from './style.ts'
 
 const preview: Preview = {
@@ -28,7 +30,9 @@ const preview: Preview = {
         <APIProvider
           apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string}
         >
-          <Story />
+          <ModalProvider>
+            <Story />
+          </ModalProvider>
         </APIProvider>
       </ThemeProvider>
     ),

@@ -1,10 +1,11 @@
-import type { IArrayInput, IArrayItem } from '@/types'
 import { useMemo, useState } from 'react'
 import { css } from '@emotion/react'
-import InputField from '@/components/common/InputField'
 import { AddCircle, CheckCircle } from '@solar-icons/react'
-import { theme } from '@/styles/theme'
+
 import BottomButton from '@/components/common/BottomButton'
+import InputField from '@/components/common/InputField'
+import { theme } from '@/styles/theme'
+import type { IArrayInput, IArrayItem } from '@/types'
 
 interface Props {
   items: IArrayItem[]
@@ -28,7 +29,7 @@ export default function ArraySelector({
   }, [items, searchTerm])
 
   return (
-    <div css={containerStyle}>
+    <>
       <InputField
         onChange={(v: string) => {
           setSearchTerm(v)
@@ -94,24 +95,17 @@ export default function ArraySelector({
           })
         }
       />
-    </div>
+    </>
   )
 }
 
-const containerStyle = css({
-  padding: 16,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 16,
-})
-
 const listStyle = css({
-  padding: 0,
+  padding: 16,
   paddingBottom: 72,
   margin: 0,
   display: 'flex',
   flexDirection: 'column',
-  gap: 12,
+  gap: 16,
   listStyle: 'none',
 })
 

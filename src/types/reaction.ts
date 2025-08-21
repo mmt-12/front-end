@@ -18,4 +18,5 @@ export interface IVoice extends IReaction {
 export interface ReactionListProps {
   onClick: (_e: React.MouseEvent<HTMLDivElement>, _id: number) => void
   selectedId?: number
+  showAmount?: boolean
 }

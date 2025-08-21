@@ -1,5 +1,6 @@
-import type { IReaction } from '@/types/reaction'
 import { css, useTheme, type Theme } from '@emotion/react'
+
+import type { IReaction } from '@/types/reaction'
 
 export default function Emoji({
   id,
@@ -32,7 +33,7 @@ const containerStyle = (
 ) =>
   css({
     width: 'fit-content',
-    padding: isAmount ? '6px' : 0,
+    padding: isAmount ? (isActive ? '6px' : '2px') : 0,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

@@ -1,6 +1,6 @@
-import { css, type Theme } from '@emotion/react'
-import { ACHIEVEMENTS } from '@/mocks/data/guestBook'
 import Badge from '@/components/common/Badge'
+import { ACHIEVEMENTS } from '@/mocks/data/guestBook'
+import { type Theme, css } from '@emotion/react'
 
 interface Props {
   isExpanded?: boolean
@@ -32,7 +32,7 @@ export default function BadgeList({ isExpanded = false }: Props) {
       {badgeListData
         .filter(badge => badge.type !== 'HIDDEN')
         .map(badge => (
-          <div css={medalInfoStyle} className='stardust'>
+          <div css={medalInfoStyle} className='stardust' key={badge.id}>
             <Badge key={badge.id} id={badge.id} />
             <p css={conditionStyle}>
               {badge.type === 'RESTRICTED' && !badge.isObtained

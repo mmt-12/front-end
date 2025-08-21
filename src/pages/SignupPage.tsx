@@ -1,14 +1,15 @@
-import { css } from '@emotion/react'
-import { ROUTES } from '@/routes/ROUTES'
-import { useNavigate } from 'react-router-dom'
-import InputField from '@/components/common/InputField'
-import DateInputField from '@/components/common/DateInputField'
 import { useMemo, useState } from 'react'
-import Button from '@/components/common/Button'
-import { useUserStore } from '@/store/userStore'
-import { dateToId } from '@/utils/date'
+import { useNavigate } from 'react-router-dom'
+
+import BottomButton from '@/components/common/BottomButton'
+import DateInputField from '@/components/common/DateInputField'
+import InputField from '@/components/common/InputField'
+import Spacing from '@/components/common/Spacing'
 import { MEMBERS } from '@/consts/SSAFY_12_MEMBERS'
+import { ROUTES } from '@/routes/ROUTES'
+import { useUserStore } from '@/store/userStore'
 import { signupTitleStyle } from '@/styles/signupTitle'
+import { dateToId } from '@/utils/date'
 
 export default function SignupPage() {
   const navigate = useNavigate()
@@ -28,60 +29,41 @@ export default function SignupPage() {
   }, [name, password, birthDate])
 
   return (
-    <div css={containerStyle}>
+    <>
       <div css={signupTitleStyle}>
         <h1>당신은 누구인가요?</h1>
         <p>지금은 싸피 12기 12반만 가입할 수 있어요.</p>
       </div>
-      <div css={inputsStyle}>
-        <InputField
-          label='이름'
-          onChange={(v: string) => {
-            setName(v)
-          }}
-        />
-        <DateInputField
-          label='생년월일'
-          onChange={date => {
-            setBirthDate(date)
-          }}
-        />
-        <InputField
-          label='암호 - 우리반 반장님이 뱉은 주스는?'
-          onChange={(v: string) => {
-            setPassword(v)
-          }}
-        />
-      </div>
-      <div css={buttonWrapperStyle}>
-        <Button
-          label='입장하기'
-          type={isValid ? 'primary' : 'disabled'}
-          onClick={() => {
-            userStore.login(birthDate)
-            navigate(ROUTES.MEMORY_LIST)
-          }}
-        />
-      </div>
-    </div>
+      <Spacing height={8} />
+      <InputField
+        label='이름'
+        onChange={(v: string) => {
+          setName(v)
+        }}
+      />
+      <Spacing height={8} />
+      <DateInputField
+        label='생년월일'
+        onChange={date => {
+          setBirthDate(date)
+        }}
+      />
+      <Spacing height={8} />
+      <InputField
+        label='암호 - 우리반 반장님이 뱉은 주스는?'
+        onChange={(v: string) => {
+          setPassword(v)
+        }}
+      />
+      <Spacing height={8} />
+      <BottomButton
+        label='입장하기'
+        type={isValid ? 'primary' : 'disabled'}
+        onClick={() => {
+          userStore.login(birthDate)
+          navigate(ROUTES.MEMORY_LIST)
+        }}
+      />
+    </>
   )
 }
-
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  height: '100vh',
-})
-
-const inputsStyle = css({
-  margin: '32px 0px',
-
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 16,
-})
-
-const buttonWrapperStyle = css({
-  marginTop: 'auto',
-  padding: '16px',
-})

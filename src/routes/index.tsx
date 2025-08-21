@@ -21,78 +21,86 @@ import ErrorBoundary from '@/pages/ErrorBoundary'
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { ROUTES } from './ROUTES'
 import PostRegisterPage from '@/pages/memory/PostRegisterPage'
+import RootLayout from '@/layouts/RootLayout'
 
 const router = createBrowserRouter([
   {
-    path: ROUTES.LOGIN,
-    Component: () => <PlainLayout />,
-    errorElement: <ErrorBoundary />,
-    children: [
-      {
-        index: true,
-        element: <LoginPage />,
-      },
-      {
-        path: ROUTES.SIGNUP,
-        element: <SignupPage />,
-      },
-    ],
-  },
-  {
     path: '/',
-    Component: () => <DefaultLayout />,
-    errorElement: <ErrorBoundary />,
-    children: [
-      { index: true, element: <Navigate to={ROUTES.MEMORY_LIST} replace /> },
-      {
-        path: ROUTES.MEMORY_LIST,
-        element: <MemoryListPage />,
-      },
-      {
-        path: ROUTES.MAP,
-        element: <MapPage />,
-      },
-      {
-        path: ROUTES.CALENDAR,
-        element: <CalendarPage />,
-      },
-      {
-        path: ROUTES.GUEST_BOOK(':id'),
-        element: <GuestBookPage />,
-      },
-    ],
-  },
-  {
-    Component: () => <HeaderLayout />,
+    Component: () => <RootLayout />,
     errorElement: <ErrorBoundary />,
     children: [
       {
-        path: ROUTES.NOTIFICATION,
-        element: <NotificationPage />,
+        path: ROUTES.LOGIN,
+        Component: () => <PlainLayout />,
+        children: [
+          {
+            index: true,
+            element: <LoginPage />,
+          },
+          {
+            path: ROUTES.SIGNUP,
+            element: <SignupPage />,
+          },
+        ],
       },
       {
-        path: ROUTES.EDIT_PROFILE,
-        element: <EditProfilePage />,
+        path: '/',
+        Component: () => <DefaultLayout />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to={ROUTES.MEMORY_LIST} replace />,
+          },
+          {
+            path: ROUTES.MEMORY_LIST,
+            element: <MemoryListPage />,
+          },
+          {
+            path: ROUTES.MAP,
+            element: <MapPage />,
+          },
+          {
+            path: ROUTES.CALENDAR,
+            element: <CalendarPage />,
+          },
+          {
+            path: ROUTES.GUEST_BOOK(':id'),
+            element: <GuestBookPage />,
+          },
+        ],
       },
       {
-        path: ROUTES.ADD_PROFILE_IMAGE,
-        element: <AddProfileImagePage />,
-      },
-      {
-        path: ROUTES.MEMORY_REGISTER,
-        element: <MemoryRegisterPage />,
-      },
-      {
-        path: ROUTES.MEMORY_DETAIL(':id'),
-        element: <MemoryDetailPage />,
-      },
-      {
-        path: ROUTES.POST_DETAIL(':id'),
-        element: <PostDetailPage />,
-      },
-      {
-        path: ROUTES.POST_REGISTER,
-        element: <PostRegisterPage />,
+        Component: () => <HeaderLayout />,
+        children: [
+          {
+            path: ROUTES.NOTIFICATION,
+            element: <NotificationPage />,
+          },
+          {
+            path: ROUTES.EDIT_PROFILE,
+            element: <EditProfilePage />,
+          },
+          {
+            path: ROUTES.ADD_PROFILE_IMAGE,
+            element: <AddProfileImagePage />,
+          },
+          {
+            path: ROUTES.MEMORY_REGISTER,
+            element: <MemoryRegisterPage />,
+          },
+          {
+            path: ROUTES.MEMORY_DETAIL(':id'),
+            element: <MemoryDetailPage />,
+          },
+          {
+            path: ROUTES.POST_DETAIL(':id'),
+            element: <PostDetailPage />,
+          },
+          {
+            path: ROUTES.POST_REGISTER,
+            element: <PostRegisterPage />,
+          },
+        ],
       },
     ],
   },

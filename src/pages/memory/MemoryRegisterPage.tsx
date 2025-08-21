@@ -30,7 +30,7 @@ export default function MemoryRegisterPage() {
   const [participants, setParticipants] = useState<IArrayInput>()
 
   return (
-    <div>
+    <>
       <InputField onChange={setTitle} label='제목' />
       <InputPopup
         content={<DateRangeSelector />}
@@ -79,6 +79,6 @@ export default function MemoryRegisterPage() {
           })
         }}
       />
-    </div>
+    </>
   )
 }

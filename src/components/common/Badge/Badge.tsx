@@ -1,5 +1,6 @@
-import { BADGES } from '@/consts/BADGES'
 import { css } from '@emotion/react'
+
+import { BADGES } from '@/consts/BADGES'
 import WavyBox from '../../guest-book/WavyBox'
 
 interface Props {

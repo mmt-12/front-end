@@ -1,4 +1,3 @@
-import { ROUTES } from '@/routes/ROUTES'
 import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 import type { JSX } from '@emotion/react/jsx-runtime'
@@ -9,15 +8,20 @@ import {
   CalendarMinimalistic,
   PointOnMap,
 } from '@solar-icons/react'
-import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+
+import { useModal } from '@/hooks/useModal'
+import { ROUTES } from '@/routes/ROUTES'
 import CreateButtonsModal from '../CreateButtonsModal/CreateButtonsModal'
 
 export default function NavBar() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { openModal } = useModal()
   const user = {
     id: 123,
     name: '사용자 이름',
+  }
+  const handleAddButtonClick = () => {
+    openModal('create-buttons', <CreateButtonsModal id='create-buttons' />)
   }
   return (
     <>
@@ -32,7 +36,7 @@ export default function NavBar() {
           icon={<PointOnMap weight='Bold' size={24} />}
           to={ROUTES.MAP}
         />
-        <button css={addButtonStyle} onClick={() => setIsModalOpen(true)}>
+        <button css={addButtonStyle} onClick={handleAddButtonClick}>
           <AddCircle size={40} />
         </button>
         <Navigation
@@ -46,10 +50,6 @@ export default function NavBar() {
           to={ROUTES.GUEST_BOOK(user.id)}
         />
       </div>
-      <CreateButtonsModal
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-      />
     </>
   )
 }

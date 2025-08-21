@@ -1,11 +1,12 @@
-import GreetingPopup from '@/components/popup/GreetingPopup'
+import { useCallback, useEffect, useState } from 'react'
+import { Album, SortByTime } from '@solar-icons/react'
+
 import MemoryListItem from '@/components/memory/MemoryListItem'
+import GreetingPopup from '@/components/popup/GreetingPopup'
 import useHeader from '@/hooks/useHeader'
 import { MEMORIES } from '@/mocks/data/memories'
 import { useSettingStore } from '@/store/settingStore'
 import { type IHeaderItem } from '@/types'
-import { Album, SortByTime } from '@solar-icons/react'
-import { useCallback, useEffect, useState } from 'react'
 
 export default function MemoryListPage() {
   const { memoryListView, setMemoryListView } = useSettingStore()
@@ -34,7 +35,7 @@ export default function MemoryListPage() {
   }, [memoryListView, setLeftItem, toggleViewMode])
 
   return (
-    <div>
+    <>
       <GreetingPopup />
       {MEMORIES.map(memory => (
         <MemoryListItem
@@ -43,6 +44,6 @@ export default function MemoryListPage() {
           isGrid={memoryListView == 'grid'}
         />
       ))}
-    </div>
+    </>
   )
 }

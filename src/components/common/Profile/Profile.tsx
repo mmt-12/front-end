@@ -1,6 +1,7 @@
 import { css, type Theme } from '@emotion/react'
-import Badge from '../Badge'
+
 import defaultImageUrl from '@/assets/images/mascot/default-profile.png'
+import Badge from '@/components/common/Badge'
 import type { IMember } from '@/types'
 
 export interface Props extends IMember {
@@ -54,7 +55,6 @@ const containerStyle = (size: 'sm' | 'md') =>
       display: 'flex',
       flexDirection: 'column',
       gap: '6px',
-      overflow: 'hidden',
       '>div': {
         display: 'flex',
         flexDirection: 'row',

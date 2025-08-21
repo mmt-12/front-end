@@ -1,29 +1,43 @@
+import { css, useTheme } from '@emotion/react'
 import {
   Box,
   SmileSquare,
   Soundwave,
   UsersGroupRounded,
 } from '@solar-icons/react'
-import BottomDrawer from '../../common/BottomDrawer'
-import Button from '../../common/Button'
-import { css, useTheme } from '@emotion/react'
 import { Link } from 'react-router-dom'
+
+import BottomDrawer from '@/components/common/BottomDrawer'
+import Button from '@/components/common/Button'
+import EmojiRegisterModal from '@/components/reaction/EmojiRegisterModal'
+import VoiceRegisterModal from '@/components/reaction/VoiceRegisterModal/VoiceRegisterModal'
+import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 
 interface Props {
-  isModalOpen: boolean
-  setIsModalOpen: (_isOpen: boolean) => void
+  id: string
 }
 
-export default function CreateButtonsModal({
-  isModalOpen,
-  setIsModalOpen,
-}: Props) {
+export default function CreateButtonsModal({ id }: Props) {
   const theme = useTheme()
+  const { closeModal, openModal } = useModal()
+
+  const handleEmojiClick = () => {
+    openModal('emoji-register', <EmojiRegisterModal id='emoji-register' />)
+    closeModal(id)
+  }
+
+  const handleVoiceClick = () => {
+    openModal('voice-register', <VoiceRegisterModal id='voice-register' />)
+    closeModal(id)
+  }
+
   return (
-    <BottomDrawer isOpen={isModalOpen} close={() => setIsModalOpen(false)}>
+    <BottomDrawer close={() => closeModal(id)}>
       <span
         style={{
+          display: 'block',
+          textAlign: 'center',
           fontWeight: 'bold',
           fontSize: '16px',
           color: theme.stone[800],
@@ -34,6 +48,7 @@ export default function CreateButtonsModal({
       <div css={contentStyle}>
         <Link to={ROUTES.MEMORY_REGISTER}>
           <Button
+            onClick={() => closeModal(id)}
             type='primary'
             size='md'
             label='기억'
@@ -41,6 +56,7 @@ export default function CreateButtonsModal({
           />
         </Link>
         <Button
+          onClick={handleEmojiClick}
           type='secondary'
           size='md'
           label='이모티콘'
@@ -57,6 +73,7 @@ export default function CreateButtonsModal({
           size='md'
           label='보이스'
           icon={<Soundwave weight='Bold' size={28} />}
+          onClick={handleVoiceClick}
         />
       </div>
     </BottomDrawer>
@@ -64,8 +81,9 @@ export default function CreateButtonsModal({
 }
 
 const contentStyle = css({
+  width: '100%',
+  padding: '16px',
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
-  gap: '16px',
-  width: '100%',
+  gap: '12px',
 })

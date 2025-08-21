@@ -1,7 +1,8 @@
-import type { IReaction } from '@/types/reaction'
+import { useRef, useState, type MouseEvent } from 'react'
 import { css, useTheme, type Theme } from '@emotion/react'
 import { PauseCircle, PlayCircle } from '@solar-icons/react'
-import { useRef, useState, type MouseEvent } from 'react'
+
+import type { IReaction } from '@/types/reaction'
 
 interface Props extends IReaction {
   content: string
@@ -65,12 +66,11 @@ const containerStyle = (
 ) =>
   css({
     width: 'fit-content',
-    padding: isAmount ? '6px' : 0,
+    padding: isAmount ? (isActive ? '4px 12px 4px 4px' : '2px') : 0,
 
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flexShrink: 0,
     gap: '4px',
 
     borderRadius: '24px',
@@ -82,7 +82,6 @@ const containerStyle = (
       : 'none',
 
     span: {
-      paddingRight: '10px',
       fontWeight: iReacted ? 'bold' : 'normal',
       color: iReacted ? theme.sky[500] : theme.black,
     },
@@ -98,6 +97,8 @@ const playButtonWrapperStyle = (theme: Theme) =>
     backgroundColor: theme.stone[600],
     p: {
       color: theme.white,
+      whiteSpace: 'nowrap',
+      textOverflow: 'ellipsis',
     },
   })
 

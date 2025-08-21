@@ -1,4 +1,14 @@
 {
+  "plugins": [
+    "@ianvs/prettier-plugin-sort-imports"
+  ],
+  "importOrder": [
+    "^react$",
+    "^(?!@/)(@\\w+|[a-zA-Z0-9])",
+    "",
+    "^@/",
+    "^[.]"
+  ],
   "arrowParens": "avoid",
   "bracketSpacing": true,
   "htmlWhitespaceSensitivity": "css",
