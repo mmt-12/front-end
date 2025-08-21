@@ -3,8 +3,11 @@ import { css } from '@emotion/react'
 export const globalStyle = css({
   '@font-face': [
     {
-      fontFamily: 'Pretendard',
-      src: "url('@/assets/fonts/PretendardVariable.woff2') format('woff2')",
+      fontFamily: 'Pretendard Variable',
+      fontWeight: '45 92',
+      fontStyle: 'normal',
+      fontDisplay: 'swap',
+      src: `url('./woff2/PretendardVariable.woff2') format('woff2-variations')`,
     },
     {
       fontFamily: 'PFStardust',
@@ -18,7 +21,7 @@ export const globalStyle = css({
     },
   ],
   html: {
-    fontFamily: 'Pretendard, sans-serif',
+    fontFamily: 'Pretendard Variable, sans-serif',
   },
   body: {
     padding: 0,

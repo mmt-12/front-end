@@ -6,8 +6,8 @@ export interface IMemoryInfo {
   imageCount: number
   images: string[]
   description?: string
-  startDate?: string
-  endDate?: string
+  startDate: string
+  endDate: string
 }
 
 export type locationType = {

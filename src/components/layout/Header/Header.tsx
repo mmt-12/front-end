@@ -1,7 +1,8 @@
-import { useHeaderStore } from '@/store/headerStore'
-import { headerStyle } from '@/styles/header'
-import HeaderItem from './HeaderItem'
 import { useEffect } from 'react'
+
+import { useHeaderStore } from '@/store/headerStore'
+import { headerStyle } from '@/styles/layout'
+import HeaderItem from './HeaderItem'
 
 export default function Header() {
   const { leftItem, rightItem, routeName } = useHeaderStore()
