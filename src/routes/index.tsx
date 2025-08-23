@@ -9,6 +9,7 @@ import ErrorBoundary from '@/pages/ErrorBoundary'
 import AddProfileImagePage from '@/pages/guest-book/AddProfileImagePage'
 import EditProfilePage from '@/pages/guest-book/EditProfilePage'
 import GuestBookPage from '@/pages/guest-book/GuestBookPage'
+import MemberPage from '@/pages/guest-book/MemberPage'
 import LoginPage from '@/pages/LoginPage'
 import MapPage from '@/pages/MapPage'
 import MemoryDetailPage from '@/pages/memory/MemoryDetailPage'
@@ -96,6 +97,10 @@ const router = createBrowserRouter([
           {
             path: ROUTES.POST_REGISTER,
             element: <PostRegisterPage />,
+          },
+          {
+            path: ROUTES.MEMBER,
+            element: <MemberPage />,
           },
         ],
       },
