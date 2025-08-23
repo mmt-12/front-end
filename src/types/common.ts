@@ -1,6 +1,6 @@
+import type { ReactNode } from 'react'
 import type { SerializedStyles } from '@emotion/react'
 import type { Icon } from '@solar-icons/react/lib/types'
-import type { ReactNode } from 'react'
 
 export interface IHeaderItem {
   icon: Icon | null
@@ -53,3 +53,5 @@ export interface ButtonProps {
   onClick?: () => void
   customCss?: SerializedStyles
 }
+
+export type DayCellType = 'default' | 'inRange' | 'dot'

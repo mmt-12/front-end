@@ -48,7 +48,7 @@ const markerImageWrapper = (theme: Theme) =>
 
     border: `1px solid ${theme.white}`,
     borderRadius: '50%',
-    boxShadow: `0 2px 4px ${theme.shadow}`,
+    boxShadow: theme.shadow,
     overflow: 'hidden',
     img: {
       width: '100%',

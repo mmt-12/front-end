@@ -1,9 +1,10 @@
-import ReactDOM from 'react-dom'
+import type { ReactNode } from 'react'
 import { css } from '@emotion/react'
 import { ArrowLeft } from '@solar-icons/react'
-import { headerStyle } from '@/styles/header'
+import ReactDOM from 'react-dom'
+
 import HeaderItem from '@/components/layout/Header/HeaderItem'
-import type { ReactNode } from 'react'
+import { headerStyle } from '@/styles/layout'
 import { modalStyle } from '@/styles/modal'
 
 interface Props {

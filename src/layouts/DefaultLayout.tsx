@@ -10,7 +10,7 @@ export default function DefaultLayout() {
       <Header />
       <main css={mainStyle} className='no-scrollbar'>
         <Outlet />
-        <div css={{ height: '56px' }}></div>
+        <div css={{ height: '56px', flexShrink: 0 }} />
       </main>
       <NavBar />
     </>
