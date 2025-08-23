@@ -72,6 +72,7 @@ const nameStyle = (size: 'sm' | 'md') =>
     margin: 0,
     fontSize: '16px',
     fontWeight: size === 'md' ? 'bold' : '500',
+    fontFamily: size === 'md' ? 'PFStardust' : '',
   })
 
 const imageWrapperStyle = (size: 'sm' | 'md') =>
