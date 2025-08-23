@@ -12,9 +12,12 @@ export const fixedWithMargin = (margin: number) =>
     zIndex: 10,
   })
 
-export const flexGap = (gap: number = 0) =>
+export const flexGap = (
+  gap: number = 0,
+  direction: 'row' | 'column' = 'column',
+) =>
   css({
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: direction,
     gap: `${gap}px`,
   })
