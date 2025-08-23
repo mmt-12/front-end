@@ -1,14 +1,15 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type JSX } from 'react'
 import { css } from '@emotion/react'
 import { AddCircle, CheckCircle } from '@solar-icons/react'
 
 import BottomButton from '@/components/common/BottomButton'
-import InputField from '@/components/common/InputField'
+import SearchBar from '@/components/common/SearchBar'
 import { theme } from '@/styles/theme'
 import type { IArrayInput, IArrayItem } from '@/types'
 
 interface Props {
   items: IArrayItem[]
+  searchBarIcon: JSX.ElementType
   renderPreview?: boolean
   multiple?: boolean
   onSelect?: (_selectedItems: IArrayInput) => void
@@ -16,6 +17,7 @@ interface Props {
 
 export default function ArraySelector({
   items,
+  searchBarIcon,
   renderPreview,
   onSelect,
   multiple,
@@ -30,10 +32,10 @@ export default function ArraySelector({
 
   return (
     <>
-      <InputField
-        onChange={(v: string) => {
-          setSearchTerm(v)
-        }}
+      <SearchBar
+        onChange={setSearchTerm}
+        icon={searchBarIcon}
+        count={items.length}
       />
       <ul css={listStyle}>
         {searchedItems.map(item => (

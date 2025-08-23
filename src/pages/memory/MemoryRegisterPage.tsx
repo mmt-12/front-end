@@ -1,19 +1,21 @@
+import { useState } from 'react'
+import {
+  CalendarMinimalistic,
+  Map,
+  UserRounded,
+  UsersGroupTwoRounded,
+} from '@solar-icons/react'
+
 import BottomButton from '@/components/common/BottomButton'
 import InputField from '@/components/common/InputField'
+import Profile from '@/components/common/Profile'
 import ArraySelector from '@/components/popup/ArraySelector'
 import DateRangeSelector from '@/components/popup/DateRangeSelector'
 import InputPopup from '@/components/popup/InputPopup'
 import MapLocationSelector from '@/components/popup/MapLocationSelector'
-import Profile from '@/components/common/Profile'
 import useHeader from '@/hooks/useHeader'
 import { MEMBERS } from '@/mocks/data/members'
 import type { IArrayInput, IDateRangeInput, ILocationInput } from '@/types'
-import {
-  CalendarMinimalistic,
-  Map,
-  UsersGroupTwoRounded,
-} from '@solar-icons/react'
-import { useState } from 'react'
 
 export default function MemoryRegisterPage() {
   useHeader({
@@ -54,6 +56,7 @@ export default function MemoryRegisterPage() {
       <InputPopup
         content={
           <ArraySelector
+            searchBarIcon={UserRounded}
             multiple
             items={MEMBERS.map(m => ({
               label: m.name,
