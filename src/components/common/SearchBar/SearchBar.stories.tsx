@@ -4,9 +4,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import SearchBar from './SearchBar'
 
 const meta = {
-  title: 'Component/SearchBar',
+  title: 'Components/SearchBar',
   component: SearchBar,
-  tags: ['autodocs'],
   args: {
     onChange: () => {},
     icon: UserRounded,
