@@ -27,7 +27,7 @@ export default function Profile({
           css={imageStyle}
         />
       </div>
-      <div>
+      <div css={contentStyle}>
         <div>
           <p css={nameStyle(size)}>{name}</p>
           {badgeId && <Badge id={badgeId} />}
@@ -44,25 +44,28 @@ export default function Profile({
 
 const containerStyle = (size: 'sm' | 'md') =>
   css({
-    width: size === 'md' ? 'calc(100% - 16px)' : 'auto',
+    width: size === 'md' ? '100%' : 'auto',
     padding: size === 'md' ? 8 : 0,
     display: 'inline-flex',
     alignItems: 'center',
-    gap: '10px',
+    gap: '8px',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
-    '>div': {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '6px',
-      '>div': {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: '8px',
-      },
-    },
   })
+
+const contentStyle = css({
+  padding: '2px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '6px',
+  overflow: 'hidden',
+  '>div': {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: '8px',
+  },
+})
 
 const nameStyle = (size: 'sm' | 'md') =>
   css({
