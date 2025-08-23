@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import WavyBox from '.'
 import { expect } from 'storybook/test'
 
+import WavyBox from '.'
+
 const meta = {
-  title: 'components/WavyBox',
+  title: 'components/guest book/WavyBox',
   component: WavyBox,
   tags: ['autodocs'],
   args: {

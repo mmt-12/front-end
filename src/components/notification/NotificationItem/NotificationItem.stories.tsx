@@ -5,7 +5,7 @@ import { NOTIFICATIONS } from '@/mocks/data/notifications'
 import NotificationItem from '.'
 
 const meta = {
-  title: 'components/NotificationItem',
+  title: 'components/notification/NotificationItem',
   component: NotificationItem,
   tags: ['autodocs'],
   args: NOTIFICATIONS[1],
