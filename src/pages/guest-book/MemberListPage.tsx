@@ -11,7 +11,7 @@ import { ROUTES } from '@/routes/ROUTES'
 import { flexGap } from '@/styles/common'
 import { filterByStringProp } from '@/utils/filter'
 
-export default function MemberPage() {
+export default function MemberListPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const memberData = MEMBERS
   const filteredMembers = useMemo(

@@ -27,7 +27,7 @@ export default function GuestBookPage() {
     routeName: '방명록',
     leftItem: {
       icon: UsersGroupRounded,
-      onClick: () => navigate(ROUTES.MEMBER),
+      onClick: () => navigate(ROUTES.MEMBER_LIST),
     },
     rightItem: isMyPage
       ? {
