@@ -6,6 +6,7 @@ import BottomButton from '@/components/common/BottomButton'
 import SearchBar from '@/components/common/SearchBar'
 import { theme } from '@/styles/theme'
 import type { IArrayInput, IArrayItem } from '@/types'
+import { filterByStringProp } from '@/utils/filter'
 
 interface Props {
   items: IArrayItem[]
@@ -24,11 +25,10 @@ export default function ArraySelector({
 }: Props) {
   const [selectedItems, setSelectedItems] = useState<IArrayItem[]>([])
   const [searchTerm, setSearchTerm] = useState('')
-  const searchedItems = useMemo(() => {
-    return items.filter(item =>
-      item.label.toLowerCase().includes(searchTerm.toLowerCase()),
-    )
-  }, [items, searchTerm])
+  const searchedItems = useMemo(
+    () => filterByStringProp(items, 'label', searchTerm),
+    [items, searchTerm],
+  )
 
   return (
     <>
