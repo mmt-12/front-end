@@ -1,14 +1,16 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type JSX } from 'react'
 import { css } from '@emotion/react'
 import { AddCircle, CheckCircle } from '@solar-icons/react'
 
 import BottomButton from '@/components/common/BottomButton'
-import InputField from '@/components/common/InputField'
+import SearchBar from '@/components/common/SearchBar'
 import { theme } from '@/styles/theme'
 import type { IArrayInput, IArrayItem } from '@/types'
+import { filterByStringProp } from '@/utils/filter'
 
 interface Props {
   items: IArrayItem[]
+  searchBarIcon: JSX.ElementType
   renderPreview?: boolean
   multiple?: boolean
   onSelect?: (_selectedItems: IArrayInput) => void
@@ -16,24 +18,24 @@ interface Props {
 
 export default function ArraySelector({
   items,
+  searchBarIcon,
   renderPreview,
   onSelect,
   multiple,
 }: Props) {
   const [selectedItems, setSelectedItems] = useState<IArrayItem[]>([])
   const [searchTerm, setSearchTerm] = useState('')
-  const searchedItems = useMemo(() => {
-    return items.filter(item =>
-      item.label.toLowerCase().includes(searchTerm.toLowerCase()),
-    )
-  }, [items, searchTerm])
+  const searchedItems = useMemo(
+    () => filterByStringProp(items, 'label', searchTerm),
+    [items, searchTerm],
+  )
 
   return (
     <>
-      <InputField
-        onChange={(v: string) => {
-          setSearchTerm(v)
-        }}
+      <SearchBar
+        onChange={setSearchTerm}
+        icon={searchBarIcon}
+        count={items.length}
       />
       <ul css={listStyle}>
         {searchedItems.map(item => (

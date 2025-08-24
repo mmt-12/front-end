@@ -1,19 +1,21 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import InputPopup from './InputPopup'
 import {
   CalendarMinimalistic,
   Map,
   MedalRibbonStar,
+  UserRounded,
   UsersGroupTwoRounded,
 } from '@solar-icons/react'
-import DateRangeSelector from '../DateRangeSelector'
-import MapLocationSelector from '../MapLocationSelector'
-import ArraySelector from '../ArraySelector'
+import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect } from 'storybook/test'
+
 import Badge from '@/components/common/Badge'
 import Profile from '@/components/common/Profile'
 import { BADGES } from '@/consts/BADGES'
 import { MEMBERS } from '@/mocks/data/members'
-import { expect } from 'storybook/test'
+import ArraySelector from '../ArraySelector'
+import DateRangeSelector from '../DateRangeSelector'
+import MapLocationSelector from '../MapLocationSelector'
+import InputPopup from './InputPopup'
 
 const meta = {
   title: 'components/popup/InputPopup',
@@ -58,6 +60,7 @@ export const Array: Story = {
     icon: MedalRibbonStar,
     content: (
       <ArraySelector
+        searchBarIcon={MedalRibbonStar}
         renderPreview
         items={Object.entries(BADGES).map(([id, badge]) => ({
           id: Number(id),
@@ -77,6 +80,7 @@ export const MultipleArray: Story = {
     icon: UsersGroupTwoRounded,
     content: (
       <ArraySelector
+        searchBarIcon={UserRounded}
         multiple
         items={MEMBERS.map(member => ({
           id: member.id,
