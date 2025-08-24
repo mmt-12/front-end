@@ -21,8 +21,16 @@ export default function VoiceRegisterModal({ id }: { id: string }) {
 
   return (
     <BottomDrawer close={() => closeModal(id)}>
-      <InputField label='이름' onChange={(v: string) => setName(v)} />
-      <InputField label='설명' onChange={(v: string) => setContent(v)} />
+      <InputField
+        label='이름'
+        value={name}
+        onChange={e => setName(e.target.value)}
+      />
+      <InputField
+        label='설명'
+        value={content}
+        onChange={e => setContent(e.target.value)}
+      />
       {audio ? (
         <div
           css={{

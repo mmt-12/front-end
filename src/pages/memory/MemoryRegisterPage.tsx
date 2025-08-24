@@ -33,7 +33,11 @@ export default function MemoryRegisterPage() {
 
   return (
     <>
-      <InputField onChange={setTitle} label='제목' />
+      <InputField
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+        label='제목'
+      />
       <InputPopup
         content={<DateRangeSelector />}
         icon={CalendarMinimalistic}
@@ -41,11 +45,10 @@ export default function MemoryRegisterPage() {
         onChange={ds => setDateRange(ds as IDateRangeInput)}
       />
       <InputField
-        onChange={d => {
-          setDescription(d as string)
-        }}
+        value={description}
+        onChange={e => setDescription(e.target.value)}
         label='설명'
-        size='lg'
+        type='textarea'
       />
       <InputPopup
         content={<MapLocationSelector />}

@@ -18,7 +18,11 @@ export default function EmojiRegisterModal({ id }: { id: string }) {
 
   return (
     <BottomDrawer close={() => closeModal(id)}>
-      <InputField label='이름' onChange={(v: string) => setEmojiName(v)} />
+      <InputField
+        label='이름'
+        value={emojiName}
+        onChange={e => setEmojiName(e.target.value)}
+      />
       {emojiImage ? (
         <div
           css={imageWrapperStyle}
@@ -49,9 +53,7 @@ export default function EmojiRegisterModal({ id }: { id: string }) {
         style={{ display: 'none' }}
         onChange={e => {
           const file = e.target.files?.[0]
-          if (file) {
-            setEmojiImage(file)
-          }
+          if (file) setEmojiImage(file)
         }}
       />
       <BottomButton

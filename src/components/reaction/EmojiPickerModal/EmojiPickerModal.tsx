@@ -33,7 +33,11 @@ export default function EmojiPickerModal({ id }: Props) {
           <Emoji key={emoji.id} {...emoji} amount={undefined} />
         ))}
       </div>
-      <InputField label='검색' onChange={(v: string) => setSearchKey(v)} />
+      <InputField
+        label='검색'
+        value={searchKey}
+        onChange={e => setSearchKey(e.target.value)}
+      />
       <div css={[emojiListStyle, { flexWrap: 'wrap', marginTop: '6px' }]}>
         {emojies
           .filter(emoji => emoji.name.includes(searchKey))

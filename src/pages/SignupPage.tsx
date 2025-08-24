@@ -16,7 +16,7 @@ export default function SignupPage() {
 
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
-  const [birthDate, setBirthDate] = useState<Date | null>(null)
+  const [birthDate, setBirthDate] = useState<Date>()
 
   const userStore = useUserStore()
 
@@ -33,9 +33,8 @@ export default function SignupPage() {
       </div>
       <InputField
         label='이름'
-        onChange={(v: string) => {
-          setName(v)
-        }}
+        value={name}
+        onChange={e => setName(e.target.value)}
       />
       <DateInputField
         label='생년월일'
@@ -45,14 +44,14 @@ export default function SignupPage() {
       />
       <InputField
         label='암호 - 우리반 반장님이 뱉은 주스는?'
-        onChange={(v: string) => {
-          setPassword(v)
-        }}
+        value={password}
+        onChange={e => setPassword(e.target.value)}
       />
       <BottomButton
         label='입장하기'
         type={isValid ? 'primary' : 'disabled'}
         onClick={() => {
+          if (!birthDate) return
           userStore.login(birthDate)
           navigate(ROUTES.MEMORY_LIST)
         }}

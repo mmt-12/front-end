@@ -1,9 +1,9 @@
-import { css, type Theme } from '@emotion/react'
 import { useEffect, useMemo, useState } from 'react'
+import { css, type Theme } from '@emotion/react'
 
 export interface Props {
   label: string
-  onChange: (_value: Date | null) => void
+  onChange: (_value: Date) => void
 }
 
 export default function DateInputField({ label, onChange }: Props) {

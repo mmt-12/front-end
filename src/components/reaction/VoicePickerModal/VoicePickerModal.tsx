@@ -36,7 +36,11 @@ export default function VoicePickerModal({ id }: Props) {
           <Voice key={voice.id} {...voice} amount={undefined} />
         ))}
       </div>
-      <InputField label='검색' onChange={(v: string) => setSearchKey(v)} />
+      <InputField
+        label='검색'
+        value={searchKey}
+        onChange={e => setSearchKey(e.target.value)}
+      />
       <div css={[voiceListStyle, { flexWrap: 'wrap', marginTop: '6px' }]}>
         {voices
           .filter(voice => voice.name.includes(searchKey))
