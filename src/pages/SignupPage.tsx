@@ -21,11 +21,8 @@ export default function SignupPage() {
   const userStore = useUserStore()
 
   const isValid = useMemo(() => {
-    const id = dateToId(birthDate)
-    if (id === null) return false
-    if (MEMBERS[id] === undefined) return false
-
-    return name.length > 0 && password == '오렌지' && birthDate !== null
+    if (!birthDate || !MEMBERS[dateToId(birthDate)]) return false
+    return name.length > 0 && password == '오렌지' && !!birthDate
   }, [name, password, birthDate])
 
   return (
