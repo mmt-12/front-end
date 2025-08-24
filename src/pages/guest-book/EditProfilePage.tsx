@@ -1,7 +1,14 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
+import { MedalRibbonStar, RoundAltArrowRight } from '@solar-icons/react'
 
+import Badge from '@/components/common/Badge'
 import InputField from '@/components/common/InputField'
+import ArraySelector from '@/components/popup/ArraySelector'
+import InputPopup from '@/components/popup/InputPopup'
+import { BADGES } from '@/consts/BADGES'
 import useHeader from '@/hooks/useHeader'
+import { MEMBERS } from '@/mocks/data/members'
+import type { IArrayInput } from '@/types'
 
 export default function EditProfilePage() {
   useHeader({
@@ -11,8 +18,21 @@ export default function EditProfilePage() {
     },
   })
 
-  const [name, setName] = useState('')
-  const [introduction, setIntroduction] = useState('')
+  const member = MEMBERS[0]
+
+  const [name, setName] = useState(member.name)
+  const [introduction, setIntroduction] = useState(member.introduction || '')
+  const [badgeId, setBadgeId] = useState(member.badgeId)
+
+  const badgeItems = useMemo(
+    () =>
+      Object.entries(BADGES).map(([id, badge]) => ({
+        id: Number(id),
+        label: badge.name,
+        render: () => <Badge key={id} id={Number(id)} />,
+      })),
+    [],
+  )
 
   return (
     <>
@@ -20,6 +40,18 @@ export default function EditProfilePage() {
         label='이름'
         value={name}
         onChange={e => setName(e.target.value)}
+      />
+      <InputPopup
+        label='칭호'
+        icon={RoundAltArrowRight}
+        onChange={({ items }: IArrayInput) => setBadgeId(items[0].id)}
+        content={
+          <ArraySelector
+            items={badgeItems}
+            searchBarIcon={MedalRibbonStar}
+            renderPreview
+          />
+        }
       />
       <InputField
         label='한줄소개'

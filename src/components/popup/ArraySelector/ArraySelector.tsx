@@ -1,27 +1,27 @@
 import { useMemo, useState, type JSX } from 'react'
 import { css } from '@emotion/react'
-import { AddCircle, CheckCircle } from '@solar-icons/react'
 
 import BottomButton from '@/components/common/BottomButton'
 import SearchBar from '@/components/common/SearchBar'
-import { theme } from '@/styles/theme'
+import { flexGap } from '@/styles/common'
 import type { IArrayInput, IArrayItem } from '@/types'
 import { filterByStringProp } from '@/utils/filter'
+import Item from './Item'
 
 interface Props {
   items: IArrayItem[]
   searchBarIcon: JSX.ElementType
+  onSelect?: (_selectedItems: IArrayInput) => void
   renderPreview?: boolean
   multiple?: boolean
-  onSelect?: (_selectedItems: IArrayInput) => void
 }
 
 export default function ArraySelector({
   items,
   searchBarIcon,
-  renderPreview,
   onSelect,
-  multiple,
+  multiple = false,
+  renderPreview = false,
 }: Props) {
   const [selectedItems, setSelectedItems] = useState<IArrayItem[]>([])
   const [searchTerm, setSearchTerm] = useState('')
@@ -37,46 +37,22 @@ export default function ArraySelector({
         icon={searchBarIcon}
         count={items.length}
       />
-      <ul css={listStyle}>
+      <ul css={[flexGap(16), listStyle]}>
         {searchedItems.map(item => (
-          <li key={item.id}>
-            {selectedItems.some(m => m.id === item.id) ? (
-              <label
-                css={itemStyle}
-                onClick={() =>
-                  setSelectedItems(prev => prev.filter(m => m.id !== item.id))
-                }
-              >
-                {item.render()}
-                <CheckCircle
-                  weight='Bold'
-                  size={40}
-                  color={theme.sky[500]}
-                  onClick={() =>
-                    setSelectedItems(prev => prev.filter(m => m.id !== item.id))
-                  }
-                  css={buttonStyle}
-                />
-              </label>
-            ) : (
-              <label
-                css={itemStyle}
-                onClick={() =>
-                  multiple
-                    ? setSelectedItems(prev => [...prev, item])
-                    : setSelectedItems([item])
-                }
-              >
-                {item.render()}
-                <AddCircle
-                  weight='Bold'
-                  size={40}
-                  color={theme.stone[300]}
-                  css={buttonStyle}
-                />
-              </label>
-            )}
-          </li>
+          <ArraySelector.Item
+            key={item.id}
+            item={item}
+            isSelected={selectedItems.some(m => m.id === item.id)}
+            onSelect={item => {
+              if (selectedItems.some(m => m.id === item.id))
+                setSelectedItems(prev => prev.filter(m => m.id !== item.id))
+              else if (multiple) {
+                setSelectedItems(prev => [...prev, item])
+              } else {
+                setSelectedItems([item])
+              }
+            }}
+          />
         ))}
       </ul>
       <BottomButton
@@ -101,22 +77,11 @@ export default function ArraySelector({
   )
 }
 
+ArraySelector.Item = Item
+
 const listStyle = css({
   padding: 16,
   paddingBottom: 72,
   margin: 0,
-  display: 'flex',
-  flexDirection: 'column',
-  gap: 16,
   listStyle: 'none',
-})
-
-const itemStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-})
-
-const buttonStyle = css({
-  flexShrink: 0,
 })
