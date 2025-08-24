@@ -12,7 +12,7 @@ export default function Profile({
   name,
   imageUrl,
   badgeId,
-  description,
+  introduction,
   size = 'md',
 }: Props) {
   return (
@@ -32,9 +32,9 @@ export default function Profile({
           <p css={nameStyle(size)}>{name}</p>
           {badgeId && <Badge id={badgeId} />}
         </div>
-        {description && (
+        {introduction && (
           <p css={descriptionStyle} className='stardust'>
-            {description}
+            {introduction}
           </p>
         )}
       </div>

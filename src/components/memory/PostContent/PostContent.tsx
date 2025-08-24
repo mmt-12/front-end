@@ -1,10 +1,11 @@
+import { css, type Theme } from '@emotion/react'
+import { Link } from 'react-router-dom'
+
 import Album from '@/components/common/Album'
 import Profile from '@/components/common/Profile'
 import { ROUTES } from '@/routes/ROUTES'
 import type { IMember } from '@/types'
 import { formatDateTime } from '@/utils/date'
-import { type Theme, css } from '@emotion/react'
-import { Link } from 'react-router-dom'
 
 export interface Props {
   id: number
@@ -14,14 +15,18 @@ export interface Props {
   content: string
 }
 
-export default function PostContent(
-  { id, author, createdAt, images, content }: Props,
-) {
+export default function PostContent({
+  id,
+  author,
+  createdAt,
+  images,
+  content,
+}: Props) {
   return (
     <div>
       <header css={headerStyle}>
         <Link to={ROUTES.GUEST_BOOK(author.id)} css={profileLinkStyle}>
-          <Profile {...author} size='sm' description='' />
+          <Profile {...author} size='sm' introduction='' />
         </Link>
         <time>{formatDateTime(createdAt)}</time>
       </header>

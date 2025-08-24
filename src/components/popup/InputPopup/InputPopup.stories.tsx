@@ -85,15 +85,7 @@ export const MultipleArray: Story = {
         items={MEMBERS.map(member => ({
           id: member.id,
           label: member.name,
-          render: () => (
-            <Profile
-              id={member.id}
-              name={member.name}
-              imageUrl={member.imageUrl}
-              badgeId={member.badgeId}
-              description={member.description}
-            />
-          ),
+          render: () => <Profile {...member} />,
         }))}
       />
     ),

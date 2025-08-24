@@ -69,9 +69,9 @@ export default function PostDetailPage() {
             <MagniferZoomIn weight='Linear' size={20} />
           </div>
           <div css={reactedProfilesStyle}>
-            <Profile {...MEMBERS[0]} size='sm' description={undefined} />
-            <Profile {...MEMBERS[1]} size='sm' description={undefined} />
-            <Profile {...MEMBERS[2]} size='sm' description={undefined} />
+            <Profile {...MEMBERS[0]} size='sm' introduction={undefined} />
+            <Profile {...MEMBERS[1]} size='sm' introduction={undefined} />
+            <Profile {...MEMBERS[2]} size='sm' introduction={undefined} />
           </div>
         </>
       )}

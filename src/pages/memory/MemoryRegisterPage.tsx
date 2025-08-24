@@ -64,7 +64,7 @@ export default function MemoryRegisterPage() {
             items={MEMBERS.map(m => ({
               label: m.name,
               id: m.id,
-              render: () => <Profile {...m} size='sm' description='' />,
+              render: () => <Profile {...m} size='sm' introduction='' />,
             }))}
           />
         }
