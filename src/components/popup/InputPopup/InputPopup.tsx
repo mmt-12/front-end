@@ -16,6 +16,7 @@ interface Props<
   T extends IBaseInput = ITextInput | IDateRangeInput | IArrayInput,
 > {
   label: string
+  value?: T
   onChange: (_value: T) => void
   icon: Icon
   content: React.ReactNode
@@ -24,17 +25,16 @@ interface Props<
 
 export default function InputPopup<T extends IBaseInput>({
   label,
+  value,
   onChange,
   content,
   icon,
   placeholder = '',
 }: Props<T>) {
-  const [value, setValue] = useState<T | null>(null)
   const [showPopup, setShowPopup] = useState(false)
 
   const handlePopupSelect = (result: T): void => {
     setShowPopup(false)
-    setValue(result)
     onChange(result)
   }
 

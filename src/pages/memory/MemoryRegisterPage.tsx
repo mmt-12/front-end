@@ -57,6 +57,10 @@ export default function MemoryRegisterPage() {
         onChange={l => setLocation(l as ILocationInput)}
       />
       <InputPopup
+        label='참여자'
+        value={participants}
+        onChange={ps => setParticipants(ps as IArrayInput)}
+        icon={UsersGroupTwoRounded}
         content={
           <ArraySelector
             searchBarIcon={UserRounded}
@@ -68,9 +72,6 @@ export default function MemoryRegisterPage() {
             }))}
           />
         }
-        label='참여자'
-        onChange={ps => setParticipants(ps as IArrayInput)}
-        icon={UsersGroupTwoRounded}
       />
       <BottomButton
         label='저장'
