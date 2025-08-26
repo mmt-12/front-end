@@ -10,6 +10,7 @@ import Item from './Item'
 
 interface Props {
   items: IArrayItem[]
+  initialItems?: IArrayItem[]
   searchBarIcon: JSX.ElementType
   onSelect?: (_selectedItems: IArrayInput) => void
   renderPreview?: boolean
@@ -18,12 +19,13 @@ interface Props {
 
 export default function ArraySelector({
   items,
+  initialItems = [],
   searchBarIcon,
   onSelect,
   multiple = false,
   renderPreview = false,
 }: Props) {
-  const [selectedItems, setSelectedItems] = useState<IArrayItem[]>([])
+  const [selectedItems, setSelectedItems] = useState<IArrayItem[]>(initialItems)
   const [searchTerm, setSearchTerm] = useState('')
   const searchedItems = useMemo(
     () => filterByStringProp(items, 'label', searchTerm),

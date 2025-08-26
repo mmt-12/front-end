@@ -34,6 +34,8 @@ export default function EditProfilePage() {
     [],
   )
 
+  const filteredBadgeItems = badgeItems.filter(item => item.id === badgeId)
+
   return (
     <>
       <InputField
@@ -44,9 +46,18 @@ export default function EditProfilePage() {
       <InputPopup
         label='칭호'
         icon={RoundAltArrowRight}
+        value={
+          filteredBadgeItems.length > 0
+            ? {
+                items: filteredBadgeItems,
+                render: () => <Badge id={badgeId || 0} key={badgeId || 0} />,
+              }
+            : undefined
+        }
         onChange={({ items }: IArrayInput) => setBadgeId(items[0].id)}
         content={
           <ArraySelector
+            initialItems={badgeItems.filter(item => item.id === badgeId)}
             items={badgeItems}
             searchBarIcon={MedalRibbonStar}
             renderPreview

@@ -39,10 +39,11 @@ export default function MemoryRegisterPage() {
         label='제목'
       />
       <InputPopup
-        content={<DateRangeSelector />}
         icon={CalendarMinimalistic}
         label='날짜'
+        value={dateRange}
         onChange={ds => setDateRange(ds as IDateRangeInput)}
+        content={<DateRangeSelector />}
       />
       <InputField
         value={description}
@@ -51,14 +52,20 @@ export default function MemoryRegisterPage() {
         type='textarea'
       />
       <InputPopup
-        content={<MapLocationSelector />}
+        value={location}
         label='장소'
         icon={Map}
         onChange={l => setLocation(l as ILocationInput)}
+        content={<MapLocationSelector />}
       />
       <InputPopup
+        label='참여자'
+        value={participants}
+        onChange={ps => setParticipants(ps as IArrayInput)}
+        icon={UsersGroupTwoRounded}
         content={
           <ArraySelector
+            initialItems={participants?.items || []}
             searchBarIcon={UserRounded}
             multiple
             items={MEMBERS.map(m => ({
@@ -68,9 +75,6 @@ export default function MemoryRegisterPage() {
             }))}
           />
         }
-        label='참여자'
-        onChange={ps => setParticipants(ps as IArrayInput)}
-        icon={UsersGroupTwoRounded}
       />
       <BottomButton
         label='저장'
