@@ -1,5 +1,8 @@
 import { lazy } from 'react'
 
+import LoginPage from '@/pages/LoginPage'
+import MemoryListPage from '@/pages/memory/MemoryListPage'
+
 const CalendarPage = lazy(() => import('@/pages/CalendarPage'))
 const ErrorPage = lazy(() => import('@/pages/ErrorPage'))
 const AddProfileImagePage = lazy(
@@ -8,10 +11,8 @@ const AddProfileImagePage = lazy(
 const EditProfilePage = lazy(() => import('@/pages/guest-book/EditProfilePage'))
 const GuestBookPage = lazy(() => import('@/pages/guest-book/GuestBookPage'))
 const MemberPage = lazy(() => import('@/pages/guest-book/MemberPage'))
-const LoginPage = lazy(() => import('@/pages/LoginPage'))
 const MapPage = lazy(() => import('@/pages/MapPage'))
 const MemoryDetailPage = lazy(() => import('@/pages/memory/MemoryDetailPage'))
-const MemoryListPage = lazy(() => import('@/pages/memory/MemoryListPage'))
 const MemoryRegisterPage = lazy(
   () => import('@/pages/memory/MemoryRegisterPage'),
 )

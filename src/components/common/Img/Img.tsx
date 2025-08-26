@@ -1,3 +1,5 @@
+import { css } from '@emotion/react'
+
 import defaultProfile from '@/assets/images/mascot/default-profile.png'
 
 interface Props {
@@ -15,6 +17,7 @@ export default function Img(props: Props) {
   return (
     <img
       {...props}
+      css={[defaultStyle, props.css]}
       src={src}
       onError={e => {
         e.currentTarget.src = defaultProfile
@@ -23,3 +26,7 @@ export default function Img(props: Props) {
     />
   )
 }
+
+const defaultStyle = css({
+  objectFit: 'cover',
+})
