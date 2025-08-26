@@ -7,6 +7,7 @@ import ArraySelector from '@/components/popup/ArraySelector'
 import InputPopup from '@/components/popup/InputPopup'
 import { BADGES } from '@/consts/BADGES'
 import useHeader from '@/hooks/useHeader'
+import { useModal } from '@/hooks/useModal'
 import { MEMBERS } from '@/mocks/data/members'
 import type { IArrayInput } from '@/types'
 
@@ -23,6 +24,7 @@ export default function EditProfilePage() {
   const [name, setName] = useState(member.name)
   const [introduction, setIntroduction] = useState(member.introduction || '')
   const [badgeId, setBadgeId] = useState(member.badgeId)
+  const { openModal, closeModal } = useModal()
 
   const badgeItems = useMemo(
     () =>

@@ -1,9 +1,9 @@
-import ReactDOM from 'react-dom'
+import type { ReactNode } from 'react'
 import { css } from '@emotion/react'
 import { ArrowLeft } from '@solar-icons/react'
-import { headerStyle } from '@/styles/header'
+
 import HeaderItem from '@/components/layout/Header/HeaderItem'
-import type { ReactNode } from 'react'
+import { headerStyle } from '@/styles/header'
 import { modalStyle } from '@/styles/modal'
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function PopupModal({ title, children, onClose }: Props) {
-  const modal = (
+  return (
     <div
       css={modalStyle}
       onClick={e => e.stopPropagation()}
@@ -30,8 +30,6 @@ export default function PopupModal({ title, children, onClose }: Props) {
       <div css={contentStyle}>{children}</div>
     </div>
   )
-
-  return ReactDOM.createPortal(modal, document.body)
 }
 
 const contentStyle = css({
