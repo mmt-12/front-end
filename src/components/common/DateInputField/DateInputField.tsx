@@ -1,12 +1,19 @@
 import { useEffect, useMemo, useState } from 'react'
-import { css, type Theme } from '@emotion/react'
+import { css, useTheme, type Theme } from '@emotion/react'
 
 export interface Props {
   label: string
   onChange: (_value: Date) => void
+  disabled?: boolean
 }
 
-export default function DateInputField({ label, onChange }: Props) {
+export default function DateInputField({
+  label,
+  onChange,
+  disabled = false,
+}: Props) {
+  const theme = useTheme()
+
   const [year, setYear] = useState<number>(new Date().getFullYear())
   const [month, setMonth] = useState<number>(new Date().getMonth())
   const [day, setDay] = useState<number>(new Date().getDate())
@@ -42,9 +49,10 @@ export default function DateInputField({ label, onChange }: Props) {
   return (
     <form onSubmit={e => e.preventDefault()} css={containerStyle}>
       <label css={labelStyle}>{label}</label>
-      <div css={inputContainerStyle}>
-        <div css={inputsWrapperStyle}>
+      <div css={inputContainerStyle(theme, disabled)}>
+        <div css={inputsWrapperStyle(theme, disabled)}>
           <input
+            disabled={disabled}
             inputMode='numeric'
             onChange={handleYearChange}
             value={year}
@@ -53,6 +61,7 @@ export default function DateInputField({ label, onChange }: Props) {
           />
           <p>년</p>
           <input
+            disabled={disabled}
             inputMode='numeric'
             onChange={handleMonthChange}
             value={month + 1}
@@ -61,6 +70,7 @@ export default function DateInputField({ label, onChange }: Props) {
           />
           <p>월</p>
           <input
+            disabled={disabled}
             inputMode='numeric'
             onChange={handleDayChange}
             value={day}
@@ -95,13 +105,13 @@ const labelStyle = (theme: Theme) =>
       },
   })
 
-const inputsWrapperStyle = (theme: Theme) =>
+const inputsWrapperStyle = (theme: Theme, disabled: boolean) =>
   css({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
 
-    color: theme.black,
+    color: disabled ? theme.stone[500] : theme.stone[900],
     fontFamily: 'inherit',
     fontSize: '18px',
     letterSpacing: '0.5px',
@@ -112,13 +122,14 @@ const inputsWrapperStyle = (theme: Theme) =>
       fontSize: '18px',
       textAlign: 'end',
       backgroundColor: 'transparent',
+      color: 'inherit',
     },
     '>p': {
       marginRight: '4px',
     },
   })
 
-const inputContainerStyle = (theme: Theme) =>
+const inputContainerStyle = (theme: Theme, disabled: boolean) =>
   css({
     margin: '0px',
     padding: '14px 16px',
@@ -129,7 +140,7 @@ const inputContainerStyle = (theme: Theme) =>
     gap: '32px',
 
     borderRadius: '12px',
-    outline: `2px solid ${theme.stone[400]}`,
+    outline: `2px solid ${disabled ? theme.stone[300] : theme.stone[400]}`,
     transition: 'outline 0.1s ease-in-out',
     '&:focus': {
       outline: `2px solid ${theme.sky[400]}`,
