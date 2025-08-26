@@ -6,6 +6,7 @@ import { GalleryAdd } from '@solar-icons/react'
 import BottomButton from '@/components/common/BottomButton'
 import BottomDrawer from '@/components/common/BottomDrawer'
 import Button from '@/components/common/Button'
+import Img from '@/components/common/Img'
 import InputField from '@/components/common/InputField'
 import { useModal } from '@/hooks/useModal'
 
@@ -30,7 +31,7 @@ export default function EmojiRegisterModal() {
             inputRef.current?.click()
           }}
         >
-          <img src={URL.createObjectURL(emojiImage)} alt={emojiName} />
+          <Img src={URL.createObjectURL(emojiImage)} alt={emojiName} />
         </div>
       ) : (
         <div css={buttonWrapperStyle}>

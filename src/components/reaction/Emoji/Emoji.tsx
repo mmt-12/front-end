@@ -1,5 +1,6 @@
 import { css, useTheme, type Theme } from '@emotion/react'
 
+import Img from '@/components/common/Img'
 import type { IReaction } from '@/types/reaction'
 
 export default function Emoji({
@@ -18,7 +19,7 @@ export default function Emoji({
       css={containerStyle(theme, iReacted, isActive, !!amount)}
     >
       <div css={imageWrapperStyle(size, !!amount)}>
-        <img src={imageUrl} alt='Emoji' css={imageStyle} />
+        <Img src={imageUrl} alt='Emoji' css={imageStyle} />
       </div>
       {amount != null && <p>{amount}</p>}
     </div>

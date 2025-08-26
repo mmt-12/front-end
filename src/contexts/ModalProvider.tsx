@@ -9,7 +9,7 @@ type Modal = {
   promiseResolver: (_value: ModalReturnType) => void
 }
 
-type ModalReturnType = void | null | IBaseInput
+type ModalReturnType = void | null | IBaseInput | string
 
 interface ModalContextType {
   openModal: (_content: ReactNode) => Promise<ModalReturnType>

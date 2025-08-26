@@ -1,11 +1,13 @@
-import Badge from '@/components/common/Badge'
-import WavyBox from '@/components/guest-book/WavyBox'
 import { css, type Theme } from '@emotion/react'
-import defaultImageUrl from '@/assets/images/mascot/default-profile.png'
-import { formatDateString } from '@/utils/date'
-import { useNavigate } from 'react-router-dom'
-import { ROUTES } from '@/routes/ROUTES'
 import { GalleryAdd } from '@solar-icons/react'
+import { useNavigate } from 'react-router-dom'
+
+import defaultImageUrl from '@/assets/images/mascot/default-profile.png'
+import Badge from '@/components/common/Badge'
+import Img from '@/components/common/Img'
+import WavyBox from '@/components/guest-book/WavyBox'
+import { ROUTES } from '@/routes/ROUTES'
+import { formatDateString } from '@/utils/date'
 
 interface Props {
   nickname: string
@@ -39,12 +41,9 @@ export default function GuestBookProfile({
           borderRadius={8}
           childrenOnTop={false}
         >
-          <img
+          <Img
             src={imagePath || defaultImageUrl}
             alt={nickname}
-            onError={e => {
-              e.currentTarget.src = defaultImageUrl
-            }}
             css={imageStyle}
           />
         </WavyBox>

@@ -3,6 +3,7 @@ import { css, type Theme } from '@emotion/react'
 import defaultImageUrl from '@/assets/images/mascot/default-profile.png'
 import Badge from '@/components/common/Badge'
 import type { IMember } from '@/types'
+import Img from '../Img'
 
 export interface Props extends IMember {
   size?: 'sm' | 'md'
@@ -18,12 +19,9 @@ export default function Profile({
   return (
     <div css={containerStyle(size)}>
       <div css={imageWrapperStyle(size)}>
-        <img
+        <Img
           src={imageUrl ? imageUrl : defaultImageUrl}
           alt={name}
-          onError={e => {
-            e.currentTarget.src = defaultImageUrl
-          }}
           css={imageStyle}
         />
       </div>

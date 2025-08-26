@@ -1,10 +1,12 @@
-import { useUserStore } from '@/store/userStore'
-import { css } from '@emotion/react'
 import { useEffect, useState } from 'react'
+import { css } from '@emotion/react'
+
 import greetingMascot from '@/assets/images/mascot/greeting.jpeg'
+import Img from '@/components/common/Img'
 import { MEMBERS } from '@/consts/SSAFY_12_MEMBERS'
-import { signupTitleStyle } from '@/styles/signupTitle'
+import { useUserStore } from '@/store/userStore'
 import { modalStyle } from '@/styles/modal'
+import { signupTitleStyle } from '@/styles/signupTitle'
 
 export default function GreetingPopup() {
   const userStore = useUserStore()
@@ -30,7 +32,7 @@ export default function GreetingPopup() {
         </p>
       </div>
       <div css={mascotWrapperStyle}>
-        <img src={greetingMascot} alt='Greeting Mascot' css={mascotStyle} />
+        <Img src={greetingMascot} alt='Greeting Mascot' css={mascotStyle} />
       </div>
     </div>
   )

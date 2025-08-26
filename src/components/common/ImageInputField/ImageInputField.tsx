@@ -4,6 +4,7 @@ import { GalleryAdd } from '@solar-icons/react'
 
 import Album from '../Album'
 import Button from '../Button'
+import Img from '../Img'
 
 interface Props {
   images: File[]
@@ -26,7 +27,7 @@ export default function ImageInputField({
       <Album>
         {images.map((image, index) => (
           <div key={index} css={customImageCss}>
-            <img
+            <Img
               src={URL.createObjectURL(image)}
               alt={`Album image ${index}`}
             />

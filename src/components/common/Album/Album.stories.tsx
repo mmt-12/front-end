@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import Album from './Album'
+
 import { POST } from '@/mocks/data/post'
+import Img from '../Img'
+import Album from './Album'
 
 const meta = {
   title: 'components/Album',
@@ -9,7 +11,7 @@ const meta = {
   args: {
     children: POST.images.map((image, index) => (
       <div key={index}>
-        <img src={image} alt={`Album image ${index}`} />
+        <Img src={image} alt={`Album image ${index}`} />
       </div>
     )),
   },

@@ -2,6 +2,7 @@ import { css, type Theme } from '@emotion/react'
 import { Link } from 'react-router-dom'
 
 import Album from '@/components/common/Album'
+import Img from '@/components/common/Img'
 import Profile from '@/components/common/Profile'
 import { ROUTES } from '@/routes/ROUTES'
 import type { IMember } from '@/types'
@@ -34,7 +35,7 @@ export default function PostContent({
         <Album>
           {images.map((image, index) => (
             <div key={index}>
-              <img src={image} alt={`Album image ${index}`} />
+              <Img src={image} alt={`Album image ${index}`} />
             </div>
           ))}
         </Album>
