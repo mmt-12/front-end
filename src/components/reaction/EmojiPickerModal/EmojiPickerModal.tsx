@@ -11,20 +11,16 @@ import { emojies } from '@/mocks/data/reaction'
 import Emoji from '../Emoji/Emoji'
 import EmojiRegisterModal from '../EmojiRegisterModal'
 
-interface Props {
-  id: string
-}
-
-export default function EmojiPickerModal({ id }: Props) {
+export default function EmojiPickerModal() {
   const { closeModal, openModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
 
   const handleRegisterEmojiClick = () => {
-    openModal('emoji-register', <EmojiRegisterModal id='emoji-add' />)
+    openModal(<EmojiRegisterModal />)
   }
 
   return (
-    <BottomDrawer close={() => closeModal(id)}>
+    <BottomDrawer close={closeModal}>
       <Text customCss={spanStyle} withPadding>
         최근 사용
       </Text>

@@ -14,26 +14,12 @@ import VoiceRegisterModal from '@/components/reaction/VoiceRegisterModal/VoiceRe
 import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 
-interface Props {
-  id: string
-}
-
-export default function CreateButtonsModal({ id }: Props) {
+export default function CreateButtonsModal() {
   const theme = useTheme()
   const { closeModal, openModal } = useModal()
 
-  const handleEmojiClick = () => {
-    openModal('emoji-register', <EmojiRegisterModal id='emoji-register' />)
-    closeModal(id)
-  }
-
-  const handleVoiceClick = () => {
-    openModal('voice-register', <VoiceRegisterModal id='voice-register' />)
-    closeModal(id)
-  }
-
   return (
-    <BottomDrawer close={() => closeModal(id)}>
+    <BottomDrawer close={closeModal}>
       <span
         style={{
           display: 'block',
@@ -48,7 +34,7 @@ export default function CreateButtonsModal({ id }: Props) {
       <div css={contentStyle}>
         <Link to={ROUTES.MEMORY_REGISTER}>
           <Button
-            onClick={() => closeModal(id)}
+            onClick={closeModal}
             type='primary'
             size='md'
             label='기억'
@@ -56,11 +42,11 @@ export default function CreateButtonsModal({ id }: Props) {
           />
         </Link>
         <Button
-          onClick={handleEmojiClick}
           type='secondary'
           size='md'
           label='이모티콘'
           icon={<SmileSquare weight='Bold' size={28} />}
+          onClick={() => openModal(<EmojiRegisterModal />)}
         />
         <Button
           type='disabled'
@@ -73,7 +59,7 @@ export default function CreateButtonsModal({ id }: Props) {
           size='md'
           label='보이스'
           icon={<Soundwave weight='Bold' size={28} />}
-          onClick={handleVoiceClick}
+          onClick={() => openModal(<VoiceRegisterModal />)}
         />
       </div>
     </BottomDrawer>

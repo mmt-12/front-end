@@ -21,7 +21,7 @@ export default function NavBar() {
     name: '사용자 이름',
   }
   const handleAddButtonClick = () => {
-    openModal('create-buttons', <CreateButtonsModal id='create-buttons' />)
+    openModal(<CreateButtonsModal />)
   }
   return (
     <>

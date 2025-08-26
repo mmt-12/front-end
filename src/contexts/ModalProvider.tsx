@@ -3,11 +3,11 @@ import { createContext, useState, type ReactNode } from 'react'
 import { css } from '@emotion/react'
 import { createPortal } from 'react-dom'
 
-type Modal = { id: string; content: ReactNode }
+type Modal = { content: ReactNode }
 
 interface ModalContextType {
-  openModal: (_id: string, _content: ReactNode) => void
-  closeModal: (_id: string) => void
+  openModal: (_content: ReactNode) => void
+  closeModal: () => void
 }
 
 const ModalContext = createContext<ModalContextType | null>(null)
@@ -15,11 +15,11 @@ const ModalContext = createContext<ModalContextType | null>(null)
 function ModalProvider({ children }: { children: ReactNode }) {
   const [modals, setModals] = useState<Modal[]>([])
 
-  const openModal = (id: string, content: ReactNode) =>
-    setModals(prev => [...prev, { id, content }])
+  const openModal = (content: ReactNode) =>
+    setModals(prev => [...prev, { content }])
 
-  const closeModal = (id: string) => {
-    setModals(prev => prev.filter(m => m.id !== id))
+  const closeModal = () => {
+    setModals(prev => prev.slice(0, -1))
   }
 
   return (
@@ -35,7 +35,7 @@ function ModalRenderer({
   closeModal,
 }: {
   modals: Modal[]
-  closeModal: (_id: string) => void
+  closeModal: () => void
 }) {
   const modalRoot = document.getElementById('modal-root')
   if (!modalRoot || !modals.length) return null
@@ -44,10 +44,10 @@ function ModalRenderer({
   return createPortal(
     <div
       css={backgroundStyle}
-      onClick={() => closeModal(topModal.id)}
+      onClick={closeModal}
       data-testid='modal-background'
     >
-      {modals[modals.length - 1].content}
+      {topModal.content}
     </div>,
     modalRoot,
   )
