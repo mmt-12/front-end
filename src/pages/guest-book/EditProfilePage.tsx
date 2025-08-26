@@ -7,9 +7,8 @@ import ArraySelector from '@/components/popup/ArraySelector'
 import InputPopup from '@/components/popup/InputPopup'
 import { BADGES } from '@/consts/BADGES'
 import useHeader from '@/hooks/useHeader'
-import { useModal } from '@/hooks/useModal'
 import { MEMBERS } from '@/mocks/data/members'
-import type { IArrayInput } from '@/types'
+import type { IArrayInput, IArrayItem } from '@/types'
 
 export default function EditProfilePage() {
   useHeader({
@@ -24,7 +23,6 @@ export default function EditProfilePage() {
   const [name, setName] = useState(member.name)
   const [introduction, setIntroduction] = useState(member.introduction || '')
   const [badgeId, setBadgeId] = useState(member.badgeId)
-  const { openModal, closeModal } = useModal()
 
   const badgeItems = useMemo(
     () =>
@@ -36,7 +34,15 @@ export default function EditProfilePage() {
     [],
   )
 
-  const filteredBadgeItems = badgeItems.filter(item => item.id === badgeId)
+  const filteredBadgeItems = useMemo<IArrayItem[]>(
+    () => badgeItems.filter(item => item.id === badgeId),
+    [badgeId, badgeItems],
+  )
+
+  const arrayInput: IArrayInput = {
+    items: filteredBadgeItems,
+    render: () => <Badge id={badgeId || 0} key={badgeId || 0} />,
+  }
 
   return (
     <>
@@ -48,18 +54,11 @@ export default function EditProfilePage() {
       <InputPopup
         label='칭호'
         icon={RoundAltArrowRight}
-        value={
-          filteredBadgeItems.length > 0
-            ? {
-                items: filteredBadgeItems,
-                render: () => <Badge id={badgeId || 0} key={badgeId || 0} />,
-              }
-            : undefined
-        }
+        value={arrayInput}
         onChange={({ items }: IArrayInput) => setBadgeId(items[0].id)}
         content={
           <ArraySelector
-            initialItems={badgeItems.filter(item => item.id === badgeId)}
+            initialItems={filteredBadgeItems}
             items={badgeItems}
             searchBarIcon={MedalRibbonStar}
             renderPreview

@@ -1,10 +1,11 @@
+import { css, type Theme } from '@emotion/react'
+import { Link, useNavigate, useRouteError } from 'react-router-dom'
+
 import errorImage from '@/assets/images/mascot/error.jpeg'
 import Button from '@/components/common/Button'
 import { ROUTES } from '@/routes/ROUTES'
-import { type Theme, css } from '@emotion/react'
-import { Link, useNavigate, useRouteError } from 'react-router-dom'
 
-export default function ErrorBoundary() {
+export default function ErrorPage() {
   const error = useRouteError() as Error
   const navigate = useNavigate()
   return (
