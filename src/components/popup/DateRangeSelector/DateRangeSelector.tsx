@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import type { IDateRangeInput } from '@/types'
 import { css, useTheme } from '@emotion/react'
 import type { Theme } from '@emotion/react'
 import { AltArrowLeft, AltArrowRight } from '@solar-icons/react'
-import DayCell from './DayCell'
+
 import BottomButton from '@/components/common/BottomButton'
+import type { IDateRangeInput } from '@/types'
 import { formatDate, formatDateRange } from '@/utils/date'
+import DayCell from './DayCell'
 
 interface Props {
   onSelect?: (_range: IDateRangeInput) => void
@@ -118,8 +119,8 @@ export default function DateRangeSelector({ onSelect }: Props) {
                       day === '일'
                         ? theme.red
                         : day === '토'
-                        ? theme.blue
-                        : theme.stone[500],
+                          ? theme.blue
+                          : theme.stone[500],
                   }}
                 >
                   {day}

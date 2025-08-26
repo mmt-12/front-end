@@ -1,13 +1,19 @@
-// contexts/ModalProvider.tsx
 import { createContext, useState, type ReactNode } from 'react'
 import { css } from '@emotion/react'
 import { createPortal } from 'react-dom'
 
-type Modal = { content: ReactNode }
+import type { IBaseInput } from '@/types'
+
+type Modal = {
+  content: ReactNode
+  promiseResolver: (_value: ModalReturnType) => void
+}
+
+type ModalReturnType = void | null | IBaseInput
 
 interface ModalContextType {
-  openModal: (_content: ReactNode) => void
-  closeModal: () => void
+  openModal: (_content: ReactNode) => Promise<ModalReturnType>
+  closeModal: (_value: ModalReturnType) => void
 }
 
 const ModalContext = createContext<ModalContextType | null>(null)
@@ -15,11 +21,18 @@ const ModalContext = createContext<ModalContextType | null>(null)
 function ModalProvider({ children }: { children: ReactNode }) {
   const [modals, setModals] = useState<Modal[]>([])
 
-  const openModal = (content: ReactNode) =>
-    setModals(prev => [...prev, { content }])
+  const openModal = async (content: ReactNode) => {
+    return new Promise<ModalReturnType>(resolve => {
+      setModals(prev => [...prev, { content, promiseResolver: resolve }])
+    })
+  }
 
-  const closeModal = () => {
-    setModals(prev => prev.slice(0, -1))
+  const closeModal = (value: ModalReturnType) => {
+    setModals(prev => {
+      const topModal = prev[prev.length - 1]
+      topModal.promiseResolver(value)
+      return prev.slice(0, -1)
+    })
   }
 
   return (
@@ -35,7 +48,7 @@ function ModalRenderer({
   closeModal,
 }: {
   modals: Modal[]
-  closeModal: () => void
+  closeModal: (_value: ModalReturnType) => void
 }) {
   const modalRoot = document.getElementById('modal-root')
   if (!modalRoot || !modals.length) return null
@@ -44,7 +57,7 @@ function ModalRenderer({
   return createPortal(
     <div
       css={backgroundStyle}
-      onClick={closeModal}
+      onClick={() => closeModal(null)}
       data-testid='modal-background'
     >
       {topModal.content}
