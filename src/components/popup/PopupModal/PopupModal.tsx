@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 import { ArrowLeft } from '@solar-icons/react'
 
 import HeaderItem from '@/components/layout/Header/HeaderItem'
-import { headerStyle } from '@/styles/header'
+import { headerStyle } from '@/styles/layout'
 import { modalStyle } from '@/styles/modal'
 
 interface Props {

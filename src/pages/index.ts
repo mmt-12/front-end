@@ -10,7 +10,7 @@ const AddProfileImagePage = lazy(
 )
 const EditProfilePage = lazy(() => import('@/pages/guest-book/EditProfilePage'))
 const GuestBookPage = lazy(() => import('@/pages/guest-book/GuestBookPage'))
-const MemberPage = lazy(() => import('@/pages/guest-book/MemberPage'))
+const MemberListPage = lazy(() => import('@/pages/guest-book/MemberListPage'))
 const MapPage = lazy(() => import('@/pages/MapPage'))
 const MemoryDetailPage = lazy(() => import('@/pages/memory/MemoryDetailPage'))
 const MemoryRegisterPage = lazy(
@@ -27,7 +27,7 @@ export {
   AddProfileImagePage,
   EditProfilePage,
   GuestBookPage,
-  MemberPage,
+  MemberListPage,
   LoginPage,
   MapPage,
   MemoryDetailPage,

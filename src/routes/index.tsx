@@ -82,8 +82,8 @@ const router = createBrowserRouter([
             element: <Pages.PostRegisterPage />,
           },
           {
-            path: ROUTES.MEMBER,
-            element: <Pages.MemberPage />,
+            path: ROUTES.MEMBER_LIST,
+            element: <Pages.MemberListPage />,
           },
         ],
       },

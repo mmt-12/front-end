@@ -6,7 +6,6 @@ import BottomButton from '@/components/common/BottomButton'
 import CalendarPicker from '@/components/common/CalendarPicker/CalendarPicker'
 import type { IDateRangeInput } from '@/types'
 import { formatDate, formatDateRange } from '@/utils/date'
-import DayCell from './DayCell'
 
 interface Props {
   onSelect?: (_range: IDateRangeInput) => void
