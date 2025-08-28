@@ -12,5 +12,5 @@ export const ROUTES = {
   NOTIFICATION_LIST: '/notification',
   EDIT_PROFILE: '/edit-profile',
   ADD_PROFILE_IMAGE: '/add-profile-image',
-  MEMBER: '/member',
+  MEMBER_LIST: '/member-list',
 }

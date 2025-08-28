@@ -1,18 +1,23 @@
 import { css, useTheme, type Theme } from '@emotion/react'
 import { DownloadSquare, GalleryCircle, UserCircle } from '@solar-icons/react'
+import { Link } from 'react-router-dom'
 
+import rightArrow from '@/assets/images/icons/rightArrow.svg'
 import Chip from '@/components/common/Chip'
+import { ROUTES } from '@/routes/ROUTES'
 import type { locationType } from '@/types/memory'
 
 interface Props {
   title: string
   location: locationType
   memberCount: number
-  imageCount: number
+  imageCount?: number
   description?: string
   startDate?: string
-  endDate?: string
+  endDate: string
+  id?: number
   saveEnabled?: boolean
+  isLink?: boolean
 }
 
 export default function MemoryInfo(props: Props) {
@@ -22,10 +27,10 @@ export default function MemoryInfo(props: Props) {
     return (
       <>
         <p className='location'>{props.location.name}</p>
-        {!!props.startDate && (
+        {props.startDate !== undefined && (
           <p className='date'>
             {props.startDate}
-            {!!props.endDate && ` - ${props.endDate}`}
+            {props.endDate != props.startDate && ` - ${props.endDate}`}
           </p>
         )}
       </>
@@ -38,7 +43,9 @@ export default function MemoryInfo(props: Props) {
         <h2>{props.title}</h2>
         <div css={countChipsStyle}>
           <Chip Icon={UserCircle} label={props.memberCount} />
-          <Chip Icon={GalleryCircle} label={props.imageCount} />
+          {props.imageCount !== undefined && (
+            <Chip Icon={GalleryCircle} label={props.imageCount} />
+          )}
         </div>
       </div>
       <div css={metaRowStyle(theme, !!props.saveEnabled)}>
@@ -56,11 +63,19 @@ export default function MemoryInfo(props: Props) {
           <>{renderMeta()}</>
         )}
       </div>
-      {props.description ? (
-        <p css={descriptionStyle}>{props.description}</p>
-      ) : (
-        <div style={{ height: 8 }} />
-      )}
+      {props.description &&
+        (props.isLink ? (
+          <Link
+            to={props.id ? ROUTES.MEMORY_DETAIL(props.id) : ROUTES.MEMORY_LIST}
+          >
+            <div css={linkStyle}>
+              <p css={descriptionStyle}>{props.description}</p>
+              <img src={rightArrow} alt='' width={14} />
+            </div>
+          </Link>
+        ) : (
+          <p css={descriptionStyle}>{props.description}</p>
+        ))}
     </div>
   )
 }
@@ -113,6 +128,19 @@ const descriptionStyle = (theme: Theme) => ({
   color: theme.stone[800],
   fontSize: '14px',
 })
+
+const linkStyle = (theme: Theme) =>
+  css({
+    margin: '12px 0px 4px 0px',
+    padding: '6px 14px',
+
+    display: 'flex',
+    justifyContent: 'space-between',
+
+    backgroundColor: theme.sky[100],
+    borderRadius: '12px',
+    borderTopLeftRadius: '0px',
+  })
 
 const chipCustomStyle = css({
   padding: '6px 12px',

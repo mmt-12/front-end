@@ -38,7 +38,7 @@ const containerStyle = (isGrid: boolean) =>
   css({
     display: 'flex',
     flexDirection: 'column',
-    padding: isGrid ? '8px 4px' : '16px',
+    padding: isGrid ? '12px 4px' : '16px',
     gap: '4px',
   })
 

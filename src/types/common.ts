@@ -49,3 +49,5 @@ export interface ButtonProps {
   onClick?: () => void
   customCss?: SerializedStyles
 }
+
+export type DayCellType = 'default' | 'inRange' | 'dot'
