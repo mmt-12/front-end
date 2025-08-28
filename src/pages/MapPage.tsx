@@ -9,6 +9,7 @@ import { Map, useMap } from '@vis.gl/react-google-maps'
 import { createRoot } from 'react-dom/client'
 import { Link } from 'react-router-dom'
 
+import Img from '@/components/common/Img'
 import MemoryInfo from '@/components/memory/MemoryInfo'
 import ClusteredMarker from '@/components/memoryMap/ClusteredMarker/ClusteredMarker'
 import MemoryMarker from '@/components/memoryMap/MemoryMarker/MemoryMarker'
@@ -152,7 +153,7 @@ export default function MapPage() {
           <MemoryInfo {...selectedMemory} description={undefined} />
           <div css={imagesListStyle}>
             {selectedMemory.images.slice(0, 3).map((image, index) => (
-              <img key={index} src={image} alt={`Memory image ${index + 1}`} />
+              <Img key={index} src={image} alt={`Memory image ${index + 1}`} />
             ))}
           </div>
         </Link>

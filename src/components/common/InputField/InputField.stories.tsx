@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect } from 'storybook/test'
+
 import InputField from './InputField'
-import { expect, fn } from 'storybook/test'
 
 const meta = {
   title: 'components/InputField',
@@ -8,7 +10,9 @@ const meta = {
   tags: ['autodocs'],
   args: {
     label: '입력 텍스트',
-    onChange: fn(),
+    type: 'input',
+    value: '',
+    onChange: () => {},
   },
   play: async ({ args, canvas, userEvent }) => {
     const input = await canvas.findByRole('textbox')
@@ -24,14 +28,21 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    label: '기본 입력 필드',
+  render: () => {
+    const [value, setValue] = useState('')
+    return <InputField value={value} onChange={e => setValue(e.target.value)} />
   },
 }
 
 export const LargeInput: Story = {
-  args: {
-    label: '큰 입력 필드',
-    size: 'lg',
+  render: () => {
+    const [value, setValue] = useState('')
+    return (
+      <InputField
+        value={value}
+        onChange={e => setValue(e.target.value)}
+        type='textarea'
+      />
+    )
   },
 }

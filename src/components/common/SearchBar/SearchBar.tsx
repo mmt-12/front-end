@@ -1,4 +1,4 @@
-import type { JSX } from 'react'
+import { useState, type JSX } from 'react'
 import { css, type Theme } from '@emotion/react'
 
 import Chip from '@/components/common/Chip'
@@ -12,10 +12,17 @@ interface Props {
 }
 
 export default function SearchBar({ onChange, icon, count }: Props) {
+  const [value, setValue] = useState('')
   return (
     <div css={[flexGap(12, 'row'), searchBarWrapperStyle]}>
       <div css={inputWrapperStyle}>
-        <InputField onChange={onChange} />
+        <InputField
+          onChange={e => {
+            onChange(e.target.value)
+            setValue(e.target.value)
+          }}
+          value={value}
+        />
       </div>
       <Chip
         customCss={css({ backgroundColor: 'transparent' })}

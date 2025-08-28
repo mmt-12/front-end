@@ -10,11 +10,11 @@ export default function ReactBar() {
   const { openModal } = useModal()
 
   const handleEmojiClick = () => {
-    openModal('emoji-picker', <EmojiPickerModal id='emoji-picker' />)
+    openModal(<EmojiPickerModal />)
   }
 
   const handleVoiceClick = () => {
-    openModal('voice-picker', <VoicePickerModal id='voice-picker' />)
+    openModal(<VoicePickerModal />)
   }
 
   return (

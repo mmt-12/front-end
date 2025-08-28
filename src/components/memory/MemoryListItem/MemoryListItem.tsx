@@ -1,6 +1,8 @@
 import { css } from '@emotion/react'
 import { Link } from 'react-router-dom'
 
+import ImageGrid from '@/components/common/ImageGrid'
+import Img from '@/components/common/Img'
 import { ROUTES } from '@/routes/ROUTES'
 import type { IMemoryInfo } from '@/types/memory'
 import MemoryInfo from '../MemoryInfo'
@@ -20,15 +22,11 @@ export default function MemoryListItem(props: Props) {
         description={props.isGrid ? '' : props.description}
       />
       {props.isGrid ? (
-        <div css={imagesGridStyle}>
-          {props.images.map((image, index) => (
-            <img key={index} src={image} alt={`Memory image ${index + 1}`} />
-          ))}
-        </div>
+        <ImageGrid images={props.images} />
       ) : (
         <div css={imagesListStyle}>
           {props.images.slice(0, 3).map((image, index) => (
-            <img key={index} src={image} alt={`Memory image ${index + 1}`} />
+            <Img key={index} src={image} alt={`Memory image ${index + 1}`} />
           ))}
         </div>
       )}
@@ -43,19 +41,6 @@ const containerStyle = (isGrid: boolean) =>
     padding: isGrid ? '12px 4px' : '16px',
     gap: '4px',
   })
-
-const imagesGridStyle = css({
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr 1fr',
-  gap: '4px',
-  img: {
-    width: '100%',
-    aspectRatio: '1 / 1',
-    objectFit: 'cover',
-    overflow: 'hidden',
-    objectPosition: 'center',
-  },
-})
 
 const imagesListStyle = css({
   height: 'fit-content',

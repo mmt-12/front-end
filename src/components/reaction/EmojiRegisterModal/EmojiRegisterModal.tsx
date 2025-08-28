@@ -6,10 +6,11 @@ import { GalleryAdd } from '@solar-icons/react'
 import BottomButton from '@/components/common/BottomButton'
 import BottomDrawer from '@/components/common/BottomDrawer'
 import Button from '@/components/common/Button'
+import Img from '@/components/common/Img'
 import InputField from '@/components/common/InputField'
 import { useModal } from '@/hooks/useModal'
 
-export default function EmojiRegisterModal({ id }: { id: string }) {
+export default function EmojiRegisterModal() {
   const theme = useTheme()
   const { closeModal } = useModal()
   const inputRef = useRef<HTMLInputElement>(null)
@@ -17,8 +18,12 @@ export default function EmojiRegisterModal({ id }: { id: string }) {
   const [emojiImage, setEmojiImage] = useState<File | null>(null)
 
   return (
-    <BottomDrawer close={() => closeModal(id)}>
-      <InputField label='이름' onChange={(v: string) => setEmojiName(v)} />
+    <BottomDrawer close={closeModal}>
+      <InputField
+        label='이름'
+        value={emojiName}
+        onChange={e => setEmojiName(e.target.value)}
+      />
       {emojiImage ? (
         <div
           css={imageWrapperStyle}
@@ -26,7 +31,7 @@ export default function EmojiRegisterModal({ id }: { id: string }) {
             inputRef.current?.click()
           }}
         >
-          <img src={URL.createObjectURL(emojiImage)} alt={emojiName} />
+          <Img src={URL.createObjectURL(emojiImage)} alt={emojiName} />
         </div>
       ) : (
         <div css={buttonWrapperStyle}>
@@ -49,9 +54,7 @@ export default function EmojiRegisterModal({ id }: { id: string }) {
         style={{ display: 'none' }}
         onChange={e => {
           const file = e.target.files?.[0]
-          if (file) {
-            setEmojiImage(file)
-          }
+          if (file) setEmojiImage(file)
         }}
       />
       <BottomButton

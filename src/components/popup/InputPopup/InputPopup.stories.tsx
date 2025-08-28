@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   CalendarMinimalistic,
   Map,
@@ -12,6 +13,7 @@ import Badge from '@/components/common/Badge'
 import Profile from '@/components/common/Profile'
 import { BADGES } from '@/consts/BADGES'
 import { MEMBERS } from '@/mocks/data/members'
+import type { IArrayInput, IDateRangeInput, ILocationInput } from '@/types'
 import ArraySelector from '../ArraySelector'
 import DateRangeSelector from '../DateRangeSelector'
 import MapLocationSelector from '../MapLocationSelector'
@@ -40,6 +42,18 @@ export const Date: Story = {
       <DateRangeSelector onSelect={val => console.log('선택된 날짜:', val)} />
     ),
   },
+  render: () => {
+    const [dateRange, setDateRange] = useState<IDateRangeInput>()
+    return (
+      <InputPopup
+        label='날짜 선택'
+        value={dateRange}
+        onChange={ds => setDateRange(ds as IDateRangeInput)}
+        icon={CalendarMinimalistic}
+        content={<DateRangeSelector onSelect={setDateRange} />}
+      />
+    )
+  },
 }
 
 export const Location: Story = {
@@ -50,6 +64,18 @@ export const Location: Story = {
     content: (
       <MapLocationSelector onSelect={val => console.log('선택된 위치:', val)} />
     ),
+  },
+  render: () => {
+    const [location, setLocation] = useState<ILocationInput>()
+    return (
+      <InputPopup
+        label='위치 선택'
+        value={location}
+        onChange={setLocation}
+        icon={Map}
+        content={<MapLocationSelector />}
+      />
+    )
   },
 }
 
@@ -71,6 +97,28 @@ export const Array: Story = {
       />
     ),
   },
+  render: () => {
+    const [selectedItems, setSelectedItems] = useState<IArrayInput>()
+    return (
+      <InputPopup
+        label='배열 선택'
+        value={selectedItems}
+        onChange={setSelectedItems}
+        icon={MedalRibbonStar}
+        content={
+          <ArraySelector
+            searchBarIcon={MedalRibbonStar}
+            renderPreview
+            items={Object.entries(BADGES).map(([id, badge]) => ({
+              id: Number(id),
+              label: badge.name,
+              render: () => <Badge id={Number(id)} />,
+            }))}
+          />
+        }
+      />
+    )
+  },
 }
 
 export const MultipleArray: Story = {
@@ -85,17 +133,31 @@ export const MultipleArray: Story = {
         items={MEMBERS.map(member => ({
           id: member.id,
           label: member.name,
-          render: () => (
-            <Profile
-              id={member.id}
-              name={member.name}
-              imageUrl={member.imageUrl}
-              badgeId={member.badgeId}
-              description={member.description}
-            />
-          ),
+          render: () => <Profile {...member} />,
         }))}
       />
     ),
+  },
+  render: () => {
+    const [selectedItems, setSelectedItems] = useState<IArrayInput>()
+    return (
+      <InputPopup
+        label='다중 배열 선택'
+        value={selectedItems}
+        onChange={setSelectedItems}
+        icon={UsersGroupTwoRounded}
+        content={
+          <ArraySelector
+            searchBarIcon={UserRounded}
+            multiple
+            items={MEMBERS.map(member => ({
+              id: member.id,
+              label: member.name,
+              render: () => <Profile {...member} />,
+            }))}
+          />
+        }
+      />
+    )
   },
 }

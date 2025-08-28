@@ -33,41 +33,48 @@ export default function MemoryRegisterPage() {
 
   return (
     <>
-      <InputField onChange={setTitle} label='제목' />
+      <InputField
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+        label='제목'
+      />
       <InputPopup
-        content={<DateRangeSelector />}
         icon={CalendarMinimalistic}
         label='날짜'
+        value={dateRange}
         onChange={ds => setDateRange(ds as IDateRangeInput)}
+        content={<DateRangeSelector />}
       />
       <InputField
-        onChange={d => {
-          setDescription(d as string)
-        }}
+        value={description}
+        onChange={e => setDescription(e.target.value)}
         label='설명'
-        size='lg'
+        type='textarea'
       />
       <InputPopup
-        content={<MapLocationSelector />}
+        value={location}
         label='장소'
         icon={Map}
         onChange={l => setLocation(l as ILocationInput)}
+        content={<MapLocationSelector />}
       />
       <InputPopup
+        label='참여자'
+        value={participants}
+        onChange={ps => setParticipants(ps as IArrayInput)}
+        icon={UsersGroupTwoRounded}
         content={
           <ArraySelector
+            initialItems={participants?.items || []}
             searchBarIcon={UserRounded}
             multiple
             items={MEMBERS.map(m => ({
               label: m.name,
               id: m.id,
-              render: () => <Profile {...m} size='sm' description='' />,
+              render: () => <Profile {...m} size='sm' introduction='' />,
             }))}
           />
         }
-        label='참여자'
-        onChange={ps => setParticipants(ps as IArrayInput)}
-        icon={UsersGroupTwoRounded}
       />
       <BottomButton
         label='저장'

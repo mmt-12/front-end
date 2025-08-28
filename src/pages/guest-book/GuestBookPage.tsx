@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { lazy, useState } from 'react'
 import { css } from '@emotion/react'
 import { PenNewSquare, UsersGroupRounded } from '@solar-icons/react'
 import { useNavigate } from 'react-router-dom'
@@ -6,12 +6,13 @@ import { useNavigate } from 'react-router-dom'
 import BadgeList from '@/components/guest-book/BadgeList'
 import Card from '@/components/guest-book/Card'
 import GuestBookProfile from '@/components/guest-book/GuestBookProfile'
-import MbtiChart from '@/components/guest-book/MbtiChart'
 import MbtiTest from '@/components/guest-book/MbtiTest'
 import useHeader from '@/hooks/useHeader'
 import { PROFILE } from '@/mocks/data/guestBook'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
+
+const MbtiChart = lazy(() => import('@/components/guest-book/MbtiChart'))
 
 export default function GuestBookPage() {
   const [mode, setMode] = useState<'MBTI' | 'MEDALS' | 'GUEST BOOK' | null>(
@@ -21,7 +22,7 @@ export default function GuestBookPage() {
   const navigate = useNavigate()
 
   const profileData = PROFILE
-  const isMyPage = birthDate === profileData.birthday
+  const isMyPage = birthDate !== profileData.birthday
 
   useHeader({
     routeName: '방명록',

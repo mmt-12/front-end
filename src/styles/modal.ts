@@ -10,5 +10,5 @@ export const modalStyle = (theme: Theme) =>
     maxWidth: theme.maxWidth,
     overflowY: 'hidden',
     background: theme.bg,
-    zIndex: 10,
+    zIndex: 31,
   })

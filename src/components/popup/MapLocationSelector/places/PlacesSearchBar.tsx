@@ -27,10 +27,6 @@ export const PlacesSearchBar = ({ onPlaceSelect }: Props) => {
     [isHideSuggestions],
   )
 
-  const handleInput = useCallback((value: string) => {
-    setInputValue(value)
-  }, [])
-
   const handleSuggestionClick = useCallback(
     async (suggestion: google.maps.places.AutocompleteSuggestion) => {
       if (!places) return
@@ -69,7 +65,10 @@ export const PlacesSearchBar = ({ onPlaceSelect }: Props) => {
           position: 'relative',
         }}
       >
-        <InputField onChange={handleInput} />
+        <InputField
+          value={inputValue}
+          onChange={e => setInputValue(e.target.value)}
+        />
         {suggestions.length && (
           <ToggleButton
             onClick={toggleHide}

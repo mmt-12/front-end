@@ -11,20 +11,16 @@ import { voices } from '@/mocks/data/reaction'
 import Voice from '../Voice'
 import VoiceRegisterModal from '../VoiceRegisterModal/VoiceRegisterModal'
 
-interface Props {
-  id: string
-}
-
-export default function VoicePickerModal({ id }: Props) {
+export default function VoicePickerModal() {
   const { closeModal, openModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
 
   const handleRegisterVoiceClick = () => {
-    openModal('voice-register', <VoiceRegisterModal id='voice-add' />)
+    openModal(<VoiceRegisterModal />)
   }
 
   return (
-    <BottomDrawer close={() => closeModal(id)}>
+    <BottomDrawer close={closeModal}>
       <Text customCss={spanStyle} withPadding>
         최근 사용
       </Text>
@@ -36,7 +32,11 @@ export default function VoicePickerModal({ id }: Props) {
           <Voice key={voice.id} {...voice} amount={undefined} />
         ))}
       </div>
-      <InputField label='검색' onChange={(v: string) => setSearchKey(v)} />
+      <InputField
+        label='검색'
+        value={searchKey}
+        onChange={e => setSearchKey(e.target.value)}
+      />
       <div css={[voiceListStyle, { flexWrap: 'wrap', marginTop: '6px' }]}>
         {voices
           .filter(voice => voice.name.includes(searchKey))

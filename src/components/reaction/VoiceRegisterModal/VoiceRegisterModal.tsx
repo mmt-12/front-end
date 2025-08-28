@@ -9,7 +9,7 @@ import Button from '@/components/common/Button'
 import InputField from '@/components/common/InputField'
 import { useModal } from '@/hooks/useModal'
 
-export default function VoiceRegisterModal({ id }: { id: string }) {
+export default function VoiceRegisterModal() {
   const theme = useTheme()
   const { closeModal } = useModal()
   const inputRef = useRef<HTMLInputElement>(null)
@@ -20,9 +20,17 @@ export default function VoiceRegisterModal({ id }: { id: string }) {
   const audioRef = useRef<HTMLAudioElement>(null)
 
   return (
-    <BottomDrawer close={() => closeModal(id)}>
-      <InputField label='이름' onChange={(v: string) => setName(v)} />
-      <InputField label='설명' onChange={(v: string) => setContent(v)} />
+    <BottomDrawer close={closeModal}>
+      <InputField
+        label='이름'
+        value={name}
+        onChange={e => setName(e.target.value)}
+      />
+      <InputField
+        label='설명'
+        value={content}
+        onChange={e => setContent(e.target.value)}
+      />
       {audio ? (
         <div
           css={{

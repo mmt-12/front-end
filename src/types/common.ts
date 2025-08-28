@@ -15,10 +15,6 @@ export interface IDateRangeInput extends IBaseInput {
   endDate: string
 }
 
-export interface ITextInput extends IBaseInput {
-  value: string
-}
-
 export interface ILocationInput extends IBaseInput {
   address: string
   location: {
@@ -42,7 +38,7 @@ export interface IMember {
   name: string
   imageUrl?: string
   badgeId?: number
-  description?: string
+  introduction?: string
 }
 
 export interface ButtonProps {

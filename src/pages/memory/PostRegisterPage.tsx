@@ -35,8 +35,9 @@ export default function PostRegisterPage() {
       />
       <InputField
         label='어떤 상황이었나요?'
-        size='lg'
-        onChange={(d: string) => setDescription(d)}
+        type='textarea'
+        value={description}
+        onChange={e => setDescription(e.target.value)}
       />
       <BottomButton
         label='작성 완료'

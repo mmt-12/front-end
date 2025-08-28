@@ -1,46 +1,37 @@
-import { useState } from 'react'
+import type { ChangeEvent } from 'react'
 import { css } from '@emotion/react'
 import type { Theme } from '@emotion/react'
 
 import { inputContainerStyle } from '@/styles/input'
-import type { IDateRangeInput } from '@/types'
 
-interface Props<T = string | IDateRangeInput> {
-  onChange: (_value: T) => void
-  size?: 'md' | 'lg'
+interface Props {
+  value: string
+  onChange: (
+    _value: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void
+  type?: 'input' | 'textarea'
   label?: string
 }
 
-export default function InputField<T>({
-  label,
+export default function InputField({
+  value,
   onChange,
-  size = 'md',
-}: Props<T>) {
-  const [value, setValue] = useState<T>('' as T)
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const newValue = e.target.value as T
-    setValue(newValue)
-    onChange(newValue)
+  type = 'input',
+  label,
+}: Props) {
+  const inputProps = {
+    css: inputStyle,
+    value,
+    onChange,
   }
+
   return (
     <div css={inputContainerStyle}>
       {label && <label css={labelStyle}>{label}</label>}
-      {size === 'lg' ? (
-        <textarea
-          css={inputStyle}
-          rows={3}
-          value={value as string}
-          onChange={handleChange}
-        />
+      {type === 'textarea' ? (
+        <textarea rows={3} {...inputProps} />
       ) : (
-        <input
-          css={inputStyle}
-          type='text'
-          value={value as string}
-          onChange={handleChange}
-        />
+        <input type='text' {...inputProps} />
       )}
     </div>
   )

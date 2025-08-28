@@ -1,10 +1,12 @@
-import errorImage from '@/assets/images/mascot/error.jpeg'
-import Button from '@/components/common/Button'
-import { ROUTES } from '@/routes/ROUTES'
-import { type Theme, css } from '@emotion/react'
+import { css, type Theme } from '@emotion/react'
 import { Link, useNavigate, useRouteError } from 'react-router-dom'
 
-export default function ErrorBoundary() {
+import errorImage from '@/assets/images/mascot/error.jpeg'
+import Button from '@/components/common/Button'
+import Img from '@/components/common/Img'
+import { ROUTES } from '@/routes/ROUTES'
+
+export default function ErrorPage() {
   const error = useRouteError() as Error
   const navigate = useNavigate()
   return (
@@ -12,7 +14,7 @@ export default function ErrorBoundary() {
       <h2>문제가 발생했어요.</h2>
       <p>{error.message}</p>
       <div css={imageWrapperStyle}>
-        <img src={errorImage} alt='Error mascot' />
+        <Img src={errorImage} alt='Error mascot' />
       </div>
       <Button type='secondary' label='뒤로가기' onClick={() => navigate(-1)} />
       <Link to={ROUTES.MEMORY_LIST} css={{ width: '100%' }}>

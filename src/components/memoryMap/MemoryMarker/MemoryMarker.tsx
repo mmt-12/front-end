@@ -3,6 +3,7 @@ import { css, type Theme } from '@emotion/react'
 import { AdvancedMarker } from '@vis.gl/react-google-maps'
 
 import pinSrc from '@/assets/images/icons/pin.svg'
+import Img from '@/components/common/Img'
 import type { IMemoryInfo } from '@/types/memory'
 
 interface Props {
@@ -30,11 +31,11 @@ export default function MemoryMarker({
     <AdvancedMarker key={memory.id} position={memory.location} ref={ref}>
       {isSelected ? (
         <div>
-          <img src={pinSrc} alt='' width={64} />
+          <Img src={pinSrc} alt='' width={64} />
         </div>
       ) : (
         <div css={markerImageWrapper} onClick={e => onClick(e, memory)}>
-          <img src={memory.images[0]} alt='' />
+          <Img src={memory.images[0]} alt='' />
         </div>
       )}
     </AdvancedMarker>

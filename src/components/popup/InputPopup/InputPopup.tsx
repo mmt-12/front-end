@@ -1,72 +1,64 @@
-import { cloneElement, useState } from 'react'
+import { cloneElement } from 'react'
 import { css, useTheme } from '@emotion/react'
 import type { Theme } from '@emotion/react'
 import type { Icon } from '@solar-icons/react/lib/types'
 
+import { useModal } from '@/hooks/useModal'
 import { inputContainerStyle } from '@/styles/input'
 import type {
   IArrayInput,
   IBaseInput,
   IDateRangeInput,
-  ITextInput,
+  ILocationInput,
 } from '@/types'
 import PopupModal from '../PopupModal'
 
-interface Props<
-  T extends IBaseInput = ITextInput | IDateRangeInput | IArrayInput,
-> {
+interface Props<T = IDateRangeInput | IArrayInput | ILocationInput> {
   label: string
+  value?: T
   onChange: (_value: T) => void
   icon: Icon
   content: React.ReactNode
-  placeholder?: string
 }
 
 export default function InputPopup<T extends IBaseInput>({
   label,
+  value,
   onChange,
   content,
   icon,
-  placeholder = '',
 }: Props<T>) {
-  const [value, setValue] = useState<T | null>(null)
-  const [showPopup, setShowPopup] = useState(false)
+  const { openModal, closeModal } = useModal()
 
   const handlePopupSelect = (result: T): void => {
-    setShowPopup(false)
-    setValue(result)
+    closeModal(result)
     onChange(result)
   }
 
   const Icon = icon as Icon
-
   const theme = useTheme()
+
+  const modal = (
+    <PopupModal title={label} onClose={() => closeModal()}>
+      {cloneElement(
+        content as React.ReactElement<{
+          onSelect: (_value: T) => void
+        }>,
+        {
+          onSelect: handlePopupSelect,
+        },
+      )}
+    </PopupModal>
+  )
 
   return (
     <div css={inputContainerStyle}>
       <label css={labelStyle}>{label}</label>
 
-      <button onClick={() => setShowPopup(true)} css={buttonStyle}>
-        <div>
-          {value?.render() || (
-            <span style={{ color: theme.stone[400] }}>{placeholder}</span>
-          )}
-        </div>
+      <button onClick={() => openModal(modal)} css={buttonStyle}>
+        <div>{value?.render()}</div>
         {<Icon weight='Bold' size={24} color={theme.stone[400]} />}
       </button>
-
-      {showPopup && (
-        <PopupModal title={label} onClose={() => setShowPopup(false)}>
-          {cloneElement(
-            content as React.ReactElement<{
-              onSelect: (_value: T) => void
-            }>,
-            {
-              onSelect: handlePopupSelect,
-            },
-          )}
-        </PopupModal>
-      )}
     </div>
   )
 }

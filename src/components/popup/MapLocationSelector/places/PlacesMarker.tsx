@@ -1,9 +1,11 @@
-import Button from '@/components/common/Button'
-import { theme } from '@/styles/theme'
+import React, { useEffect } from 'react'
 import { css, type Theme } from '@emotion/react'
 import { CloseCircle } from '@solar-icons/react'
 import { AdvancedMarker, useMap } from '@vis.gl/react-google-maps'
-import React, { useEffect } from 'react'
+
+import Button from '@/components/common/Button'
+import Img from '@/components/common/Img'
+import { theme } from '@/styles/theme'
 
 interface Props {
   place: google.maps.places.Place | null
@@ -28,7 +30,7 @@ const PlacesMarker = ({ place, setSelectedPlace, closeModal }: Props) => {
           <CloseCircle weight='Bold' size={36} color={theme.white} />
         </div>
         {place.photos?.[0]?.getURI?.() && (
-          <img
+          <Img
             src={place.photos[0].getURI()}
             alt={place.displayName as string}
             css={imageStyle}
