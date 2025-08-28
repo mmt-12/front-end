@@ -5,7 +5,6 @@ import { css } from '@emotion/react'
 import BottomButton from '@/components/common/BottomButton'
 import BottomDrawer from '@/components/common/BottomDrawer'
 import InputField from '@/components/common/InputField'
-import Text from '@/components/common/Text'
 import { useModal } from '@/hooks/useModal'
 import { voices } from '@/mocks/data/reaction'
 import Voice from '../Voice'
@@ -21,9 +20,7 @@ export default function VoicePickerModal() {
 
   return (
     <BottomDrawer close={closeModal}>
-      <Text customCss={spanStyle} withPadding>
-        최근 사용
-      </Text>
+      <p css={spanStyle}>최근 사용</p>
       <div
         css={[voiceListStyle, { marginBottom: '4px' }]}
         className='no-scrollbar'
@@ -55,6 +52,7 @@ export default function VoicePickerModal() {
 
 const spanStyle = (theme: Theme) =>
   css({
+    padding: '8px 16px',
     fontSize: '14px',
     fontWeight: '500',
     letterSpacing: '0.5px',

@@ -4,19 +4,15 @@ import { PauseCircle, PlayCircle } from '@solar-icons/react'
 
 import type { IReaction } from '@/types/reaction'
 
-interface Props extends IReaction {
-  content: string
-}
-
 export default function Voice({
   id,
   url: audioUrl,
   amount,
   isActive = false,
   iReacted = false,
-  content,
+  name,
   onClick,
-}: Props) {
+}: IReaction) {
   const audioRef = useRef<HTMLAudioElement>(null)
   const theme = useTheme()
   const [isPlaying, setIsPlaying] = useState(false)
@@ -46,7 +42,7 @@ export default function Voice({
             <PlayCircle weight='Bold' size={28} color={theme.white} />
           )}
         </button>
-        <p className='stardust'>{content}</p>
+        <p className='stardust'>{name}</p>
       </div>
       {amount && <span>{amount}</span>}
       <audio
