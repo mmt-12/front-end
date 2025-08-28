@@ -28,6 +28,10 @@ export default function Album({ children }: Props) {
     }
   }, [])
 
+  useEffect(() => {
+    if (albumContainerRef.current) albumContainerRef.current.scrollLeft = 0
+  }, [children])
+
   return (
     <div css={contianerStyle}>
       <div
@@ -38,15 +42,17 @@ export default function Album({ children }: Props) {
         {children}
       </div>
       <div css={dotContainerStyle}>
-        {Children.map(children, (_, index) => {
-          return (
-            <div
-              key={index}
-              css={dotStyle}
-              className={currentIndex === index ? 'active' : ''}
-            ></div>
-          )
-        })}
+        {Children.map(
+          children,
+          (child, index) =>
+            child && (
+              <div
+                key={index}
+                css={dotStyle}
+                className={currentIndex === index ? 'active' : ''}
+              ></div>
+            ),
+        )}
       </div>
     </div>
   )
