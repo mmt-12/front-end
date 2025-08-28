@@ -133,7 +133,17 @@ export default function EditProfilePage() {
         value={introduction}
         onChange={e => setIntroduction(e.target.value)}
       />
-      <BottomButton label='수정하기' />
+      <BottomButton
+        label='수정하기'
+        onClick={() => {
+          console.log({
+            imagePath,
+            name,
+            introduction,
+            badgeId,
+          })
+        }}
+      />
     </div>
   )
 }

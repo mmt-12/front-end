@@ -2,21 +2,21 @@ import { useState } from 'react'
 import { css, useTheme } from '@emotion/react'
 
 import BottomButton from '@/components/common/BottomButton'
-import ImageGrid from '@/components/common/ImageGrid'
 import Img from '@/components/common/Img'
+import ProfileImageList from '@/components/common/ProfileImageList'
 import WavyBox from '@/components/guest-book/WavyBox'
-import { PROFILE_IMAGES } from '@/mocks/data/profileImages'
+import { MY_PROFILE_IMAGES } from '@/mocks/data/profileImages'
 
 interface Props {
   value?: string
   onSelect: (_value: string) => void
 }
 
-const images = PROFILE_IMAGES
+const images = MY_PROFILE_IMAGES
 
 export default function ImageSelector({ value, onSelect }: Props) {
   const theme = useTheme()
-  const [imagePath, setImagePath] = useState<string>(value || '')
+  const [image, setImage] = useState<string>(value || '')
   return (
     <>
       <div css={imageWrapperStyle}>
@@ -26,15 +26,15 @@ export default function ImageSelector({ value, onSelect }: Props) {
           borderRadius={8}
           childrenOnTop={false}
         >
-          <Img src={imagePath} alt='current profile' css={imageStyle} />
+          <Img src={image} alt='current profile' css={imageStyle} />
         </WavyBox>
       </div>
-      <ImageGrid
+      <ProfileImageList
         images={images}
-        onImageClick={setImagePath}
-        selectedImage={imagePath}
+        onImageClick={profileImage => setImage(profileImage.url)}
+        selectedImageUrl={image}
       />
-      <BottomButton label='이미지 수정' onClick={() => onSelect(imagePath)} />
+      <BottomButton label='이미지 수정' onClick={() => onSelect(image)} />
     </>
   )
 }

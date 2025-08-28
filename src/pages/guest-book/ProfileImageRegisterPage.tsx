@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 import BottomButton from '@/components/common/BottomButton'
-import ImageGrid from '@/components/common/ImageGrid'
 import ImageInputField from '@/components/common/ImageInputField'
+import ProfileImageList from '@/components/common/ProfileImageList'
 import useHeader from '@/hooks/useHeader'
 import { PROFILE_IMAGES } from '@/mocks/data/profileImages'
 import { flexGap } from '@/styles/common'
@@ -34,7 +34,7 @@ export default function ProfileImageRegisterPage() {
         maxLength={10}
         onChange={setNewImages}
       />
-      <ImageGrid images={images} onImageClick={handleImageClick} />
+      <ProfileImageList images={images} onImageClick={handleImageClick} />
       <BottomButton label='등록' onClick={handleSubmit} />
     </div>
   )
