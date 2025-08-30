@@ -5,10 +5,10 @@ import MemoryListPage from '@/pages/memory/MemoryListPage'
 
 const CalendarPage = lazy(() => import('@/pages/CalendarPage'))
 const ErrorPage = lazy(() => import('@/pages/ErrorPage'))
-const AddProfileImagePage = lazy(
-  () => import('@/pages/guest-book/AddProfileImagePage'),
+const ProfileImageRegisterPage = lazy(
+  () => import('@/pages/guest-book/ProfileImageRegisterPage'),
 )
-const EditProfilePage = lazy(() => import('@/pages/guest-book/EditProfilePage'))
+const EditProfilePage = lazy(() => import('@/pages/guest-book/ProfileEditPage'))
 const GuestBookPage = lazy(() => import('@/pages/guest-book/GuestBookPage'))
 const MemberListPage = lazy(() => import('@/pages/guest-book/MemberListPage'))
 const MapPage = lazy(() => import('@/pages/MapPage'))
@@ -24,7 +24,7 @@ const SignupPage = lazy(() => import('@/pages/SignupPage'))
 export {
   CalendarPage,
   ErrorPage,
-  AddProfileImagePage,
+  ProfileImageRegisterPage,
   EditProfilePage,
   GuestBookPage,
   MemberListPage,

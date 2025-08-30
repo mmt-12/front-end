@@ -1,13 +1,9 @@
 import { css } from '@emotion/react'
 
 import Voice from '@/components/reaction/Voice'
-import type { IVoice, ReactionListProps } from '@/types/reaction'
+import type { ReactionListProps } from '@/types/reaction'
 
-interface Props extends ReactionListProps {
-  reactions: Array<IVoice>
-}
-
-export default function VoiceList(props: Props) {
+export default function VoiceList(props: ReactionListProps) {
   return (
     <div css={reactionsStyle} className='no-scrollbar'>
       {props.reactions.map(voice => (

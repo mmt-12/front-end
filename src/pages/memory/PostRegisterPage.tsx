@@ -29,7 +29,7 @@ export default function PostRegisterPage() {
         <p css={{ fontSize: 16 }}>에서 있었던 일을 공유해요.</p>
       </div>
       <ImageInputField
-        maxLength={10}
+        maxLength={30}
         images={images}
         onChange={is => setImages(is)}
       />

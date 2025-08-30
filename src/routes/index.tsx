@@ -63,7 +63,7 @@ const router = createBrowserRouter([
           },
           {
             path: ROUTES.ADD_PROFILE_IMAGE,
-            element: <Pages.AddProfileImagePage />,
+            element: <Pages.ProfileImageRegisterPage />,
           },
           {
             path: ROUTES.MEMORY_REGISTER,

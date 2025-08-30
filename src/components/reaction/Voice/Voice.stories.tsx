@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+
 import Voice from '.'
 
 const meta = {
@@ -16,8 +17,7 @@ export const Default: Story = {
     size: 'md',
     id: 1,
     url: '/test_voices/voice1.mp3',
-    content: '하.하.하.하.하',
-    name: 'Smile',
+    name: '하.하.하.하.하',
     amount: undefined,
     onClick: (e, id) => {
       e.stopPropagation()
@@ -31,8 +31,7 @@ export const Reacted: Story = {
     size: 'md',
     id: 2,
     url: '/test_voices/voice2.mp3',
-    content: '하.하.하.하.하',
-    name: 'Laugh',
+    name: '하.하.하.하.하',
     iReacted: true,
     onClick: (e, id) => {
       e.stopPropagation()
@@ -46,9 +45,8 @@ export const WithAmount: Story = {
     size: 'md',
     id: 3,
     url: '/test_voices/voice3.mp3',
-    name: 'Heart',
+    name: '하.하.하.하.하',
     amount: 10,
-    content: '하.하.하.하.하',
     onClick: (e, id) => {
       e.stopPropagation()
       console.log(`Clicked on Voice with id: ${id}`)
@@ -61,9 +59,8 @@ export const Active: Story = {
     size: 'md',
     id: 3,
     url: '/test_voices/voice3.mp3',
-    name: 'Heart',
+    name: '하.하.하.하.하',
     amount: 5,
-    content: '하.하.하.하.하',
     isActive: true,
     onClick: (e, id) => {
       e.stopPropagation()

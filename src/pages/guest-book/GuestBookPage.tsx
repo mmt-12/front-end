@@ -22,7 +22,7 @@ export default function GuestBookPage() {
   const navigate = useNavigate()
 
   const profileData = PROFILE
-  const isMyPage = birthDate !== profileData.birthday
+  const isMyPage = birthDate === profileData.birthday
 
   useHeader({
     routeName: '방명록',

@@ -1,27 +1,24 @@
-import type { IVoice } from '@/types/reaction'
+import type { IReaction } from '@/types/reaction'
 
-export const voices: IVoice[] = [
+export const voices: IReaction[] = [
   {
     id: 1,
     url: '/test_voices/voice1.mp3',
-    content: '하.하.하.하.하.',
     amount: 12,
     iReacted: true,
-    name: 'hahaha',
+    name: '하.하.하.하.하.',
   },
   {
     id: 2,
     url: '/test_voices/voice2.mp3',
-    content: '뭐라는거야~',
     amount: 12,
-    name: 'mworana',
+    name: '뭐라는거야~',
   },
   {
     id: 3,
     url: '/test_voices/voice3.mp3',
-    content: '인지용~?',
     amount: 12,
-    name: 'injiyong',
+    name: '인지용~?',
   },
 ]
 

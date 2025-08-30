@@ -5,7 +5,6 @@ import { css } from '@emotion/react'
 import BottomButton from '@/components/common/BottomButton'
 import BottomDrawer from '@/components/common/BottomDrawer'
 import InputField from '@/components/common/InputField'
-import Text from '@/components/common/Text'
 import { useModal } from '@/hooks/useModal'
 import { emojies } from '@/mocks/data/reaction'
 import Emoji from '../Emoji/Emoji'
@@ -21,9 +20,7 @@ export default function EmojiPickerModal() {
 
   return (
     <BottomDrawer close={closeModal}>
-      <Text customCss={spanStyle} withPadding>
-        최근 사용
-      </Text>
+      <p css={spanStyle}>최근 사용</p>
       <div css={[emojiListStyle, { marginBottom: '4px' }]}>
         {emojies.slice(0, 6).map(emoji => (
           <Emoji key={emoji.id} {...emoji} amount={undefined} />
@@ -52,6 +49,7 @@ export default function EmojiPickerModal() {
 
 const spanStyle = (theme: Theme) =>
   css({
+    padding: '8px 16px',
     fontSize: '14px',
     fontWeight: '500',
     letterSpacing: '0.5px',
