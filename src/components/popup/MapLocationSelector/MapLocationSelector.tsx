@@ -104,8 +104,10 @@ export default function MapLocationSelector({ onSelect }: Props) {
             onSelect?.({
               address: address,
               location: {
-                lat: selectedPlaceInfo?.location?.lat() || DEFAULT_LOCATION.lat,
-                lng: selectedPlaceInfo?.location?.lng() || DEFAULT_LOCATION.lng,
+                latitude:
+                  selectedPlaceInfo?.location?.lat() || DEFAULT_LOCATION.lat,
+                longitude:
+                  selectedPlaceInfo?.location?.lng() || DEFAULT_LOCATION.lng,
               },
               render: () => <span>{address}</span>,
             })
@@ -128,8 +130,8 @@ export default function MapLocationSelector({ onSelect }: Props) {
             onSelect?.({
               address,
               location: {
-                lat: cameraLocation?.lat() || DEFAULT_LOCATION.lat,
-                lng: cameraLocation?.lng() || DEFAULT_LOCATION.lng,
+                latitude: cameraLocation?.lat() || DEFAULT_LOCATION.lat,
+                longitude: cameraLocation?.lng() || DEFAULT_LOCATION.lng,
               },
               render: () => <span>{address}</span>,
             })

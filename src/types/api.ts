@@ -1,0 +1,294 @@
+import type { locationType } from './memory'
+
+// types/api.ts
+export interface TokenInfo {
+  grantType: string
+  accessToken: string
+  accessTokenExpiresAt: number
+  refreshToken: string | null
+  refreshTokenExpiresAt: number | null
+}
+
+export interface LoginResponse {
+  memberId?: number
+  name?: string
+  kakaoId?: number
+  email?: string
+  token: TokenInfo
+}
+
+export interface SignUpRequest {
+  name: string
+  email: string
+  birthday: number[]
+}
+
+export interface UpdateMemberRequest {
+  name: string
+  email: string
+}
+
+export interface Community {
+  id: number
+  name: string
+  associateId: number
+}
+
+export interface CommunitiesResponse {
+  communities: Community[]
+}
+
+export interface Memory {
+  id: number
+  title: string
+  description: string
+  period: {
+    startTime: string
+    endTime: string
+  }
+  location: locationType
+  memberAmount: number
+  pictureAmount: number
+  pictures: string[]
+}
+
+export interface CreateMemoryRequest {
+  title: string
+  period: {
+    startTime: number[]
+    endTime: number[]
+  }
+  description: string
+  associates: number[]
+  location: locationType
+}
+
+export interface MemoryListResponse {
+  cursor: number
+  hasNext: boolean
+  memories: Memory[]
+}
+
+export interface MemoryImagesResponse {
+  pictures: string[]
+}
+
+export interface Achievement {
+  id: number
+  name: string
+  criteria?: string
+  type?: string
+  obtained?: boolean
+}
+
+export interface Author {
+  id: number
+  imageUrl: string
+  nickname: string
+  achievement?: Achievement
+}
+
+export interface CommentAuthor extends Author {
+  commentId: number
+  createdAt: string
+}
+
+export interface EmojiComment {
+  id: number
+  url: string
+  authors: CommentAuthor[]
+  involved: boolean
+}
+
+export interface VoiceComment {
+  id: number
+  url: string
+  authors: CommentAuthor[]
+  involved: boolean
+}
+
+export interface TemporaryVoiceComment {
+  id: number
+  url: string
+  authors: CommentAuthor[]
+}
+
+export interface Post {
+  id: number
+  author: Author
+  pictures: string[]
+  content: string
+  createdAt: string
+  comments: {
+    emojis: EmojiComment[]
+    voices: VoiceComment[]
+    temporaryVoices: TemporaryVoiceComment[]
+  }
+}
+
+export interface PostListResponse {
+  cursor: number
+  hasNext: boolean
+  posts: Post[]
+}
+
+export interface CreatePostRequest {
+  content: string
+}
+
+export interface UpdatePostRequest {
+  content: string
+  oldPictures: number[]
+}
+
+export interface Associate {
+  id: number
+  nickname: string
+  imageUrl: string
+  introduction: string
+  achievement: Achievement
+  birthday?: string
+}
+
+export interface AssociateListResponse {
+  communityName: string
+  associates: Associate[]
+  cursor: number
+  hasNext: boolean
+}
+
+export interface UpdateAssociateRequest {
+  profileImageUrl: string
+  nickname: string
+  achievement: number
+  introduction: string
+}
+
+export interface AchievementListResponse {
+  achievements: Achievement[]
+}
+
+export interface GuestBook {
+  id: number
+  type: string
+  content: string
+  createdAt: string
+}
+
+export interface GuestBookListResponse {
+  guestBooks: GuestBook[]
+  cursor: number
+  hasNext: boolean
+}
+
+export interface CreateGuestBookRequest {
+  type: string
+  contentId?: number | null
+  content?: string | null
+}
+
+export interface MbtiTestResponse {
+  INFP: number
+  INFJ: number
+  INTP: number
+  INTJ: number
+  ISFP: number
+  ISFJ: number
+  ISTP: number
+  ISTJ: number
+  ENFP: number
+  ENFJ: number
+  ENTP: number
+  ENTJ: number
+  ESFP: number
+  ESFJ: number
+  ESTP: number
+  ESTJ: number
+}
+
+export interface CreateMbtiTestRequest {
+  mbti: string
+}
+
+export interface ProfileImage {
+  id: number
+  url: string
+  register: boolean
+}
+
+export interface ProfileImageListResponse {
+  profileImages: ProfileImage[]
+  cursor: number
+  hasNext: boolean
+}
+
+export interface Voice {
+  id: number
+  name: string
+  url: string
+  author: {
+    id: number
+    nickname: string
+    imageUrl: string | null
+  }
+}
+
+export interface VoiceListResponse {
+  voices: Voice[]
+  pageInfo: {
+    hasNext: boolean
+    nextCursor: number
+  }
+}
+
+export interface CreateVoiceRequest {
+  name: string
+}
+
+export interface Emoji {
+  id: number | null
+  name: string
+  url: string
+  author: {
+    id: number
+    nickname: string
+    imageUrl: string | null
+  }
+}
+
+export interface EmojiListResponse {
+  emoji: Emoji[]
+  pageInfo: {
+    hasNext: boolean
+    nextCursor: number
+  }
+}
+
+export interface CreateEmojiRequest {
+  name: string
+}
+
+export interface Notification {
+  id: number
+  title: string
+  content: string
+  isRead: boolean
+  type: string
+  actorId: number
+  memoryId: number
+  postId: number
+  createdAt: string
+}
+
+export interface NotificationListResponse {
+  notifications: Notification[]
+  pageInfo: {
+    hasNext: boolean
+    nextCursor: number
+  }
+}
+
+export interface UnreadNotificationResponse {
+  hasUnread: boolean
+  count: number
+}

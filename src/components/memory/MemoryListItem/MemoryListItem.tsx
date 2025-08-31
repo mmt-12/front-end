@@ -16,16 +16,17 @@ export default function MemoryListItem(props: Props) {
     <Link
       to={ROUTES.MEMORY_DETAIL(props.id)}
       css={containerStyle(!!props.isGrid)}
+      state={{ memory: props as IMemoryInfo }}
     >
       <MemoryInfo
         {...props}
         description={props.isGrid ? '' : props.description}
       />
       {props.isGrid ? (
-        <ImageGrid images={props.images} />
+        <ImageGrid images={props.pictures} />
       ) : (
         <div css={imagesListStyle}>
-          {props.images.slice(0, 3).map((image, index) => (
+          {props.pictures.slice(0, 3).map((image, index) => (
             <Img key={index} src={image} alt={`Memory image ${index + 1}`} />
           ))}
         </div>

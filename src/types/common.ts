@@ -2,6 +2,8 @@ import type { ReactNode } from 'react'
 import type { SerializedStyles } from '@emotion/react'
 import type { Icon } from '@solar-icons/react/lib/types'
 
+import type { Achievement } from './api'
+
 export interface IHeaderItem {
   icon: Icon | null
   onClick?: () => void
@@ -11,15 +13,15 @@ export interface IBaseInput {
 }
 
 export interface IDateRangeInput extends IBaseInput {
-  startDate: string
-  endDate: string
+  startTime: string
+  endTime: string
 }
 
 export interface ILocationInput extends IBaseInput {
   address: string
   location: {
-    lat: number
-    lng: number
+    latitude: number
+    longitude: number
   }
 }
 
@@ -35,9 +37,9 @@ export interface IArrayInput extends IBaseInput {
 
 export interface IMember {
   id: number
-  name: string
+  nickname: string
   imageUrl?: string
-  badgeId?: number
+  achievement?: Achievement
   introduction?: string
 }
 

@@ -9,7 +9,7 @@ const meta = {
   component: Album,
   tags: ['autodocs'],
   args: {
-    children: POST.images.map((image, index) => (
+    children: POST.pictures.map((image, index) => (
       <div key={index}>
         <Img src={image} alt={`Album image ${index}`} />
       </div>

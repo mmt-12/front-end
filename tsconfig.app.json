@@ -30,5 +30,5 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "mock/data/memories.ts"]
 }

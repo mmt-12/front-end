@@ -1,35 +1,38 @@
 import { PenNewSquare } from '@solar-icons/react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
+import { usePostList } from '@/api'
 import MemoryInfo from '@/components/memory/MemoryInfo'
 import Post from '@/components/memory/Post'
 import useHeader from '@/hooks/useHeader'
-import { MEMORIES } from '@/mocks/data/memories'
-import { POST } from '@/mocks/data/post'
 import { ROUTES } from '@/routes/ROUTES'
+import type { IMemoryInfo } from '@/types/memory'
 
-const MEMORY = MEMORIES[0]
 export default function MemoryDetailPage() {
   const navigate = useNavigate()
+  const memory = useLocation().state.memory as IMemoryInfo
 
   useHeader({
-    routeName: MEMORY.title,
+    routeName: memory.title,
     rightItem: {
       icon: PenNewSquare,
       onClick: () => {
-        navigate(ROUTES.POST_REGISTER, { state: { memory: MEMORY } })
+        navigate(ROUTES.POST_REGISTER, { state: { memory: memory } })
       },
     },
   })
+
+  const { data } = usePostList(1, memory.id)
+
   return (
     <>
       <header css={{ padding: '16px 12px' }}>
-        <MemoryInfo {...MEMORY} saveEnabled />
+        <MemoryInfo {...memory} saveEnabled />
       </header>
       <ol>
-        <Post {...POST} />
-        <Post {...POST} />
-        <Post {...POST} />
+        {data?.posts.map(post => (
+          <Post key={post.id} {...post} />
+        ))}
       </ol>
     </>
   )

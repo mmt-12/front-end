@@ -1,22 +1,14 @@
 import type { MouseEvent } from 'react'
 
+import type { Post } from '@/api'
 import Border from '@/components/common/Border'
 import { emojies, voices } from '@/mocks/data/reaction'
 import { flexGap } from '@/styles/common'
-import type { IMember } from '@/types'
 import EmojiList from '../../reaction/EmojiList'
 import VoiceList from '../../reaction/VoiceList'
 import PostContent from '../PostContent/PostContent'
 
-export interface Props {
-  id: number
-  images: string[]
-  content: string
-  author: IMember
-  createdAt: Date
-}
-
-export default function Post(props: Props) {
+export default function Post(props: Post) {
   const handleReactionClick = (e: MouseEvent, id: number) => {
     e.stopPropagation()
     console.log(`Reaction clicked: ${id}`)

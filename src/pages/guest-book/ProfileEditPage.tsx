@@ -39,9 +39,9 @@ export default function EditProfilePage() {
   const { openModal, closeModal } = useModal()
 
   const [imagePath, setImagePath] = useState<string>()
-  const [name, setName] = useState(member.name)
+  const [name, setName] = useState(member.nickname)
   const [introduction, setIntroduction] = useState(member.introduction || '')
-  const [badgeId, setBadgeId] = useState(member.badgeId)
+  const [badgeId, setBadgeId] = useState(member.achievement?.id)
 
   const badgeItems = useMemo(
     () =>

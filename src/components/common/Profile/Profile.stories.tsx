@@ -22,15 +22,15 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: MEMBERS[0],
   play: async ({ args, canvas }) => {
-    expect(canvas.getByText(args.name)).toBeInTheDocument()
+    expect(canvas.getByText(args.nickname)).toBeInTheDocument()
 
     if (args.introduction)
       expect(canvas.getByText(args.introduction)).toBeInTheDocument()
 
     if (args.imageUrl)
       expect(canvas.getByRole('img')).toHaveAttribute('src', args.imageUrl)
-    if (args.badgeId) {
-      const badge = canvas.getByTestId(`badge-${args.badgeId}`)
+    if (args.achievement) {
+      const badge = canvas.getByTestId(`badge-${args.achievement.id}`)
       expect(badge).toBeInTheDocument()
     }
   },

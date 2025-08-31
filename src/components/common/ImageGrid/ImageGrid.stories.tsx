@@ -8,7 +8,7 @@ const meta = {
   component: ImageGrid,
   tags: ['autodocs'],
   args: {
-    images: POST.images,
+    images: POST.pictures,
     onImageClick: () => {},
     selectedImage: '',
   },

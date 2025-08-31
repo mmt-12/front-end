@@ -132,7 +132,7 @@ export const MultipleArray: Story = {
         multiple
         items={MEMBERS.map(member => ({
           id: member.id,
-          label: member.name,
+          label: member.nickname,
           render: () => <Profile {...member} />,
         }))}
       />
@@ -152,7 +152,7 @@ export const MultipleArray: Story = {
             multiple
             items={MEMBERS.map(member => ({
               id: member.id,
-              label: member.name,
+              label: member.nickname,
               render: () => <Profile {...member} />,
             }))}
           />

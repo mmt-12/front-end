@@ -69,7 +69,7 @@ export default function MemoryRegisterPage() {
             searchBarIcon={UserRounded}
             multiple
             items={MEMBERS.map(m => ({
-              label: m.name,
+              label: m.nickname,
               id: m.id,
               render: () => <Profile {...m} size='sm' introduction='' />,
             }))}

@@ -15,7 +15,7 @@ export default function MemberListPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const memberData = MEMBERS
   const filteredMembers = useMemo(
-    () => filterByStringProp(memberData, 'name', searchTerm),
+    () => filterByStringProp(memberData, 'nickname', searchTerm),
     [memberData, searchTerm],
   )
 

@@ -9,6 +9,7 @@ import EmojiList from '@/components/reaction/EmojiList'
 import VoiceList from '@/components/reaction/VoiceList'
 import useHeader from '@/hooks/useHeader'
 import { MEMBERS } from '@/mocks/data/members'
+import { POST } from '@/mocks/data/post'
 import { emojies, voices } from '@/mocks/data/reaction'
 
 export default function PostDetailPage() {
@@ -24,17 +25,7 @@ export default function PostDetailPage() {
   const [selectedReactionId, setSelectedReactionId] =
     useState<number>(initialSelectedId)
 
-  const postContent = {
-    id: 1,
-    images: [
-      '/test_images/image1.png',
-      '/test_images/image2.png',
-      '/test_images/image3.png',
-    ],
-    content: '첫 번째 포스트 내용입니다.',
-    author: MEMBERS[4],
-    createdAt: new Date('2025-06-20T12:00:00'),
-  }
+  const postContent = POST
 
   const selectedReaction =
     emojies.find(emoji => emoji.id === selectedReactionId) ||
