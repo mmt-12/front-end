@@ -1,4 +1,5 @@
 import type { locationType } from './memory'
+import type { NotificationType } from './notification'
 
 // types/api.ts
 export interface TokenInfo {
@@ -77,7 +78,7 @@ export interface Achievement {
   id: number
   name: string
   criteria?: string
-  type?: string
+  type?: 'OPEN' | 'RESTRICTED' | 'HIDDEN'
   obtained?: boolean
 }
 
@@ -95,6 +96,7 @@ export interface CommentAuthor extends Author {
 
 export interface EmojiComment {
   id: number
+  name: string
   url: string
   authors: CommentAuthor[]
   involved: boolean
@@ -102,6 +104,7 @@ export interface EmojiComment {
 
 export interface VoiceComment {
   id: number
+  name: string
   url: string
   authors: CommentAuthor[]
   involved: boolean
@@ -147,7 +150,7 @@ export interface Associate {
   imageUrl: string
   introduction: string
   achievement: Achievement
-  birthday?: string
+  birthday: string
 }
 
 export interface AssociateListResponse {
@@ -183,8 +186,8 @@ export interface GuestBookListResponse {
 
 export interface CreateGuestBookRequest {
   type: string
-  contentId?: number | null
-  content?: string | null
+  contentId?: number
+  content?: string
 }
 
 export interface MbtiTestResponse {
@@ -226,6 +229,7 @@ export interface Voice {
   id: number
   name: string
   url: string
+  involved: boolean
   author: {
     id: number
     nickname: string
@@ -246,9 +250,10 @@ export interface CreateVoiceRequest {
 }
 
 export interface Emoji {
-  id: number | null
+  id: number
   name: string
   url: string
+  involved: boolean
   author: {
     id: number
     nickname: string
@@ -273,7 +278,7 @@ export interface Notification {
   title: string
   content: string
   isRead: boolean
-  type: string
+  type: NotificationType
   actorId: number
   memoryId: number
   postId: number

@@ -3,19 +3,23 @@ import { css } from '@emotion/react'
 import { UserRounded } from '@solar-icons/react'
 import { Link } from 'react-router-dom'
 
+import { useAssociateList } from '@/api'
 import Profile from '@/components/common/Profile'
 import SearchBar from '@/components/common/SearchBar'
 import useHeader from '@/hooks/useHeader'
-import { MEMBERS } from '@/mocks/data/members'
 import { ROUTES } from '@/routes/ROUTES'
 import { flexGap } from '@/styles/common'
 import { filterByStringProp } from '@/utils/filter'
 
 export default function MemberListPage() {
   const [searchTerm, setSearchTerm] = useState('')
-  const memberData = MEMBERS
+  const { data: memberData } = useAssociateList(1)
+
   const filteredMembers = useMemo(
-    () => filterByStringProp(memberData, 'nickname', searchTerm),
+    () =>
+      memberData
+        ? filterByStringProp(memberData.associates, 'nickname', searchTerm)
+        : [],
     [memberData, searchTerm],
   )
 
@@ -23,12 +27,14 @@ export default function MemberListPage() {
     routeName: '멤버',
   })
 
+  if (!memberData) return null
+
   return (
     <>
       <SearchBar
         onChange={setSearchTerm}
         icon={UserRounded}
-        count={memberData.length}
+        count={memberData.associates.length}
       />
       <div css={[flexGap(8), css({ margin: '0 16px 16px' })]}>
         {filteredMembers.map(member => (

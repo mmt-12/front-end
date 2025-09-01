@@ -1,6 +1,6 @@
+import { useNotificationList } from '@/api'
 import NotificationItem from '@/components/notification/NotificationItem'
 import useHeader from '@/hooks/useHeader'
-import { NOTIFICATIONS } from '@/mocks/data/notifications'
 
 export default function NotificationPage() {
   useHeader({
@@ -10,11 +10,11 @@ export default function NotificationPage() {
     },
   })
 
-  const notifications = NOTIFICATIONS
+  const { data } = useNotificationList({})
 
   return (
     <>
-      {notifications.map(notification => (
+      {data?.notifications.map(notification => (
         <NotificationItem key={notification.id} {...notification} />
       ))}
     </>

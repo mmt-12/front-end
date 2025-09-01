@@ -9,7 +9,7 @@ export default function Voice({
   url: audioUrl,
   amount,
   isActive = false,
-  iReacted = false,
+  involved = false,
   name,
   onClick,
 }: IReaction) {
@@ -31,7 +31,7 @@ export default function Voice({
   }
   return (
     <div
-      css={containerStyle(theme, iReacted, isActive, !!amount)}
+      css={containerStyle(theme, involved, isActive, !!amount)}
       onClick={e => onClick?.(e, id)}
     >
       <div css={playButtonWrapperStyle}>
@@ -56,7 +56,7 @@ export default function Voice({
 
 const containerStyle = (
   theme: Theme,
-  iReacted: boolean,
+  involved: boolean,
   isActive: boolean,
   isAmount: boolean,
 ) =>
@@ -71,15 +71,15 @@ const containerStyle = (
 
     borderRadius: '24px',
     backgroundColor: isActive ? theme.stone[200] : 'transparent',
-    outline: iReacted
+    outline: involved
       ? isAmount
         ? 'none'
         : `3px solid ${theme.sky[300]}`
       : 'none',
 
     span: {
-      fontWeight: iReacted ? 'bold' : 'normal',
-      color: iReacted ? theme.sky[500] : theme.black,
+      fontWeight: involved ? 'bold' : 'normal',
+      color: involved ? theme.sky[500] : theme.black,
     },
   })
 

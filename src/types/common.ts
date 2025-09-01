@@ -57,5 +57,5 @@ export type DayCellType = 'default' | 'inRange' | 'dot'
 export interface IProfileImage {
   id: number
   url: string
-  isMine: boolean
+  register: boolean
 }

@@ -32,7 +32,7 @@ export const Reacted: Story = {
     id: 2,
     url: '/test_voices/voice2.mp3',
     name: '하.하.하.하.하',
-    iReacted: true,
+    involved: true,
     onClick: (e, id) => {
       e.stopPropagation()
       console.log(`Clicked on Voice with id: ${id}`)

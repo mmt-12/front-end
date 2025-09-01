@@ -2,17 +2,18 @@ import { useState } from 'react'
 import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 
+import { useEmojiList } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import BottomDrawer from '@/components/common/BottomDrawer'
 import InputField from '@/components/common/InputField'
 import { useModal } from '@/hooks/useModal'
-import { emojies } from '@/mocks/data/reaction'
 import Emoji from '../Emoji/Emoji'
 import EmojiRegisterModal from '../EmojiRegisterModal'
 
 export default function EmojiPickerModal() {
   const { closeModal, openModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
+  const { data } = useEmojiList(1, {})
 
   const handleRegisterEmojiClick = () => {
     openModal(<EmojiRegisterModal />)
@@ -22,7 +23,7 @@ export default function EmojiPickerModal() {
     <BottomDrawer close={closeModal}>
       <p css={spanStyle}>최근 사용</p>
       <div css={[emojiListStyle, { marginBottom: '4px' }]}>
-        {emojies.slice(0, 6).map(emoji => (
+        {data?.emoji.slice(0, 6).map(emoji => (
           <Emoji key={emoji.id} {...emoji} amount={undefined} />
         ))}
       </div>
@@ -32,7 +33,7 @@ export default function EmojiPickerModal() {
         onChange={e => setSearchKey(e.target.value)}
       />
       <div css={[emojiListStyle, { flexWrap: 'wrap', marginTop: '6px' }]}>
-        {emojies
+        {data?.emoji
           .filter(emoji => emoji.name.includes(searchKey))
           .map(emoji => (
             <Emoji key={emoji.id} {...emoji} amount={undefined} />

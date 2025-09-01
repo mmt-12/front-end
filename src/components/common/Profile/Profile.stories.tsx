@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { MEMBERS } from 'mock/data/members'
 import { expect } from 'storybook/test'
 
-import { MEMBERS } from '@/mocks/data/members'
 import Profile from './Profile'
 
 const meta = {

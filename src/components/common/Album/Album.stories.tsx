@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { POSTS } from 'mock/data/posts'
 
-import { POST } from '@/mocks/data/post'
 import Img from '../Img'
 import Album from './Album'
 
@@ -9,7 +9,7 @@ const meta = {
   component: Album,
   tags: ['autodocs'],
   args: {
-    children: POST.pictures.map((image, index) => (
+    children: POSTS[0].pictures.map((image, index) => (
       <div key={index}>
         <Img src={image} alt={`Album image ${index}`} />
       </div>

@@ -10,7 +10,7 @@ export const NOTIFICATIONS: INotification[] = [
     actorId: null,
     memoryId: null,
     postId: null,
-    createdAt: new Date('2025-07-21T12:00:00Z'),
+    createdAt: '2025-07-21T12:00:00Z',
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ export const NOTIFICATIONS: INotification[] = [
     actorId: null,
     memoryId: 1,
     postId: 2,
-    createdAt: new Date('2025-06-30T12:00:00Z'),
+    createdAt: '2025-06-30T12:00:00Z',
   },
   {
     id: 3,
@@ -32,6 +32,6 @@ export const NOTIFICATIONS: INotification[] = [
     actorId: null,
     memoryId: null,
     postId: null,
-    createdAt: new Date('2025-05-25T12:00:00Z'),
+    createdAt: '2025-05-25T12:00:00Z',
   },
 ]
