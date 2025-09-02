@@ -106,7 +106,7 @@ export default function MapPage() {
     setSelectedMemory(memory)
     if (!map) return
     map.panTo({
-      lat: memory.location.latitude - 0.08,
+      lat: memory.location.latitude,
       lng: memory.location.longitude,
     })
   }

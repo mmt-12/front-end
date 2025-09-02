@@ -80,6 +80,8 @@ export default function MbtiChart() {
     }
   }, [data, theme])
 
+  if (!option) return null
+
   return (
     <EChartsReactCore
       echarts={echarts}
