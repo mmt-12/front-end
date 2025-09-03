@@ -24,11 +24,13 @@ import { PROFILE } from '@/mocks/data/guestBook'
 import { MEMBERS } from '@/mocks/data/members'
 import { flexGap } from '@/styles/common'
 import type { IArrayInput, IArrayItem } from '@/types'
+import useStardust from '@/hooks/useStardust'
 
 const profileData = PROFILE
 const member = MEMBERS[0]
 
 export default function EditProfilePage() {
+  useStardust()
   useHeader({
     routeName: '프로필',
     rightItem: {

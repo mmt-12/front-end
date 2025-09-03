@@ -33,7 +33,7 @@ export default function GuestBookProfile({
   }
 
   return (
-    <div css={containerStyle} className='stardust'>
+    <div css={containerStyle}>
       <div css={imageWrapperStyle}>
         <WavyBox
           strokeColor='white'

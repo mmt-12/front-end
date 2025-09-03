@@ -6,10 +6,12 @@ import ProfileImageList from '@/components/common/ProfileImageList'
 import useHeader from '@/hooks/useHeader'
 import { PROFILE_IMAGES } from '@/mocks/data/profileImages'
 import { flexGap } from '@/styles/common'
+import useStardust from '@/hooks/useStardust'
 
 const images = PROFILE_IMAGES
 
 export default function ProfileImageRegisterPage() {
+  useStardust()
   useHeader({
     routeName: '프로필',
     rightItem: {

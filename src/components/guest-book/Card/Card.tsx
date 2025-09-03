@@ -73,7 +73,7 @@ const sideAreaStyle = css({
 })
 
 const cardTitleStyle = css({
-  fontFamily: 'PressStart2P',
+  fontFamily: 'PFStardust',
   fontSize: 14,
   textAlign: 'center',
   flex: 1,

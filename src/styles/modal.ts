@@ -11,4 +11,6 @@ export const modalStyle = (theme: Theme) =>
     overflowY: 'hidden',
     background: theme.bg,
     zIndex: 31,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
   })
