@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Album, SortByTime } from '@solar-icons/react'
 
 import { useMemoryList } from '@/api'
+import InfiniteScroll from '@/components/common/InfiniteScroll'
 import MemoryListItem from '@/components/memory/MemoryListItem'
 import GreetingPopup from '@/components/popup/GreetingPopup'
 import useHeader from '@/hooks/useHeader'
@@ -21,7 +22,7 @@ export default function MemoryListPage() {
     leftItem: leftItem,
   })
 
-  const { data } = useMemoryList(1, {
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useMemoryList(1, {
     cursor: 0,
     size: 10,
   })
@@ -44,16 +45,20 @@ export default function MemoryListPage() {
     <>
       <GreetingPopup />
       {data ? (
-        memories.map(memory => (
-          <MemoryListItem
-            key={memory.id}
-            {...memory}
-            isGrid={memoryListView == 'grid'}
-          />
-        ))
-      ) : (
-        <></>
-      )}
+        <InfiniteScroll
+          fetchNext={() => fetchNextPage()}
+          hasNextPage={hasNextPage}
+          isFetchingNext={isFetchingNextPage}
+        >
+          {memories.map(memory => (
+            <MemoryListItem
+              key={memory.id}
+              {...memory}
+              isGrid={memoryListView == 'grid'}
+            />
+          ))}
+        </InfiniteScroll>
+      ) : null}
     </>
   )
 }

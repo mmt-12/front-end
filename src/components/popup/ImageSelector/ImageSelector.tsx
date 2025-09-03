@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { css, useTheme } from '@emotion/react'
 
 import { useProfileImageList } from '@/api'
+import InfiniteScroll from '@/components/common/InfiniteScroll'
 import BottomButton from '@/components/common/BottomButton'
 import Img from '@/components/common/Img'
 import ProfileImageList from '@/components/common/ProfileImageList'
@@ -16,7 +17,8 @@ export default function ImageSelector({ value, onSelect }: Props) {
   const theme = useTheme()
   const [image, setImage] = useState<string>(value || '')
   const userId = 1
-  const { data } = useProfileImageList(1, userId)
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useProfileImageList(1, userId)
   const images = data?.pages.flatMap(page => page.profileImages) || []
   return (
     <>
@@ -31,11 +33,17 @@ export default function ImageSelector({ value, onSelect }: Props) {
         </WavyBox>
       </div>
       {images.length > 0 && (
-        <ProfileImageList
-          images={images}
-          onImageClick={profileImage => setImage(profileImage.url)}
-          selectedImageUrl={image}
-        />
+        <InfiniteScroll
+          fetchNext={() => fetchNextPage()}
+          hasNextPage={hasNextPage}
+          isFetchingNext={isFetchingNextPage}
+        >
+          <ProfileImageList
+            images={images}
+            onImageClick={profileImage => setImage(profileImage.url)}
+            selectedImageUrl={image}
+          />
+        </InfiniteScroll>
       )}
       <BottomButton label='이미지 수정' onClick={() => onSelect(image)} />
     </>

@@ -2,6 +2,7 @@ import { PenNewSquare } from '@solar-icons/react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { usePostList } from '@/api'
+import InfiniteScroll from '@/components/common/InfiniteScroll'
 import MemoryInfo from '@/components/memory/MemoryInfo'
 import Post from '@/components/memory/Post'
 import useHeader from '@/hooks/useHeader'
@@ -22,7 +23,8 @@ export default function MemoryDetailPage() {
     },
   })
 
-  const { data } = usePostList(1, memory.id)
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    usePostList(1, memory.id)
   const posts = data?.pages.flatMap(page => page.posts) || []
 
   return (
@@ -30,11 +32,17 @@ export default function MemoryDetailPage() {
       <header css={{ padding: '16px 12px' }}>
         <MemoryInfo {...memory} saveEnabled />
       </header>
-      <ol>
-        {posts.map(post => (
-          <Post key={post.id} {...post} />
-        ))}
-      </ol>
+      <InfiniteScroll
+        fetchNext={() => fetchNextPage()}
+        hasNextPage={hasNextPage}
+        isFetchingNext={isFetchingNextPage}
+      >
+        <ol>
+          {posts.map(post => (
+            <Post key={post.id} {...post} />
+          ))}
+        </ol>
+      </InfiniteScroll>
     </>
   )
 }
