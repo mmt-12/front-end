@@ -1,39 +1,31 @@
 import { css, type Theme } from '@emotion/react'
 import { Link } from 'react-router-dom'
 
+import type { Post } from '@/api'
 import Album from '@/components/common/Album'
 import Img from '@/components/common/Img'
 import Profile from '@/components/common/Profile'
 import { ROUTES } from '@/routes/ROUTES'
-import type { IMember } from '@/types'
 import { formatDateTime } from '@/utils/date'
-
-export interface Props {
-  id: number
-  author: IMember
-  createdAt: Date
-  images: string[]
-  content: string
-}
 
 export default function PostContent({
   id,
   author,
   createdAt,
-  images,
+  pictures,
   content,
-}: Props) {
+}: Post) {
   return (
     <div>
       <header css={headerStyle}>
         <Link to={ROUTES.GUEST_BOOK(author.id)} css={profileLinkStyle}>
           <Profile {...author} size='sm' introduction='' />
         </Link>
-        <time>{formatDateTime(createdAt)}</time>
+        <time>{formatDateTime(new Date(createdAt))}</time>
       </header>
       <Link to={ROUTES.POST_DETAIL(id)}>
         <Album>
-          {images.map((image, index) => (
+          {pictures.map((image, index) => (
             <div key={index}>
               <Img src={image} alt={`Album image ${index}`} />
             </div>

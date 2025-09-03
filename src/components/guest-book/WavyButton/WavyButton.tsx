@@ -23,7 +23,7 @@ export default function WavyButton({
         width: isFullWidth ? '100%' : 'fit-content',
       })}
     >
-      <button css={buttonStyle} onClick={onClick} className='stardust'>
+      <button css={buttonStyle} onClick={onClick}>
         <span>{label}</span>
       </button>
     </WavyBox>

@@ -6,6 +6,7 @@ import {
   RoundAltArrowRight,
 } from '@solar-icons/react'
 
+import { useAssociateProfile } from '@/api'
 import defaultImageUrl from '@/assets/images/mascot/default-profile.png'
 import Badge from '@/components/common/Badge'
 import BottomButton from '@/components/common/BottomButton'
@@ -20,28 +21,29 @@ import PopupModal from '@/components/popup/PopupModal'
 import { BADGES } from '@/consts/BADGES'
 import useHeader from '@/hooks/useHeader'
 import { useModal } from '@/hooks/useModal'
-import { PROFILE } from '@/mocks/data/guestBook'
-import { MEMBERS } from '@/mocks/data/members'
 import { flexGap } from '@/styles/common'
 import type { IArrayInput, IArrayItem } from '@/types'
-
-const profileData = PROFILE
-const member = MEMBERS[0]
+import useStardust from '@/hooks/useStardust'
 
 export default function EditProfilePage() {
+  useStardust()
   useHeader({
     routeName: '프로필',
     rightItem: {
       icon: null,
     },
   })
+
+  const userId = 1
+  const { data: profile } = useAssociateProfile(1, userId)
+
   const theme = useTheme()
   const { openModal, closeModal } = useModal()
 
   const [imagePath, setImagePath] = useState<string>()
-  const [name, setName] = useState(member.name)
-  const [introduction, setIntroduction] = useState(member.introduction || '')
-  const [badgeId, setBadgeId] = useState(member.badgeId)
+  const [name, setName] = useState(profile?.nickname || '')
+  const [introduction, setIntroduction] = useState(profile?.introduction || '')
+  const [badgeId, setBadgeId] = useState(profile?.achievement?.id)
 
   const badgeItems = useMemo(
     () =>
@@ -77,6 +79,8 @@ export default function EditProfilePage() {
     )
   }
 
+  if (!profile) return null
+
   return (
     <div css={[flexGap(8), { padding: '24px 0' }]}>
       <div
@@ -95,8 +99,8 @@ export default function EditProfilePage() {
           childrenOnTop={false}
         >
           <Img
-            src={imagePath || profileData.imagePath || defaultImageUrl}
-            alt={profileData.nickname}
+            src={imagePath || profile?.imageUrl || defaultImageUrl}
+            alt={profile?.nickname || ''}
             onError={e => {
               e.currentTarget.src = defaultImageUrl
             }}

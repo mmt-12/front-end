@@ -34,9 +34,9 @@ export const formatDateTime = (date: Date): string => {
   return `${year}.${month}.${day} ${hours}:${minutes}`
 }
 
-export const formatDateRange = (startDate: Date, endDate?: Date): string => {
-  const start = formatDate(startDate)
-  const end = endDate ? formatDate(endDate) : start
+export const formatDateRange = (startTime: Date, endTime?: Date): string => {
+  const start = formatDate(startTime)
+  const end = endTime ? formatDate(endTime) : start
   return start === end ? start : `${start} - ${end}`
 }
 

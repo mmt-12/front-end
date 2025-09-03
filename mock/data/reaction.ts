@@ -1,11 +1,10 @@
-import type { IReaction } from '@/types/reaction'
+import type { IReaction } from '../../src/types/reaction'
 
-export const voices: IReaction[] = [
+export const VOICES: IReaction[] = [
   {
     id: 1,
     url: '/test_voices/voice1.mp3',
     amount: 12,
-    iReacted: true,
     name: '하.하.하.하.하.',
   },
   {
@@ -22,12 +21,11 @@ export const voices: IReaction[] = [
   },
 ]
 
-export const emojies = [
+export const EMOJIS = [
   {
     id: 10000,
     url: '/test_images/image1.png',
     amount: 15,
-    iReacted: true,
     name: 'like',
   },
   { id: 20000, url: '/test_images/image2.png', amount: 15, name: 'love' },
@@ -35,14 +33,12 @@ export const emojies = [
     id: 30000,
     url: '/test_images/image1.png',
     amount: 14,
-    iReacted: true,
     name: 'haha',
   },
   {
     id: 40000,
     url: '/test_images/image1.png',
     amount: 13,
-    iReacted: true,
     name: 'sad',
   },
   { id: 50000, url: '/test_images/image2.png', amount: 11, name: 'angry' },

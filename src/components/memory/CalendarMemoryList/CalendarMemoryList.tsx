@@ -16,18 +16,19 @@ export default function CalendarMemoryList({ memories, selectedDate }: Props) {
     const filteredMemories = memories
       .filter(memory => {
         if (!selectedDate) return false
-        if (new Date(memory.endDate) < selectedDate) return false
+        if (new Date(memory.period.endTime) < selectedDate) return false
         return (
-          selectedDate.getMonth() === new Date(memory.startDate).getMonth() &&
+          selectedDate.getMonth() ===
+            new Date(memory.period.startTime).getMonth() &&
           selectedDate.getFullYear() ===
-            new Date(memory.startDate).getFullYear()
+            new Date(memory.period.startTime).getFullYear()
         )
       })
-      .sort((a, b) => a.startDate.localeCompare(b.startDate))
+      .sort((a, b) => a.period.startTime.localeCompare(b.period.startTime))
 
     const groups = new Map<string, IMemoryInfo[]>()
     filteredMemories.forEach(memory => {
-      const date = formatDateString(memory.startDate)
+      const date = formatDateString(memory.period.startTime)
       if (!groups.has(date)) {
         groups.set(date, [])
       }
@@ -40,16 +41,19 @@ export default function CalendarMemoryList({ memories, selectedDate }: Props) {
 
   return (
     <div css={[containerStyle, flexGap(16)]}>
-      {Array.from(groupedMemories.keys()).map(startDate => (
-        <div key={startDate} css={flexGap(6)}>
-          <p css={dateStyle}>{startDate}</p>
+      {Array.from(groupedMemories.keys()).map(startTime => (
+        <div key={startTime} css={flexGap(6)}>
+          <p css={dateStyle}>{startTime}</p>
           <div css={flexGap(16)}>
-            {groupedMemories.get(startDate)?.map(memory => (
+            {groupedMemories.get(startTime)?.map(memory => (
               <div css={memoryItemStyle} key={memory.id}>
                 <MemoryInfo
                   {...memory}
-                  imageCount={undefined}
-                  startDate={undefined}
+                  pictureAmount={undefined}
+                  period={{
+                    startTime: undefined,
+                    endTime: memory.period.endTime,
+                  }}
                   isLink
                 />
               </div>

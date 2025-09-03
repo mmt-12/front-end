@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { NOTIFICATIONS } from 'mock/data/notifications'
 import { withRouter } from 'storybook-addon-remix-react-router'
 
-import { NOTIFICATIONS } from '@/mocks/data/notifications'
 import NotificationItem from '.'
 
 const meta = {

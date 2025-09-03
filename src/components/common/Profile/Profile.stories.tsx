@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { MEMBERS } from 'mock/data/members'
 import { expect } from 'storybook/test'
 
-import { MEMBERS } from '@/mocks/data/members'
 import Profile from './Profile'
 
 const meta = {
@@ -22,15 +22,15 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: MEMBERS[0],
   play: async ({ args, canvas }) => {
-    expect(canvas.getByText(args.name)).toBeInTheDocument()
+    expect(canvas.getByText(args.nickname)).toBeInTheDocument()
 
     if (args.introduction)
       expect(canvas.getByText(args.introduction)).toBeInTheDocument()
 
     if (args.imageUrl)
       expect(canvas.getByRole('img')).toHaveAttribute('src', args.imageUrl)
-    if (args.badgeId) {
-      const badge = canvas.getByTestId(`badge-${args.badgeId}`)
+    if (args.achievement) {
+      const badge = canvas.getByTestId(`badge-${args.achievement.id}`)
       expect(badge).toBeInTheDocument()
     }
   },

@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
+import { useMemoryList } from '@/api'
 import CalendarPicker from '@/components/common/CalendarPicker'
 import CalendarMemoryList from '@/components/memory/CalendarMemoryList'
 import useHeader from '@/hooks/useHeader'
-import { MEMORIES } from '@/mocks/data/memories'
 import type { IMemoryInfo } from '@/types/memory'
 
 export default function CalendarPage() {
@@ -19,14 +19,16 @@ export default function CalendarPage() {
   const [viewMonth, setViewMonth] = useState(today.getMonth())
   const [selectedDate, setSelectedDate] = useState<Date>()
 
-  const memories = MEMORIES
+  const { data } = useMemoryList(1)
+  const memories = data?.pages.flatMap(page => page.memories) || []
+
   const dateMemoryMap = new Map<number, IMemoryInfo[]>()
   memories.forEach(memory => {
-    const startDate = new Date(memory.startDate)
-    const endDate = new Date(memory.endDate)
+    const startTime = new Date(memory.period.startTime)
+    const endTime = new Date(memory.period.endTime)
     for (
-      let date = startDate;
-      date <= endDate;
+      let date = startTime;
+      date <= endTime;
       date.setDate(date.getDate() + 1)
     ) {
       const key = date.setHours(0, 0, 0, 0)
@@ -60,7 +62,12 @@ export default function CalendarPage() {
         getDayCellType={getDayCellType}
         getIsSelected={date => selectedDate?.getTime() === date.getTime()}
       />
-      <CalendarMemoryList memories={memories} selectedDate={selectedDate} />
+      {memories.length > 0 && selectedDate && (
+        <CalendarMemoryList
+          memories={memories}
+          selectedDate={selectedDate}
+        />
+      )}
     </>
   )
 }

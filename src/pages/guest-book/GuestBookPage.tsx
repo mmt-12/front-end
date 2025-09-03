@@ -3,26 +3,30 @@ import { css } from '@emotion/react'
 import { PenNewSquare, UsersGroupRounded } from '@solar-icons/react'
 import { useNavigate } from 'react-router-dom'
 
+import { useAssociateProfile } from '@/api'
 import BadgeList from '@/components/guest-book/BadgeList'
 import Card from '@/components/guest-book/Card'
 import GuestBookProfile from '@/components/guest-book/GuestBookProfile'
 import MbtiTest from '@/components/guest-book/MbtiTest'
 import useHeader from '@/hooks/useHeader'
-import { PROFILE } from '@/mocks/data/guestBook'
+import useStardust from '@/hooks/useStardust'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 
 const MbtiChart = lazy(() => import('@/components/guest-book/MbtiChart'))
 
 export default function GuestBookPage() {
+  useStardust()
   const [mode, setMode] = useState<'MBTI' | 'MEDALS' | 'GUEST BOOK' | null>(
     null,
   )
   const { birthDate } = useUserStore()
   const navigate = useNavigate()
 
-  const profileData = PROFILE
-  const isMyPage = birthDate === profileData.birthday
+  const userId = 1
+  const { data: profile } = useAssociateProfile(1, userId)
+
+  const isMyPage = birthDate === profile?.birthday
 
   useHeader({
     routeName: '방명록',
@@ -38,13 +42,15 @@ export default function GuestBookPage() {
       : undefined,
   })
 
+  if (!profile) return null
+
   return (
     <div css={containerStyle}>
       <Card title='PROFILE'>
         <GuestBookProfile
-          achievementId={profileData.achievement.id}
+          achievementId={profile.achievement.id}
           isMyProfile={isMyPage}
-          {...profileData}
+          {...profile}
         />
       </Card>
       {mode === null ? (
@@ -72,7 +78,7 @@ export default function GuestBookPage() {
         <Card title={mode} onButtonClick={() => setMode(null)}>
           {mode === 'MEDALS' && <BadgeList isExpanded />}
           {mode === 'MBTI' && (
-            <MbtiTest isMyPage={isMyPage} name={profileData.nickname} />
+            <MbtiTest isMyPage={isMyPage} name={profile.nickname} />
           )}
         </Card>
       )}

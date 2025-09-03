@@ -10,9 +10,9 @@ export interface Props extends IMember {
 }
 
 export default function Profile({
-  name,
+  nickname,
   imageUrl,
-  badgeId,
+  achievement,
   introduction,
   size = 'md',
 }: Props) {
@@ -21,14 +21,14 @@ export default function Profile({
       <div css={imageWrapperStyle(size)}>
         <Img
           src={imageUrl ? imageUrl : defaultImageUrl}
-          alt={name}
+          alt={nickname}
           css={imageStyle}
         />
       </div>
       <div css={contentStyle}>
         <div>
-          <p css={nameStyle(size)}>{name}</p>
-          {badgeId && <Badge id={badgeId} />}
+          <p css={nameStyle(size)}>{nickname}</p>
+          {achievement && <Badge id={achievement.id} />}
         </div>
         {introduction && (
           <p css={descriptionStyle} className='stardust'>

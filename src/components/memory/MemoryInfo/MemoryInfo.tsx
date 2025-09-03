@@ -10,11 +10,13 @@ import type { locationType } from '@/types/memory'
 interface Props {
   title: string
   location: locationType
-  memberCount: number
-  imageCount?: number
+  memberAmount: number
+  pictureAmount?: number
   description?: string
-  startDate?: string
-  endDate: string
+  period: {
+    startTime?: string
+    endTime: string
+  }
   id?: number
   saveEnabled?: boolean
   isLink?: boolean
@@ -27,10 +29,11 @@ export default function MemoryInfo(props: Props) {
     return (
       <>
         <p className='location'>{props.location.name}</p>
-        {props.startDate !== undefined && (
+        {props.period.startTime !== undefined && (
           <p className='date'>
-            {props.startDate}
-            {props.endDate != props.startDate && ` - ${props.endDate}`}
+            {props.period.startTime}
+            {props.period.endTime != props.period.startTime &&
+              ` - ${props.period.endTime}`}
           </p>
         )}
       </>
@@ -42,9 +45,9 @@ export default function MemoryInfo(props: Props) {
       <div css={titleRowStyle}>
         <h2>{props.title}</h2>
         <div css={countChipsStyle}>
-          <Chip Icon={UserCircle} label={props.memberCount} />
-          {props.imageCount !== undefined && (
-            <Chip Icon={GalleryCircle} label={props.imageCount} />
+          <Chip Icon={UserCircle} label={props.memberAmount} />
+          {props.pictureAmount !== undefined && (
+            <Chip Icon={GalleryCircle} label={props.pictureAmount} />
           )}
         </div>
       </div>

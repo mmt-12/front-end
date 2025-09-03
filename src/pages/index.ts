@@ -2,6 +2,7 @@ import { lazy } from 'react'
 
 import LoginPage from '@/pages/LoginPage'
 import MemoryListPage from '@/pages/memory/MemoryListPage'
+import TestPage from './TestPage'
 
 const CalendarPage = lazy(() => import('@/pages/CalendarPage'))
 const ErrorPage = lazy(() => import('@/pages/ErrorPage'))
@@ -37,4 +38,5 @@ export {
   PostRegisterPage,
   NotificationPage,
   SignupPage,
+  TestPage,
 }

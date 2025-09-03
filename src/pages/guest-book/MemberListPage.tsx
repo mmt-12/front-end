@@ -3,40 +3,58 @@ import { css } from '@emotion/react'
 import { UserRounded } from '@solar-icons/react'
 import { Link } from 'react-router-dom'
 
+import { useAssociateList } from '@/api'
+import InfiniteScroll from '@/components/common/InfiniteScroll'
 import Profile from '@/components/common/Profile'
 import SearchBar from '@/components/common/SearchBar'
 import useHeader from '@/hooks/useHeader'
-import { MEMBERS } from '@/mocks/data/members'
 import { ROUTES } from '@/routes/ROUTES'
 import { flexGap } from '@/styles/common'
 import { filterByStringProp } from '@/utils/filter'
+import useStardust from '@/hooks/useStardust'
 
 export default function MemberListPage() {
+  useStardust()
   const [searchTerm, setSearchTerm] = useState('')
-  const memberData = MEMBERS
-  const filteredMembers = useMemo(
-    () => filterByStringProp(memberData, 'name', searchTerm),
-    [memberData, searchTerm],
-  )
+  const {
+    data: memberData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useAssociateList(1)
+
+  const filteredMembers = useMemo(() => {
+    const associates = memberData?.pages.flatMap(page => page.associates) || []
+
+    return filterByStringProp(associates, 'nickname', searchTerm)
+  }, [searchTerm, memberData])
 
   useHeader({
     routeName: '멤버',
   })
+
+  if (!memberData) return null
 
   return (
     <>
       <SearchBar
         onChange={setSearchTerm}
         icon={UserRounded}
-        count={memberData.length}
+        count={filteredMembers.length}
       />
-      <div css={[flexGap(8), css({ margin: '0 16px 16px' })]}>
-        {filteredMembers.map(member => (
-          <Link to={ROUTES.GUEST_BOOK(member.id)} key={member.id}>
-            <Profile {...member} />
-          </Link>
-        ))}
-      </div>
+      <InfiniteScroll
+        fetchNext={() => fetchNextPage()}
+        hasNextPage={hasNextPage}
+        isFetchingNext={isFetchingNextPage}
+      >
+        <div css={[flexGap(8), css({ margin: '0 16px 16px' })]}>
+          {filteredMembers.map(member => (
+            <Link to={ROUTES.GUEST_BOOK(member.id)} key={member.id}>
+              <Profile {...member} />
+            </Link>
+          ))}
+        </div>
+      </InfiniteScroll>
     </>
   )
 }

@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import MemoryInfo from './MemoryInfo'
 import { withRouter } from 'storybook-addon-remix-react-router'
-import { MEMORIES } from '@/mocks/data/memories'
+
+import { MEMORIES } from '@/../mock/data/memories'
+import MemoryInfo from './MemoryInfo'
 
 const meta = {
   title: 'components/memory/MemoryInfo',

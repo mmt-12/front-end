@@ -1,21 +1,27 @@
 import { useState } from 'react'
 
+import { useProfileImageList } from '@/api'
+import InfiniteScroll from '@/components/common/InfiniteScroll'
 import BottomButton from '@/components/common/BottomButton'
 import ImageInputField from '@/components/common/ImageInputField'
 import ProfileImageList from '@/components/common/ProfileImageList'
 import useHeader from '@/hooks/useHeader'
-import { PROFILE_IMAGES } from '@/mocks/data/profileImages'
 import { flexGap } from '@/styles/common'
-
-const images = PROFILE_IMAGES
+import useStardust from '@/hooks/useStardust'
 
 export default function ProfileImageRegisterPage() {
+  useStardust()
   useHeader({
     routeName: '프로필',
     rightItem: {
       icon: null,
     },
   })
+
+  const userId = 1
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useProfileImageList(1, userId)
+  const images = data?.pages.flatMap(page => page.profileImages) || []
 
   const [newImages, setNewImages] = useState<File[]>([])
 
@@ -34,7 +40,18 @@ export default function ProfileImageRegisterPage() {
         maxLength={10}
         onChange={setNewImages}
       />
-      <ProfileImageList images={images} onImageClick={handleImageClick} />
+      {images.length > 0 && (
+        <InfiniteScroll
+          fetchNext={() => fetchNextPage()}
+          hasNextPage={hasNextPage}
+          isFetchingNext={isFetchingNextPage}
+        >
+          <ProfileImageList
+            images={images}
+            onImageClick={handleImageClick}
+          />
+        </InfiniteScroll>
+      )}
       <BottomButton label='등록' onClick={handleSubmit} />
     </div>
   )

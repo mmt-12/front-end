@@ -12,7 +12,7 @@ import { formatDateString } from '@/utils/date'
 interface Props {
   nickname: string
   achievementId: number
-  imagePath: string
+  imageUrl: string
   introduction: string
   birthday: string
   isMyProfile: boolean
@@ -21,7 +21,7 @@ interface Props {
 export default function GuestBookProfile({
   nickname,
   achievementId,
-  imagePath,
+  imageUrl,
   introduction,
   birthday,
   isMyProfile,
@@ -33,7 +33,7 @@ export default function GuestBookProfile({
   }
 
   return (
-    <div css={containerStyle} className='stardust'>
+    <div css={containerStyle}>
       <div css={imageWrapperStyle}>
         <WavyBox
           strokeColor='white'
@@ -42,7 +42,7 @@ export default function GuestBookProfile({
           childrenOnTop={false}
         >
           <Img
-            src={imagePath || defaultImageUrl}
+            src={imageUrl || defaultImageUrl}
             alt={nickname}
             css={imageStyle}
           />

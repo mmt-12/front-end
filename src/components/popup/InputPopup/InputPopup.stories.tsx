@@ -7,12 +7,12 @@ import {
   UsersGroupTwoRounded,
 } from '@solar-icons/react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { MEMBERS } from 'mock/data/members'
 import { expect } from 'storybook/test'
 
 import Badge from '@/components/common/Badge'
 import Profile from '@/components/common/Profile'
 import { BADGES } from '@/consts/BADGES'
-import { MEMBERS } from '@/mocks/data/members'
 import type { IArrayInput, IDateRangeInput, ILocationInput } from '@/types'
 import ArraySelector from '../ArraySelector'
 import DateRangeSelector from '../DateRangeSelector'
@@ -132,7 +132,7 @@ export const MultipleArray: Story = {
         multiple
         items={MEMBERS.map(member => ({
           id: member.id,
-          label: member.name,
+          label: member.nickname,
           render: () => <Profile {...member} />,
         }))}
       />
@@ -152,7 +152,7 @@ export const MultipleArray: Story = {
             multiple
             items={MEMBERS.map(member => ({
               id: member.id,
-              label: member.name,
+              label: member.nickname,
               render: () => <Profile {...member} />,
             }))}
           />

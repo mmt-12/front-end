@@ -2,14 +2,13 @@ import { useState } from 'react'
 import { css, type Theme } from '@emotion/react'
 import { MagniferZoomIn } from '@solar-icons/react'
 
+import { usePost } from '@/api'
 import Profile from '@/components/common/Profile'
 import PostContent from '@/components/memory/PostContent/PostContent'
 import ReactBar from '@/components/memory/ReactBar/ReactBar'
 import EmojiList from '@/components/reaction/EmojiList'
 import VoiceList from '@/components/reaction/VoiceList'
 import useHeader from '@/hooks/useHeader'
-import { MEMBERS } from '@/mocks/data/members'
-import { emojies, voices } from '@/mocks/data/reaction'
 
 export default function PostDetailPage() {
   useHeader({
@@ -18,27 +17,27 @@ export default function PostDetailPage() {
     },
   })
 
-  const initialSelectedId =
-    emojies.length > 0 ? emojies[0].id : voices.length > 0 ? voices[0].id : 0
+  const memoryId = 1
+  const postId = 1
+
+  const { data: post } = usePost(1, memoryId, postId)
+
+  const initialSelectedId = post
+    ? post.comments.emojis.length > 0
+      ? post.comments.emojis[0].id
+      : post.comments.voices.length > 0
+        ? post.comments.voices[0].id
+        : 0
+    : 0
 
   const [selectedReactionId, setSelectedReactionId] =
-    useState<number>(initialSelectedId)
+    useState(initialSelectedId)
 
-  const postContent = {
-    id: 1,
-    images: [
-      '/test_images/image1.png',
-      '/test_images/image2.png',
-      '/test_images/image3.png',
-    ],
-    content: '첫 번째 포스트 내용입니다.',
-    author: MEMBERS[4],
-    createdAt: new Date('2025-06-20T12:00:00'),
-  }
+  if (!post) return null
 
   const selectedReaction =
-    emojies.find(emoji => emoji.id === selectedReactionId) ||
-    voices.find(voice => voice.id === selectedReactionId)
+    post.comments.emojis.find(emoji => emoji.id === selectedReactionId) ||
+    post.comments.voices.find(voice => voice.id === selectedReactionId)
 
   const handleReactionClick = (e: React.MouseEvent, id: number) => {
     e.stopPropagation()
@@ -47,16 +46,16 @@ export default function PostDetailPage() {
 
   return (
     <div css={containerStyle}>
-      <PostContent {...postContent} />
+      <PostContent {...post} />
       <div css={reactionsStyle}>
         <EmojiList
-          reactions={emojies}
+          reactions={post.comments.emojis}
           onClick={handleReactionClick}
           selectedId={selectedReactionId}
           showAmount
         />
         <VoiceList
-          reactions={voices}
+          reactions={post.comments.voices}
           onClick={handleReactionClick}
           selectedId={selectedReactionId}
           showAmount
@@ -69,9 +68,14 @@ export default function PostDetailPage() {
             <MagniferZoomIn weight='Linear' size={20} />
           </div>
           <div css={reactedProfilesStyle}>
-            <Profile {...MEMBERS[0]} size='sm' introduction={undefined} />
-            <Profile {...MEMBERS[1]} size='sm' introduction={undefined} />
-            <Profile {...MEMBERS[2]} size='sm' introduction={undefined} />
+            {selectedReaction.authors.map(author => (
+              <Profile
+                key={author.id}
+                {...author}
+                size='sm'
+                introduction={undefined}
+              />
+            ))}
           </div>
         </>
       )}
