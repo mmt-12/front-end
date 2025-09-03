@@ -14,6 +14,7 @@ export default function VoicePickerModal() {
   const { closeModal, openModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
   const { data } = useVoiceList(1, {})
+  const voices = data?.pages.flatMap(page => page.voices) || []
 
   const handleRegisterVoiceClick = () => {
     openModal(<VoiceRegisterModal />)
@@ -26,7 +27,7 @@ export default function VoicePickerModal() {
         css={[voiceListStyle, { marginBottom: '4px' }]}
         className='no-scrollbar'
       >
-        {data?.voices.slice(0, 6).map(voice => (
+        {voices.slice(0, 6).map(voice => (
           <Voice key={voice.id} {...voice} amount={undefined} />
         ))}
       </div>
@@ -36,7 +37,7 @@ export default function VoicePickerModal() {
         onChange={e => setSearchKey(e.target.value)}
       />
       <div css={[voiceListStyle, { flexWrap: 'wrap', marginTop: '6px' }]}>
-        {data?.voices
+        {voices
           .filter(voice => voice.name.includes(searchKey))
           .map(voice => (
             <Voice key={voice.id} {...voice} amount={undefined} />

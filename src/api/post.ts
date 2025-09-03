@@ -1,5 +1,10 @@
 // hooks/post.ts
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
 
 import { api } from '../lib/api'
 import type { Post, PostListResponse } from '../types/api'
@@ -18,13 +23,32 @@ export function usePost(communityId = 1, memoryId: number, postId: number) {
 }
 
 // 포스트 목록 조회
-export function usePostList(communityId = 1, memoryId: number) {
-  return useQuery({
-    queryKey: ['posts', communityId, memoryId],
-    queryFn: () =>
-      api
-        .get(`/v1/communities/${communityId}/memories/${memoryId}/posts`)
-        .then(r => r.data as PostListResponse),
+export interface PostListParams {
+  cursor?: number
+  size?: number
+}
+
+export function usePostList(
+  communityId = 1,
+  memoryId: number,
+  params?: PostListParams,
+) {
+  return useInfiniteQuery({
+    queryKey: ['posts', communityId, memoryId, params?.size],
+    initialPageParam: params?.cursor ?? 0,
+    queryFn: ({ pageParam = 0 }) => {
+      const searchParams = new URLSearchParams()
+      searchParams.append('cursor', pageParam.toString())
+      if (params?.size) searchParams.append('size', params.size.toString())
+
+      return api
+        .get(
+          `/v1/communities/${communityId}/memories/${memoryId}/posts?${searchParams}`,
+        )
+        .then(r => r.data as PostListResponse)
+    },
+    getNextPageParam: lastPage =>
+      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
   })
 }
 

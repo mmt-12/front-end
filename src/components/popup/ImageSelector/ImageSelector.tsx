@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { css, useTheme } from '@emotion/react'
 
 import { useProfileImageList } from '@/api'
+import InfiniteScroll from '@/components/common/InfiniteScroll'
 import BottomButton from '@/components/common/BottomButton'
 import Img from '@/components/common/Img'
 import ProfileImageList from '@/components/common/ProfileImageList'
@@ -16,7 +17,9 @@ export default function ImageSelector({ value, onSelect }: Props) {
   const theme = useTheme()
   const [image, setImage] = useState<string>(value || '')
   const userId = 1
-  const { data } = useProfileImageList(1, userId)
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useProfileImageList(1, userId)
+  const images = data?.pages.flatMap(page => page.profileImages) || []
   return (
     <>
       <div css={imageWrapperStyle}>
@@ -29,12 +32,18 @@ export default function ImageSelector({ value, onSelect }: Props) {
           <Img src={image} alt='current profile' css={imageStyle} />
         </WavyBox>
       </div>
-      {data && (
-        <ProfileImageList
-          images={data.profileImages}
-          onImageClick={profileImage => setImage(profileImage.url)}
-          selectedImageUrl={image}
-        />
+      {images.length > 0 && (
+        <InfiniteScroll
+          fetchNext={() => fetchNextPage()}
+          hasNextPage={hasNextPage}
+          isFetchingNext={isFetchingNextPage}
+        >
+          <ProfileImageList
+            images={images}
+            onImageClick={profileImage => setImage(profileImage.url)}
+            selectedImageUrl={image}
+          />
+        </InfiniteScroll>
       )}
       <BottomButton label='이미지 수정' onClick={() => onSelect(image)} />
     </>

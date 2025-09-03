@@ -19,8 +19,7 @@ export default defineMock([
   {
     url: '/api/v1/communities/:communityId/memories',
     body: {
-      cursor: 0,
-      hasNext: false,
+      pageInfo: { nextCursor: 0, hasNext: true },
       memories: MEMORIES,
     },
   },
@@ -28,9 +27,8 @@ export default defineMock([
   {
     url: '/api/v1/communities/:communityId/memories/:memoryId/posts',
     body: {
-      cursor: 0,
-      hasNext: false,
       posts: POSTS,
+      pageInfo: { nextCursor: 0, hasNext: true },
     },
   },
   // 방명록 - Get associate profile
@@ -51,8 +49,7 @@ export default defineMock([
     body: {
       communityName: '싸피12반최고',
       associates: MEMBERS,
-      cursor: 0,
-      hasNext: false,
+      pageInfo: { nextCursor: 101, hasNext: true },
     },
   },
   // 방명록 - Get achievements for an associate
@@ -67,8 +64,7 @@ export default defineMock([
     url: '/api/v1/communities/:communityId/associates/:associateId/guest-books',
     body: {
       guestBooks: [],
-      cursor: 0,
-      hasNext: false,
+      pageInfo: { nextCursor: 0, hasNext: true },
     },
   },
   // 방명록 - Get MBTI tests for an associate
@@ -81,8 +77,7 @@ export default defineMock([
     url: '/api/v1/communities/:communityId/associates/:associateId/profile-images',
     body: {
       profileImages: PROFILE_IMAGES,
-      cursor: 0,
-      hasNext: false,
+      pageInfo: { nextCursor: 0, hasNext: true },
     },
   },
   // Auth - Sign in
@@ -123,8 +118,7 @@ export default defineMock([
     url: '/api/v1/communities/:communityId/memories/:memoryId',
     body: {
       posts: POSTS,
-      cursor: 0,
-      hasNext: false,
+      pageInfo: { nextCursor: 0, hasNext: true },
     },
   },
   // Reaction - Get voices in a community
@@ -133,7 +127,7 @@ export default defineMock([
     body: {
       voices: VOICES,
       pageInfo: {
-        cursor: 0,
+        nextCursor: 0,
         hasNext: false,
       },
     },
@@ -144,7 +138,7 @@ export default defineMock([
     body: {
       emoji: EMOJIS,
       pageInfo: {
-        cursor: 0,
+        nextCursor: 0,
         hasNext: false,
       },
     },
@@ -155,7 +149,7 @@ export default defineMock([
     body: {
       notifications: [],
       pageInfo: {
-        cursor: 0,
+        nextCursor: 0,
         hasNext: false,
       },
     },

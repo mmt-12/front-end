@@ -20,9 +20,10 @@ export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState<Date>()
 
   const { data } = useMemoryList(1)
+  const memories = data?.pages.flatMap(page => page.memories) || []
 
   const dateMemoryMap = new Map<number, IMemoryInfo[]>()
-  data?.memories.forEach(memory => {
+  memories.forEach(memory => {
     const startTime = new Date(memory.period.startTime)
     const endTime = new Date(memory.period.endTime)
     for (
@@ -61,9 +62,9 @@ export default function CalendarPage() {
         getDayCellType={getDayCellType}
         getIsSelected={date => selectedDate?.getTime() === date.getTime()}
       />
-      {data?.memories && selectedDate && (
+      {memories.length > 0 && selectedDate && (
         <CalendarMemoryList
-          memories={data.memories}
+          memories={memories}
           selectedDate={selectedDate}
         />
       )}
