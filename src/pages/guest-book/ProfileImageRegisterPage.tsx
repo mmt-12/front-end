@@ -7,8 +7,10 @@ import ImageInputField from '@/components/common/ImageInputField'
 import ProfileImageList from '@/components/common/ProfileImageList'
 import useHeader from '@/hooks/useHeader'
 import { flexGap } from '@/styles/common'
+import useStardust from '@/hooks/useStardust'
 
 export default function ProfileImageRegisterPage() {
+  useStardust()
   useHeader({
     routeName: '프로필',
     rightItem: {

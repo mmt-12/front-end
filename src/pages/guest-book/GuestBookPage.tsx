@@ -9,12 +9,14 @@ import Card from '@/components/guest-book/Card'
 import GuestBookProfile from '@/components/guest-book/GuestBookProfile'
 import MbtiTest from '@/components/guest-book/MbtiTest'
 import useHeader from '@/hooks/useHeader'
+import useStardust from '@/hooks/useStardust'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 
 const MbtiChart = lazy(() => import('@/components/guest-book/MbtiChart'))
 
 export default function GuestBookPage() {
+  useStardust()
   const [mode, setMode] = useState<'MBTI' | 'MEDALS' | 'GUEST BOOK' | null>(
     null,
   )

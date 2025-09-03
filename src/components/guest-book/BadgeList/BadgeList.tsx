@@ -22,7 +22,7 @@ export default function BadgeList({ isExpanded = false }: Props) {
       visibleBadges.length
 
     return (
-      <div css={compactContainerStyle} className='stardust'>
+      <div css={compactContainerStyle}>
         {visibleBadges.map(badge => (
           <Badge key={badge.id} id={badge.id} />
         ))}
@@ -36,7 +36,7 @@ export default function BadgeList({ isExpanded = false }: Props) {
       {data.achievements
         .filter(badge => badge.type !== 'HIDDEN')
         .map(badge => (
-          <div css={medalInfoStyle} className='stardust' key={badge.id}>
+          <div css={medalInfoStyle} key={badge.id}>
             <Badge key={badge.id} id={badge.id} />
             <p css={conditionStyle}>
               {badge.type === 'RESTRICTED' && !badge.obtained

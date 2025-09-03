@@ -23,8 +23,10 @@ import useHeader from '@/hooks/useHeader'
 import { useModal } from '@/hooks/useModal'
 import { flexGap } from '@/styles/common'
 import type { IArrayInput, IArrayItem } from '@/types'
+import useStardust from '@/hooks/useStardust'
 
 export default function EditProfilePage() {
+  useStardust()
   useHeader({
     routeName: '프로필',
     rightItem: {

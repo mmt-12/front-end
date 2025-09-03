@@ -55,7 +55,7 @@ export default function MbtiTest({ isMyPage, name }: Props) {
 
   return (
     <div css={containerStyle}>
-      <div css={contentStyle} className='stardust'>
+      <div css={contentStyle}>
         {step === 'chart' && <MbtiChart />}
         {step === 'start' && (
           <>

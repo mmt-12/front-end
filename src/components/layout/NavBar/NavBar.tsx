@@ -48,6 +48,7 @@ export default function NavBar() {
           title='방명록'
           icon={<BookBookmark weight='Bold' size={24} />}
           to={ROUTES.GUEST_BOOK(user.id)}
+          stardust
         />
       </div>
     </>
@@ -58,11 +59,18 @@ interface INavigationProps {
   title: string
   icon: JSX.Element
   to: string
+  stardust?: boolean
 }
 
 function Navigation(props: INavigationProps) {
   return (
-    <NavLink to={props.to} css={{ width: '100%' }}>
+    <NavLink
+      to={props.to}
+      css={{
+        width: '100%',
+        fontFamily: props.stardust ? 'PFStardust' : 'Pretendard Variable',
+      }}
+    >
       {({ isActive }) => (
         <div css={navLinkStyle}>
           <span className={`icon ${isActive && 'active'}`}>{props.icon}</span>
