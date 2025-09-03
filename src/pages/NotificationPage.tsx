@@ -11,10 +11,12 @@ export default function NotificationPage() {
   })
 
   const { data } = useNotificationList({})
+  const notifications =
+    data?.pages.flatMap(page => page.notifications) || []
 
   return (
     <>
-      {data?.notifications.map(notification => (
+      {notifications.map(notification => (
         <NotificationItem key={notification.id} {...notification} />
       ))}
     </>

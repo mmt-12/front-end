@@ -34,6 +34,7 @@ export default function MapPage() {
   })
 
   const { data } = useMemoryList(1)
+  const memories = data?.pages.flatMap(page => page.memories) || []
   const [selectedMemory, setSelectedMemory] = useState<IMemoryInfo>()
   const [markers, setMarkers] = useState<{ [key: number]: Marker }>({})
   const [center, setCenter] = useState<google.maps.LatLng>()
@@ -138,7 +139,7 @@ export default function MapPage() {
         onIdle={handleIdleEvent}
         minZoom={5.5}
       >
-        {data?.memories.map(memory => (
+        {memories.map(memory => (
           <MemoryMarker
             key={memory.id}
             memory={memory}

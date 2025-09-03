@@ -1,5 +1,5 @@
 // hooks/notification.ts
-import { useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 import { api } from '../lib/api'
 import type {
@@ -8,24 +8,26 @@ import type {
 } from '../types/api'
 
 export interface NotificationListParams {
-  cursor?: number
   size?: number
+  cursor?: number
 }
 
 // 알림 목록 조회
 export function useNotificationList(params?: NotificationListParams) {
-  return useQuery({
-    queryKey: ['notifications', params],
-    queryFn: () => {
+  return useInfiniteQuery({
+    queryKey: ['notifications', params?.size],
+    initialPageParam: params?.cursor ?? 0,
+    queryFn: ({ pageParam = 0 }) => {
       const searchParams = new URLSearchParams()
-      if (params?.cursor)
-        searchParams.append('cursor', params.cursor.toString())
+      searchParams.append('cursor', pageParam.toString())
       if (params?.size) searchParams.append('size', params.size.toString())
 
       return api
         .get(`/v1/notifications?${searchParams}`)
         .then(r => r.data as NotificationListResponse)
     },
+    getNextPageParam: lastPage =>
+      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
   })
 }
 

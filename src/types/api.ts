@@ -65,8 +65,10 @@ export interface CreateMemoryRequest {
 }
 
 export interface MemoryListResponse {
-  cursor: number
-  hasNext: boolean
+  pageInfo: {
+    nextCursor: number
+    hasNext: boolean
+  }
   memories: Memory[]
 }
 
@@ -130,9 +132,11 @@ export interface Post {
 }
 
 export interface PostListResponse {
-  cursor: number
-  hasNext: boolean
   posts: Post[]
+  pageInfo: {
+    nextCursor: number
+    hasNext: boolean
+  }
 }
 
 export interface CreatePostRequest {
@@ -156,8 +160,10 @@ export interface Associate {
 export interface AssociateListResponse {
   communityName: string
   associates: Associate[]
-  cursor: number
-  hasNext: boolean
+  pageInfo: {
+    nextCursor: number
+    hasNext: boolean
+  }
 }
 
 export interface UpdateAssociateRequest {
@@ -180,8 +186,10 @@ export interface GuestBook {
 
 export interface GuestBookListResponse {
   guestBooks: GuestBook[]
-  cursor: number
-  hasNext: boolean
+  pageInfo: {
+    nextCursor: number
+    hasNext: boolean
+  }
 }
 
 export interface CreateGuestBookRequest {
@@ -221,8 +229,10 @@ export interface ProfileImage {
 
 export interface ProfileImageListResponse {
   profileImages: ProfileImage[]
-  cursor: number
-  hasNext: boolean
+  pageInfo: {
+    nextCursor: number
+    hasNext: boolean
+  }
 }
 
 export interface Voice {

@@ -1,5 +1,10 @@
 // hooks/guestbook.ts
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
 
 import { api } from '@/lib/api'
 import type {
@@ -16,8 +21,8 @@ import type {
 
 export interface AssociateListParams {
   keyword?: string
-  cursor?: number
   size?: number
+  cursor?: number
 }
 
 export interface GuestBookListParams {
@@ -46,19 +51,21 @@ export function useAssociateList(
   communityId = 1,
   params?: AssociateListParams,
 ) {
-  return useQuery({
-    queryKey: ['associates', communityId, params],
-    queryFn: () => {
+  return useInfiniteQuery({
+    queryKey: ['associates', communityId, params?.keyword, params?.size],
+    initialPageParam: params?.cursor ?? 0,
+    queryFn: ({ pageParam = 0 }) => {
       const searchParams = new URLSearchParams()
       if (params?.keyword) searchParams.append('keyword', params.keyword)
-      if (params?.cursor)
-        searchParams.append('cursor', params.cursor.toString())
       if (params?.size) searchParams.append('size', params.size.toString())
+      searchParams.append('cursor', pageParam.toString())
 
       return api
         .get(`/v1/communities/${communityId}/associates?${searchParams}`)
         .then(r => r.data as AssociateListResponse)
     },
+    getNextPageParam: lastPage =>
+      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
   })
 }
 
@@ -99,13 +106,13 @@ export function useGuestBookList(
   associateId: number,
   params?: GuestBookListParams,
 ) {
-  return useQuery({
-    queryKey: ['guestbooks', communityId, associateId, params],
-    queryFn: () => {
+  return useInfiniteQuery({
+    queryKey: ['guestbooks', communityId, associateId, params?.size],
+    initialPageParam: params?.cursor ?? 0,
+    queryFn: ({ pageParam = 0 }) => {
       const searchParams = new URLSearchParams()
       if (params?.size) searchParams.append('size', params.size.toString())
-      if (params?.cursor)
-        searchParams.append('cursor', params.cursor.toString())
+      searchParams.append('cursor', pageParam.toString())
 
       return api
         .get(
@@ -113,6 +120,8 @@ export function useGuestBookList(
         )
         .then(r => r.data as GuestBookListResponse)
     },
+    getNextPageParam: lastPage =>
+      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
   })
 }
 
@@ -242,13 +251,13 @@ export function useProfileImageList(
   associateId: number,
   params?: ProfileImageListParams,
 ) {
-  return useQuery({
-    queryKey: ['profile-images', communityId, associateId, params],
-    queryFn: () => {
+  return useInfiniteQuery({
+    queryKey: ['profile-images', communityId, associateId, params?.size],
+    initialPageParam: params?.cursor ?? 0,
+    queryFn: ({ pageParam = 0 }) => {
       const searchParams = new URLSearchParams()
       if (params?.size) searchParams.append('size', params.size.toString())
-      if (params?.cursor)
-        searchParams.append('cursor', params.cursor.toString())
+      searchParams.append('cursor', pageParam.toString())
 
       return api
         .get(
@@ -256,6 +265,8 @@ export function useProfileImageList(
         )
         .then(r => r.data as ProfileImageListResponse)
     },
+    getNextPageParam: lastPage =>
+      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
   })
 }
 

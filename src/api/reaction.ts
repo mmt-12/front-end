@@ -1,19 +1,23 @@
 // hooks/reaction.ts
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query'
 
 import { api } from '../lib/api'
 import type { EmojiListResponse, VoiceListResponse } from '../types/api'
 
 export interface VoiceListParams {
-  cursor?: number
   size?: number
   keyword?: string
+  cursor?: number
 }
 
 export interface EmojiListParams {
-  cursor?: number
   size?: number
   keyword?: string
+  cursor?: number
 }
 
 // 보이스 등록
@@ -37,12 +41,12 @@ export function useCreateVoice(communityId = 1) {
 
 // 보이스 목록 조회
 export function useVoiceList(communityId = 1, params?: VoiceListParams) {
-  return useQuery({
-    queryKey: ['voices', communityId, params],
-    queryFn: () => {
+  return useInfiniteQuery({
+    queryKey: ['voices', communityId, params?.size, params?.keyword],
+    initialPageParam: params?.cursor ?? 0,
+    queryFn: ({ pageParam = 0 }) => {
       const searchParams = new URLSearchParams()
-      if (params?.cursor)
-        searchParams.append('cursor', params.cursor.toString())
+      searchParams.append('cursor', pageParam.toString())
       if (params?.size) searchParams.append('size', params.size.toString())
       if (params?.keyword) searchParams.append('keyword', params.keyword)
 
@@ -50,6 +54,8 @@ export function useVoiceList(communityId = 1, params?: VoiceListParams) {
         .get(`/v1/communities/${communityId}/voices?${searchParams}`)
         .then(r => r.data as VoiceListResponse)
     },
+    getNextPageParam: lastPage =>
+      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
   })
 }
 
@@ -89,12 +95,12 @@ export function useCreateEmoji(communityId = 1) {
 
 // 이모지 목록 조회
 export function useEmojiList(communityId = 1, params?: EmojiListParams) {
-  return useQuery({
-    queryKey: ['emojis', communityId, params],
-    queryFn: () => {
+  return useInfiniteQuery({
+    queryKey: ['emojis', communityId, params?.size, params?.keyword],
+    initialPageParam: params?.cursor ?? 0,
+    queryFn: ({ pageParam = 0 }) => {
       const searchParams = new URLSearchParams()
-      if (params?.cursor)
-        searchParams.append('cursor', params.cursor.toString())
+      searchParams.append('cursor', pageParam.toString())
       if (params?.size) searchParams.append('size', params.size.toString())
       if (params?.keyword) searchParams.append('keyword', params.keyword)
 
@@ -102,6 +108,8 @@ export function useEmojiList(communityId = 1, params?: EmojiListParams) {
         .get(`/v1/communities/${communityId}/emoji?${searchParams}`)
         .then(r => r.data as EmojiListResponse)
     },
+    getNextPageParam: lastPage =>
+      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
   })
 }
 

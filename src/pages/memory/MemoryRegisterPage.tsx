@@ -26,6 +26,8 @@ export default function MemoryRegisterPage() {
   })
 
   const { data: memberData } = useAssociateList(1)
+  const associates =
+    memberData?.pages.flatMap(page => page.associates) || []
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -60,7 +62,7 @@ export default function MemoryRegisterPage() {
         onChange={l => setLocation(l as ILocationInput)}
         content={<MapLocationSelector />}
       />
-      {memberData && (
+      {associates.length > 0 && (
         <InputPopup
           label='참여자'
           value={participants}
@@ -71,7 +73,7 @@ export default function MemoryRegisterPage() {
               initialItems={participants?.items || []}
               searchBarIcon={UserRounded}
               multiple
-              items={memberData.associates.map(m => ({
+              items={associates.map(m => ({
                 label: m.nickname,
                 id: m.id,
                 render: () => <Profile {...m} size='sm' introduction='' />,

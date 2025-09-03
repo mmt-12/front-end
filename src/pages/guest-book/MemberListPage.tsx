@@ -14,13 +14,12 @@ import { filterByStringProp } from '@/utils/filter'
 export default function MemberListPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const { data: memberData } = useAssociateList(1)
+  const associates =
+    memberData?.pages.flatMap(page => page.associates) || []
 
   const filteredMembers = useMemo(
-    () =>
-      memberData
-        ? filterByStringProp(memberData.associates, 'nickname', searchTerm)
-        : [],
-    [memberData, searchTerm],
+    () => filterByStringProp(associates, 'nickname', searchTerm),
+    [associates, searchTerm],
   )
 
   useHeader({
@@ -34,7 +33,7 @@ export default function MemberListPage() {
       <SearchBar
         onChange={setSearchTerm}
         icon={UserRounded}
-        count={memberData.associates.length}
+        count={associates.length}
       />
       <div css={[flexGap(8), css({ margin: '0 16px 16px' })]}>
         {filteredMembers.map(member => (

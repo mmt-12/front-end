@@ -17,6 +17,7 @@ export default function ImageSelector({ value, onSelect }: Props) {
   const [image, setImage] = useState<string>(value || '')
   const userId = 1
   const { data } = useProfileImageList(1, userId)
+  const images = data?.pages.flatMap(page => page.profileImages) || []
   return (
     <>
       <div css={imageWrapperStyle}>
@@ -29,9 +30,9 @@ export default function ImageSelector({ value, onSelect }: Props) {
           <Img src={image} alt='current profile' css={imageStyle} />
         </WavyBox>
       </div>
-      {data && (
+      {images.length > 0 && (
         <ProfileImageList
-          images={data.profileImages}
+          images={images}
           onImageClick={profileImage => setImage(profileImage.url)}
           selectedImageUrl={image}
         />

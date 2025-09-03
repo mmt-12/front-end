@@ -25,6 +25,7 @@ export default function MemoryListPage() {
     cursor: 0,
     size: 10,
   })
+  const memories = data?.pages.flatMap(page => page.memories) || []
 
   const toggleViewMode = useCallback(() => {
     setMemoryListView(memoryListView == 'grid' ? 'list' : 'grid')
@@ -43,7 +44,7 @@ export default function MemoryListPage() {
     <>
       <GreetingPopup />
       {data ? (
-        data.memories.map(memory => (
+        memories.map(memory => (
           <MemoryListItem
             key={memory.id}
             {...memory}

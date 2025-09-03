@@ -17,6 +17,7 @@ export default function ProfileImageRegisterPage() {
 
   const userId = 1
   const { data } = useProfileImageList(1, userId)
+  const images = data?.pages.flatMap(page => page.profileImages) || []
 
   const [newImages, setNewImages] = useState<File[]>([])
 
@@ -35,9 +36,9 @@ export default function ProfileImageRegisterPage() {
         maxLength={10}
         onChange={setNewImages}
       />
-      {data && (
+      {images.length > 0 && (
         <ProfileImageList
-          images={data.profileImages}
+          images={images}
           onImageClick={handleImageClick}
         />
       )}

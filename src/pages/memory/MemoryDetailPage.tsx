@@ -23,6 +23,7 @@ export default function MemoryDetailPage() {
   })
 
   const { data } = usePostList(1, memory.id)
+  const posts = data?.pages.flatMap(page => page.posts) || []
 
   return (
     <>
@@ -30,7 +31,7 @@ export default function MemoryDetailPage() {
         <MemoryInfo {...memory} saveEnabled />
       </header>
       <ol>
-        {data?.posts.map(post => (
+        {posts.map(post => (
           <Post key={post.id} {...post} />
         ))}
       </ol>
