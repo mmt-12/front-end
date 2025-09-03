@@ -23,8 +23,10 @@ export default function MemoryDetailPage() {
     },
   })
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    usePostList(1, memory.id)
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = usePostList(
+    1,
+    memory.id,
+  )
   const posts = data?.pages.flatMap(page => page.posts) || []
 
   return (
