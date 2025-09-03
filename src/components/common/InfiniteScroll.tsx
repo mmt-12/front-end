@@ -51,7 +51,8 @@ export default function InfiniteScroll({
     <div className={className}>
       {children}
       <div ref={sentinelRef} />
-      {isFetchingNext && (loader ?? <div style={{ padding: 8 }}>Loading...</div>)}
+      {isFetchingNext &&
+        (loader ?? <div style={{ padding: 8 }}>Loading...</div>)}
     </div>
-  )}
-
+  )
+}
