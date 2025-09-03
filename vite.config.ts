@@ -1,19 +1,21 @@
 /// <reference types="vitest/config" />
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import { VitePWA } from 'vite-plugin-pwa'
-import tsconfigPaths from 'vite-tsconfig-paths'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
+import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from 'vite'
+import { mockDevServerPlugin } from 'vite-plugin-mock-dev-server'
+import { VitePWA } from 'vite-plugin-pwa'
+import tsconfigPaths from 'vite-tsconfig-paths'
+
 const dirname =
   typeof __dirname !== 'undefined'
     ? __dirname
     : path.dirname(fileURLToPath(import.meta.url))
 
-// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   plugins: [
+    mockDevServerPlugin(),
     react({
       jsxImportSource: '@emotion/react',
     }),
@@ -29,6 +31,11 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  server: {
+    proxy: {
+      '^/api': 'http://example.com/',
+    },
+  },
   test: {
     projects: [
       {

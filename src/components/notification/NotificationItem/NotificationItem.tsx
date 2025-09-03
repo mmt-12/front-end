@@ -41,7 +41,7 @@ export default function NotificationItem({
         <div css={[{ width: '100%' }, flexGap(10)]}>
           <div css={infoRowStyle}>
             <span>{title}</span>
-            <span>{formatTimeAgo(createdAt)}</span>
+            <span>{formatTimeAgo(new Date(createdAt))}</span>
           </div>
           <p css={{ fontColor: theme.stone[900] }}>{content}</p>
         </div>

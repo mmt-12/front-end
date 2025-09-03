@@ -15,26 +15,26 @@ export default function DateRangeSelector({ onSelect }: Props) {
   const today = new Date()
   const [viewYear, setViewYear] = useState(today.getFullYear())
   const [viewMonth, setViewMonth] = useState(today.getMonth())
-  const [startDate, setStartDate] = useState<Date>()
-  const [endDate, setEndDate] = useState<Date>()
+  const [startTime, setStartDate] = useState<Date>()
+  const [endTime, setEndDate] = useState<Date>()
 
-  const startDateString = startDate ? formatDate(startDate) : ''
-  const endDateString = endDate ? formatDate(endDate) : ''
+  const startDateString = startTime ? formatDate(startTime) : ''
+  const endDateString = endTime ? formatDate(endTime) : ''
 
   const getDayCellType = (date: Date) => {
-    if (startDate && endDate) {
-      if (date > startDate && date < endDate) return 'inRange'
+    if (startTime && endTime) {
+      if (date > startTime && date < endTime) return 'inRange'
     }
     return 'default'
   }
 
   const handleDateClick = (date: Date) => {
-    const isSameDate = startDate?.getTime() === endDate?.getTime()
-    if (!startDate || (startDate && endDate && !isSameDate)) {
+    const isSameDate = startTime?.getTime() === endTime?.getTime()
+    if (!startTime || (startTime && endTime && !isSameDate)) {
       setStartDate(date)
       setEndDate(undefined)
-    } else if ((startDate && !endDate) || isSameDate) {
-      if (date >= startDate) {
+    } else if ((startTime && !endTime) || isSameDate) {
+      if (date >= startTime) {
         setEndDate(date)
       } else {
         setStartDate(date)
@@ -53,22 +53,22 @@ export default function DateRangeSelector({ onSelect }: Props) {
         getDayCellType={getDayCellType}
         onClick={handleDateClick}
         getIsSelected={date =>
-          date.getTime() === startDate?.getTime() ||
-          date.getTime() === endDate?.getTime()
+          date.getTime() === startTime?.getTime() ||
+          date.getTime() === endTime?.getTime()
         }
       />
 
-      {startDate ? (
+      {startTime ? (
         <BottomButton
           type='secondary'
           onClick={() => {
             onSelect?.({
-              startDate: startDateString,
-              endDate: endDateString ? endDateString : startDateString,
-              render: () => <span>{formatDateRange(startDate, endDate)}</span>,
+              startTime: startDateString,
+              endTime: endDateString ? endDateString : startDateString,
+              render: () => <span>{formatDateRange(startTime, endTime)}</span>,
             })
           }}
-          label={`${formatDateRange(startDate, endDate)} 으로 설정`}
+          label={`${formatDateRange(startTime, endTime)} 으로 설정`}
         ></BottomButton>
       ) : (
         <BottomButton label='날짜를 선택하세요.' type='disabled' />

@@ -83,7 +83,6 @@ ArraySelector.Item = Item
 
 const listStyle = css({
   padding: 16,
-  paddingBottom: 72,
   margin: 0,
   listStyle: 'none',
 })

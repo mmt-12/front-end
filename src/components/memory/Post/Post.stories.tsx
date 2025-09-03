@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import Post from './Post'
+import { POSTS } from 'mock/data/posts'
 import { withRouter } from 'storybook-addon-remix-react-router'
-import { POST } from '@/mocks/data/post'
+
+import Post from './Post'
 
 const meta = {
   title: 'components/memory/Post',
   component: Post,
-  args: POST,
+  args: POSTS[0],
   decorators: [withRouter],
 } satisfies Meta<typeof Post>
 

@@ -40,7 +40,7 @@ export default function ProfileImageList({
             alt={`Memory image ${index + 1}`}
             css={imageStyle(selectedImageUrl == image.url)}
           />
-          {image.isMine && (
+          {image.register && (
             <CloseCircle
               css={deleteButtonStyle}
               weight='Bold'

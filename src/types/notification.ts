@@ -7,7 +7,7 @@ export interface INotification {
   actorId: number | null
   memoryId: number | null
   postId: number | null
-  createdAt: Date
+  createdAt: string
 }
 
 export type NotificationType =

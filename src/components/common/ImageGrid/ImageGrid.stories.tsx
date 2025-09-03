@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { POSTS } from 'mock/data/posts'
 
-import { POST } from '@/mocks/data/post'
 import ImageGrid from './ImageGrid'
 
 const meta = {
@@ -8,7 +8,7 @@ const meta = {
   component: ImageGrid,
   tags: ['autodocs'],
   args: {
-    images: POST.images,
+    images: POSTS[0].pictures,
     onImageClick: () => {},
     selectedImage: '',
   },

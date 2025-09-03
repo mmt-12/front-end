@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import GuestBookProfile from './GuestBookProfile'
+import { PROFILE } from 'mock/data/guestBook'
 import { withRouter } from 'storybook-addon-remix-react-router'
-import { PROFILE } from '@/mocks/data/guestBook'
+
+import GuestBookProfile from './GuestBookProfile'
 
 const meta = {
   title: 'components/guest book/GuestBookProfile',
@@ -10,7 +11,7 @@ const meta = {
   args: {
     nickname: PROFILE.nickname,
     achievementId: PROFILE.achievement.id,
-    imagePath: PROFILE.imagePath,
+    imageUrl: PROFILE.imageUrl,
     introduction: PROFILE.introduction,
     birthday: PROFILE.birthday,
   },

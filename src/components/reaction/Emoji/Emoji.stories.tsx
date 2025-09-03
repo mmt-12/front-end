@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+
 import Emoji from '.'
 
 const meta = {
@@ -31,7 +32,7 @@ export const Reacted: Story = {
     id: 2,
     url: '/test_images/image2.png',
     name: 'Laugh',
-    iReacted: true,
+    involved: true,
     onClick: (e, id) => {
       e.stopPropagation()
       console.log(`Clicked on emoji with id: ${id}`)

@@ -2,17 +2,19 @@ import { useState } from 'react'
 import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 
+import { useVoiceList } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import BottomDrawer from '@/components/common/BottomDrawer'
 import InputField from '@/components/common/InputField'
 import { useModal } from '@/hooks/useModal'
-import { voices } from '@/mocks/data/reaction'
 import Voice from '../Voice'
 import VoiceRegisterModal from '../VoiceRegisterModal/VoiceRegisterModal'
 
 export default function VoicePickerModal() {
   const { closeModal, openModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
+  const { data } = useVoiceList(1, {})
+  const voices = data?.pages.flatMap(page => page.voices) || []
 
   const handleRegisterVoiceClick = () => {
     openModal(<VoiceRegisterModal />)

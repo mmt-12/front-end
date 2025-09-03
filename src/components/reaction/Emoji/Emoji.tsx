@@ -9,14 +9,14 @@ export default function Emoji({
   size = 'md',
   amount,
   isActive = false,
-  iReacted = false,
+  involved = false,
   onClick,
 }: IReaction) {
   const theme = useTheme()
   return (
     <div
       onClick={e => onClick?.(e, id)}
-      css={containerStyle(theme, iReacted, isActive, !!amount)}
+      css={containerStyle(theme, involved, isActive, !!amount)}
     >
       <div css={imageWrapperStyle(size, !!amount)}>
         <Img src={imageUrl} alt='Emoji' css={imageStyle} />
@@ -28,7 +28,7 @@ export default function Emoji({
 
 const containerStyle = (
   theme: Theme,
-  iReacted: boolean,
+  involved: boolean,
   isActive: boolean,
   isAmount: boolean,
 ) =>
@@ -40,7 +40,7 @@ const containerStyle = (
     justifyContent: 'center',
     flexShrink: 0,
     gap: '6px',
-    outline: iReacted
+    outline: involved
       ? isAmount
         ? 'none'
         : `3px solid ${theme.sky[300]}`
@@ -50,8 +50,8 @@ const containerStyle = (
 
     p: {
       marginRight: '6px',
-      fontWeight: iReacted ? 'bold' : 'normal',
-      color: iReacted ? theme.sky[500] : theme.black,
+      fontWeight: involved ? 'bold' : 'normal',
+      color: involved ? theme.sky[500] : theme.black,
     },
   })
 

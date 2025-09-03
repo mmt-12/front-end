@@ -9,12 +9,12 @@ import { Map, useMap } from '@vis.gl/react-google-maps'
 import { createRoot } from 'react-dom/client'
 import { Link } from 'react-router-dom'
 
+import { useMemoryList } from '@/api'
 import Img from '@/components/common/Img'
 import MemoryInfo from '@/components/memory/MemoryInfo'
 import ClusteredMarker from '@/components/memoryMap/ClusteredMarker/ClusteredMarker'
 import MemoryMarker from '@/components/memoryMap/MemoryMarker/MemoryMarker'
 import useHeader from '@/hooks/useHeader'
-import { MEMORIES } from '@/mocks/data/memories'
 import { ROUTES } from '@/routes/ROUTES'
 import type { IMemoryInfo } from '@/types/memory'
 import { getDistanceBetween } from '@/utils/map'
@@ -33,7 +33,8 @@ export default function MapPage() {
     },
   })
 
-  const memories = MEMORIES
+  const { data } = useMemoryList(1)
+  const memories = data?.pages.flatMap(page => page.memories) || []
   const [selectedMemory, setSelectedMemory] = useState<IMemoryInfo>()
   const [markers, setMarkers] = useState<{ [key: number]: Marker }>({})
   const [center, setCenter] = useState<google.maps.LatLng>()
@@ -105,7 +106,10 @@ export default function MapPage() {
     e.stopPropagation()
     setSelectedMemory(memory)
     if (!map) return
-    map.panTo({ lat: memory.location.lat - 0.08, lng: memory.location.lng })
+    map.panTo({
+      lat: memory.location.latitude,
+      lng: memory.location.longitude,
+    })
   }
 
   const handleIdleEvent = () => {
@@ -149,10 +153,11 @@ export default function MapPage() {
         <Link
           css={memoryDetailStyle}
           to={ROUTES.MEMORY_DETAIL(selectedMemory.id)}
+          state={{ memory: selectedMemory }}
         >
           <MemoryInfo {...selectedMemory} description={undefined} />
           <div css={imagesListStyle}>
-            {selectedMemory.images.slice(0, 3).map((image, index) => (
+            {selectedMemory.pictures.slice(0, 3).map((image, index) => (
               <Img key={index} src={image} alt={`Memory image ${index + 1}`} />
             ))}
           </div>

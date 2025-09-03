@@ -13,4 +13,5 @@ export const ROUTES = {
   EDIT_PROFILE: '/edit-profile',
   ADD_PROFILE_IMAGE: '/add-profile-image',
   MEMBER_LIST: '/member-list',
+  TEST: '/test',
 }

@@ -1,20 +1,24 @@
+import { css, type Theme } from '@emotion/react'
+
+import { useAchievements } from '@/api'
 import Badge from '@/components/common/Badge'
-import { ACHIEVEMENTS } from '@/mocks/data/guestBook'
-import { type Theme, css } from '@emotion/react'
 
 interface Props {
   isExpanded?: boolean
 }
 
 export default function BadgeList({ isExpanded = false }: Props) {
-  const badgeListData = ACHIEVEMENTS
+  const userId = 1
+  const { data } = useAchievements(1, userId)
+
+  if (!data) return null
 
   if (!isExpanded) {
-    const visibleBadges = badgeListData
+    const visibleBadges = data.achievements
       .filter(badge => badge.type !== 'HIDDEN')
       .slice(0, 4)
     const hiddenCount =
-      badgeListData.filter(badge => badge.type !== 'HIDDEN').length -
+      data.achievements.filter(badge => badge.type !== 'HIDDEN').length -
       visibleBadges.length
 
     return (
@@ -29,15 +33,15 @@ export default function BadgeList({ isExpanded = false }: Props) {
 
   return (
     <div css={expandedContainerStyle}>
-      {badgeListData
+      {data.achievements
         .filter(badge => badge.type !== 'HIDDEN')
         .map(badge => (
           <div css={medalInfoStyle} key={badge.id}>
             <Badge key={badge.id} id={badge.id} />
             <p css={conditionStyle}>
-              {badge.type === 'RESTRICTED' && !badge.isObtained
+              {badge.type === 'RESTRICTED' && !badge.obtained
                 ? '???'
-                : badge.condition}
+                : badge.criteria}
             </p>
           </div>
         ))}

@@ -7,7 +7,7 @@ export interface IReaction {
   size?: 'md' | 'lg'
   amount?: number
   isActive?: boolean
-  iReacted?: boolean
+  involved?: boolean
   onClick?: (_e: MouseEvent<HTMLDivElement>, _id: number) => void
 }
 

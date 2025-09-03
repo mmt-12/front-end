@@ -28,14 +28,21 @@ export default function MemoryMarker({
     [setMarkerRef, memory.id],
   )
   return (
-    <AdvancedMarker key={memory.id} position={memory.location} ref={ref}>
+    <AdvancedMarker
+      key={memory.id}
+      position={{
+        lat: memory.location.latitude,
+        lng: memory.location.longitude,
+      }}
+      ref={ref}
+    >
       {isSelected ? (
         <div>
           <Img src={pinSrc} alt='' width={64} />
         </div>
       ) : (
         <div css={markerImageWrapper} onClick={e => onClick(e, memory)}>
-          <Img src={memory.images[0]} alt='' />
+          <Img src={memory.pictures[0]} alt='' />
         </div>
       )}
     </AdvancedMarker>

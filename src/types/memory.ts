@@ -2,17 +2,20 @@ export interface IMemoryInfo {
   id: number
   title: string
   location: locationType
-  memberCount: number
-  imageCount: number
-  images: string[]
+  memberAmount: number
+  pictureAmount: number
+  pictures: string[]
   description?: string
-  startDate: string
-  endDate: string
+  period: {
+    startTime: string
+    endTime: string
+  }
 }
 
 export type locationType = {
-  lat: number
-  lng: number
+  latitude: number
+  longitude: number
+  code: number
   name: string
   address: string
 }

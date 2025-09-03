@@ -5,8 +5,8 @@ import { LegendComponent } from 'echarts/components'
 import * as echarts from 'echarts/core'
 import { SVGRenderer } from 'echarts/renderers'
 
+import { useMbtiTest } from '@/api'
 import { MBTI_COLOR, type MbtiType } from '@/consts/MBTI'
-import { MBTI } from '@/mocks/data/guestBook'
 
 const EChartsReactCore = lazy(() => import('echarts-for-react/lib/core'))
 
@@ -15,12 +15,14 @@ echarts.use([PieChart, LegendComponent, SVGRenderer])
 
 export default function MbtiChart() {
   const theme = useTheme()
-  const mbtiData = MBTI
+  const userId = 1
+  const { data } = useMbtiTest(1, userId)
   const chartRef = useRef(null)
 
   const option = useMemo(() => {
-    const labels = Object.keys(mbtiData)
-    const values = Object.values(mbtiData)
+    if (!data) return null
+    const labels = Object.keys(data)
+    const values = Object.values(data)
     const total = values.reduce<number>((acc, v) => acc + v, 0)
 
     return {
@@ -76,7 +78,9 @@ export default function MbtiChart() {
         },
       ],
     }
-  }, [mbtiData, theme])
+  }, [data, theme])
+
+  if (!option) return null
 
   return (
     <EChartsReactCore
