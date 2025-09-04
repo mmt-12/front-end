@@ -25,6 +25,10 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: ROUTES.LANDING,
+        element: <Pages.LandingPage />,
+      },
+      {
         path: '/',
         Component: () => <Layouts.DefaultLayout />,
         children: [

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { useSignUp } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import DateInputField from '@/components/common/DateInputField'
 import InputField from '@/components/common/InputField'
@@ -9,7 +10,7 @@ import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 import { flexGap } from '@/styles/common'
 import { signupTitleStyle } from '@/styles/signupTitle'
-import { dateToId } from '@/utils/date'
+import { dateToId, formatDate } from '@/utils/date'
 
 export default function SignupPage() {
   const navigate = useNavigate()
@@ -19,6 +20,7 @@ export default function SignupPage() {
   const [birthDate, setBirthDate] = useState<Date>()
 
   const userStore = useUserStore()
+  const { mutate: signup } = useSignUp()
 
   const isValid = useMemo(() => {
     if (!birthDate || !MEMBERS[dateToId(birthDate)]) return false
@@ -52,8 +54,20 @@ export default function SignupPage() {
         type={isValid ? 'primary' : 'disabled'}
         onClick={() => {
           if (!birthDate) return
-          userStore.login(birthDate)
-          navigate(ROUTES.MEMORY_LIST)
+
+          signup(
+            {
+              birthday: formatDate(birthDate, '-'),
+              name,
+              email: userStore.email,
+            },
+            {
+              onSuccess: () => {
+                userStore.signup(birthDate)
+                navigate(ROUTES.MEMORY_LIST)
+              },
+            },
+          )
         }}
       />
     </div>

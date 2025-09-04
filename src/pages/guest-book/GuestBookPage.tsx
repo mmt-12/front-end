@@ -48,7 +48,7 @@ export default function GuestBookPage() {
     <div css={containerStyle}>
       <Card title='PROFILE'>
         <GuestBookProfile
-          achievementId={profile.achievement.id}
+          achievementId={profile.achievement?.id}
           isMyProfile={isMyPage}
           {...profile}
         />

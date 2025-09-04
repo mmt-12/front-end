@@ -21,7 +21,7 @@ export interface LoginResponse {
 export interface SignUpRequest {
   name: string
   email: string
-  birthday: number[]
+  birthday: string
 }
 
 export interface UpdateMemberRequest {
@@ -56,8 +56,8 @@ export interface Memory {
 export interface CreateMemoryRequest {
   title: string
   period: {
-    startTime: number[]
-    endTime: number[]
+    startTime: string
+    endTime: string
   }
   description: string
   associates: number[]

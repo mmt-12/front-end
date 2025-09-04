@@ -1,7 +1,7 @@
 // hooks/notification.ts
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
-import { api } from '../lib/api'
+import { api } from '../utils/api'
 import type {
   NotificationListResponse,
   UnreadNotificationResponse,

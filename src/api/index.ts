@@ -1,10 +1,5 @@
 // Auth hooks
-export {
-  useKakaoLogin,
-  useSignUp,
-  useUpdateMember,
-  useAssociatesList,
-} from './auth'
+export { useLogin, useSignUp, useUpdateMember, useAssociatesList } from './auth'
 
 // Memory hooks
 export {

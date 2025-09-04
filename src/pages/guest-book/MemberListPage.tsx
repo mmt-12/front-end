@@ -8,10 +8,10 @@ import InfiniteScroll from '@/components/common/InfiniteScroll'
 import Profile from '@/components/common/Profile'
 import SearchBar from '@/components/common/SearchBar'
 import useHeader from '@/hooks/useHeader'
+import useStardust from '@/hooks/useStardust'
 import { ROUTES } from '@/routes/ROUTES'
 import { flexGap } from '@/styles/common'
 import { filterByStringProp } from '@/utils/filter'
-import useStardust from '@/hooks/useStardust'
 
 export default function MemberListPage() {
   useStardust()

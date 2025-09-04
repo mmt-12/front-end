@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { mockApi } from '@/lib/mockApi'
+import { api } from '@/utils/api'
 
 export function useTest() {
   return useQuery({
     queryKey: ['test'],
     queryFn: async () => {
-      return mockApi.get('/test').then(response => response.data)
+      return api.get('/test').then(response => response.data)
     },
   })
 }

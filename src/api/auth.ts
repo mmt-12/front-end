@@ -1,7 +1,7 @@
 // hooks/auth.ts
 import { useMutation, useQuery } from '@tanstack/react-query'
 
-import { api } from '@/lib/api'
+import { api } from '@/utils/api'
 import type {
   CommunitiesResponse,
   LoginResponse,
@@ -9,10 +9,11 @@ import type {
   UpdateMemberRequest,
 } from '@/types/api'
 
-// 카카오 로그인 (리다이렉트)
-export function useKakaoLogin() {
-  return useMutation({
-    mutationFn: () => api.post('/v1/sign-in').then(r => r.data),
+// 로그인 (리다이렉트)
+export function useLogin(code: string) {
+  return useQuery<LoginResponse>({
+    queryKey: ['kakao-login'],
+    queryFn: () => api.get(`/v1/auth/redirect?code=${code}`).then(r => r.data),
   })
 }
 
