@@ -1,5 +1,5 @@
 import { lazy, useState } from 'react'
-import { css } from '@emotion/react'
+import { css, keyframes } from '@emotion/react'
 import { PenNewSquare, UsersGroupRounded } from '@solar-icons/react'
 import { useNavigate } from 'react-router-dom'
 
@@ -21,6 +21,7 @@ export default function GuestBookPage() {
     null,
   )
   const { birthDate } = useUserStore()
+  const [isClosing, setIsClosing] = useState(false)
   const navigate = useNavigate()
 
   const userId = 1
@@ -48,7 +49,7 @@ export default function GuestBookPage() {
     <div css={containerStyle}>
       <Card title='PROFILE'>
         <GuestBookProfile
-          achievementId={profile.achievement.id}
+          achievementId={profile.achievement?.id}
           isMyProfile={isMyPage}
           {...profile}
         />
@@ -75,12 +76,27 @@ export default function GuestBookPage() {
           </Card>
         </>
       ) : (
-        <Card title={mode} onButtonClick={() => setMode(null)}>
-          {mode === 'MEDALS' && <BadgeList isExpanded />}
-          {mode === 'MBTI' && (
-            <MbtiTest isMyPage={isMyPage} name={profile.nickname} />
-          )}
-        </Card>
+        <div css={flipContainerStyle}>
+          <div css={flipCardStyle(isClosing)}>
+            <div css={[flipFaceStyle, flipBackStyle]}>
+              <Card
+                title={mode}
+                onButtonClick={() => {
+                  setIsClosing(true)
+                  setTimeout(() => {
+                    setMode(null)
+                    setIsClosing(false)
+                  }, 160)
+                }}
+              >
+                {mode === 'MEDALS' && <BadgeList isExpanded />}
+                {mode === 'MBTI' && (
+                  <MbtiTest isMyPage={isMyPage} name={profile.nickname} />)
+                }
+              </Card>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )
@@ -97,4 +113,35 @@ const containerStyle = css({
 const rowStyle = css({
   display: 'flex',
   gap: '10px',
+})
+
+const flipIn = keyframes({
+  from: { transform: 'perspective(1000px) rotateY(90deg)', opacity: 0 },
+  to: { transform: 'perspective(1000px) rotateY(0deg)', opacity: 1 },
+})
+
+const flipOut = keyframes({
+  from: { transform: 'perspective(1000px) rotateY(0deg)',  opacity: 1 },
+  to:   { transform: 'perspective(1000px) rotateY(90deg)', opacity: 0 },
+})
+
+const flipContainerStyle = css({
+  perspective: '1000px',
+})
+
+const flipCardStyle = (isClosing: boolean) =>
+  css({
+    position: 'relative',
+    transformStyle: 'preserve-3d',
+    // isClosing에 따라 animation-name을 바꿔 "재시작"을 유도
+    animation: `${isClosing ? flipOut : flipIn} 260ms cubic-bezier(0.22, 1, 0.36, 1) both`,
+    willChange: 'transform, opacity',
+  })
+
+const flipFaceStyle = css({
+  backfaceVisibility: 'hidden',
+})
+
+const flipBackStyle = css({
+  transform: 'rotateY(0deg)',
 })

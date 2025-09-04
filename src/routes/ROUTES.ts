@@ -1,5 +1,6 @@
 export const ROUTES = {
   LOGIN: '/login',
+  LANDING: '/landing',
   SIGNUP: '/login/signup',
   MEMORY_LIST: '/memory',
   MEMORY_DETAIL: (id: string | number) => `/memory/${id}`,

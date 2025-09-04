@@ -10,8 +10,8 @@ import { useModal } from '@/hooks/useModal'
 import Emoji from '../Emoji/Emoji'
 import EmojiRegisterModal from '../EmojiRegisterModal'
 
-export default function EmojiPickerModal() {
-  const { closeModal, openModal } = useModal()
+export default function EmojiPickerModal({ closing }: { closing?: boolean }) {
+  const { openModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
   const { data } = useEmojiList(1, {})
   const emojis = data?.pages.flatMap(page => page.emoji) || []
@@ -21,7 +21,7 @@ export default function EmojiPickerModal() {
   }
 
   return (
-    <BottomDrawer close={closeModal}>
+    <BottomDrawer closing={closing}>
       <p css={spanStyle}>최근 사용</p>
       <div css={[emojiListStyle, { marginBottom: '4px' }]}>
         {emojis.slice(0, 6).map(emoji => (

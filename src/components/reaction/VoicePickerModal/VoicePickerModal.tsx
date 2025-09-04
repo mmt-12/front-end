@@ -10,8 +10,8 @@ import { useModal } from '@/hooks/useModal'
 import Voice from '../Voice'
 import VoiceRegisterModal from '../VoiceRegisterModal/VoiceRegisterModal'
 
-export default function VoicePickerModal() {
-  const { closeModal, openModal } = useModal()
+export default function VoicePickerModal({ closing }: { closing?: boolean }) {
+  const { openModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
   const { data } = useVoiceList(1, {})
   const voices = data?.pages.flatMap(page => page.voices) || []
@@ -21,7 +21,7 @@ export default function VoicePickerModal() {
   }
 
   return (
-    <BottomDrawer close={closeModal}>
+    <BottomDrawer closing={closing}>
       <p css={spanStyle}>최근 사용</p>
       <div
         css={[voiceListStyle, { marginBottom: '4px' }]}

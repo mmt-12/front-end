@@ -12,14 +12,12 @@ import { NavLink } from 'react-router-dom'
 
 import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
+import { useUserStore } from '@/store/userStore'
 import CreateButtonsModal from '../CreateButtonsModal/CreateButtonsModal'
 
 export default function NavBar() {
   const { openModal } = useModal()
-  const user = {
-    id: 123,
-    name: '사용자 이름',
-  }
+  const user = useUserStore()
   const handleAddButtonClick = () => {
     openModal(<CreateButtonsModal />)
   }
@@ -47,7 +45,7 @@ export default function NavBar() {
         <Navigation
           title='방명록'
           icon={<BookBookmark weight='Bold' size={24} />}
-          to={ROUTES.GUEST_BOOK(user.id)}
+          to={ROUTES.GUEST_BOOK(user.associateId)}
           stardust
         />
       </div>

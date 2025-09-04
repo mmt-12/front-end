@@ -1,15 +1,14 @@
 import { css, useTheme, type Theme } from '@emotion/react'
 import { QuestionCircle } from '@solar-icons/react'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
+import kakaoIcon from '@/assets/images/icons/kakao.png'
+import mainMascot from '@/assets/images/mascot/main.png'
 import Img from '@/components/common/Img'
-import { ROUTES } from '@/routes/ROUTES'
-import kakaoIcon from '../assets/images/icons/kakao.png'
-import mainMascot from '../assets/images/mascot/main.png'
 
 export default function LoginPage() {
-  const navigate = useNavigate()
   const theme = useTheme()
+
   return (
     <div css={containerStyle}>
       <div css={titlesStyle}>
@@ -20,13 +19,13 @@ export default function LoginPage() {
         <Img src={mainMascot} alt='memento mascot main' css={mascotStyle} />
       </div>
       <div css={buttonsContainerStyle}>
-        <button
+        <Link
+          to={'http://localhost:8080/api/v1/sign-in'}
           css={[buttonStyle, kakaoButtonStyle]}
-          onClick={() => navigate(ROUTES.SIGNUP)}
         >
           <Img src={kakaoIcon} alt='kakao icon' css={kakaoIconStyle} />
           <p>카카오 로그인</p>
-        </button>
+        </Link>
         <button css={buttonStyle}>
           <QuestionCircle
             weight='Bold'
