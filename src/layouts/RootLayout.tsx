@@ -1,6 +1,7 @@
-import { ModalProvider } from '@/contexts/ModalProvider'
 import { css, type Theme } from '@emotion/react'
 import { Outlet } from 'react-router-dom'
+
+import { ModalProvider } from '@/contexts/ModalProvider'
 
 export default function RootLayout() {
   return (

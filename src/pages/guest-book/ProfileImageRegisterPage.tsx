@@ -1,13 +1,13 @@
 import { useState } from 'react'
 
 import { useProfileImageList } from '@/api'
-import InfiniteScroll from '@/components/common/InfiniteScroll'
 import BottomButton from '@/components/common/BottomButton'
 import ImageInputField from '@/components/common/ImageInputField'
+import InfiniteScroll from '@/components/common/InfiniteScroll'
 import ProfileImageList from '@/components/common/ProfileImageList'
 import useHeader from '@/hooks/useHeader'
-import { flexGap } from '@/styles/common'
 import useStardust from '@/hooks/useStardust'
+import { flexGap } from '@/styles/common'
 
 export default function ProfileImageRegisterPage() {
   useStardust()
@@ -46,10 +46,7 @@ export default function ProfileImageRegisterPage() {
           hasNextPage={hasNextPage}
           isFetchingNext={isFetchingNextPage}
         >
-          <ProfileImageList
-            images={images}
-            onImageClick={handleImageClick}
-          />
+          <ProfileImageList images={images} onImageClick={handleImageClick} />
         </InfiniteScroll>
       )}
       <BottomButton label='등록' onClick={handleSubmit} />

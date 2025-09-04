@@ -1,5 +1,5 @@
 import { createContext, useState, type ReactNode, isValidElement, cloneElement } from 'react'
-import { css } from '@emotion/react'
+import { css, type Keyframes } from '@emotion/react'
 import { fadeIn, fadeOut } from '@/styles/animation'
 import { createPortal } from 'react-dom'
 
@@ -9,13 +9,13 @@ type Modal = {
   content: ReactNode
   promiseResolver: (_value: ModalReturnType) => void
   isClosing?: boolean
-  closingKeyframe: string
+  closingKeyframe: Keyframes
 }
 
 type ModalReturnType = void | null | IBaseInput | string
 
 interface ModalContextType {
-  openModal: (_content: ReactNode) => Promise<ModalReturnType>
+  openModal: (_content: ReactNode, _closingKeyframe?: Keyframes) => Promise<ModalReturnType>
   closeModal: (_value: ModalReturnType) => void
 }
 
@@ -24,7 +24,7 @@ const ModalContext = createContext<ModalContextType | null>(null)
 function ModalProvider({ children }: { children: ReactNode }) {
   const [modals, setModals] = useState<Modal[]>([])
 
-  const openModal = async (content: ReactNode, closingKeyframe: string = fadeOut) => {
+  const openModal = async (content: ReactNode, closingKeyframe: Keyframes = fadeOut) => {
     return new Promise<ModalReturnType>(resolve => {
       setModals(prev => [...prev, { content, promiseResolver: resolve, closingKeyframe }])
     })

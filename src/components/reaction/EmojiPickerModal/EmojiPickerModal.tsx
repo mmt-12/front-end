@@ -9,6 +9,7 @@ import InputField from '@/components/common/InputField'
 import { useModal } from '@/hooks/useModal'
 import Emoji from '../Emoji/Emoji'
 import EmojiRegisterModal from '../EmojiRegisterModal'
+import { slideDown } from '@/styles/animation'
 
 export default function EmojiPickerModal({ closing }: { closing?: boolean }) {
   const { openModal } = useModal()
@@ -17,7 +18,7 @@ export default function EmojiPickerModal({ closing }: { closing?: boolean }) {
   const emojis = data?.pages.flatMap(page => page.emoji) || []
 
   const handleRegisterEmojiClick = () => {
-    openModal(<EmojiRegisterModal />)
+    openModal(<EmojiRegisterModal />, slideDown)
   }
 
   return (

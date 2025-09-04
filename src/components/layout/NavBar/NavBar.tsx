@@ -14,12 +14,13 @@ import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 import CreateButtonsModal from '../CreateButtonsModal/CreateButtonsModal'
+import { slideDown } from '@/styles/animation'
 
 export default function NavBar() {
   const { openModal } = useModal()
   const user = useUserStore()
   const handleAddButtonClick = () => {
-    openModal(<CreateButtonsModal />)
+    openModal(<CreateButtonsModal />, slideDown)
   }
   return (
     <>

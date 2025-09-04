@@ -1,7 +1,8 @@
-import Header from '@/components/layout/Header'
 import { css } from '@emotion/react'
 import { Outlet } from 'react-router-dom'
+
 import PageTransition from '@/components/animation/PageTransition'
+import Header from '@/components/layout/Header'
 
 export default function HeaderLayout() {
   return (

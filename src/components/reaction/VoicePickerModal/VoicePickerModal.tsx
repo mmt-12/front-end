@@ -9,6 +9,7 @@ import InputField from '@/components/common/InputField'
 import { useModal } from '@/hooks/useModal'
 import Voice from '../Voice'
 import VoiceRegisterModal from '../VoiceRegisterModal/VoiceRegisterModal'
+import { slideDown } from '@/styles/animation'
 
 export default function VoicePickerModal({ closing }: { closing?: boolean }) {
   const { openModal } = useModal()
@@ -17,7 +18,7 @@ export default function VoicePickerModal({ closing }: { closing?: boolean }) {
   const voices = data?.pages.flatMap(page => page.voices) || []
 
   const handleRegisterVoiceClick = () => {
-    openModal(<VoiceRegisterModal />)
+    openModal(<VoiceRegisterModal />, slideDown)
   }
 
   return (
