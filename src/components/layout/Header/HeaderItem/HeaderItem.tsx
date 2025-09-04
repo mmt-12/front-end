@@ -10,6 +10,12 @@ const ItemStyle = (theme: Theme) =>
     alignItems: 'center',
     justifyContent: 'center',
     color: theme.stone[500],
+    borderRadius: '50%',
+    transition: 'transform 120ms ease, background-color 160ms ease',
+    ':active': {
+      transform: 'scale(0.94)',
+      backgroundColor: theme.stone[100],
+    },
   })
 
 export default function HeaderItem({ icon, onClick }: IHeaderItem) {

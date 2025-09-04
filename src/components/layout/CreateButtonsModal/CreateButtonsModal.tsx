@@ -14,12 +14,12 @@ import VoiceRegisterModal from '@/components/reaction/VoiceRegisterModal/VoiceRe
 import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 
-export default function CreateButtonsModal() {
+export default function CreateButtonsModal({ closing }: { closing?: boolean }) {
   const theme = useTheme()
   const { closeModal, openModal } = useModal()
 
   return (
-    <BottomDrawer close={closeModal}>
+    <BottomDrawer closing={closing}>
       <span
         style={{
           display: 'block',
