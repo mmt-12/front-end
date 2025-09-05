@@ -1,9 +1,9 @@
 import { Outlet } from 'react-router-dom'
 
+import PageTransition from '@/components/common/PageTransition'
 import Header from '@/components/layout/Header'
 import NavBar from '@/components/layout/NavBar'
 import { mainStyle } from '@/styles/layout'
-import PageTransition from '@/components/animation/PageTransition'
 
 export default function DefaultLayout() {
   return (
