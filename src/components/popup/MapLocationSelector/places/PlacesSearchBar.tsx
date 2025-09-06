@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { css, type Theme } from '@emotion/react'
 import { MapPoint, RoundArrowDown } from '@solar-icons/react'
 import { RoundArrowUp } from '@solar-icons/react/ssr'
@@ -54,10 +54,6 @@ export const PlacesSearchBar = ({ onPlaceSelect }: Props) => {
     [places, onPlaceSelect, resetSession],
   )
 
-  useEffect(() => {
-    console.log(suggestions[0]?.placePrediction)
-  }, [suggestions])
-
   return (
     <div css={fixedWithMargin(0)}>
       <div
@@ -69,7 +65,7 @@ export const PlacesSearchBar = ({ onPlaceSelect }: Props) => {
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
         />
-        {suggestions.length && (
+        {suggestions.length > 0 && (
           <ToggleButton
             onClick={toggleHide}
             color={theme.stone[500]}

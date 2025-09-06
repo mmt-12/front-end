@@ -1,4 +1,10 @@
+
 import axios from 'axios'
+
+// Fake delay utility
+function delay (ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
 
 export const api = axios.create({
   baseURL: import.meta.env.DEV
@@ -8,6 +14,7 @@ export const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+
 })
 
 // JWT 토큰 관리
@@ -44,7 +51,11 @@ api.interceptors.request.use(
 
 // Response interceptor - 토큰 자동 저장
 api.interceptors.response.use(
-  response => {
+  async response => {
+    // 가짜 딜레이 추가 (개발용)
+    if (import.meta.env.DEV) {
+      await delay(3000)
+    }
     // 로그인 응답에서 토큰 자동 저장
     if (response.data?.token?.accessToken) {
       setToken(response.data.token.accessToken)

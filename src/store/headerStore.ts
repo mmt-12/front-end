@@ -18,11 +18,11 @@ export const useHeaderStore = create<HeaderState>()((set, get) => ({
   routeName: '',
   leftItem: {
     icon: null,
-    onClick: () => console.log('Left clicked'),
+    onClick: () => {},
   },
   rightItem: {
     icon: null,
-    onClick: () => console.log('Right clicked'),
+    onClick: () => {},
   },
   setRouteName: (routeName: string) => {
     if (get().routeName === routeName) return

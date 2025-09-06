@@ -47,7 +47,6 @@ export default function CalendarPage() {
   }
 
   const handleDayClick = (date: Date) => {
-    console.log(date)
     setSelectedDate(date)
   }
 

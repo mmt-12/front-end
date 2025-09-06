@@ -46,9 +46,7 @@ export default function ProfileImageList({
               weight='Bold'
               size={34}
               color={theme.white}
-              onClick={() => {
-                console.log('delete', image)
-              }}
+              onClick={() => {}}
             />
           )}
         </WavyBox>

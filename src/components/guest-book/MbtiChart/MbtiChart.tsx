@@ -7,6 +7,7 @@ import { SVGRenderer } from 'echarts/renderers'
 
 import { useMbtiTest } from '@/api'
 import { MBTI_COLOR, type MbtiType } from '@/consts/MBTI'
+import MbtiChartSkeleton from './MbtiChart.Skeleton'
 
 const EChartsReactCore = lazy(() => import('echarts-for-react/lib/core'))
 
@@ -80,7 +81,7 @@ export default function MbtiChart() {
     }
   }, [data, theme])
 
-  if (!option) return null
+  if (!option) return <MbtiChartSkeleton />
 
   return (
     <EChartsReactCore

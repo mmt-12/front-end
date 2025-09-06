@@ -3,7 +3,7 @@ import { Album, SortByTime } from '@solar-icons/react'
 
 import { useMemoryList } from '@/api'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
-import MemoryListItem from '@/components/memory/MemoryListItem'
+import MemoryListItem, { MemoryListItemSkeleton } from '@/components/memory/MemoryListItem'
 import GreetingPopup from '@/components/popup/GreetingPopup'
 import useHeader from '@/hooks/useHeader'
 import { useSettingStore } from '@/store/settingStore'
@@ -58,7 +58,13 @@ export default function MemoryListPage() {
             />
           ))}
         </InfiniteScroll>
-      ) : null}
+      ) : (
+        <div>
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <MemoryListItemSkeleton key={idx} isGrid={memoryListView == 'grid'} />
+          ))}
+        </div>
+      )}
     </>
   )
 }

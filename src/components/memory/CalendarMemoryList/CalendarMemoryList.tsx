@@ -37,8 +37,6 @@ export default function CalendarMemoryList({ memories, selectedDate }: Props) {
     return groups
   }, [memories, selectedDate])
 
-  console.log(groupedMemories)
-
   return (
     <div css={[containerStyle, flexGap(16)]}>
       {Array.from(groupedMemories.keys()).map(startTime => (

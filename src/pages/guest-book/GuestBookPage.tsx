@@ -6,7 +6,9 @@ import { useNavigate } from 'react-router-dom'
 import { useAssociateProfile } from '@/api'
 import BadgeList from '@/components/guest-book/BadgeList'
 import Card from '@/components/guest-book/Card'
-import GuestBookProfile from '@/components/guest-book/GuestBookProfile'
+import GuestBookProfile, {
+  GuestBookProfileSkeleton,
+} from '@/components/guest-book/GuestBookProfile'
 import MbtiTest from '@/components/guest-book/MbtiTest'
 import useHeader from '@/hooks/useHeader'
 import useStardust from '@/hooks/useStardust'
@@ -43,16 +45,18 @@ export default function GuestBookPage() {
       : undefined,
   })
 
-  if (!profile) return null
-
   return (
     <div css={containerStyle}>
       <Card title='PROFILE'>
-        <GuestBookProfile
-          achievementId={profile.achievement?.id}
-          isMyProfile={isMyPage}
-          {...profile}
-        />
+        {profile ? (
+          <GuestBookProfile
+            achievementId={profile.achievement?.id}
+            isMyProfile={isMyPage}
+            {...profile}
+          />
+        ) : (
+          <GuestBookProfileSkeleton />
+        )}
       </Card>
       {mode === null ? (
         <>
@@ -90,9 +94,9 @@ export default function GuestBookPage() {
                 }}
               >
                 {mode === 'MEDALS' && <BadgeList isExpanded />}
-                {mode === 'MBTI' && (
-                  <MbtiTest isMyPage={isMyPage} name={profile.nickname} />)
-                }
+                {mode === 'MBTI' && profile && (
+                  <MbtiTest isMyPage={isMyPage} name={profile.nickname} />
+                )}
               </Card>
             </div>
           </div>
@@ -121,8 +125,8 @@ const flipIn = keyframes({
 })
 
 const flipOut = keyframes({
-  from: { transform: 'perspective(1000px) rotateY(0deg)',  opacity: 1 },
-  to:   { transform: 'perspective(1000px) rotateY(90deg)', opacity: 0 },
+  from: { transform: 'perspective(1000px) rotateY(0deg)', opacity: 1 },
+  to: { transform: 'perspective(1000px) rotateY(90deg)', opacity: 0 },
 })
 
 const flipContainerStyle = css({
