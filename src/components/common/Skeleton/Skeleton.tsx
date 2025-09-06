@@ -79,13 +79,7 @@ export function SkeletonText({
         <Skeleton
           key={idx}
           height={15}
-          width={
-            idx === items.length - 1
-              ? typeof width === 'number'
-                ? width
-                : width
-              : '100%'
-          }
+          width={idx === items.length - 1 ? width : '100%'}
           style={{ marginTop: idx ? 8 : 0 }}
         />
       ))}

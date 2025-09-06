@@ -22,7 +22,7 @@ export default function GuestBookPage() {
   const [mode, setMode] = useState<'MBTI' | 'MEDALS' | 'GUEST BOOK' | null>(
     null,
   )
-  const { birthDate, name } = useUserStore()
+  const { birthDate } = useUserStore()
   const [isClosing, setIsClosing] = useState(false)
   const navigate = useNavigate()
 
@@ -94,8 +94,8 @@ export default function GuestBookPage() {
                 }}
               >
                 {mode === 'MEDALS' && <BadgeList isExpanded />}
-                {mode === 'MBTI' && (
-                  <MbtiTest isMyPage={isMyPage} name={name} />
+                {mode === 'MBTI' && profile && (
+                  <MbtiTest isMyPage={isMyPage} name={profile.nickname} />
                 )}
               </Card>
             </div>
