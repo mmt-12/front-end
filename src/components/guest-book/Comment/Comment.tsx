@@ -1,16 +1,22 @@
 import { css, type Theme } from '@emotion/react'
 
+import type { GuestBook } from '@/api'
+import Img from '@/components/common/Img'
+import Voice from '@/components/reaction/Voice'
 import { formatDateString } from '@/utils/date'
 
-interface Props {
-  content: string
-  createdAt: string
-}
+interface Props extends GuestBook {}
 
-export default function Comment({ content, createdAt }: Props) {
+export default function Comment({ id, type, content, createdAt }: Props) {
   return (
     <div css={containerStyle}>
-      <span css={contentStyle}>{content}</span>
+      {type === 'TEXT' && <span css={contentStyle}>{content}</span>}
+      {type === 'EMOJI' && (
+        <div css={imageWrapperStyle}>
+          <Img src={content} alt='Emoji' css={imageStyle} />
+        </div>
+      )}
+      {type === 'VOICE' && <Voice id={id} url={content} name='' />}
       <span css={timeStyle}>{formatDateString(createdAt)}</span>
     </div>
   )
@@ -39,3 +45,20 @@ const timeStyle = (theme: Theme) =>
     fontSize: '12px',
     color: theme.stone[600],
   })
+
+const imageWrapperStyle = css({
+  width: '96px',
+  height: '96px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexShrink: 0,
+  borderRadius: '6px',
+  overflow: 'hidden',
+})
+
+const imageStyle = css({
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
+})

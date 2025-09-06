@@ -179,7 +179,7 @@ export interface AchievementListResponse {
 
 export interface GuestBook {
   id: number
-  type: string
+  type: 'TEXT' | 'EMOJI' | 'VOICE'
   content: string
   createdAt: string
 }

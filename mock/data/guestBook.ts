@@ -82,9 +82,9 @@ export const GUEST_BOOK = [
   },
   {
     id: 102,
-    type: 'TEXT',
-    content: '오늘 날씨 좋네요.',
-    createdAt: '2024-08-23T09:10:00',
+    type: 'EMOJI',
+    content: '/test_images/image1.png',
+    createdAt: '2024-08-23T09:05:00',
   },
   {
     id: 103,
@@ -94,9 +94,9 @@ export const GUEST_BOOK = [
   },
   {
     id: 104,
-    type: 'TEXT',
-    content: '점심 맛있게 드셨나요?',
-    createdAt: '2024-08-23T09:30:00',
+    type: 'VOICE',
+    content: '/test_voices/voice1.mp3',
+    createdAt: '2024-08-23T09:25:00',
   },
   {
     id: 105,
@@ -106,9 +106,9 @@ export const GUEST_BOOK = [
   },
   {
     id: 106,
-    type: 'TEXT',
-    content: '좋은 하루 보내세요!',
-    createdAt: '2024-08-23T09:50:00',
+    type: 'EMOJI',
+    content: '/test_images/image2.png',
+    createdAt: '2024-08-23T09:45:00',
   },
   {
     id: 107,
@@ -118,9 +118,9 @@ export const GUEST_BOOK = [
   },
   {
     id: 108,
-    type: 'TEXT',
-    content: '회의록 작성 완료했습니다.',
-    createdAt: '2024-08-23T10:10:00',
+    type: 'VOICE',
+    content: '/test_voices/voice2.mp3',
+    createdAt: '2024-08-23T10:05:00',
   },
   {
     id: 109,
@@ -130,9 +130,9 @@ export const GUEST_BOOK = [
   },
   {
     id: 110,
-    type: 'TEXT',
-    content: '점심 메뉴 추천 부탁드려요.',
-    createdAt: '2024-08-23T10:30:00',
+    type: 'EMOJI',
+    content: '/test_images/image3.png',
+    createdAt: '2024-08-23T10:25:00',
   },
   {
     id: 111,
@@ -142,9 +142,9 @@ export const GUEST_BOOK = [
   },
   {
     id: 112,
-    type: 'TEXT',
-    content: '다음 회의 시간 안내드립니다.',
-    createdAt: '2024-08-23T10:50:00',
+    type: 'VOICE',
+    content: '/test_voices/voice3.mp3',
+    createdAt: '2024-08-23T10:45:00',
   },
   {
     id: 113,
@@ -166,9 +166,9 @@ export const GUEST_BOOK = [
   },
   {
     id: 116,
-    type: 'TEXT',
-    content: '회의 참여 완료했습니다.',
-    createdAt: '2024-08-23T11:30:00',
+    type: 'EMOJI',
+    content: '/test_images/image1.png',
+    createdAt: '2024-08-23T11:25:00',
   },
   {
     id: 117,
@@ -178,9 +178,9 @@ export const GUEST_BOOK = [
   },
   {
     id: 118,
-    type: 'TEXT',
-    content: '오늘 일정 마무리했습니다.',
-    createdAt: '2024-08-23T11:50:00',
+    type: 'VOICE',
+    content: '/test_voices/voice1.mp3',
+    createdAt: '2024-08-23T11:45:00',
   },
   {
     id: 119,

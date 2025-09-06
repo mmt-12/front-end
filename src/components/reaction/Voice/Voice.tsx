@@ -42,7 +42,9 @@ export default function Voice({
             <PlayCircle weight='Bold' size={28} color={theme.white} />
           )}
         </button>
-        <p className='stardust'>{name}</p>
+        <p className='stardust' css={nameStyle(name.length === 0)}>
+          {name}
+        </p>
       </div>
       {amount && <span>{amount}</span>}
       <audio
@@ -91,11 +93,14 @@ const playButtonWrapperStyle = (theme: Theme) =>
     gap: '4px',
     borderRadius: '24px',
     backgroundColor: theme.stone[600],
-    p: {
-      color: theme.white,
-      whiteSpace: 'nowrap',
-      textOverflow: 'ellipsis',
-    },
+  })
+
+const nameStyle = (isBlank: boolean) =>
+  css({
+    color: 'white',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    width: isBlank ? 100 : 'auto',
   })
 
 const playButtonStyle = css({
