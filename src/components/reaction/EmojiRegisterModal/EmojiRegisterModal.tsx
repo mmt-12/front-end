@@ -8,17 +8,15 @@ import BottomDrawer from '@/components/common/BottomDrawer'
 import Button from '@/components/common/Button'
 import Img from '@/components/common/Img'
 import InputField from '@/components/common/InputField'
-import { useModal } from '@/hooks/useModal'
 
 export default function EmojiRegisterModal() {
   const theme = useTheme()
-  const { closeModal } = useModal()
   const inputRef = useRef<HTMLInputElement>(null)
   const [emojiName, setEmojiName] = useState('')
   const [emojiImage, setEmojiImage] = useState<File | null>(null)
 
   return (
-    <BottomDrawer close={closeModal}>
+    <BottomDrawer>
       <InputField
         label='이름'
         value={emojiName}
