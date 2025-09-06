@@ -4,6 +4,7 @@ import { MagniferZoomIn } from '@solar-icons/react'
 
 import { usePost } from '@/api'
 import Profile from '@/components/common/Profile'
+import { PostSkeleton } from '@/components/memory/Post'
 import PostContent from '@/components/memory/PostContent/PostContent'
 import ReactBar from '@/components/memory/ReactBar/ReactBar'
 import EmojiList from '@/components/reaction/EmojiList'
@@ -33,7 +34,12 @@ export default function PostDetailPage() {
   const [selectedReactionId, setSelectedReactionId] =
     useState(initialSelectedId)
 
-  if (!post) return null
+  if (!post)
+    return (
+      <div css={containerStyle}>
+        <PostSkeleton />
+      </div>
+    )
 
   const selectedReaction =
     post.comments.emojis.find(emoji => emoji.id === selectedReactionId) ||
@@ -47,20 +53,18 @@ export default function PostDetailPage() {
   return (
     <div css={containerStyle}>
       <PostContent {...post} />
-      <div css={reactionsStyle}>
-        <EmojiList
-          reactions={post.comments.emojis}
-          onClick={handleReactionClick}
-          selectedId={selectedReactionId}
-          showAmount
-        />
-        <VoiceList
-          reactions={post.comments.voices}
-          onClick={handleReactionClick}
-          selectedId={selectedReactionId}
-          showAmount
-        />
-      </div>
+      <EmojiList
+        reactions={post.comments.emojis}
+        onClick={handleReactionClick}
+        selectedId={selectedReactionId}
+        showAmount
+      />
+      <VoiceList
+        reactions={post.comments.voices}
+        onClick={handleReactionClick}
+        selectedId={selectedReactionId}
+        showAmount
+      />
       {selectedReaction && (
         <>
           <div css={reactionNameStyle}>
@@ -85,18 +89,10 @@ export default function PostDetailPage() {
 }
 
 const containerStyle = css({
-  padding: '10px 0px 40px 0px',
+  padding: '0px 0px 40px 0px',
   display: 'flex',
   flexDirection: 'column',
-  gap: '6px',
-})
-
-const reactionsStyle = css({
-  padding: '16px 0px',
-
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '0px',
+  gap: '10px',
 })
 
 const reactionNameStyle = (theme: Theme) => ({

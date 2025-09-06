@@ -41,7 +41,7 @@ export default function MemoryInfo(props: Props) {
   }
 
   return (
-    <div css={infoStyle}>
+    <>
       <div css={titleRowStyle}>
         <h2>{props.title}</h2>
         <div css={countChipsStyle}>
@@ -79,13 +79,9 @@ export default function MemoryInfo(props: Props) {
         ) : (
           <p css={descriptionStyle}>{props.description}</p>
         ))}
-    </div>
+    </>
   )
 }
-
-const infoStyle = css({
-  padding: '3px 6px',
-})
 
 const titleRowStyle = (theme: Theme) =>
   css({

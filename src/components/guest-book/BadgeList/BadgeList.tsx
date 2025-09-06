@@ -2,6 +2,7 @@ import { css, type Theme } from '@emotion/react'
 
 import { useAchievements } from '@/api'
 import Badge from '@/components/common/Badge'
+import BadgeListSkeleton from './BadgeList.Skeleton'
 
 interface Props {
   isExpanded?: boolean
@@ -11,7 +12,7 @@ export default function BadgeList({ isExpanded = false }: Props) {
   const userId = 1
   const { data } = useAchievements(1, userId)
 
-  if (!data) return null
+  if (!data) return <BadgeListSkeleton isExpanded={isExpanded} />
 
   if (!isExpanded) {
     const visibleBadges = data.achievements

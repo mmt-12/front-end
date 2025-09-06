@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { usePostList } from '@/api'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
 import MemoryInfo from '@/components/memory/MemoryInfo'
-import Post from '@/components/memory/Post'
+import Post, { PostSkeleton } from '@/components/memory/Post'
 import useHeader from '@/hooks/useHeader'
 import { ROUTES } from '@/routes/ROUTES'
 import type { IMemoryInfo } from '@/types/memory'
@@ -23,10 +23,8 @@ export default function MemoryDetailPage() {
     },
   })
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = usePostList(
-    1,
-    memory.id,
-  )
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    usePostList(1, memory.id)
   const posts = data?.pages.flatMap(page => page.posts) || []
 
   return (
@@ -40,9 +38,9 @@ export default function MemoryDetailPage() {
         isFetchingNext={isFetchingNextPage}
       >
         <ol>
-          {posts.map(post => (
-            <Post key={post.id} {...post} />
-          ))}
+          {isLoading
+            ? Array.from({ length: 3 }).map((_, i) => <PostSkeleton key={i} />)
+            : posts.map(post => <Post key={post.id} {...post} />)}
         </ol>
       </InfiniteScroll>
     </>

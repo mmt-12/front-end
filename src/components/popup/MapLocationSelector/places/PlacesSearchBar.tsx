@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { css, type Theme } from '@emotion/react'
 import { MapPoint, RoundArrowDown } from '@solar-icons/react'
 import { RoundArrowUp } from '@solar-icons/react/ssr'
