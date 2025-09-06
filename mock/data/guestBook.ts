@@ -72,3 +72,126 @@ export const MBTI = {
   ESTP: 0,
   ESTJ: 0,
 } as const
+
+export const GUEST_BOOK = [
+  {
+    id: 101,
+    type: 'TEXT',
+    content: '첫인사 드립니다!',
+    createdAt: '2024-08-23T09:00:00',
+  },
+  {
+    id: 102,
+    type: 'TEXT',
+    content: '오늘 날씨 좋네요.',
+    createdAt: '2024-08-23T09:10:00',
+  },
+  {
+    id: 103,
+    type: 'TEXT',
+    content: '프로젝트 잘 부탁드립니다.',
+    createdAt: '2024-08-23T09:20:00',
+  },
+  {
+    id: 104,
+    type: 'TEXT',
+    content: '점심 맛있게 드셨나요?',
+    createdAt: '2024-08-23T09:30:00',
+  },
+  {
+    id: 105,
+    type: 'TEXT',
+    content: '회의 준비 완료했습니다.',
+    createdAt: '2024-08-23T09:40:00',
+  },
+  {
+    id: 106,
+    type: 'TEXT',
+    content: '좋은 하루 보내세요!',
+    createdAt: '2024-08-23T09:50:00',
+  },
+  {
+    id: 107,
+    type: 'TEXT',
+    content: '새로운 기능 확인했습니다.',
+    createdAt: '2024-08-23T10:00:00',
+  },
+  {
+    id: 108,
+    type: 'TEXT',
+    content: '회의록 작성 완료했습니다.',
+    createdAt: '2024-08-23T10:10:00',
+  },
+  {
+    id: 109,
+    type: 'TEXT',
+    content: '오늘 일정 공유드립니다.',
+    createdAt: '2024-08-23T10:20:00',
+  },
+  {
+    id: 110,
+    type: 'TEXT',
+    content: '점심 메뉴 추천 부탁드려요.',
+    createdAt: '2024-08-23T10:30:00',
+  },
+  {
+    id: 111,
+    type: 'TEXT',
+    content: '버그 수정 완료했습니다.',
+    createdAt: '2024-08-23T10:40:00',
+  },
+  {
+    id: 112,
+    type: 'TEXT',
+    content: '다음 회의 시간 안내드립니다.',
+    createdAt: '2024-08-23T10:50:00',
+  },
+  {
+    id: 113,
+    type: 'TEXT',
+    content: '이번 주 목표 설정 완료.',
+    createdAt: '2024-08-23T11:00:00',
+  },
+  {
+    id: 114,
+    type: 'TEXT',
+    content: '코드 리뷰 요청드립니다.',
+    createdAt: '2024-08-23T11:10:00',
+  },
+  {
+    id: 115,
+    type: 'TEXT',
+    content: '좋은 아이디어 감사합니다.',
+    createdAt: '2024-08-23T11:20:00',
+  },
+  {
+    id: 116,
+    type: 'TEXT',
+    content: '회의 참여 완료했습니다.',
+    createdAt: '2024-08-23T11:30:00',
+  },
+  {
+    id: 117,
+    type: 'TEXT',
+    content: '업무 진행 상황 공유드립니다.',
+    createdAt: '2024-08-23T11:40:00',
+  },
+  {
+    id: 118,
+    type: 'TEXT',
+    content: '오늘 일정 마무리했습니다.',
+    createdAt: '2024-08-23T11:50:00',
+  },
+  {
+    id: 119,
+    type: 'TEXT',
+    content: '새로운 기술 학습 중입니다.',
+    createdAt: '2024-08-23T12:00:00',
+  },
+  {
+    id: 120,
+    type: 'TEXT',
+    content: '팀원분들 수고 많으셨습니다.',
+    createdAt: '2024-08-23T12:10:00',
+  },
+] as const

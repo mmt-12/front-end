@@ -1,33 +1,38 @@
 import { lazy, useState } from 'react'
 import { css, keyframes } from '@emotion/react'
 import { PenNewSquare, UsersGroupRounded } from '@solar-icons/react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
-import { useAssociateProfile } from '@/api'
+import { useAssociateProfile, useGuestBookList } from '@/api'
 import BadgeList from '@/components/guest-book/BadgeList'
 import Card from '@/components/guest-book/Card'
+import Comment from '@/components/guest-book/Comment'
 import GuestBookProfile, {
   GuestBookProfileSkeleton,
 } from '@/components/guest-book/GuestBookProfile'
 import MbtiTest from '@/components/guest-book/MbtiTest'
+import WavyButton from '@/components/guest-book/WavyButton'
 import useHeader from '@/hooks/useHeader'
 import useStardust from '@/hooks/useStardust'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
+import { flexGap } from '@/styles/common'
 
 const MbtiChart = lazy(() => import('@/components/guest-book/MbtiChart'))
 
 export default function GuestBookPage() {
   useStardust()
+  const navigate = useNavigate()
   const [mode, setMode] = useState<'MBTI' | 'MEDALS' | 'GUEST BOOK' | null>(
     null,
   )
-  const { birthDate } = useUserStore()
   const [isClosing, setIsClosing] = useState(false)
-  const navigate = useNavigate()
+  const { id } = useParams()
+  const { birthDate, communityId } = useUserStore()
 
-  const userId = 1
-  const { data: profile } = useAssociateProfile(1, userId)
+  const associateId = Number(id)
+  const { data: profile } = useAssociateProfile(communityId, associateId)
+  const { data: guestBookList } = useGuestBookList(communityId, associateId)
 
   const isMyPage = birthDate === profile?.birthday
 
@@ -76,7 +81,19 @@ export default function GuestBookPage() {
             </Card>
           </div>
           <Card title='GUEST BOOK'>
-            <p onClick={() => setMode('GUEST BOOK')}>guest book content</p>
+            <div css={[flexGap(12), commentListStyle]}>
+              {guestBookList?.pages[0].guestBooks.slice(0, 4).map(comment => (
+                <Comment
+                  key={comment.id}
+                  content={comment.content}
+                  createdAt={comment.createdAt}
+                />
+              ))}
+              <WavyButton
+                label='더보기'
+                onClick={() => setMode('GUEST BOOK')}
+              />
+            </div>
           </Card>
         </>
       ) : (
@@ -148,4 +165,9 @@ const flipFaceStyle = css({
 
 const flipBackStyle = css({
   transform: 'rotateY(0deg)',
+})
+
+const commentListStyle = css({
+  width: '100%',
+  alignItems: 'center',
 })
