@@ -54,10 +54,6 @@ export const PlacesSearchBar = ({ onPlaceSelect }: Props) => {
     [places, onPlaceSelect, resetSession],
   )
 
-  useEffect(() => {
-    // suggestions 업데이트 시 부수효과가 필요하다면 이 곳에서 처리
-  }, [suggestions])
-
   return (
     <div css={fixedWithMargin(0)}>
       <div
