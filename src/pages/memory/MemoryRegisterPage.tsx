@@ -82,19 +82,7 @@ export default function MemoryRegisterPage() {
           }
         />
       )}
-      <BottomButton
-        label='저장'
-        type='primary'
-        onClick={() => {
-          console.log({
-            title,
-            description,
-            dateRange,
-            location,
-            participants,
-          })
-        }}
-      />
+      <BottomButton label='저장' type='primary' onClick={() => {}} />
     </>
   )
 }

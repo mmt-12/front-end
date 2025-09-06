@@ -39,12 +39,7 @@ export default function PostRegisterPage() {
         value={description}
         onChange={e => setDescription(e.target.value)}
       />
-      <BottomButton
-        label='작성 완료'
-        onClick={() => {
-          console.log(description)
-        }}
-      />
+      <BottomButton label='작성 완료' onClick={() => {}} />
     </div>
   )
 }

@@ -58,7 +58,7 @@ export default function MemoryInfo(props: Props) {
             <Chip
               Icon={DownloadSquare}
               label='사진 모두 저장'
-              onClick={() => console.log('save all')}
+              onClick={() => {}}
               customCss={chipCustomStyle}
             />
           </>

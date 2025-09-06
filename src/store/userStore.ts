@@ -33,10 +33,10 @@ export const useUserStore = create<UserState>()(set => ({
 
   login: (userInfo: LoginResponse) => {
     api.defaults.headers.common.Authorization = `Bearer ${userInfo.token.accessToken}`
-    console.log(userInfo)
     const payload = jwtDecode<TokenPayload>(userInfo.token.accessToken)
-    console.log(payload)
+    // 로그인 성공 시 상태 갱신
     set({
+      isLoggedIn: true,
       email: userInfo.email,
       memberId: userInfo.memberId,
       associateId: payload.associateId,

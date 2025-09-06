@@ -76,7 +76,6 @@ function ModalRenderer({
   const modalRoot = document.getElementById('modal-root')
   if (!modalRoot || !modals.length) return null
   const topModal = modals[modals.length - 1]
-  console.log(topModal.isClosing, topModal.closingKeyframe)
 
   const content = topModal.content
 

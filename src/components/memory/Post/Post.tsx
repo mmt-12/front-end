@@ -8,9 +8,8 @@ import VoiceList from '../../reaction/VoiceList'
 import PostContent from '../PostContent/PostContent'
 
 export default function Post(props: PostType) {
-  const handleReactionClick = (e: MouseEvent, id: number) => {
+  const handleReactionClick = (e: MouseEvent, _id: number) => {
     e.stopPropagation()
-    console.log(`Reaction clicked: ${id}`)
   }
   return (
     <>

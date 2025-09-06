@@ -130,24 +130,14 @@ export default function EditProfilePage() {
           />
         }
       />
-      <DateInputField disabled label='생년월일' onChange={console.log} />
+      <DateInputField disabled label='생년월일' onChange={() => {}} />
       <InputField
         label='한줄소개'
         type='textarea'
         value={introduction}
         onChange={e => setIntroduction(e.target.value)}
       />
-      <BottomButton
-        label='수정하기'
-        onClick={() => {
-          console.log({
-            imagePath,
-            name,
-            introduction,
-            badgeId,
-          })
-        }}
-      />
+      <BottomButton label='수정하기' onClick={() => {}} />
     </div>
   )
 }

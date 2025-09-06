@@ -25,13 +25,9 @@ export default function ProfileImageRegisterPage() {
 
   const [newImages, setNewImages] = useState<File[]>([])
 
-  const handleImageClick = () => {
-    console.log('image clicked')
-  }
+  const handleImageClick = () => {}
 
-  const handleSubmit = () => {
-    console.log('submit clicked')
-  }
+  const handleSubmit = () => {}
 
   return (
     <div css={flexGap(12)}>

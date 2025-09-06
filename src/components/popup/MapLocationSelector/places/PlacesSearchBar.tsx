@@ -55,7 +55,7 @@ export const PlacesSearchBar = ({ onPlaceSelect }: Props) => {
   )
 
   useEffect(() => {
-    console.log(suggestions[0]?.placePrediction)
+    // suggestions 업데이트 시 부수효과가 필요하다면 이 곳에서 처리
   }, [suggestions])
 
   return (
@@ -69,7 +69,7 @@ export const PlacesSearchBar = ({ onPlaceSelect }: Props) => {
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
         />
-        {suggestions.length && (
+        {suggestions.length > 0 && (
           <ToggleButton
             onClick={toggleHide}
             color={theme.stone[500]}
