@@ -1,5 +1,6 @@
-import WavyBox from '@/components/guest-book/WavyBox'
 import { css, useTheme, type Theme } from '@emotion/react'
+
+import WavyBox from '@/components/guest-book/WavyBox'
 
 interface Props {
   label: string
@@ -37,9 +38,9 @@ const buttonStyle = (theme: Theme) =>
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: '12px',
+    padding: '8px 12px',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'PFStardust',
     color: 'white',
     wordBreak: 'keep-all',
 
