@@ -11,12 +11,12 @@ export default function NotificationItemSkeleton() {
     <div>
       <div css={containerStyle}>
         <div css={iconWrapperStyle}>
-          <SkeletonCircle size={24} />
+          <SkeletonCircle size={38} />
         </div>
         <div css={{ width: '100%' }}>
           <div css={infoRowStyle}>
-            <Skeleton height={12} width={'50%'} />
-            <Skeleton height={12} width={60} />
+            <Skeleton height={12} width={40} />
+            <Skeleton height={12} width={80} />
           </div>
           <SkeletonText lines={1} width={'70%'} />
         </div>
@@ -34,13 +34,10 @@ const containerStyle = css({
   gap: '20px',
 })
 const iconWrapperStyle = css({
-  width: 40,
-  height: 40,
-  padding: 8,
-  borderRadius: '50%',
+  flexShrink: 0,
 })
 const infoRowStyle = css({
   display: 'flex',
   justifyContent: 'space-between',
-  marginBottom: 8,
+  marginBottom: 16,
 })

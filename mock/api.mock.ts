@@ -5,6 +5,7 @@ import { MEMBERS } from './data/members'
 import { MEMORIES } from './data/memories'
 import { POSTS } from './data/posts'
 import { PROFILE_IMAGES } from './data/profileImages'
+import { NOTIFICATIONS } from './data/notifications'
 import { EMOJIS, VOICES } from './data/reaction'
 
 export default defineMock([
@@ -147,7 +148,7 @@ export default defineMock([
   {
     url: '/api/v1/notifications',
     body: {
-      notifications: [],
+      notifications: NOTIFICATIONS,
       pageInfo: {
         nextCursor: 0,
         hasNext: false,

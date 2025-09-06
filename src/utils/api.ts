@@ -54,7 +54,7 @@ api.interceptors.response.use(
   async response => {
     // 가짜 딜레이 추가 (개발용)
     if (import.meta.env.DEV) {
-      await delay(1500)
+      await delay(3000)
     }
     // 로그인 응답에서 토큰 자동 저장
     if (response.data?.token?.accessToken) {

@@ -10,8 +10,7 @@ export default function GuestBookProfileSkeleton() {
       </div>
       <div css={contentStyle}>
         <div css={headerStyle}>
-          <Skeleton height={18} width={60} />
-          <Skeleton height={24} width={80} radius={32} />
+          <Skeleton height={22} width={120} radius={20} />
         </div>
         <SkeletonText lines={1} width={'30%'} />
         <div css={{ marginTop: 8 }}>
@@ -34,6 +33,7 @@ const contentStyle = css({
   display: 'flex',
   flexDirection: 'column',
   flex: 1,
+  gap: 4,
 })
 const headerStyle = css({ display: 'flex', alignItems: 'center', gap: 8 })
 const imageWrapperStyle = css({ position: 'relative' })

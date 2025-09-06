@@ -1,31 +1,26 @@
 import { css } from '@emotion/react'
 
-import {
-  Skeleton,
-  SkeletonCircle,
-  SkeletonText,
-} from '@/components/common/Skeleton'
+import { Skeleton, SkeletonText } from '@/components/common/Skeleton'
 
 export default function MemoryListItemSkeleton({
   isGrid = false,
 }: {
   isGrid?: boolean
 }) {
-  if (isGrid) {
-    return (
-      <div css={gridContainerStyle}>
-        <div css={headerStyle}>
-          <Skeleton height={20} width='50%' />
-          <div css={chipRowStyle}>
-            <Skeleton width={40} height={24} radius={16} />
-            <Skeleton width={40} height={24} radius={16} />
-          </div>
+  return (
+    <div css={containerStyle(isGrid)}>
+      <div css={headerStyle}>
+        <Skeleton height={20} width='50%' />
+        <div css={chipRowStyle}>
+          <Skeleton width={40} height={24} radius={16} />
+          <Skeleton width={40} height={24} radius={16} />
         </div>
-        <div css={metaStyle}>
-          <Skeleton height={12} width='30%' />
-          <Skeleton height={12} width='30%' />
-        </div>
-
+      </div>
+      <div css={metaStyle}>
+        <Skeleton height={12} width='40%' />
+        <Skeleton height={12} width='30%' />
+      </div>
+      {isGrid ? (
         <div css={gridStyle}>
           <Skeleton height={120} />
           <Skeleton height={120} />
@@ -37,51 +32,27 @@ export default function MemoryListItemSkeleton({
           <Skeleton height={120} />
           <Skeleton height={120} />
         </div>
-      </div>
-    )
-  } else
-    return (
-      <div css={containerStyle}>
-        <div css={headerStyle}>
-          <Skeleton height={20} width='60%' />
-          <div css={chipRowStyle}>
-            <SkeletonCircle size={20} />
-            <SkeletonCircle size={20} />
-          </div>
-        </div>
-        <div css={metaStyle}>
-          <Skeleton height={12} width='40%' />
-          <Skeleton height={12} width='30%' />
-        </div>
-        {!isGrid && <SkeletonText lines={2} width='80%' />}
-        {isGrid ? (
-          <div css={gridStyle}>
-            <Skeleton height={120} />
-          </div>
-        ) : (
+      ) : (
+        <>
+          <SkeletonText lines={2} width='80%' />
           <div css={imagesListStyle}>
             <Skeleton height={88} />
             <Skeleton height={88} />
             <Skeleton height={88} />
           </div>
-        )}
-      </div>
-    )
+        </>
+      )}
+    </div>
+  )
 }
 
-const gridContainerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  padding: '12px 4px',
-  gap: '8px',
-})
-
-const containerStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  padding: '16px',
-  gap: '8px',
-})
+const containerStyle = (isGrid: boolean) =>
+  css({
+    display: 'flex',
+    flexDirection: 'column',
+    padding: isGrid ? '12px 4px' : '16px',
+    gap: '16px',
+  })
 
 const headerStyle = css({
   display: 'flex',

@@ -38,7 +38,7 @@ const compactContainerStyle = css({
   display: 'flex',
   justifyContent: 'center',
   flexWrap: 'wrap',
-  gap: '12px',
+  gap: '8px',
 })
 const expandedContainerStyle = css({
   width: '100%',

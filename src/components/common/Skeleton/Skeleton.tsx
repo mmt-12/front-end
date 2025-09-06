@@ -78,7 +78,7 @@ export function SkeletonText({
       {items.map((_, idx) => (
         <Skeleton
           key={idx}
-          height={12}
+          height={15}
           width={
             idx === items.length - 1
               ? typeof width === 'number'
