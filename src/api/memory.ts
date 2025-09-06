@@ -6,7 +6,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query'
 
-import { api } from '@/lib/api'
+import { api } from '@/utils/api'
 import type {
   CreateMemoryRequest,
   MemoryImagesResponse,

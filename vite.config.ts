@@ -35,6 +35,7 @@ export default defineConfig({
     proxy: {
       '^/api': 'http://example.com/',
     },
+    port: 3000,
   },
   test: {
     projects: [

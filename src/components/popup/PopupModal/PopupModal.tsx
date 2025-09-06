@@ -3,6 +3,7 @@ import { css } from '@emotion/react'
 import { ArrowLeft } from '@solar-icons/react'
 
 import HeaderItem from '@/components/layout/Header/HeaderItem'
+import { slideUp } from '@/styles/animation'
 import { headerStyle } from '@/styles/layout'
 import { modalStyle } from '@/styles/modal'
 
@@ -15,7 +16,13 @@ interface Props {
 export default function PopupModal({ title, children, onClose }: Props) {
   return (
     <div
-      css={modalStyle}
+      css={[
+        modalStyle,
+        {
+          animation: `${slideUp} 220ms cubic-bezier(0.22, 1, 0.36, 1)`,
+          willChange: 'transform, opacity',
+        },
+      ]}
       onClick={e => e.stopPropagation()}
       onScroll={e => e.stopPropagation()}
     >

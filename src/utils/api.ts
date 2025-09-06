@@ -1,8 +1,9 @@
-// lib/mockApi.ts
 import axios from 'axios'
 
-export const mockApi = axios.create({
-  baseURL: import.meta.env.VITE_TEST_API_BASE_URL,
+export const api = axios.create({
+  baseURL: import.meta.env.DEV
+    ? import.meta.env.VITE_TEST_API_BASE_URL
+    : import.meta.env.VITE_PUBLIC_API_BASE_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -10,28 +11,21 @@ export const mockApi = axios.create({
 })
 
 // JWT 토큰 관리
-const getToken = () => {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem('accessToken')
-  }
-  return null
+export const getToken = () => {
+  return localStorage.getItem('accessToken')
 }
 
-const setToken = (token: string) => {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('accessToken', token)
-  }
+export const setToken = (token: string) => {
+  localStorage.setItem('accessToken', token)
 }
 
-const removeToken = () => {
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem('accessToken')
-    localStorage.removeItem('refreshToken')
-  }
+export const removeToken = () => {
+  localStorage.removeItem('accessToken')
+  localStorage.removeItem('refreshToken')
 }
 
 // Request interceptor - 자동으로 JWT 토큰 추가
-mockApi.interceptors.request.use(
+api.interceptors.request.use(
   config => {
     const token = getToken()
     if (
@@ -49,7 +43,7 @@ mockApi.interceptors.request.use(
 )
 
 // Response interceptor - 토큰 자동 저장
-mockApi.interceptors.response.use(
+api.interceptors.response.use(
   response => {
     // 로그인 응답에서 토큰 자동 저장
     if (response.data?.token?.accessToken) {
@@ -65,9 +59,3 @@ mockApi.interceptors.response.use(
   },
 )
 
-// 토큰 관리 유틸리티 함수들 export
-export const tokenUtils = {
-  setToken,
-  getToken,
-  removeToken,
-}

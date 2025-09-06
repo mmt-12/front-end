@@ -1,7 +1,7 @@
 import { lazy } from 'react'
 
-import LoginPage from '@/pages/LoginPage'
-import MemoryListPage from '@/pages/memory/MemoryListPage'
+import LoginPage from '@/pages/auth/LoginPage'
+import LandingPage from './auth/LandingPage'
 import TestPage from './TestPage'
 
 const CalendarPage = lazy(() => import('@/pages/CalendarPage'))
@@ -11,16 +11,17 @@ const ProfileImageRegisterPage = lazy(
 )
 const EditProfilePage = lazy(() => import('@/pages/guest-book/ProfileEditPage'))
 const GuestBookPage = lazy(() => import('@/pages/guest-book/GuestBookPage'))
-const MemberListPage = lazy(() => import('@/pages/guest-book/MemberListPage'))
 const MapPage = lazy(() => import('@/pages/MapPage'))
 const MemoryDetailPage = lazy(() => import('@/pages/memory/MemoryDetailPage'))
+const MemberListPage = lazy(() => import('@/pages/guest-book/MemberListPage'))
+const MemoryListPage = lazy(() => import('@/pages/memory/MemoryListPage'))
 const MemoryRegisterPage = lazy(
   () => import('@/pages/memory/MemoryRegisterPage'),
 )
 const PostDetailPage = lazy(() => import('@/pages/memory/PostDetailPage'))
 const PostRegisterPage = lazy(() => import('@/pages/memory/PostRegisterPage'))
 const NotificationPage = lazy(() => import('@/pages/NotificationPage'))
-const SignupPage = lazy(() => import('@/pages/SignupPage'))
+const SignupPage = lazy(() => import('@/pages/auth/SignupPage'))
 
 export {
   CalendarPage,
@@ -29,6 +30,7 @@ export {
   EditProfilePage,
   GuestBookPage,
   MemberListPage,
+  LandingPage,
   LoginPage,
   MapPage,
   MemoryDetailPage,

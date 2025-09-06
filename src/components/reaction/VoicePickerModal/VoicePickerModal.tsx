@@ -7,21 +7,22 @@ import BottomButton from '@/components/common/BottomButton'
 import BottomDrawer from '@/components/common/BottomDrawer'
 import InputField from '@/components/common/InputField'
 import { useModal } from '@/hooks/useModal'
+import { slideDown } from '@/styles/animation'
 import Voice from '../Voice'
 import VoiceRegisterModal from '../VoiceRegisterModal/VoiceRegisterModal'
 
 export default function VoicePickerModal() {
-  const { closeModal, openModal } = useModal()
+  const { openModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
   const { data } = useVoiceList(1, {})
   const voices = data?.pages.flatMap(page => page.voices) || []
 
   const handleRegisterVoiceClick = () => {
-    openModal(<VoiceRegisterModal />)
+    openModal(<VoiceRegisterModal />, slideDown)
   }
 
   return (
-    <BottomDrawer close={closeModal}>
+    <BottomDrawer>
       <p css={spanStyle}>최근 사용</p>
       <div
         css={[voiceListStyle, { marginBottom: '4px' }]}
