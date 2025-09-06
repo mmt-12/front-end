@@ -7,6 +7,7 @@ import { useAssociateProfile, useGuestBookList } from '@/api'
 import BadgeList from '@/components/guest-book/BadgeList'
 import Card from '@/components/guest-book/Card'
 import Comment from '@/components/guest-book/Comment'
+import GuestBookBoard from '@/components/guest-book/GuestBookBoard'
 import GuestBookProfile, {
   GuestBookProfileSkeleton,
 } from '@/components/guest-book/GuestBookProfile'
@@ -83,11 +84,7 @@ export default function GuestBookPage() {
           <Card title='GUEST BOOK'>
             <div css={[flexGap(12), commentListStyle]}>
               {guestBookList?.pages[0].guestBooks.slice(0, 4).map(comment => (
-                <Comment
-                  key={comment.id}
-                  content={comment.content}
-                  createdAt={comment.createdAt}
-                />
+                <Comment key={comment.id} {...comment} />
               ))}
               <WavyButton
                 label='더보기'
@@ -113,6 +110,12 @@ export default function GuestBookPage() {
                 {mode === 'MEDALS' && <BadgeList isExpanded />}
                 {mode === 'MBTI' && profile && (
                   <MbtiTest isMyPage={isMyPage} name={profile.nickname} />
+                )}
+                {mode === 'GUEST BOOK' && profile && (
+                  <GuestBookBoard
+                    communityId={communityId}
+                    associateId={associateId}
+                  />
                 )}
               </Card>
             </div>
