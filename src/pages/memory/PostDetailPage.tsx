@@ -83,7 +83,7 @@ export default function PostDetailPage() {
           </div>
         </>
       )}
-      <ReactBar />
+      <ReactBar iconSize={44} customCss={reactBarStyle} />
     </div>
   )
 }
@@ -109,3 +109,21 @@ const reactedProfilesStyle = css({
   gap: '16px',
   padding: '8px 16px',
 })
+
+const reactBarStyle = (theme: Theme) =>
+  css({
+    zIndex: 20,
+    position: 'fixed',
+    bottom: '24px',
+    right: '0%',
+    marginRight: `calc(calc(calc(100vw - min(${theme.maxWidth}, 100vw)) / 2) + 24px)`,
+
+    padding: '10px 16px',
+
+    display: 'flex',
+    gap: '24px',
+
+    backgroundColor: theme.white,
+    borderRadius: '24px',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  })

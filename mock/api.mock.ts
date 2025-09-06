@@ -81,6 +81,11 @@ export default defineMock([
       pageInfo: { nextCursor: 0, hasNext: true },
     },
   },
+  // 방명록 텍스트 생성
+  {
+    url: '/api/v1/communities/:communityId/associates/:associateId/guest-books',
+    method: 'POST',
+  },
   // Auth - Sign in
   {
     url: '/api/v1/sign-in',
