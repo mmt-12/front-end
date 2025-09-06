@@ -22,23 +22,19 @@ export default function MemoryListItemSkeleton({
       </div>
       {isGrid ? (
         <div css={gridStyle}>
-          <Skeleton height={120} />
-          <Skeleton height={120} />
-          <Skeleton height={120} />
-          <Skeleton height={120} />
-          <Skeleton height={120} />
-          <Skeleton height={120} />
-          <Skeleton height={120} />
-          <Skeleton height={120} />
-          <Skeleton height={120} />
+          {Array.from({ length: 9 }).map((_, idx) => (
+            <Skeleton key={idx} style={gridItemStyle} />
+          ))}
         </div>
       ) : (
         <>
           <SkeletonText lines={2} width='80%' />
           <div css={imagesListStyle}>
-            <Skeleton height={88} />
-            <Skeleton height={88} />
-            <Skeleton height={88} />
+            {Array.from({ length: 3 }).map((_, idx) => (
+              <div key={idx}>
+                <Skeleton height={88} />
+              </div>
+            ))}
           </div>
         </>
       )}
@@ -89,3 +85,9 @@ const gridStyle = css({
     objectPosition: 'center',
   },
 })
+
+const gridItemStyle = {
+  width: '100%',
+  height: '100%',
+  aspectRatio: '1 / 1',
+}

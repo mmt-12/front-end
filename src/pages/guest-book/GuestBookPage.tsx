@@ -94,8 +94,8 @@ export default function GuestBookPage() {
                 }}
               >
                 {mode === 'MEDALS' && <BadgeList isExpanded />}
-                {mode === 'MBTI' && (
-                  <MbtiTest isMyPage={isMyPage} name={name} />
+                {mode === 'MBTI' && profile && (
+                  <MbtiTest isMyPage={isMyPage} name={profile.nickname} />
                 )}
               </Card>
             </div>
