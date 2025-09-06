@@ -1,18 +1,15 @@
 import { css, type Theme } from '@emotion/react'
-import { slideUp, slideDown } from '@/styles/animation'
+
+import { slideUp } from '@/styles/animation'
 
 interface Props {
   children: React.ReactNode
-  closing?: boolean
 }
 
-export default function BottomDrawer({ children, closing }: Props) {
+export default function BottomDrawer({ children }: Props) {
   return (
     <div
-      css={[
-        containerBaseStyle,
-        animationStyle(closing),
-      ]}
+      css={[containerBaseStyle, animationStyle]}
       onClick={e => e.stopPropagation()}
     >
       <div css={barStyle} />
@@ -44,8 +41,7 @@ const barStyle = (theme: Theme) =>
     borderRadius: '2px',
   })
 
-const animationStyle = (closing?: boolean) =>
-  css({
-    animation: `${closing ? slideDown : slideUp} 220ms cubic-bezier(0.22, 1, 0.36, 1)`,
-    willChange: 'transform, opacity',
-  })
+const animationStyle = css({
+  animation: `${slideUp} 220ms cubic-bezier(0.22, 1, 0.36, 1)`,
+  willChange: 'transform, opacity',
+})

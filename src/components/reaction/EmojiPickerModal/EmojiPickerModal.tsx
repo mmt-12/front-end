@@ -7,11 +7,11 @@ import BottomButton from '@/components/common/BottomButton'
 import BottomDrawer from '@/components/common/BottomDrawer'
 import InputField from '@/components/common/InputField'
 import { useModal } from '@/hooks/useModal'
+import { slideDown } from '@/styles/animation'
 import Emoji from '../Emoji/Emoji'
 import EmojiRegisterModal from '../EmojiRegisterModal'
-import { slideDown } from '@/styles/animation'
 
-export default function EmojiPickerModal({ closing }: { closing?: boolean }) {
+export default function EmojiPickerModal() {
   const { openModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
   const { data } = useEmojiList(1, {})
@@ -22,7 +22,7 @@ export default function EmojiPickerModal({ closing }: { closing?: boolean }) {
   }
 
   return (
-    <BottomDrawer closing={closing}>
+    <BottomDrawer>
       <p css={spanStyle}>최근 사용</p>
       <div css={[emojiListStyle, { marginBottom: '4px' }]}>
         {emojis.slice(0, 6).map(emoji => (

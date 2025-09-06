@@ -9,14 +9,14 @@ import Button from '@/components/common/Button'
 import Img from '@/components/common/Img'
 import InputField from '@/components/common/InputField'
 
-export default function EmojiRegisterModal({ closing }: { closing?: boolean }) {
+export default function EmojiRegisterModal() {
   const theme = useTheme()
   const inputRef = useRef<HTMLInputElement>(null)
   const [emojiName, setEmojiName] = useState('')
   const [emojiImage, setEmojiImage] = useState<File | null>(null)
 
   return (
-    <BottomDrawer closing={closing}>
+    <BottomDrawer>
       <InputField
         label='이름'
         value={emojiName}

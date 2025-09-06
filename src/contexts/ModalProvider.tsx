@@ -1,8 +1,8 @@
-import { createContext, useState, type ReactNode, isValidElement, cloneElement } from 'react'
+import { createContext, useState, type ReactNode } from 'react'
 import { css, type Keyframes } from '@emotion/react'
-import { fadeIn, fadeOut } from '@/styles/animation'
 import { createPortal } from 'react-dom'
 
+import { fadeIn, fadeOut } from '@/styles/animation'
 import type { IBaseInput } from '@/types'
 
 type Modal = {
@@ -15,7 +15,10 @@ type Modal = {
 type ModalReturnType = void | null | IBaseInput | string
 
 interface ModalContextType {
-  openModal: (_content: ReactNode, _closingKeyframe?: Keyframes) => Promise<ModalReturnType>
+  openModal: (
+    _content: ReactNode,
+    _closingKeyframe?: Keyframes,
+  ) => Promise<ModalReturnType>
   closeModal: (_value: ModalReturnType) => void
 }
 
@@ -24,21 +27,26 @@ const ModalContext = createContext<ModalContextType | null>(null)
 function ModalProvider({ children }: { children: ReactNode }) {
   const [modals, setModals] = useState<Modal[]>([])
 
-  const openModal = async (content: ReactNode, closingKeyframe: Keyframes = fadeOut) => {
+  const openModal = async (
+    content: ReactNode,
+    closingKeyframe: Keyframes = fadeOut,
+  ) => {
     return new Promise<ModalReturnType>(resolve => {
-      setModals(prev => [...prev, { content, promiseResolver: resolve, closingKeyframe }])
+      setModals(prev => [
+        ...prev,
+        { content, promiseResolver: resolve, closingKeyframe },
+      ])
     })
   }
 
   const closeModal = (value: ModalReturnType) => {
-    // Mark top modal as closing to allow exit animations
     setModals(prev => {
       if (!prev.length) return prev
       const next = [...prev]
       next[next.length - 1] = { ...next[next.length - 1], isClosing: true }
       return next
     })
-    // Then resolve and remove after animation duration
+
     setTimeout(() => {
       setModals(prev => {
         if (!prev.length) return prev
@@ -68,17 +76,13 @@ function ModalRenderer({
   const modalRoot = document.getElementById('modal-root')
   if (!modalRoot || !modals.length) return null
   const topModal = modals[modals.length - 1]
+  console.log(topModal.isClosing, topModal.closingKeyframe)
 
-  const content = isValidElement(topModal.content)
-    ? cloneElement(topModal.content as any, { closing: topModal.isClosing })
-    : topModal.content
+  const content = topModal.content
 
   return createPortal(
     <div
-      css={[
-        backgroundStyle,
-        topModal.isClosing && { animation: topModal.closingKeyframe },
-      ]}
+      css={backgroundStyle(topModal)}
       onClick={() => closeModal(null)}
       data-testid='modal-background'
     >
@@ -89,16 +93,19 @@ function ModalRenderer({
 }
 export { ModalProvider, ModalContext }
 
-const backgroundStyle = css({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  backgroundColor: 'rgba(0, 0, 0, 0.25)',
-  zIndex: 30,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'flex-end',
-  animation: `${fadeIn} 160ms ease-out`,
-})
+const backgroundStyle = (modal: Modal) =>
+  css({
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.25)',
+    zIndex: 30,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    animation: modal.isClosing
+      ? `${modal.closingKeyframe} 160ms ease-in`
+      : `${fadeIn} 160ms ease-out`,
+  })

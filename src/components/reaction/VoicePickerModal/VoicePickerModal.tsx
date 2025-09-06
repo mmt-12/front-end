@@ -7,11 +7,11 @@ import BottomButton from '@/components/common/BottomButton'
 import BottomDrawer from '@/components/common/BottomDrawer'
 import InputField from '@/components/common/InputField'
 import { useModal } from '@/hooks/useModal'
+import { slideDown } from '@/styles/animation'
 import Voice from '../Voice'
 import VoiceRegisterModal from '../VoiceRegisterModal/VoiceRegisterModal'
-import { slideDown } from '@/styles/animation'
 
-export default function VoicePickerModal({ closing }: { closing?: boolean }) {
+export default function VoicePickerModal() {
   const { openModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
   const { data } = useVoiceList(1, {})
@@ -22,7 +22,7 @@ export default function VoicePickerModal({ closing }: { closing?: boolean }) {
   }
 
   return (
-    <BottomDrawer closing={closing}>
+    <BottomDrawer>
       <p css={spanStyle}>최근 사용</p>
       <div
         css={[voiceListStyle, { marginBottom: '4px' }]}

@@ -3,18 +3,17 @@ import { css } from '@emotion/react'
 import { ArrowLeft } from '@solar-icons/react'
 
 import HeaderItem from '@/components/layout/Header/HeaderItem'
-import { headerStyle } from '@/styles/layout'
 import { slideUp } from '@/styles/animation'
+import { headerStyle } from '@/styles/layout'
 import { modalStyle } from '@/styles/modal'
 
 interface Props {
   title: string
   children: ReactNode
   onClose: () => void
-  closing?: boolean
 }
 
-export default function PopupModal({ title, children, onClose, closing }: Props) {
+export default function PopupModal({ title, children, onClose }: Props) {
   return (
     <div
       css={[
@@ -23,7 +22,6 @@ export default function PopupModal({ title, children, onClose, closing }: Props)
           animation: `${slideUp} 220ms cubic-bezier(0.22, 1, 0.36, 1)`,
           willChange: 'transform, opacity',
         },
-        closing && { animationDirection: 'reverse' },
       ]}
       onClick={e => e.stopPropagation()}
       onScroll={e => e.stopPropagation()}

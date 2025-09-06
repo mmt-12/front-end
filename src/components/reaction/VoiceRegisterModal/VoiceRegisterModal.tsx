@@ -8,7 +8,7 @@ import BottomDrawer from '@/components/common/BottomDrawer'
 import Button from '@/components/common/Button'
 import InputField from '@/components/common/InputField'
 
-export default function VoiceRegisterModal({ closing }: { closing?: boolean }) {
+export default function VoiceRegisterModal() {
   const theme = useTheme()
   const inputRef = useRef<HTMLInputElement>(null)
   const [name, setName] = useState('')
@@ -18,7 +18,7 @@ export default function VoiceRegisterModal({ closing }: { closing?: boolean }) {
   const audioRef = useRef<HTMLAudioElement>(null)
 
   return (
-    <BottomDrawer closing={closing}>
+    <BottomDrawer>
       <InputField
         label='이름'
         value={name}

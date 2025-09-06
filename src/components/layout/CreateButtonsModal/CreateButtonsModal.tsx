@@ -15,12 +15,12 @@ import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { slideDown } from '@/styles/animation'
 
-export default function CreateButtonsModal({ closing }: { closing?: boolean }) {
+export default function CreateButtonsModal() {
   const theme = useTheme()
   const { closeModal, openModal } = useModal()
 
   return (
-    <BottomDrawer closing={closing}>
+    <BottomDrawer>
       <span
         style={{
           display: 'block',
