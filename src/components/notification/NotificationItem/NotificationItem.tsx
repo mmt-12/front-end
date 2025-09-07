@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom'
 
 import Border from '@/components/common/Border'
 import { ROUTES } from '@/routes/ROUTES'
+import { useUserStore } from '@/store/userStore'
 import { flexGap } from '@/styles/common'
 import type { INotification, NotificationType } from '@/types/notification'
 import { formatTimeAgo } from '@/utils/date'
@@ -24,17 +25,24 @@ export default function NotificationItem({
   title,
   createdAt,
   content,
+  memoryId,
   postId,
   actorId,
 }: INotification) {
   const theme = useTheme()
-  const myId = 1
+  const { associateId: myId } = useUserStore()
 
-  const { url, Icon } = getUrlAndIcon(type, postId, actorId, myId)
+  const { url, Icon, state } = getUrlAndIcon(
+    type,
+    memoryId,
+    postId,
+    actorId,
+    myId,
+  )
 
   return (
     <>
-      <Link to={url} css={containerStyle(isRead)}>
+      <Link to={url} css={containerStyle(isRead)} state={state}>
         <div css={iconWrapperStyle}>
           <Icon weight='Bold' color={theme.stone[500]} size={22} />
         </div>
@@ -85,6 +93,7 @@ const infoRowStyle = (theme: Theme) =>
 
 function getUrlAndIcon(
   type: NotificationType,
+  memoryId: number | null,
   postId: number | null,
   actorId: number | null,
   myId: number,
@@ -119,5 +128,7 @@ function getUrlAndIcon(
     Icon = QuestionCircle
   }
 
-  return { url, Icon }
+  const state = memoryId ? { memory: { id: memoryId } } : undefined
+
+  return { url, Icon, state }
 }

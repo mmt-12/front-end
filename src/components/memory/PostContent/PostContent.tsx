@@ -1,11 +1,12 @@
 import { css, type Theme } from '@emotion/react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import type { Post } from '@/api'
 import Album from '@/components/common/Album'
 import Img from '@/components/common/Img'
 import Profile from '@/components/common/Profile'
 import { ROUTES } from '@/routes/ROUTES'
+import type { IMemoryInfo } from '@/types/memory'
 import { formatDateTime } from '@/utils/date'
 
 export default function PostContent({
@@ -15,6 +16,8 @@ export default function PostContent({
   pictures,
   content,
 }: Post) {
+  const memory = useLocation().state.memory as IMemoryInfo
+
   return (
     <div>
       <header css={headerStyle}>
@@ -23,7 +26,7 @@ export default function PostContent({
         </Link>
         <time>{formatDateTime(new Date(createdAt))}</time>
       </header>
-      <Link to={ROUTES.POST_DETAIL(id)}>
+      <Link to={ROUTES.POST_DETAIL(id)} state={{ memory }}>
         <Album>
           {pictures.map((image, index) => (
             <div key={index}>
