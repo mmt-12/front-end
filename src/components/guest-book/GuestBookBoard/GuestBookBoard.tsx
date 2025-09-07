@@ -47,8 +47,6 @@ export default function GuestBookBoard({ communityId, associateId }: Props) {
     }
   }
 
-  if (isLoading) return <GuestBookBoardSkeleton />
-
   return (
     <div css={[containerStyle, flexGap(16)]}>
       <div css={inputFieldCss}>
@@ -78,17 +76,21 @@ export default function GuestBookBoard({ communityId, associateId }: Props) {
           )}
         </div>
       </div>
-      <InfiniteScroll
-        fetchNext={() => fetchNextPage()}
-        hasNextPage={hasNextPage}
-        isFetchingNext={isFetchingNextPage}
-      >
-        <div css={flexGap(16)}>
-          {comments.map(comment => (
-            <Comment key={comment.id} {...comment} />
-          ))}
-        </div>
-      </InfiniteScroll>
+      {isLoading ? (
+        <GuestBookBoardSkeleton />
+      ) : (
+        <InfiniteScroll
+          fetchNext={fetchNextPage}
+          hasNextPage={hasNextPage}
+          isFetchingNext={isFetchingNextPage}
+        >
+          <div css={flexGap(16)}>
+            {comments.map(comment => (
+              <Comment key={comment.id} {...comment} />
+            ))}
+          </div>
+        </InfiniteScroll>
+      )}
     </div>
   )
 }
