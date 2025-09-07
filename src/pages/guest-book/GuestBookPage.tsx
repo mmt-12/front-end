@@ -76,12 +76,18 @@ export default function GuestBookPage() {
                 onClick={() => setMode('MBTI')}
                 style={{ width: '100%', height: '140px' }}
               >
-                <MbtiChart />
+                <MbtiChart
+                  communityId={communityId}
+                  associateId={associateId}
+                />
               </div>
             </Card>
             <Card title='MEDALS'>
               <div onClick={() => setMode('MEDALS')}>
-                <BadgeList />
+                <BadgeList
+                  communityId={communityId}
+                  associateId={associateId}
+                />
               </div>
             </Card>
           </div>
@@ -131,9 +137,20 @@ export default function GuestBookPage() {
                   }, 160)
                 }}
               >
-                {mode === 'MEDALS' && <BadgeList isExpanded />}
+                {mode === 'MEDALS' && (
+                  <BadgeList
+                    communityId={communityId}
+                    associateId={associateId}
+                    isExpanded
+                  />
+                )}
                 {mode === 'MBTI' && profile && (
-                  <MbtiTest isMyPage={isMyPage} name={profile.nickname} />
+                  <MbtiTest
+                    isMyPage={isMyPage}
+                    name={profile.nickname}
+                    communityId={communityId}
+                    associateId={associateId}
+                  />
                 )}
                 {mode === 'GUEST BOOK' && profile && (
                   <GuestBookBoard

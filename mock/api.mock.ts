@@ -73,6 +73,11 @@ export default defineMock([
     url: '/api/v1/communities/:communityId/associates/:associateId/mbti-tests',
     body: MBTI,
   },
+  // 방명록 - MBTI 등록
+  {
+    url: '/api/v1/communities/:communityId/associates/:associateId/mbti-tests',
+    method: 'POST',
+  },
   // 방명록 - Get profile images for an associate
   {
     url: '/api/v1/communities/:communityId/associates/:associateId/profile-images',
