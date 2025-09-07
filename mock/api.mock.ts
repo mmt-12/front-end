@@ -75,6 +75,9 @@ export default defineMock([
   {
     url: '/api/v1/communities/:communityId/associates/:associateId/mbti-tests',
     body: MBTI,
+    // 실패 응답 테스트
+    // status: 401,
+    // message: 'Unauthorized',
   },
   // 방명록 - Get profile images for an associate
   {
