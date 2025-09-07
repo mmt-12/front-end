@@ -15,24 +15,16 @@ export function useReactionPicker(type: 'EMOJI' | 'VOICE') {
   const isPostDetailPage = useMatch('/post/:id')
   const isGuestBookPage = useMatch('/guest-book/:id')
 
-  const { mutate: createEmojiComment } = useCreateEmojiComment(
-    communityId,
-    memory?.id ?? 1,
-    entityId,
-  )
-  const { mutate: createVoiceComment } = useCreateVoiceComment(
-    communityId,
-    memory?.id ?? 1,
-    entityId,
-  )
-
-  const { mutate: createGuestBookReaction } = useCreateGuestBookReaction(
-    communityId,
-    entityId,
-  )
+  const { mutate: createEmojiComment, isPending: isEmojiPending } =
+    useCreateEmojiComment(communityId, memory?.id ?? 1, entityId)
+  const { mutate: createVoiceComment, isPending: isVoicePending } =
+    useCreateVoiceComment(communityId, memory?.id ?? 1, entityId)
+  const { mutate: createGuestBookReaction, isPending: isGuestBookPending } =
+    useCreateGuestBookReaction(communityId, entityId)
 
   const selectReaction = (reactionId: number) => {
-    if (!entityId) return
+    if (!entityId || isEmojiPending || isVoicePending || isGuestBookPending)
+      return
 
     if (isPostDetailPage) {
       if (type === 'EMOJI') {
