@@ -54,6 +54,8 @@ export interface ButtonProps {
 
 export type DayCellType = 'default' | 'inRange' | 'dot'
 
+export type GuestBookCommentType = 'TEXT' | 'EMOJI' | 'VOICE'
+
 export interface IProfileImage {
   id: number
   url: string

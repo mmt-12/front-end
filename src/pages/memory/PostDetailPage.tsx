@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { css, type Theme } from '@emotion/react'
 import { MagniferZoomIn } from '@solar-icons/react'
+import { useLocation, useParams } from 'react-router-dom'
 
 import { usePost } from '@/api'
 import Profile from '@/components/common/Profile'
@@ -10,18 +11,21 @@ import ReactBar from '@/components/memory/ReactBar/ReactBar'
 import EmojiList from '@/components/reaction/EmojiList'
 import VoiceList from '@/components/reaction/VoiceList'
 import useHeader from '@/hooks/useHeader'
+import { useUserStore } from '@/store/userStore'
+import type { IMemoryInfo } from '@/types/memory'
 
 export default function PostDetailPage() {
+  const { id } = useParams()
+  const memory = useLocation().state.memory as IMemoryInfo
+  const { communityId } = useUserStore()
+
   useHeader({
     rightItem: {
       icon: null,
     },
   })
 
-  const memoryId = 1
-  const postId = 1
-
-  const { data: post } = usePost(1, memoryId, postId)
+  const { data: post } = usePost(communityId, memory.id, Number(id))
 
   const initialSelectedId = post
     ? post.comments.emojis.length > 0
@@ -83,7 +87,7 @@ export default function PostDetailPage() {
           </div>
         </>
       )}
-      <ReactBar />
+      <ReactBar iconSize={44} customCss={reactBarStyle} />
     </div>
   )
 }
@@ -109,3 +113,21 @@ const reactedProfilesStyle = css({
   gap: '16px',
   padding: '8px 16px',
 })
+
+const reactBarStyle = (theme: Theme) =>
+  css({
+    zIndex: 20,
+    position: 'fixed',
+    bottom: '24px',
+    right: '0%',
+    marginRight: `calc(calc(calc(100vw - min(${theme.maxWidth}, 100vw)) / 2) + 24px)`,
+
+    padding: '10px 16px',
+
+    display: 'flex',
+    gap: '24px',
+
+    backgroundColor: theme.white,
+    borderRadius: '24px',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  })

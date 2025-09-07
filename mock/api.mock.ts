@@ -1,11 +1,11 @@
 import { defineMock } from 'vite-plugin-mock-dev-server'
 
-import { ACHIEVEMENTS, MBTI } from './data/guestBook'
+import { ACHIEVEMENTS, GUEST_BOOK, MBTI } from './data/guestBook'
 import { MEMBERS } from './data/members'
 import { MEMORIES } from './data/memories'
+import { NOTIFICATIONS } from './data/notifications'
 import { POSTS } from './data/posts'
 import { PROFILE_IMAGES } from './data/profileImages'
-import { NOTIFICATIONS } from './data/notifications'
 import { EMOJIS, VOICES } from './data/reaction'
 
 export default defineMock([
@@ -31,6 +31,16 @@ export default defineMock([
       posts: POSTS,
       pageInfo: { nextCursor: 0, hasNext: true },
     },
+  },
+  // 포스트 댓글 이모지 생성
+  {
+    url: '/api/v1/communities/:communityId/memories/:memoryId/posts/:postId/comments/emoji',
+    method: 'POST',
+  },
+  // 포스트 댓글 보이스 생성
+  {
+    url: '/api/v1/communities/:communityId/memories/:memoryId/posts/:postId/comments/voices',
+    method: 'POST',
   },
   // 방명록 - Get associate profile
   {
@@ -64,7 +74,7 @@ export default defineMock([
   {
     url: '/api/v1/communities/:communityId/associates/:associateId/guest-books',
     body: {
-      guestBooks: [],
+      guestBooks: GUEST_BOOK,
       pageInfo: { nextCursor: 0, hasNext: true },
     },
   },
@@ -73,6 +83,11 @@ export default defineMock([
     url: '/api/v1/communities/:communityId/associates/:associateId/mbti-tests',
     body: MBTI,
   },
+  // 방명록 - MBTI 등록
+  {
+    url: '/api/v1/communities/:communityId/associates/:associateId/mbti-tests',
+    method: 'POST',
+  },
   // 방명록 - Get profile images for an associate
   {
     url: '/api/v1/communities/:communityId/associates/:associateId/profile-images',
@@ -80,6 +95,11 @@ export default defineMock([
       profileImages: PROFILE_IMAGES,
       pageInfo: { nextCursor: 0, hasNext: true },
     },
+  },
+  // 방명록 리액션 생성
+  {
+    url: '/api/v1/communities/:communityId/associates/:associateId/guest-books',
+    method: 'POST',
   },
   // Auth - Sign in
   {

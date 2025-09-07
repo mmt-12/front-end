@@ -28,5 +28,5 @@ export default function PageTransition({ children, mode = 'fade' }: Props) {
 }
 
 const containerStyle = css({
-  height: '100%',
+  flex: 1,
 })

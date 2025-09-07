@@ -1,6 +1,7 @@
 import { lazy, useState } from 'react'
 import { css } from '@emotion/react'
 
+import { useCreateMbtiTest } from '@/api/guestbook'
 import {
   MBTI_COLOR,
   MBTI_MODIFIER,
@@ -17,9 +18,16 @@ const MbtiChart = lazy(() => import('@/components/guest-book/MbtiChart'))
 interface Props {
   isMyPage: boolean
   name: string
+  communityId: number
+  associateId: number
 }
 
-export default function MbtiTest({ isMyPage, name }: Props) {
+export default function MbtiTest({
+  isMyPage,
+  name,
+  communityId,
+  associateId,
+}: Props) {
   const [step, setStep] = useState<'chart' | 'start' | 'quiz' | 'result'>(
     'chart',
   )
@@ -34,6 +42,10 @@ export default function MbtiTest({ isMyPage, name }: Props) {
     J: 0,
     P: 0,
   })
+  const { mutate: createMbtiTest, isPending } = useCreateMbtiTest(
+    communityId,
+    associateId,
+  )
 
   const handleAnswer = (code: MbtiCode) => {
     setScores(prev => ({
@@ -48,7 +60,10 @@ export default function MbtiTest({ isMyPage, name }: Props) {
   }
 
   const handleSubmit = () => {
-    //TODO: MBTI 결과 등록
+    if (isPending) return
+
+    const mbti = calculateMbti(scores)
+    createMbtiTest({ mbti })
     setCurrentQuestionIdx(0)
     setStep('chart')
   }
@@ -56,7 +71,9 @@ export default function MbtiTest({ isMyPage, name }: Props) {
   return (
     <div css={containerStyle}>
       <div css={contentStyle}>
-        {step === 'chart' && <MbtiChart />}
+        {step === 'chart' && (
+          <MbtiChart communityId={communityId} associateId={associateId} />
+        )}
         {step === 'start' && (
           <>
             <p>

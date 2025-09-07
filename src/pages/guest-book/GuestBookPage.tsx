@@ -1,35 +1,45 @@
 import { lazy, useState } from 'react'
 import { css, keyframes } from '@emotion/react'
 import { PenNewSquare, UsersGroupRounded } from '@solar-icons/react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
-import { useAssociateProfile } from '@/api'
+import { useAssociateProfile, useGuestBookList } from '@/api'
+import { Skeleton } from '@/components/common/Skeleton'
 import BadgeList from '@/components/guest-book/BadgeList'
 import Card from '@/components/guest-book/Card'
+import Comment from '@/components/guest-book/Comment'
+import GuestBookBoard from '@/components/guest-book/GuestBookBoard'
 import GuestBookProfile, {
   GuestBookProfileSkeleton,
 } from '@/components/guest-book/GuestBookProfile'
 import MbtiTest from '@/components/guest-book/MbtiTest'
+import WavyButton from '@/components/guest-book/WavyButton'
 import useHeader from '@/hooks/useHeader'
 import useStardust from '@/hooks/useStardust'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
+import { flexGap } from '@/styles/common'
 
 const MbtiChart = lazy(() => import('@/components/guest-book/MbtiChart'))
 
 export default function GuestBookPage() {
   useStardust()
+  const navigate = useNavigate()
   const [mode, setMode] = useState<'MBTI' | 'MEDALS' | 'GUEST BOOK' | null>(
     null,
   )
-  const { birthDate } = useUserStore()
   const [isClosing, setIsClosing] = useState(false)
-  const navigate = useNavigate()
+  const { id } = useParams()
+  const { birthDate, communityId, associateId: myId } = useUserStore()
 
-  const userId = 1
-  const { data: profile } = useAssociateProfile(1, userId)
+  const associateId = Number(id)
+  const { data: profile } = useAssociateProfile(communityId, associateId)
+  const { data: guestBookList, isLoading } = useGuestBookList(
+    communityId,
+    associateId,
+  )
 
-  const isMyPage = birthDate === profile?.birthday
+  const isMyPage = birthDate === profile?.birthday && myId === associateId
 
   useHeader({
     routeName: '방명록',
@@ -66,17 +76,51 @@ export default function GuestBookPage() {
                 onClick={() => setMode('MBTI')}
                 style={{ width: '100%', height: '140px' }}
               >
-                <MbtiChart />
+                <MbtiChart
+                  communityId={communityId}
+                  associateId={associateId}
+                />
               </div>
             </Card>
             <Card title='MEDALS'>
               <div onClick={() => setMode('MEDALS')}>
-                <BadgeList />
+                <BadgeList
+                  communityId={communityId}
+                  associateId={associateId}
+                />
               </div>
             </Card>
           </div>
           <Card title='GUEST BOOK'>
-            <p onClick={() => setMode('GUEST BOOK')}>guest book content</p>
+            <div css={[flexGap(12), commentListStyle]}>
+              {isLoading ? (
+                <>
+                  {Array(4)
+                    .fill(0)
+                    .map((_, index) => (
+                      <Skeleton
+                        key={index}
+                        width='100%'
+                        height={37}
+                        radius={4}
+                      />
+                    ))}
+                  <Skeleton width={65} height={32} radius={2} />
+                </>
+              ) : (
+                <>
+                  {guestBookList?.pages[0].guestBooks
+                    .slice(0, 4)
+                    .map(comment => (
+                      <Comment key={comment.id} {...comment} />
+                    ))}
+                  <WavyButton
+                    label='더보기'
+                    onClick={() => setMode('GUEST BOOK')}
+                  />
+                </>
+              )}
+            </div>
           </Card>
         </>
       ) : (
@@ -93,9 +137,26 @@ export default function GuestBookPage() {
                   }, 160)
                 }}
               >
-                {mode === 'MEDALS' && <BadgeList isExpanded />}
+                {mode === 'MEDALS' && (
+                  <BadgeList
+                    communityId={communityId}
+                    associateId={associateId}
+                    isExpanded
+                  />
+                )}
                 {mode === 'MBTI' && profile && (
-                  <MbtiTest isMyPage={isMyPage} name={profile.nickname} />
+                  <MbtiTest
+                    isMyPage={isMyPage}
+                    name={profile.nickname}
+                    communityId={communityId}
+                    associateId={associateId}
+                  />
+                )}
+                {mode === 'GUEST BOOK' && profile && (
+                  <GuestBookBoard
+                    communityId={communityId}
+                    associateId={associateId}
+                  />
                 )}
               </Card>
             </div>
@@ -148,4 +209,9 @@ const flipFaceStyle = css({
 
 const flipBackStyle = css({
   transform: 'rotateY(0deg)',
+})
+
+const commentListStyle = css({
+  width: '100%',
+  alignItems: 'center',
 })

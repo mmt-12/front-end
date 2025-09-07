@@ -1,11 +1,16 @@
-import { css, useTheme, type Theme } from '@emotion/react'
+import { useTheme, type Interpolation, type Theme } from '@emotion/react'
 import { SoundwaveSquare, StickerSmileSquare } from '@solar-icons/react'
 
 import EmojiPickerModal from '@/components/reaction/EmojiPickerModal'
 import VoicePickerModal from '@/components/reaction/VoicePickerModal'
 import { useModal } from '@/hooks/useModal'
 
-export default function ReactBar() {
+interface Props {
+  iconSize: number
+  customCss?: Interpolation<Theme>
+}
+
+export default function ReactBar({ iconSize, customCss }: Props) {
   const theme = useTheme()
   const { openModal } = useModal()
 
@@ -18,37 +23,19 @@ export default function ReactBar() {
   }
 
   return (
-    <div css={containerStyle}>
+    <div css={customCss}>
       <StickerSmileSquare
         weight='Bold'
-        size={44}
+        size={iconSize}
         color={theme.yellow}
         onClick={handleEmojiClick}
       />
       <SoundwaveSquare
         weight='Bold'
-        size={44}
+        size={iconSize}
         color={theme.sky[400]}
         onClick={handleVoiceClick}
       />
     </div>
   )
 }
-
-const containerStyle = (theme: Theme) =>
-  css({
-    zIndex: 20,
-    position: 'fixed',
-    bottom: '24px',
-    right: '0%',
-    marginRight: `calc(calc(calc(100vw - min(${theme.maxWidth}, 100vw)) / 2) + 24px)`,
-
-    padding: '10px 16px',
-
-    display: 'flex',
-    gap: '24px',
-
-    backgroundColor: theme.white,
-    borderRadius: '24px',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-  })

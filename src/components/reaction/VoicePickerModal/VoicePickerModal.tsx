@@ -7,15 +7,25 @@ import BottomButton from '@/components/common/BottomButton'
 import BottomDrawer from '@/components/common/BottomDrawer'
 import InputField from '@/components/common/InputField'
 import { useModal } from '@/hooks/useModal'
+import { useReactionPicker } from '@/hooks/useReactionPicker'
+import { useUserStore } from '@/store/userStore'
 import { slideDown } from '@/styles/animation'
 import Voice from '../Voice'
 import VoiceRegisterModal from '../VoiceRegisterModal/VoiceRegisterModal'
 
 export default function VoicePickerModal() {
-  const { openModal } = useModal()
+  const { openModal, closeModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
-  const { data } = useVoiceList(1, {})
+  const { communityId } = useUserStore()
+  const { data } = useVoiceList(communityId, {})
   const voices = data?.pages.flatMap(page => page.voices) || []
+
+  const { selectReaction } = useReactionPicker('VOICE')
+
+  const handleSelectVoice = (voiceId: number) => {
+    selectReaction(voiceId)
+    closeModal()
+  }
 
   const handleRegisterVoiceClick = () => {
     openModal(<VoiceRegisterModal />, slideDown)
@@ -29,7 +39,12 @@ export default function VoicePickerModal() {
         className='no-scrollbar'
       >
         {voices.slice(0, 6).map(voice => (
-          <Voice key={voice.id} {...voice} amount={undefined} />
+          <Voice
+            key={voice.id}
+            {...voice}
+            amount={undefined}
+            onClick={(_e, id) => handleSelectVoice(id)}
+          />
         ))}
       </div>
       <InputField
@@ -41,7 +56,12 @@ export default function VoicePickerModal() {
         {voices
           .filter(voice => voice.name.includes(searchKey))
           .map(voice => (
-            <Voice key={voice.id} {...voice} amount={undefined} />
+            <Voice
+              key={voice.id}
+              {...voice}
+              amount={undefined}
+              onClick={(_e, id) => handleSelectVoice(id)}
+            />
           ))}
       </div>
       <BottomButton
