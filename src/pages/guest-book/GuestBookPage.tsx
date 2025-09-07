@@ -30,7 +30,7 @@ export default function GuestBookPage() {
   )
   const [isClosing, setIsClosing] = useState(false)
   const { id } = useParams()
-  const { birthDate, communityId } = useUserStore()
+  const { birthDate, communityId, associateId: myId } = useUserStore()
 
   const associateId = Number(id)
   const { data: profile } = useAssociateProfile(communityId, associateId)
@@ -39,7 +39,7 @@ export default function GuestBookPage() {
     associateId,
   )
 
-  const isMyPage = birthDate === profile?.birthday
+  const isMyPage = birthDate === profile?.birthday && myId === associateId
 
   useHeader({
     routeName: '방명록',
