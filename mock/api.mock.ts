@@ -20,8 +20,9 @@ export default defineMock([
   {
     url: '/api/v1/communities/:communityId/memories',
     body: {
-      pageInfo: { nextCursor: 0, hasNext: true },
       memories: MEMORIES,
+      nextCursor: 0,
+      hasNext: true
     },
   },
   // 포스트 목록 조회
@@ -29,7 +30,8 @@ export default defineMock([
     url: '/api/v1/communities/:communityId/memories/:memoryId/posts',
     body: {
       posts: POSTS,
-      pageInfo: { nextCursor: 0, hasNext: true },
+      nextCursor: 0,
+      hasNext: true
     },
   },
   // 방명록 - Get associate profile
@@ -50,7 +52,7 @@ export default defineMock([
     body: {
       communityName: '싸피12반최고',
       associates: MEMBERS,
-      pageInfo: { nextCursor: 101, hasNext: true },
+      nextCursor: 101, hasNext: true
     },
   },
   // 방명록 - Get achievements for an associate
@@ -65,7 +67,8 @@ export default defineMock([
     url: '/api/v1/communities/:communityId/associates/:associateId/guest-books',
     body: {
       guestBooks: [],
-      pageInfo: { nextCursor: 0, hasNext: true },
+      nextCursor: 0,
+      hasNext: true
     },
   },
   // 방명록 - Get MBTI tests for an associate
@@ -78,7 +81,8 @@ export default defineMock([
     url: '/api/v1/communities/:communityId/associates/:associateId/profile-images',
     body: {
       profileImages: PROFILE_IMAGES,
-      pageInfo: { nextCursor: 0, hasNext: true },
+      nextCursor: 0,
+      hasNext: true,
     },
   },
   // Auth - Sign in
@@ -119,7 +123,7 @@ export default defineMock([
     url: '/api/v1/communities/:communityId/memories/:memoryId',
     body: {
       posts: POSTS,
-      pageInfo: { nextCursor: 0, hasNext: true },
+      nextCursor: 0, hasNext: true,
     },
   },
   // Reaction - Get voices in a community
@@ -127,10 +131,9 @@ export default defineMock([
     url: '/api/v1/communities/:communityId/voices',
     body: {
       voices: VOICES,
-      pageInfo: {
-        nextCursor: 0,
-        hasNext: false,
-      },
+
+      nextCursor: 0,
+      hasNext: false,
     },
   },
   // Reaction - Get emojis in a community
@@ -138,10 +141,8 @@ export default defineMock([
     url: '/api/v1/communities/:communityId/emoji',
     body: {
       emoji: EMOJIS,
-      pageInfo: {
-        nextCursor: 0,
-        hasNext: false,
-      },
+      nextCursor: 0,
+      hasNext: false,
     },
   },
   // Notification - Get notifications
@@ -149,10 +150,9 @@ export default defineMock([
     url: '/api/v1/notifications',
     body: {
       notifications: NOTIFICATIONS,
-      pageInfo: {
-        nextCursor: 0,
-        hasNext: false,
-      },
+
+      nextCursor: 0,
+      hasNext: false,
     },
   },
   // Notification - Get unread notification count

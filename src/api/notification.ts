@@ -13,7 +13,7 @@ export interface NotificationListParams {
 }
 
 // 알림 목록 조회
-export function useNotificationList(params?: NotificationListParams) {
+export function useNotificationList (params?: NotificationListParams) {
   return useInfiniteQuery({
     queryKey: ['notifications', params?.size],
     initialPageParam: params?.cursor ?? 0,
@@ -27,12 +27,12 @@ export function useNotificationList(params?: NotificationListParams) {
         .then(r => r.data as NotificationListResponse)
     },
     getNextPageParam: lastPage =>
-      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
+      lastPage.hasNext ? lastPage.nextCursor : undefined,
   })
 }
 
 // 안읽은 알림 조회
-export function useUnreadNotifications() {
+export function useUnreadNotifications () {
   return useQuery({
     queryKey: ['unread-notifications'],
     queryFn: () =>

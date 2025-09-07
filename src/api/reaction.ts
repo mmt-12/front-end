@@ -21,7 +21,7 @@ export interface EmojiListParams {
 }
 
 // 보이스 등록
-export function useCreateVoice(communityId = 1) {
+export function useCreateVoice (communityId = 1) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -40,7 +40,7 @@ export function useCreateVoice(communityId = 1) {
 }
 
 // 보이스 목록 조회
-export function useVoiceList(communityId = 1, params?: VoiceListParams) {
+export function useVoiceList (communityId = 1, params?: VoiceListParams) {
   return useInfiniteQuery({
     queryKey: ['voices', communityId, params?.size, params?.keyword],
     initialPageParam: params?.cursor ?? 0,
@@ -55,12 +55,12 @@ export function useVoiceList(communityId = 1, params?: VoiceListParams) {
         .then(r => r.data as VoiceListResponse)
     },
     getNextPageParam: lastPage =>
-      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
+      lastPage.hasNext ? lastPage.nextCursor : undefined,
   })
 }
 
 // 보이스 삭제
-export function useDeleteVoice(communityId = 1) {
+export function useDeleteVoice (communityId = 1) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -75,7 +75,7 @@ export function useDeleteVoice(communityId = 1) {
 }
 
 // 이모지 등록
-export function useCreateEmoji(communityId = 1) {
+export function useCreateEmoji (communityId = 1) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -94,7 +94,7 @@ export function useCreateEmoji(communityId = 1) {
 }
 
 // 이모지 목록 조회
-export function useEmojiList(communityId = 1, params?: EmojiListParams) {
+export function useEmojiList (communityId = 1, params?: EmojiListParams) {
   return useInfiniteQuery({
     queryKey: ['emojis', communityId, params?.size, params?.keyword],
     initialPageParam: params?.cursor ?? 0,
@@ -109,12 +109,12 @@ export function useEmojiList(communityId = 1, params?: EmojiListParams) {
         .then(r => r.data as EmojiListResponse)
     },
     getNextPageParam: lastPage =>
-      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
+      lastPage.hasNext ? lastPage.nextCursor : undefined,
   })
 }
 
 // 이모지 삭제
-export function useDeleteEmoji(communityId = 1) {
+export function useDeleteEmoji (communityId = 1) {
   const queryClient = useQueryClient()
 
   return useMutation({

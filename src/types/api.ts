@@ -65,10 +65,8 @@ export interface CreateMemoryRequest {
 }
 
 export interface MemoryListResponse {
-  pageInfo: {
-    nextCursor: number
-    hasNext: boolean
-  }
+  nextCursor: number
+  hasNext: boolean
   memories: Memory[]
 }
 
@@ -133,10 +131,8 @@ export interface Post {
 
 export interface PostListResponse {
   posts: Post[]
-  pageInfo: {
-    nextCursor: number
-    hasNext: boolean
-  }
+  nextCursor: number
+  hasNext: boolean
 }
 
 export interface CreatePostRequest {
@@ -160,10 +156,8 @@ export interface Associate {
 export interface AssociateListResponse {
   communityName: string
   associates: Associate[]
-  pageInfo: {
-    nextCursor: number
-    hasNext: boolean
-  }
+  nextCursor: number
+  hasNext: boolean
 }
 
 export interface UpdateAssociateRequest {
@@ -186,10 +180,8 @@ export interface GuestBook {
 
 export interface GuestBookListResponse {
   guestBooks: GuestBook[]
-  pageInfo: {
-    nextCursor: number
-    hasNext: boolean
-  }
+  nextCursor: number
+  hasNext: boolean
 }
 
 export interface CreateGuestBookRequest {
@@ -229,10 +221,8 @@ export interface ProfileImage {
 
 export interface ProfileImageListResponse {
   profileImages: ProfileImage[]
-  pageInfo: {
-    nextCursor: number
-    hasNext: boolean
-  }
+  nextCursor: number
+  hasNext: boolean
 }
 
 export interface Voice {
@@ -249,10 +239,8 @@ export interface Voice {
 
 export interface VoiceListResponse {
   voices: Voice[]
-  pageInfo: {
-    hasNext: boolean
-    nextCursor: number
-  }
+  hasNext: boolean
+  nextCursor: number
 }
 
 export interface CreateVoiceRequest {
@@ -273,10 +261,8 @@ export interface Emoji {
 
 export interface EmojiListResponse {
   emoji: Emoji[]
-  pageInfo: {
-    hasNext: boolean
-    nextCursor: number
-  }
+  hasNext: boolean
+  nextCursor: number
 }
 
 export interface CreateEmojiRequest {
@@ -297,10 +283,8 @@ export interface Notification {
 
 export interface NotificationListResponse {
   notifications: Notification[]
-  pageInfo: {
-    hasNext: boolean
-    nextCursor: number
-  }
+  hasNext: boolean
+  nextCursor: number
 }
 
 export interface UnreadNotificationResponse {
