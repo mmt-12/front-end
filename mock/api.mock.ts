@@ -32,6 +32,16 @@ export default defineMock([
       pageInfo: { nextCursor: 0, hasNext: true },
     },
   },
+  // 포스트 댓글 이모지 생성
+  {
+    url: '/api/v1/communities/:communityId/memories/:memoryId/posts/:postId/comments/emoji',
+    method: 'POST',
+  },
+  // 포스트 댓글 보이스 생성
+  {
+    url: '/api/v1/communities/:communityId/memories/:memoryId/posts/:postId/comments/voices',
+    method: 'POST',
+  },
   // 방명록 - Get associate profile
   {
     url: '/api/v1/communities/:communityId/associates/:associateId',
@@ -86,7 +96,7 @@ export default defineMock([
       pageInfo: { nextCursor: 0, hasNext: true },
     },
   },
-  // 방명록 텍스트 생성
+  // 방명록 리액션 생성
   {
     url: '/api/v1/communities/:communityId/associates/:associateId/guest-books',
     method: 'POST',
