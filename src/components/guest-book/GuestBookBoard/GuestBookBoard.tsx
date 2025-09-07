@@ -21,7 +21,7 @@ export default function GuestBookBoard({ communityId, associateId }: Props) {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useGuestBookList(communityId, associateId, { size: 10 })
-  const { mutate: createComment } = useCreateGuestBookText(
+  const { mutate: createComment, isPending } = useCreateGuestBookText(
     communityId,
     associateId,
   )
@@ -29,7 +29,7 @@ export default function GuestBookBoard({ communityId, associateId }: Props) {
   const comments = data?.pages.flatMap(page => page.guestBooks) || []
 
   const handleCommentSubmit = () => {
-    if (inputValue.trim() === '') return
+    if (inputValue.trim() === '' || isPending) return
     createComment(
       { type: 'TEXT', content: inputValue },
       {
