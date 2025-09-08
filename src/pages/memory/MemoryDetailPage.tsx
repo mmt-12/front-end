@@ -33,7 +33,7 @@ export default function MemoryDetailPage() {
         <MemoryInfo {...memory} saveEnabled />
       </header>
       <InfiniteScroll
-        fetchNext={() => fetchNextPage()}
+        fetchNext={fetchNextPage}
         hasNextPage={hasNextPage}
         isFetchingNext={isFetchingNextPage}
       >

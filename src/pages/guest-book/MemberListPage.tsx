@@ -59,7 +59,7 @@ export default function MemberListPage() {
         count={filteredMembers.length}
       />
       <InfiniteScroll
-        fetchNext={() => fetchNextPage()}
+        fetchNext={fetchNextPage}
         hasNextPage={hasNextPage}
         isFetchingNext={isFetchingNextPage}
       >

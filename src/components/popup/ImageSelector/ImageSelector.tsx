@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { css, useTheme } from '@emotion/react'
 
 import { useProfileImageList } from '@/api'
-import InfiniteScroll from '@/components/common/InfiniteScroll'
 import BottomButton from '@/components/common/BottomButton'
 import Img from '@/components/common/Img'
+import InfiniteScroll from '@/components/common/InfiniteScroll'
 import ProfileImageList from '@/components/common/ProfileImageList'
 import WavyBox from '@/components/guest-book/WavyBox'
 
@@ -34,7 +34,7 @@ export default function ImageSelector({ value, onSelect }: Props) {
       </div>
       {images.length > 0 && (
         <InfiniteScroll
-          fetchNext={() => fetchNextPage()}
+          fetchNext={fetchNextPage}
           hasNextPage={hasNextPage}
           isFetchingNext={isFetchingNextPage}
         >

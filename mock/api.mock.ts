@@ -149,7 +149,7 @@ export default defineMock([
       voices: VOICES,
       pageInfo: {
         nextCursor: 0,
-        hasNext: false,
+        hasNext: true,
       },
     },
   },
@@ -160,7 +160,7 @@ export default defineMock([
       emoji: EMOJIS,
       pageInfo: {
         nextCursor: 0,
-        hasNext: false,
+        hasNext: true,
       },
     },
   },
@@ -171,7 +171,7 @@ export default defineMock([
       notifications: NOTIFICATIONS,
       pageInfo: {
         nextCursor: 0,
-        hasNext: false,
+        hasNext: true,
       },
     },
   },

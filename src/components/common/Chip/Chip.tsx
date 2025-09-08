@@ -1,16 +1,11 @@
 import type { JSX } from 'react'
-import {
-  css,
-  useTheme,
-  type SerializedStyles,
-  type Theme,
-} from '@emotion/react'
+import { css, useTheme, type Interpolation, type Theme } from '@emotion/react'
 
 interface Props {
   label: string | number
   Icon: JSX.ElementType
   onClick?: () => void
-  customCss?: SerializedStyles
+  customCss?: Interpolation<Theme>
 }
 
 export default function Chip({ label, onClick, Icon, customCss }: Props) {

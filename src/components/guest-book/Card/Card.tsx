@@ -1,4 +1,4 @@
-import { css, useTheme, type SerializedStyles } from '@emotion/react'
+import { css, useTheme, type Interpolation, type Theme } from '@emotion/react'
 import { Widget } from '@solar-icons/react'
 
 import WavyBox from '@/components/guest-book/WavyBox'
@@ -7,7 +7,7 @@ interface Props {
   title: string
   onButtonClick?: () => void
   children: React.ReactNode
-  customCss?: SerializedStyles
+  customCss?: Interpolation<Theme>
 }
 
 export default function Card({
@@ -24,7 +24,7 @@ export default function Card({
       strokeWidth={2.2}
       backgroundColor='white'
       borderRadius={16}
-      customCss={css([containerStyle, customCss])}
+      customCss={[containerStyle, customCss]}
     >
       <div css={contentStyle}>
         <div css={headerStyle}>

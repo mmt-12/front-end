@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import type { SerializedStyles } from '@emotion/react'
+import type { Interpolation } from '@emotion/react'
 import type { Icon } from '@solar-icons/react/lib/types'
 
 import type { Achievement } from './api'
@@ -49,7 +49,7 @@ export interface ButtonProps {
   type?: 'primary' | 'secondary' | 'disabled'
   size?: 'sm' | 'md' | 'lg' | 'full'
   onClick?: () => void
-  customCss?: SerializedStyles
+  customCss?: Interpolation
 }
 
 export type DayCellType = 'default' | 'inRange' | 'dot'

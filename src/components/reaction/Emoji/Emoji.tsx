@@ -57,8 +57,8 @@ const containerStyle = (
 
 const imageWrapperStyle = (size: 'md' | 'lg', isAmount: boolean) =>
   css({
-    width: size === 'md' ? (isAmount ? '40px' : '48px') : '120px',
-    height: size === 'md' ? (isAmount ? '40px' : '48px') : '120px',
+    width: size === 'md' ? (isAmount ? '40px' : '52px') : '120px',
+    height: size === 'md' ? (isAmount ? '40px' : '52px') : '120px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
