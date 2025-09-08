@@ -1,5 +1,5 @@
 import { PenNewSquare } from '@solar-icons/react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import { usePostList } from '@/api'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
@@ -7,18 +7,20 @@ import MemoryInfo from '@/components/memory/MemoryInfo'
 import Post, { PostSkeleton } from '@/components/memory/Post'
 import useHeader from '@/hooks/useHeader'
 import { ROUTES } from '@/routes/ROUTES'
-import type { IMemoryInfo } from '@/types/memory'
+import { useUserStore } from '@/store/userStore'
 
 export default function MemoryDetailPage() {
   const navigate = useNavigate()
-  const memory = useLocation().state.memory as IMemoryInfo
+  const memoryId = Number(useParams().memoryId!)
+  const { communityId } = useUserStore()
+  const { data: memory } = usePostList(communityId, memoryId)
 
   useHeader({
-    routeName: memory.title,
+    routeName: memory?.title || '',
     rightItem: {
       icon: PenNewSquare,
       onClick: () => {
-        navigate(ROUTES.POST_REGISTER, { state: { memory: memory } })
+        navigate(ROUTES.POST_REGISTER(memory.id))
       },
     },
   })

@@ -74,15 +74,15 @@ const router = createBrowserRouter([
             element: <Pages.MemoryRegisterPage />,
           },
           {
-            path: ROUTES.MEMORY_DETAIL(':id'),
+            path: ROUTES.MEMORY_DETAIL(':memoryId'),
             element: <Pages.MemoryDetailPage />,
           },
           {
-            path: ROUTES.POST_DETAIL(':id'),
+            path: ROUTES.POST_DETAIL(':memoryId', ':postId'),
             element: <Pages.PostDetailPage />,
           },
           {
-            path: ROUTES.POST_REGISTER,
+            path: ROUTES.POST_REGISTER(':memoryId'),
             element: <Pages.PostRegisterPage />,
           },
           {

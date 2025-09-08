@@ -16,7 +16,6 @@ export default function MemoryListItem(props: Props) {
     <Link
       to={ROUTES.MEMORY_DETAIL(props.id)}
       css={containerStyle(!!props.isGrid)}
-      state={{ memory: props as IMemoryInfo }}
     >
       <MemoryInfo
         {...props}
