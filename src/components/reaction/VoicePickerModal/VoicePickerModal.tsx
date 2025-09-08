@@ -5,7 +5,9 @@ import { css } from '@emotion/react'
 import { useVoiceList } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import BottomDrawer from '@/components/common/BottomDrawer'
+import InfiniteScroll from '@/components/common/InfiniteScroll'
 import InputField from '@/components/common/InputField'
+import { Skeleton } from '@/components/common/Skeleton'
 import { useModal } from '@/hooks/useModal'
 import { useReactionPicker } from '@/hooks/useReactionPicker'
 import { useUserStore } from '@/store/userStore'
@@ -17,7 +19,8 @@ export default function VoicePickerModal() {
   const { openModal, closeModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
   const { communityId } = useUserStore()
-  const { data } = useVoiceList(communityId, {})
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useVoiceList(communityId, { keyword: searchKey })
   const voices = data?.pages.flatMap(page => page.voices) || []
 
   const { selectReaction } = useReactionPicker('VOICE')
@@ -38,32 +41,46 @@ export default function VoicePickerModal() {
         css={[voiceListStyle, { marginBottom: '4px' }]}
         className='no-scrollbar'
       >
-        {voices.slice(0, 6).map(voice => (
-          <Voice
-            key={voice.id}
-            {...voice}
-            amount={undefined}
-            onClick={(_e, id) => handleSelectVoice(id)}
-          />
-        ))}
+        {isLoading
+          ? Array.from({ length: 4 }).map((_, i) => (
+              <Skeleton key={i} width={120} height={36} radius={24} />
+            ))
+          : voices
+              .slice(0, 6)
+              .map(voice => (
+                <Voice
+                  key={voice.id}
+                  {...voice}
+                  amount={undefined}
+                  onClick={(_e, id) => handleSelectVoice(id)}
+                />
+              ))}
       </div>
       <InputField
         label='검색'
         value={searchKey}
         onChange={e => setSearchKey(e.target.value)}
       />
-      <div css={[voiceListStyle, { flexWrap: 'wrap', marginTop: '6px' }]}>
-        {voices
-          .filter(voice => voice.name.includes(searchKey))
-          .map(voice => (
-            <Voice
-              key={voice.id}
-              {...voice}
-              amount={undefined}
-              onClick={(_e, id) => handleSelectVoice(id)}
-            />
-          ))}
-      </div>
+      <InfiniteScroll
+        fetchNext={fetchNextPage}
+        hasNextPage={hasNextPage}
+        isFetchingNext={isFetchingNextPage}
+      >
+        <div css={[voiceListStyle, { flexWrap: 'wrap', marginTop: '6px' }]}>
+          {isLoading
+            ? Array.from({ length: 7 }).map((_, i) => (
+                <Skeleton key={i} width={150} height={34} radius={24} />
+              ))
+            : voices.map(voice => (
+                <Voice
+                  key={voice.id}
+                  {...voice}
+                  amount={undefined}
+                  onClick={(_e, id) => handleSelectVoice(id)}
+                />
+              ))}
+        </div>
+      </InfiniteScroll>
       <BottomButton
         type='secondary'
         label='보이스 만들기'
@@ -86,6 +103,6 @@ const voiceListStyle = css({
   padding: '4px 16px',
 
   display: 'flex',
-  gap: '8px',
+  gap: '12px 10px',
   overflowX: 'auto',
 })

@@ -38,7 +38,7 @@ export default function ProfileImageRegisterPage() {
       />
       {images.length > 0 && (
         <InfiniteScroll
-          fetchNext={() => fetchNextPage()}
+          fetchNext={fetchNextPage}
           hasNextPage={hasNextPage}
           isFetchingNext={isFetchingNextPage}
         >
