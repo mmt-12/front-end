@@ -1,11 +1,11 @@
-import { css, type SerializedStyles } from '@emotion/react'
+import { css, type Interpolation, type Theme } from '@emotion/react'
 
 interface Props {
   strokeColor: string
   strokeWidth: number
   backgroundColor?: string
   borderRadius?: number
-  customCss?: SerializedStyles
+  customCss?: Interpolation<Theme>
   children: React.ReactNode
   childrenOnTop?: boolean
 }

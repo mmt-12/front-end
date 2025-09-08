@@ -2,6 +2,7 @@ import { useRef, useState, type MouseEvent } from 'react'
 import { css, useTheme, type Theme } from '@emotion/react'
 import { PauseCircle, PlayCircle } from '@solar-icons/react'
 
+import Marquee from '@/components/common/Marquee'
 import type { IReaction } from '@/types/reaction'
 
 export default function Voice({
@@ -37,14 +38,16 @@ export default function Voice({
       <div css={playButtonWrapperStyle}>
         <button onClick={handleButtonClick} css={playButtonStyle}>
           {isPlaying ? (
-            <PauseCircle weight='Bold' size={28} color={theme.white} />
+            <PauseCircle weight='Bold' size={36} color={theme.white} />
           ) : (
-            <PlayCircle weight='Bold' size={28} color={theme.white} />
+            <PlayCircle weight='Bold' size={36} color={theme.white} />
           )}
         </button>
-        <p className='stardust' css={nameStyle(name.length === 0)}>
-          {name}
-        </p>
+        <div css={marqueeStyle}>
+          <Marquee speed={20} className='stardust'>
+            <p css={nameStyle}>{name}</p>
+          </Marquee>
+        </div>
       </div>
       {amount && <span>{amount}</span>}
       <audio
@@ -63,10 +66,10 @@ const containerStyle = (
   isAmount: boolean,
 ) =>
   css({
-    width: 'fit-content',
     padding: isAmount ? (isActive ? '4px 12px 4px 4px' : '2px') : 0,
 
     display: 'flex',
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
     gap: '4px',
@@ -89,24 +92,30 @@ const playButtonWrapperStyle = (theme: Theme) =>
   css({
     padding: '3px 12px 3px 4px',
     display: 'flex',
+    flexGrow: 1,
     alignItems: 'center',
     gap: '4px',
     borderRadius: '24px',
     backgroundColor: theme.stone[600],
   })
 
-const nameStyle = (isBlank: boolean) =>
-  css({
-    color: 'white',
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-    width: isBlank ? 100 : 'auto',
-  })
+const marqueeStyle = css({
+  width: 'fit-content',
+  maxWidth: '100px',
+})
+
+const nameStyle = css({
+  marginRight: '8px',
+  width: 'fit-content',
+  color: 'white',
+  fontSize: '17px',
+})
 
 const playButtonStyle = css({
-  width: '32px',
+  width: '38px',
   aspectRatio: '1 / 1',
   display: 'flex',
+  flexShrink: 0,
   alignItems: 'center',
   justifyContent: 'center',
 })

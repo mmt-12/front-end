@@ -60,12 +60,18 @@ export default function EmojiPickerModal() {
         value={searchKey}
         onChange={e => setSearchKey(e.target.value)}
       />
-      <InfiniteScroll
-        fetchNext={fetchNextPage}
-        hasNextPage={hasNextPage}
-        isFetchingNext={isFetchingNextPage}
+      <div
+        css={{
+          maxHeight: '240px',
+          overflow: 'auto',
+        }}
       >
-        <div css={emojiListStyle}>
+        <InfiniteScroll
+          fetchNext={fetchNextPage}
+          hasNextPage={hasNextPage}
+          isFetchingNext={isFetchingNextPage}
+          customCSS={emojiListStyle}
+        >
           {isLoading
             ? Array.from({ length: 12 }).map((_, i) => (
                 <Skeleton key={i} width={52} height={52} radius={12} />
@@ -78,8 +84,8 @@ export default function EmojiPickerModal() {
                   onClick={(_e, id) => handleSelectEmoji(id)}
                 />
               ))}
-        </div>
-      </InfiniteScroll>
+        </InfiniteScroll>
+      </div>
       <BottomButton
         type='secondary'
         label='이모티콘 만들기'
@@ -99,12 +105,9 @@ const spanStyle = (theme: Theme) =>
   })
 
 const emojiListStyle = css({
-  maxHeight: '40vh',
   padding: '0px 16px',
 
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fill, minmax(40px, 1fr))',
   gap: '16px 18px',
-
-  overflow: 'auto',
 })

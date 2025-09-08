@@ -38,7 +38,7 @@ export default function VoicePickerModal() {
     <BottomDrawer>
       <p css={spanStyle}>최근 사용</p>
       <div
-        css={[voiceListStyle, { marginBottom: '4px' }]}
+        css={[voiceListStyle, { flexWrap: 'nowrap', marginBottom: '4px' }]}
         className='no-scrollbar'
       >
         {isLoading
@@ -61,12 +61,18 @@ export default function VoicePickerModal() {
         value={searchKey}
         onChange={e => setSearchKey(e.target.value)}
       />
-      <InfiniteScroll
-        fetchNext={fetchNextPage}
-        hasNextPage={hasNextPage}
-        isFetchingNext={isFetchingNextPage}
+      <div
+        css={{
+          maxHeight: '240px',
+          overflow: 'auto',
+        }}
       >
-        <div css={[voiceListStyle, { flexWrap: 'wrap', marginTop: '6px' }]}>
+        <InfiniteScroll
+          fetchNext={fetchNextPage}
+          hasNextPage={hasNextPage}
+          isFetchingNext={isFetchingNextPage}
+          customCSS={voiceListStyle}
+        >
           {isLoading
             ? Array.from({ length: 7 }).map((_, i) => (
                 <Skeleton key={i} width={150} height={34} radius={24} />
@@ -79,8 +85,8 @@ export default function VoicePickerModal() {
                   onClick={(_e, id) => handleSelectVoice(id)}
                 />
               ))}
-        </div>
-      </InfiniteScroll>
+        </InfiniteScroll>
+      </div>
       <BottomButton
         type='secondary'
         label='보이스 만들기'
@@ -101,8 +107,11 @@ const spanStyle = (theme: Theme) =>
 
 const voiceListStyle = css({
   padding: '4px 16px',
+  marginTop: '6px',
 
+  flexWrap: 'wrap',
   display: 'flex',
   gap: '12px 10px',
-  overflowX: 'auto',
+
+  overflow: 'scroll',
 })
