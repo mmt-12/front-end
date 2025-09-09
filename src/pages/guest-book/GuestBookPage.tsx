@@ -7,7 +7,8 @@ import { useAssociateProfile, useGuestBookList } from '@/api'
 import { Skeleton } from '@/components/common/Skeleton'
 import BadgeList from '@/components/guest-book/BadgeList'
 import Card from '@/components/guest-book/Card'
-import Comment from '@/components/guest-book/Comment/Comment'
+import Comment from '@/components/guest-book/Comment'
+import GuestBookBoard from '@/components/guest-book/GuestBookBoard'
 import GuestBookProfile, {
   GuestBookProfileSkeleton,
 } from '@/components/guest-book/GuestBookProfile'
@@ -24,14 +25,13 @@ const MbtiChart = lazy(() => import('@/components/guest-book/MbtiChart'))
 
 export default function GuestBookPage() {
   useStardust()
+  const navigate = useNavigate()
   const [mode, setMode] = useState<'MBTI' | 'MEDALS' | 'GUEST BOOK' | null>(
     null,
   )
-  const { birthDate, communityId } = useUserStore()
   const [isClosing, setIsClosing] = useState(false)
-  const navigate = useNavigate()
-
   const { id } = useParams()
+  const { birthDate, communityId, associateId: myId } = useUserStore()
 
   const associateId = Number(id)
   const { data: profile } = useAssociateProfile(communityId, associateId)
@@ -41,7 +41,7 @@ export default function GuestBookPage() {
     { size: 4 },
   )
 
-  const isMyPage = birthDate === profile?.birthday
+  const isMyPage = birthDate === profile?.birthday && myId === associateId
 
   useHeader({
     routeName: '방명록',
@@ -78,12 +78,18 @@ export default function GuestBookPage() {
                 onClick={() => setMode('MBTI')}
                 style={{ width: '100%', height: '140px' }}
               >
-                <MbtiChart />
+                <MbtiChart
+                  communityId={communityId}
+                  associateId={associateId}
+                />
               </div>
             </Card>
             <Card title='MEDALS'>
               <div onClick={() => setMode('MEDALS')}>
-                <BadgeList />
+                <BadgeList
+                  communityId={communityId}
+                  associateId={associateId}
+                />
               </div>
             </Card>
           </div>
@@ -130,9 +136,26 @@ export default function GuestBookPage() {
                   }, 160)
                 }}
               >
-                {mode === 'MEDALS' && <BadgeList isExpanded />}
+                {mode === 'MEDALS' && (
+                  <BadgeList
+                    communityId={communityId}
+                    associateId={associateId}
+                    isExpanded
+                  />
+                )}
                 {mode === 'MBTI' && profile && (
-                  <MbtiTest isMyPage={isMyPage} name={profile.nickname} />
+                  <MbtiTest
+                    isMyPage={isMyPage}
+                    name={profile.nickname}
+                    communityId={communityId}
+                    associateId={associateId}
+                  />
+                )}
+                {mode === 'GUEST BOOK' && profile && (
+                  <GuestBookBoard
+                    communityId={communityId}
+                    associateId={associateId}
+                  />
                 )}
               </Card>
             </div>

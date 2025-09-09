@@ -1,15 +1,15 @@
 import { useEffect, useRef } from 'react'
+import type { Interpolation, Theme } from '@emotion/react'
 
 import Loader from '../Loader/Loader'
 
 interface Props {
   children: React.ReactNode
   fetchNext: () => void | Promise<unknown>
+  customCSS?: Interpolation<Theme>
   hasNextPage?: boolean
   isFetchingNext?: boolean
   rootMargin?: string
-  threshold?: number
-  className?: string
   loader?: React.ReactNode
   disabled?: boolean
 }
@@ -20,10 +20,9 @@ export default function InfiniteScroll({
   hasNextPage,
   isFetchingNext,
   rootMargin = '200px',
-  threshold = 0,
-  className,
   loader,
   disabled = false,
+  customCSS,
 }: Props) {
   const sentinelRef = useRef<HTMLDivElement | null>(null)
 
@@ -42,15 +41,15 @@ export default function InfiniteScroll({
 
         fetchNext()
       },
-      { root: null, rootMargin, threshold },
+      { root: null, rootMargin },
     )
 
     observer.observe(el)
     return () => observer.unobserve(el)
-  }, [fetchNext, hasNextPage, isFetchingNext, rootMargin, threshold, disabled])
+  }, [fetchNext, hasNextPage, isFetchingNext, rootMargin, disabled])
 
   return (
-    <div className={className}>
+    <div css={customCSS}>
       {children}
       {isFetchingNext && (loader ?? <Loader />)}
       <div ref={sentinelRef} />

@@ -30,6 +30,8 @@ const containerBaseStyle = (theme: Theme) =>
 
     borderTopLeftRadius: '24px',
     borderTopRightRadius: '24px',
+
+    overflowY: 'scroll',
   })
 
 const barStyle = (theme: Theme) =>

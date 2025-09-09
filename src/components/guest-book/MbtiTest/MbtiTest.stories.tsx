@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+
 import MbtiTest from './MbtiTest'
 
 const meta = {
@@ -8,6 +9,8 @@ const meta = {
   args: {
     isMyPage: false,
     name: '이름',
+    communityId: 1,
+    associateId: 1,
   },
 } satisfies Meta<typeof MbtiTest>
 

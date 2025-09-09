@@ -9,6 +9,7 @@ interface Props {
   onChange: (
     _value: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement>
   type?: 'input' | 'textarea'
   label?: string
 }
@@ -16,6 +17,7 @@ interface Props {
 export default function InputField({
   value,
   onChange,
+  onKeyDown,
   type = 'input',
   label,
 }: Props) {
@@ -29,9 +31,9 @@ export default function InputField({
     <div css={inputContainerStyle}>
       {label && <label css={labelStyle}>{label}</label>}
       {type === 'textarea' ? (
-        <textarea rows={3} {...inputProps} />
+        <textarea rows={3} {...inputProps} onKeyDown={onKeyDown} />
       ) : (
-        <input type='text' {...inputProps} />
+        <input type='text' {...inputProps} onKeyDown={onKeyDown} />
       )}
     </div>
   )

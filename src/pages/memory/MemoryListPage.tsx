@@ -3,7 +3,9 @@ import { Album, SortByTime } from '@solar-icons/react'
 
 import { useMemoryList } from '@/api'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
-import MemoryListItem, { MemoryListItemSkeleton } from '@/components/memory/MemoryListItem'
+import MemoryListItem, {
+  MemoryListItemSkeleton,
+} from '@/components/memory/MemoryListItem'
 import GreetingPopup from '@/components/popup/GreetingPopup'
 import useHeader from '@/hooks/useHeader'
 import { useSettingStore } from '@/store/settingStore'
@@ -22,10 +24,11 @@ export default function MemoryListPage() {
     leftItem: leftItem,
   })
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useMemoryList(1, {
-    cursor: 0,
-    size: 10,
-  })
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useMemoryList(1, {
+      cursor: 0,
+      size: 10,
+    })
   const memories = data?.pages.flatMap(page => page.memories) || []
 
   const toggleViewMode = useCallback(() => {
@@ -46,7 +49,7 @@ export default function MemoryListPage() {
       <GreetingPopup />
       {data ? (
         <InfiniteScroll
-          fetchNext={() => fetchNextPage()}
+          fetchNext={fetchNextPage}
           hasNextPage={hasNextPage}
           isFetchingNext={isFetchingNextPage}
         >
@@ -61,7 +64,10 @@ export default function MemoryListPage() {
       ) : (
         <div>
           {Array.from({ length: 6 }).map((_, idx) => (
-            <MemoryListItemSkeleton key={idx} isGrid={memoryListView == 'grid'} />
+            <MemoryListItemSkeleton
+              key={idx}
+              isGrid={memoryListView == 'grid'}
+            />
           ))}
         </div>
       )}

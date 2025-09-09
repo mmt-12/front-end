@@ -5,17 +5,32 @@ import { css } from '@emotion/react'
 import { useEmojiList } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import BottomDrawer from '@/components/common/BottomDrawer'
+import InfiniteScroll from '@/components/common/InfiniteScroll'
 import InputField from '@/components/common/InputField'
+import { Skeleton } from '@/components/common/Skeleton'
 import { useModal } from '@/hooks/useModal'
+import { useReactionPicker } from '@/hooks/useReactionPicker'
+import { useUserStore } from '@/store/userStore'
 import { slideDown } from '@/styles/animation'
 import Emoji from '../Emoji/Emoji'
 import EmojiRegisterModal from '../EmojiRegisterModal'
 
 export default function EmojiPickerModal() {
-  const { openModal } = useModal()
+  const { openModal, closeModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
-  const { data } = useEmojiList(1, {})
+  const { communityId } = useUserStore()
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useEmojiList(communityId, {
+      keyword: searchKey,
+    })
   const emojis = data?.pages.flatMap(page => page.emoji) || []
+
+  const { selectReaction } = useReactionPicker('EMOJI')
+
+  const handleSelectEmoji = (emojiId: number) => {
+    selectReaction(emojiId)
+    closeModal()
+  }
 
   const handleRegisterEmojiClick = () => {
     openModal(<EmojiRegisterModal />, slideDown)
@@ -25,21 +40,51 @@ export default function EmojiPickerModal() {
     <BottomDrawer>
       <p css={spanStyle}>최근 사용</p>
       <div css={[emojiListStyle, { marginBottom: '4px' }]}>
-        {emojis.slice(0, 6).map(emoji => (
-          <Emoji key={emoji.id} {...emoji} amount={undefined} />
-        ))}
+        {isLoading
+          ? Array.from({ length: 6 }).map((_, i) => (
+              <Skeleton key={i} width={48} height={48} radius={12} />
+            ))
+          : emojis
+              .slice(0, 6)
+              .map(emoji => (
+                <Emoji
+                  key={emoji.id}
+                  {...emoji}
+                  amount={undefined}
+                  onClick={(_e, id) => handleSelectEmoji(id)}
+                />
+              ))}
       </div>
       <InputField
         label='검색'
         value={searchKey}
         onChange={e => setSearchKey(e.target.value)}
       />
-      <div css={[emojiListStyle, { flexWrap: 'wrap', marginTop: '6px' }]}>
-        {emojis
-          .filter(emoji => emoji.name.includes(searchKey))
-          .map(emoji => (
-            <Emoji key={emoji.id} {...emoji} amount={undefined} />
-          ))}
+      <div
+        css={{
+          maxHeight: '240px',
+          overflow: 'auto',
+        }}
+      >
+        <InfiniteScroll
+          fetchNext={fetchNextPage}
+          hasNextPage={hasNextPage}
+          isFetchingNext={isFetchingNextPage}
+          customCSS={emojiListStyle}
+        >
+          {isLoading
+            ? Array.from({ length: 12 }).map((_, i) => (
+                <Skeleton key={i} width={52} height={52} radius={12} />
+              ))
+            : emojis.map(emoji => (
+                <Emoji
+                  key={emoji.id}
+                  {...emoji}
+                  amount={undefined}
+                  onClick={(_e, id) => handleSelectEmoji(id)}
+                />
+              ))}
+        </InfiniteScroll>
       </div>
       <BottomButton
         type='secondary'
@@ -64,7 +109,5 @@ const emojiListStyle = css({
 
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fill, minmax(40px, 1fr))',
-  gap: '16px',
-
-  overflow: 'visible',
+  gap: '16px 18px',
 })

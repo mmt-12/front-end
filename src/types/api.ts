@@ -1,3 +1,4 @@
+import type { GuestBookCommentType } from './common'
 import type { locationType } from './memory'
 import type { NotificationType } from './notification'
 
@@ -173,7 +174,7 @@ export interface AchievementListResponse {
 
 export interface GuestBook {
   id: number
-  type: string
+  type: GuestBookCommentType
   content: string
   createdAt: string
 }
@@ -185,7 +186,7 @@ export interface GuestBookListResponse {
 }
 
 export interface CreateGuestBookRequest {
-  type: string
+  type: GuestBookCommentType
   contentId?: number
   content?: string
 }

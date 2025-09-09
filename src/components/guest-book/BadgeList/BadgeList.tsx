@@ -5,12 +5,17 @@ import Badge from '@/components/common/Badge'
 import BadgeListSkeleton from './BadgeList.Skeleton'
 
 interface Props {
+  communityId: number
+  associateId: number
   isExpanded?: boolean
 }
 
-export default function BadgeList({ isExpanded = false }: Props) {
-  const userId = 1
-  const { data } = useAchievements(1, userId)
+export default function BadgeList({
+  communityId,
+  associateId,
+  isExpanded = false,
+}: Props) {
+  const { data } = useAchievements(communityId, associateId)
 
   if (!data) return <BadgeListSkeleton isExpanded={isExpanded} />
 

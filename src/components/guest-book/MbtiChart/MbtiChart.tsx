@@ -14,10 +14,14 @@ const EChartsReactCore = lazy(() => import('echarts-for-react/lib/core'))
 // 사용할 모듈 등록
 echarts.use([PieChart, LegendComponent, SVGRenderer])
 
-export default function MbtiChart() {
+interface Props {
+  communityId: number
+  associateId: number
+}
+
+export default function MbtiChart({ communityId, associateId }: Props) {
   const theme = useTheme()
-  const userId = 1
-  const { data } = useMbtiTest(1, userId)
+  const { data } = useMbtiTest(communityId, associateId)
   const chartRef = useRef(null)
 
   const option = useMemo(() => {
