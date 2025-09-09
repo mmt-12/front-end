@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react'
 
+import Loader from '../Loader/Loader'
+
 interface Props {
   children: React.ReactNode
   fetchNext: () => void | Promise<unknown>
@@ -50,9 +52,8 @@ export default function InfiniteScroll({
   return (
     <div className={className}>
       {children}
+      {isFetchingNext && (loader ?? <Loader />)}
       <div ref={sentinelRef} />
-      {isFetchingNext &&
-        (loader ?? <div style={{ padding: 8 }}>Loading...</div>)}
     </div>
   )
 }

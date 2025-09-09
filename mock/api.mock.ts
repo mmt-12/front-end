@@ -71,6 +71,14 @@ export default defineMock([
       hasNext: true
     },
   },
+  // 방명록 - 4개만 불러오기
+  {
+    url: '/api/v1/communities/:communityId/associates/:associateId/guest-books?size=4',
+    body: {
+      guestBooks: GUEST_BOOK.slice(0, 4),
+      pageInfo: { nextCursor: 0, hasNext: false },
+    },
+  },
   // 방명록 - Get MBTI tests for an associate
   {
     url: '/api/v1/communities/:communityId/associates/:associateId/mbti-tests',

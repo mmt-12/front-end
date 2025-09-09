@@ -39,3 +39,22 @@ export const slideInRight = keyframes({
   from: { transform: 'translateX(16px)', opacity: 0 },
   to: { transform: 'translateX(0)', opacity: 1 },
 })
+
+export const rotation = keyframes({
+  from: {
+    transform: 'rotate(0deg)',
+  },
+  to: {
+    transform: 'rotate(360deg)',
+  },
+})
+
+export const flipIn = keyframes({
+  from: { transform: 'perspective(1000px) rotateY(90deg)', opacity: 0 },
+  to: { transform: 'perspective(1000px) rotateY(0deg)', opacity: 1 },
+})
+
+export const flipOut = keyframes({
+  from: { transform: 'perspective(1000px) rotateY(0deg)', opacity: 1 },
+  to: { transform: 'perspective(1000px) rotateY(90deg)', opacity: 0 },
+})

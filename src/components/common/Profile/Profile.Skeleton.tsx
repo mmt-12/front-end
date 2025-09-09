@@ -19,10 +19,10 @@ export default function ProfileSkeleton({
       </div>
       <div css={contentStyle}>
         <div css={nameRowStyle}>
-          <Skeleton height={16} width={size === 'md' ? 120 : 80} />
-          <SkeletonCircle size={20} />
+          <Skeleton height={16} width={size === 'md' ? 80 : 60} />
+          <Skeleton height={20} width={60} radius={20} />
         </div>
-        {size === 'md' && <SkeletonText lines={1} width={'60%'} />}
+        {size === 'md' && <SkeletonText lines={1} width={'100%'} />}
       </div>
     </div>
   )
@@ -39,6 +39,7 @@ const containerStyle = (size: 'sm' | 'md') =>
     whiteSpace: 'nowrap',
   })
 const contentStyle = css({
+  width: '100%',
   padding: '2px',
   display: 'flex',
   flexDirection: 'column',

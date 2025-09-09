@@ -1,17 +1,16 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { css } from '@emotion/react'
 import { UserRounded } from '@solar-icons/react'
 import { Link } from 'react-router-dom'
 
 import { useAssociateList } from '@/api'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
-import Profile from '@/components/common/Profile'
+import Profile, { ProfileSkeleton } from '@/components/common/Profile'
 import SearchBar from '@/components/common/SearchBar'
 import useHeader from '@/hooks/useHeader'
 import useStardust from '@/hooks/useStardust'
 import { ROUTES } from '@/routes/ROUTES'
 import { flexGap } from '@/styles/common'
-import { filterByStringProp } from '@/utils/filter'
 
 export default function MemberListPage() {
   useStardust()
@@ -21,40 +20,43 @@ export default function MemberListPage() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useAssociateList(1)
+  } = useAssociateList(1, { keyword: searchTerm, size: 20 })
 
-  const filteredMembers = useMemo(() => {
-    const associates = memberData?.pages.flatMap(page => page.associates) || []
-
-    return filterByStringProp(associates, 'nickname', searchTerm)
-  }, [searchTerm, memberData])
+  const members = memberData?.pages.flatMap(page => page.associates) || []
 
   useHeader({
     routeName: '멤버',
   })
-
-  if (!memberData) return null
 
   return (
     <>
       <SearchBar
         onChange={setSearchTerm}
         icon={UserRounded}
-        count={filteredMembers.length}
+        count={members.length}
       />
-      <InfiniteScroll
-        fetchNext={() => fetchNextPage()}
-        hasNextPage={hasNextPage}
-        isFetchingNext={isFetchingNextPage}
-      >
-        <div css={[flexGap(8), css({ margin: '0 16px 16px' })]}>
-          {filteredMembers.map(member => (
+      {memberData ? (
+        <InfiniteScroll
+          fetchNext={fetchNextPage}
+          hasNextPage={hasNextPage}
+          isFetchingNext={isFetchingNextPage}
+          // customCSS={[flexGap(8), css({ margin: '0 16px 16px' })]}
+        >
+          {members.map(member => (
             <Link to={ROUTES.GUEST_BOOK(member.id)} key={member.id}>
               <Profile {...member} />
             </Link>
           ))}
+        </InfiniteScroll>
+      ) : (
+        <div css={[flexGap(8), css({ margin: '0 16px 16px' })]}>
+          {Array(5)
+            .fill(0)
+            .map((_, index) => (
+              <ProfileSkeleton key={index} />
+            ))}
         </div>
-      </InfiniteScroll>
+      )}
     </>
   )
 }

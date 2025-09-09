@@ -41,7 +41,7 @@ export default function MemoryInfo(props: Props) {
   }
 
   return (
-    <>
+    <div css={{ padding: '4px 8px' }}>
       <div css={titleRowStyle}>
         <h2>{props.title}</h2>
         <div css={countChipsStyle}>
@@ -79,7 +79,7 @@ export default function MemoryInfo(props: Props) {
         ) : (
           <p css={descriptionStyle}>{props.description}</p>
         ))}
-    </>
+    </div>
   )
 }
 
