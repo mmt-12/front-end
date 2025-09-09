@@ -1,6 +1,6 @@
 
 import { ROUTES } from '@/routes/ROUTES'
-import axios, { type AxiosResponse } from 'axios'
+import axios, { AxiosError, type AxiosResponse } from 'axios'
 
 // Fake delay utility
 function delay (ms: number) {
@@ -65,11 +65,11 @@ api.interceptors.response.use(
 
     return response
   },
-  async error => {
+  async (error: AxiosError) => {
     // 401 응답에 대해 refresh token으로 토큰 재발급 시도
     console.log(error)
-    if (error.status === 401) {
-      const newRequest = await handleUnauthorized(error)
+    if (error.response?.status === 401) {
+      const newRequest = await handleUnauthorized(error.response)
       // 재발급 성공 시 새로운 요청 시도
       if (newRequest !== null) return newRequest
     }
