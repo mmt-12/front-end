@@ -1,6 +1,7 @@
 import { css } from '@emotion/react'
 
-import { Skeleton, SkeletonText } from '@/components/common/Skeleton'
+import { Skeleton } from '@/components/common/Skeleton'
+import MemoryInfoSkeleton from '../MemoryInfo/MemoryInfo.Skeleton'
 
 export default function MemoryListItemSkeleton({
   isGrid = false,
@@ -8,18 +9,8 @@ export default function MemoryListItemSkeleton({
   isGrid?: boolean
 }) {
   return (
-    <div css={containerStyle(isGrid)}>
-      <div css={headerStyle}>
-        <Skeleton height={20} width='50%' />
-        <div css={chipRowStyle}>
-          <Skeleton width={40} height={24} radius={16} />
-          <Skeleton width={40} height={24} radius={16} />
-        </div>
-      </div>
-      <div css={metaStyle}>
-        <Skeleton height={12} width='40%' />
-        <Skeleton height={12} width='30%' />
-      </div>
+    <div css={containerStyle}>
+      <MemoryInfoSkeleton description={!isGrid} />
       {isGrid ? (
         <div css={gridStyle}>
           {Array.from({ length: 9 }).map((_, idx) => (
@@ -27,50 +18,39 @@ export default function MemoryListItemSkeleton({
           ))}
         </div>
       ) : (
-        <>
-          <SkeletonText lines={2} width='80%' />
-          <div css={imagesListStyle}>
-            {Array.from({ length: 3 }).map((_, idx) => (
-              <div key={idx}>
-                <Skeleton height={88} />
-              </div>
-            ))}
-          </div>
-        </>
+        <div css={imagesListStyle}>
+          {Array.from({ length: 3 }).map((_, idx) => (
+            <div css={skeletonWrapperStyle} key={idx}>
+              <Skeleton height='100%' radius={0} />
+            </div>
+          ))}
+        </div>
       )}
     </div>
   )
 }
 
-const containerStyle = (isGrid: boolean) =>
-  css({
-    display: 'flex',
-    flexDirection: 'column',
-    padding: isGrid ? '12px 4px' : '16px',
-    gap: '16px',
-  })
+const containerStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '8px 4px',
+  gap: '16px',
+})
 
-const headerStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 12,
+const skeletonWrapperStyle = css({
+  flex: 1,
+  aspectRatio: '1 / 1',
+  width: '100%',
 })
-const chipRowStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  gap: 6,
-  marginLeft: 'auto',
-})
-const metaStyle = css({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: 10,
-})
+
 const imagesListStyle = css({
+  height: 'fit-content',
+  margin: '0px 8px',
+
   display: 'flex',
   gap: 4,
-  '> div': { flex: 1, borderRadius: 12, overflow: 'hidden' },
+  overflow: 'hidden',
+  borderRadius: 20,
 })
 
 const gridStyle = css({

@@ -9,6 +9,7 @@ import {
 import { api } from '@/utils/api'
 import type {
   CreateMemoryRequest,
+  Memory,
   MemoryImagesResponse,
   MemoryListResponse,
 } from '@/types/api'
@@ -56,6 +57,16 @@ export function useMemoryList (communityId = 1, params?: MemoryListParams) {
     },
     getNextPageParam: lastPage =>
       lastPage.hasNext ? lastPage.nextCursor : undefined,
+  })
+}
+
+export function useMemoryDetail (communityId = 1, memoryId: number) {
+  return useQuery({
+    queryKey: ['memories', communityId, memoryId],
+    queryFn: () =>
+      api
+        .get(`/v1/communities/${communityId}/memories/${memoryId}`)
+        .then(r => r.data as Memory),
   })
 }
 

@@ -25,14 +25,12 @@ export default defineMock([
       hasNext: true
     },
   },
-  // 포스트 목록 조회
+  // 기억 상세 조회
   {
-    url: '/api/v1/communities/:communityId/memories/:memoryId/posts',
-    body: {
-      posts: POSTS,
-      nextCursor: 0,
-      hasNext: true
-    },
+    url: '/api/v1/communities/:communityId/memories/:memoryId',
+    body:
+      MEMORIES[0]
+    ,
   },
   // 포스트 댓글 이모지 생성
   {
@@ -86,7 +84,8 @@ export default defineMock([
     url: '/api/v1/communities/:communityId/associates/:associateId/guest-books?size=4',
     body: {
       guestBooks: GUEST_BOOK.slice(0, 4),
-      pageInfo: { nextCursor: 0, hasNext: false },
+      nextCursor: 0,
+      hasNext: false,
     },
   },
   // 방명록 - Get MBTI tests for an associate
@@ -151,7 +150,7 @@ export default defineMock([
   },
   // 포스트 목록 조회
   {
-    url: '/api/v1/communities/:communityId/memories/:memoryId',
+    url: '/api/v1/communities/:communityId/memories/:memoryId/posts',
     body: {
       posts: POSTS,
       nextCursor: 0, hasNext: true,

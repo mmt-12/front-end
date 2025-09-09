@@ -1,9 +1,11 @@
 import { PenNewSquare } from '@solar-icons/react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { usePostList } from '@/api'
+import { useMemoryDetail } from '@/api/memory'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
 import MemoryInfo from '@/components/memory/MemoryInfo'
+import MemoryInfoSkeleton from '@/components/memory/MemoryInfo/MemoryInfo.Skeleton'
 import Post, { PostSkeleton } from '@/components/memory/Post'
 import useHeader from '@/hooks/useHeader'
 import { ROUTES } from '@/routes/ROUTES'
@@ -11,28 +13,32 @@ import { useUserStore } from '@/store/userStore'
 
 export default function MemoryDetailPage() {
   const navigate = useNavigate()
-  const memoryId = Number(useParams().memoryId!)
+  const memoryId = Number(useParams().memoryId)
   const { communityId } = useUserStore()
-  const { data: memory } = usePostList(communityId, memoryId)
+  const { data: memory } = useMemoryDetail(communityId, memoryId)
 
   useHeader({
     routeName: memory?.title || '',
     rightItem: {
       icon: PenNewSquare,
       onClick: () => {
-        navigate(ROUTES.POST_REGISTER(memory.id))
+        navigate(ROUTES.POST_REGISTER(memoryId))
       },
     },
   })
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    usePostList(1, memory.id)
+    usePostList(1, memoryId)
   const posts = data?.pages.flatMap(page => page.posts) || []
 
   return (
     <>
-      <header css={{ padding: '16px 12px' }}>
-        <MemoryInfo {...memory} saveEnabled />
+      <header css={{ padding: '4px' }}>
+        {memory ? (
+          <MemoryInfo {...memory} saveEnabled />
+        ) : (
+          <MemoryInfoSkeleton saveEnabled description />
+        )}
       </header>
       <InfiniteScroll
         fetchNext={fetchNextPage}
