@@ -261,7 +261,7 @@ export interface Emoji {
 }
 
 export interface EmojiListResponse {
-  emoji: Emoji[]
+  emojis: Emoji[]
   hasNext: boolean
   nextCursor: number
 }

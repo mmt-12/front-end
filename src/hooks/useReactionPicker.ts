@@ -1,24 +1,21 @@
-import { useLocation, useMatch, useParams } from 'react-router-dom'
+import { useMatch, useParams } from 'react-router-dom'
 
 import { useCreateGuestBookReaction } from '@/api'
 import { useCreateEmojiComment, useCreateVoiceComment } from '@/api/post'
 import { useUserStore } from '@/store/userStore'
-import type { IMemoryInfo } from '@/types/memory'
 
-export function useReactionPicker(type: 'EMOJI' | 'VOICE') {
+export function useReactionPicker (type: 'EMOJI' | 'VOICE') {
   const { communityId } = useUserStore()
-  const location = useLocation()
-  const memory = location.state?.memory as IMemoryInfo | undefined
-  const { id } = useParams()
-  const entityId = Number(id)
+  const { memoryId, postId, associateId } = useParams()
+  const entityId = Number(postId ?? associateId)
 
-  const isPostDetailPage = useMatch('/post/:id')
-  const isGuestBookPage = useMatch('/guest-book/:id')
+  const isPostDetailPage = useMatch('/memory/:memoryId/post/:postId')
+  const isGuestBookPage = useMatch('/guest-book/:associateId')
 
   const { mutate: createEmojiComment, isPending: isEmojiPending } =
-    useCreateEmojiComment(communityId, memory?.id ?? 1, entityId)
+    useCreateEmojiComment(communityId, Number(memoryId), entityId)
   const { mutate: createVoiceComment, isPending: isVoicePending } =
-    useCreateVoiceComment(communityId, memory?.id ?? 1, entityId)
+    useCreateVoiceComment(communityId, Number(memoryId), entityId)
   const { mutate: createGuestBookReaction, isPending: isGuestBookPending } =
     useCreateGuestBookReaction(communityId, entityId)
 

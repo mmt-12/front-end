@@ -9,10 +9,10 @@ export const ROUTES = {
   POST_REGISTER: (memoryId: string | number) => `/memory/${memoryId}/post/register`,
   MAP: '/map',
   CALENDAR: '/calendar',
-  GUEST_BOOK: (id: string | number) => `/guest-book/${id}`,
+  GUEST_BOOK: (associateId: string | number) => `/guest-book/${associateId}`,
   NOTIFICATION_LIST: '/notification',
   EDIT_PROFILE: '/edit-profile',
-  ADD_PROFILE_IMAGE: '/add-profile-image',
+  ADD_PROFILE_IMAGE: (associateId: string | number) => `/add-profile-image/${associateId}`,
   MEMBER_LIST: '/member-list',
   TEST: '/test',
 }

@@ -10,15 +10,16 @@ import type {
 } from '@/types/api'
 
 // 로그인 (리다이렉트)
-export function useLogin(code: string) {
+export function useLogin (code: string) {
   return useQuery<LoginResponse>({
-    queryKey: ['kakao-login'],
+    queryKey: ['kakao-login', code],
     queryFn: () => api.get(`/v1/auth/redirect?code=${code}`).then(r => r.data),
+    enabled: !!code,
   })
 }
 
 // 회원가입
-export function useSignUp() {
+export function useSignUp () {
   return useMutation({
     mutationFn: (data: SignUpRequest) =>
       api.post('/v1/members', data).then(r => r.data as LoginResponse),
@@ -26,7 +27,7 @@ export function useSignUp() {
 }
 
 // 회원 정보 수정
-export function useUpdateMember() {
+export function useUpdateMember () {
   return useMutation({
     mutationFn: (data: UpdateMemberRequest) =>
       api.put('/v1/members', data).then(r => r.data),
@@ -34,7 +35,7 @@ export function useUpdateMember() {
 }
 
 // 그룹 목록 조회
-export function useAssociatesList() {
+export function useAssociatesList () {
   return useQuery({
     queryKey: ['associates-list'],
     queryFn: () =>

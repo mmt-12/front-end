@@ -51,14 +51,15 @@ export function useAssociateList (
   communityId = 1,
   params?: AssociateListParams,
 ) {
+  const size = params?.size ?? 10
   return useInfiniteQuery({
-    queryKey: ['associates', communityId, params?.keyword, params?.size],
-    initialPageParam: params?.cursor ?? 0,
-    queryFn: ({ pageParam = 0 }) => {
+    queryKey: ['associates', communityId, params?.keyword, size],
+    initialPageParam: params?.cursor,
+    queryFn: ({ pageParam = undefined }) => {
       const searchParams = new URLSearchParams()
       if (params?.keyword) searchParams.append('keyword', params.keyword)
-      if (params?.size) searchParams.append('size', params.size.toString())
-      searchParams.append('cursor', pageParam.toString())
+      if (size) searchParams.append('size', size.toString())
+      if (pageParam) searchParams.append('cursor', pageParam.toString())
 
       return api
         .get(`/v1/communities/${communityId}/associates?${searchParams}`)
@@ -106,13 +107,14 @@ export function useGuestBookList (
   associateId: number,
   params?: GuestBookListParams,
 ) {
+  const size = params?.size ?? 10
   return useInfiniteQuery({
-    queryKey: ['guestbooks', communityId, associateId, params?.size],
-    initialPageParam: params?.cursor ?? 0,
-    queryFn: ({ pageParam = 0 }) => {
+    queryKey: ['guestbooks', communityId, associateId, size],
+    initialPageParam: params?.cursor,
+    queryFn: ({ pageParam = undefined }) => {
       const searchParams = new URLSearchParams()
-      if (params?.size) searchParams.append('size', params.size.toString())
-      searchParams.append('cursor', pageParam.toString())
+      if (size) searchParams.append('size', size.toString())
+      if (pageParam) searchParams.append('cursor', pageParam.toString())
 
       return api
         .get(
@@ -251,13 +253,14 @@ export function useProfileImageList (
   associateId: number,
   params?: ProfileImageListParams,
 ) {
+  const size = params?.size ?? 10
   return useInfiniteQuery({
-    queryKey: ['profile-images', communityId, associateId, params?.size],
-    initialPageParam: params?.cursor ?? 0,
-    queryFn: ({ pageParam = 0 }) => {
+    queryKey: ['profile-images', communityId, associateId, size],
+    initialPageParam: params?.cursor,
+    queryFn: ({ pageParam = undefined }) => {
       const searchParams = new URLSearchParams()
-      if (params?.size) searchParams.append('size', params.size.toString())
-      searchParams.append('cursor', pageParam.toString())
+      if (size) searchParams.append('size', size.toString())
+      if (pageParam) searchParams.append('cursor', pageParam.toString())
 
       return api
         .get(

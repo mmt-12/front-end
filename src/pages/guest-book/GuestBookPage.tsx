@@ -1,4 +1,4 @@
-import { lazy, useState } from 'react'
+import { useState } from 'react'
 import { css } from '@emotion/react'
 import { PenNewSquare, UsersGroupRounded } from '@solar-icons/react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -12,6 +12,7 @@ import GuestBookBoard from '@/components/guest-book/GuestBookBoard'
 import GuestBookProfile, {
   GuestBookProfileSkeleton,
 } from '@/components/guest-book/GuestBookProfile'
+import MbtiChart from '@/components/guest-book/MbtiChart'
 import MbtiTest from '@/components/guest-book/MbtiTest'
 import WavyButton from '@/components/guest-book/WavyButton'
 import useHeader from '@/hooks/useHeader'
@@ -21,8 +22,6 @@ import { useUserStore } from '@/store/userStore'
 import { flipIn, flipOut } from '@/styles/animation'
 import { flexGap } from '@/styles/common'
 
-const MbtiChart = lazy(() => import('@/components/guest-book/MbtiChart'))
-
 export default function GuestBookPage() {
   useStardust()
   const navigate = useNavigate()
@@ -30,10 +29,10 @@ export default function GuestBookPage() {
     null,
   )
   const [isClosing, setIsClosing] = useState(false)
-  const { id } = useParams()
-  const { birthDate, communityId, associateId: myId } = useUserStore()
+  const { associateId: stringId } = useParams()
+  const { communityId, associateId: myId } = useUserStore()
 
-  const associateId = Number(id)
+  const associateId = Number(stringId)
   const { data: profile } = useAssociateProfile(communityId, associateId)
   const { data: guestBookList, isLoading } = useGuestBookList(
     communityId,
@@ -41,7 +40,7 @@ export default function GuestBookPage() {
     { size: 4 },
   )
 
-  const isMyPage = birthDate === profile?.birthday && myId === associateId
+  const isMyPage = myId === associateId
 
   useHeader({
     routeName: '방명록',
@@ -65,6 +64,7 @@ export default function GuestBookPage() {
             achievementId={profile.achievement?.id}
             isMyProfile={isMyPage}
             {...profile}
+            id={associateId}
           />
         ) : (
           <GuestBookProfileSkeleton />

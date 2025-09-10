@@ -16,7 +16,7 @@ export default function Post(props: PostType) {
       <div css={[flexGap(10), { marginBottom: '32px' }]}>
         <div>
           <Border />
-          <PostContent {...props} />
+          <PostContent {...props} link />
         </div>
         <EmojiList
           reactions={props.comments.emojis}

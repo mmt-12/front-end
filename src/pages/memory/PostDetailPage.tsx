@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { css, type Theme } from '@emotion/react'
 import { MagniferZoomIn } from '@solar-icons/react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import { usePost } from '@/api'
 import Profile from '@/components/common/Profile'
@@ -12,11 +12,9 @@ import EmojiList from '@/components/reaction/EmojiList'
 import VoiceList from '@/components/reaction/VoiceList'
 import useHeader from '@/hooks/useHeader'
 import { useUserStore } from '@/store/userStore'
-import type { IMemoryInfo } from '@/types/memory'
 
 export default function PostDetailPage() {
-  const { id } = useParams()
-  const memory = useLocation().state.memory as IMemoryInfo
+  const { memoryId, postId } = useParams()
   const { communityId } = useUserStore()
 
   useHeader({
@@ -25,7 +23,7 @@ export default function PostDetailPage() {
     },
   })
 
-  const { data: post } = usePost(communityId, memory.id, Number(id))
+  const { data: post } = usePost(communityId, Number(memoryId), Number(postId))
 
   const initialSelectedId = post
     ? post.comments.emojis.length > 0

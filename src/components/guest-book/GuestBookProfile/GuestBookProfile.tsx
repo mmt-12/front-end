@@ -10,6 +10,7 @@ import { ROUTES } from '@/routes/ROUTES'
 import { formatDateString } from '@/utils/date'
 
 interface Props {
+  id: number
   nickname: string
   achievementId: number
   imageUrl: string
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export default function GuestBookProfile({
+  id,
   nickname,
   achievementId,
   imageUrl,
@@ -29,7 +31,7 @@ export default function GuestBookProfile({
   const navigate = useNavigate()
 
   const handleButtonClick = () => {
-    navigate(ROUTES.ADD_PROFILE_IMAGE)
+    navigate(ROUTES.ADD_PROFILE_IMAGE(id))
   }
 
   return (

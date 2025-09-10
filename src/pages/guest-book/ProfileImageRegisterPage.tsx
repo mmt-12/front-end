@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 
-import { useProfileImageList } from '@/api'
+import { useCreateProfileImage, useProfileImageList } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import ImageInputField from '@/components/common/ImageInputField'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
@@ -18,16 +19,34 @@ export default function ProfileImageRegisterPage() {
     },
   })
 
-  const userId = 1
+  const { associateId } = useParams()
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useProfileImageList(1, userId)
+    useProfileImageList(1, Number(associateId))
+  const { mutate: uploadProfileImages } = useCreateProfileImage(
+    1,
+    Number(associateId),
+  )
+
   const images = data?.pages.flatMap(page => page.profileImages) || []
 
   const [newImages, setNewImages] = useState<File[]>([])
 
   const handleImageClick = () => {}
 
-  const handleSubmit = () => {}
+  const handleSubmit = () => {
+    if (newImages.length === 0) return
+
+    const formData = new FormData()
+    newImages.forEach(image => {
+      formData.append('image', image)
+    })
+
+    uploadProfileImages(formData, {
+      onSuccess: () => {
+        alert('프로필 이미지가 등록되었습니다.')
+      },
+    })
+  }
 
   return (
     <div css={flexGap(12)}>

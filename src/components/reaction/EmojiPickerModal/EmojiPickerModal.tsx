@@ -23,7 +23,7 @@ export default function EmojiPickerModal() {
     useEmojiList(communityId, {
       keyword: searchKey,
     })
-  const emojis = data?.pages.flatMap(page => page.emoji) || []
+  const emojis = data?.pages.flatMap(page => page.emojis) || []
 
   const { selectReaction } = useReactionPicker('EMOJI')
 

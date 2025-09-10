@@ -6,6 +6,7 @@ import rightArrow from '@/assets/images/icons/rightArrow.svg'
 import Chip from '@/components/common/Chip'
 import { ROUTES } from '@/routes/ROUTES'
 import type { locationType } from '@/types/memory'
+import { formatDateString } from '@/utils/date'
 
 interface Props {
   title: string
@@ -25,15 +26,17 @@ interface Props {
 export default function MemoryInfo(props: Props) {
   const theme = useTheme()
 
+  const formattedStartTime = formatDateString(props.period.startTime || '')
+  const formattedEndTime = formatDateString(props.period.endTime || '')
+
   const renderMeta = () => {
     return (
       <>
         <p className='location'>{props.location.name}</p>
-        {props.period.startTime !== undefined && (
+        {formattedStartTime !== undefined && (
           <p className='date'>
-            {props.period.startTime}
-            {props.period.endTime != props.period.startTime &&
-              ` - ${props.period.endTime}`}
+            {formattedStartTime}
+            {formattedEndTime != formattedStartTime && ` - ${formattedEndTime}`}
           </p>
         )}
       </>

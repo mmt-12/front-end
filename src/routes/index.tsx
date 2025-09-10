@@ -49,7 +49,7 @@ const router = createBrowserRouter([
             element: <Pages.CalendarPage />,
           },
           {
-            path: ROUTES.GUEST_BOOK(':id'),
+            path: ROUTES.GUEST_BOOK(':associateId'),
             element: <Pages.GuestBookPage />,
           },
         ],
@@ -66,7 +66,7 @@ const router = createBrowserRouter([
             element: <Pages.EditProfilePage />,
           },
           {
-            path: ROUTES.ADD_PROFILE_IMAGE,
+            path: ROUTES.ADD_PROFILE_IMAGE(':associateId'),
             element: <Pages.ProfileImageRegisterPage />,
           },
           {
