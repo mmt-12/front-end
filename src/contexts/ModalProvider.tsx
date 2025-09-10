@@ -40,6 +40,11 @@ function ModalProvider({ children }: { children: ReactNode }) {
   }
 
   const closeModal = (value: ModalReturnType) => {
+    // 뒤로가기 방지를 위해 임의로 생성된 주소인 경우 한번 더 뒤로가기 호출
+    if (window.history.state.modal) {
+      window.history.back()
+    }
+
     setModals(prev => {
       if (!prev.length) return prev
       const next = [...prev]

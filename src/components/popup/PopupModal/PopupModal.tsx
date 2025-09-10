@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { css } from '@emotion/react'
 import { ArrowLeft } from '@solar-icons/react'
 
@@ -14,6 +14,16 @@ interface Props {
 }
 
 export default function PopupModal({ title, children, onClose }: Props) {
+  useEffect(() => {
+    if (!onClose) return
+    window.history.pushState({ modal: true }, '', window.location.href)
+    window.addEventListener('popstate', onClose)
+
+    return () => {
+      window.removeEventListener('popstate', onClose)
+    }
+  }, [onClose])
+
   return (
     <div
       css={[
