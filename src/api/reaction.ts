@@ -41,13 +41,14 @@ export function useCreateVoice (communityId = 1) {
 
 // 보이스 목록 조회
 export function useVoiceList (communityId = 1, params?: VoiceListParams) {
+  const size = params?.size ?? 10
   return useInfiniteQuery({
-    queryKey: ['voices', communityId, params?.size, params?.keyword],
-    initialPageParam: params?.cursor ?? 0,
-    queryFn: ({ pageParam = 0 }) => {
+    queryKey: ['voices', communityId, size, params?.keyword],
+    initialPageParam: params?.cursor,
+    queryFn: ({ pageParam = undefined }) => {
       const searchParams = new URLSearchParams()
-      searchParams.append('cursor', pageParam.toString())
-      if (params?.size) searchParams.append('size', params.size.toString())
+      if (pageParam) searchParams.append('cursor', pageParam.toString())
+      if (size) searchParams.append('size', size.toString())
       if (params?.keyword) searchParams.append('keyword', params.keyword)
 
       return api
@@ -81,7 +82,7 @@ export function useCreateEmoji (communityId = 1) {
   return useMutation({
     mutationFn: (formData: FormData) =>
       api
-        .post(`/v1/communities/${communityId}/emoji`, formData, {
+        .post(`/v1/communities/${communityId}/emojis`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -95,17 +96,18 @@ export function useCreateEmoji (communityId = 1) {
 
 // 이모지 목록 조회
 export function useEmojiList (communityId = 1, params?: EmojiListParams) {
+  const size = params?.size ?? 10
   return useInfiniteQuery({
-    queryKey: ['emojis', communityId, params?.size, params?.keyword],
-    initialPageParam: params?.cursor ?? 0,
-    queryFn: ({ pageParam = 0 }) => {
+    queryKey: ['emojis', communityId, size, params?.keyword],
+    initialPageParam: params?.cursor,
+    queryFn: ({ pageParam = undefined }) => {
       const searchParams = new URLSearchParams()
-      searchParams.append('cursor', pageParam.toString())
-      if (params?.size) searchParams.append('size', params.size.toString())
+      if (pageParam) searchParams.append('cursor', pageParam.toString())
+      if (size) searchParams.append('size', size.toString())
       if (params?.keyword) searchParams.append('keyword', params.keyword)
 
       return api
-        .get(`/v1/communities/${communityId}/emoji?${searchParams}`)
+        .get(`/v1/communities/${communityId}/emojis?${searchParams}`)
         .then(r => r.data as EmojiListResponse)
     },
     getNextPageParam: lastPage =>
@@ -120,7 +122,7 @@ export function useDeleteEmoji (communityId = 1) {
   return useMutation({
     mutationFn: (emojiId: number) =>
       api
-        .delete(`/v1/communities/${communityId}/emoji/${emojiId}`)
+        .delete(`/v1/communities/${communityId}/emojis/${emojiId}`)
         .then(r => r.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['emojis', communityId] })

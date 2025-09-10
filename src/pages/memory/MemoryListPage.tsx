@@ -25,10 +25,7 @@ export default function MemoryListPage() {
   })
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useMemoryList(1, {
-      cursor: 0,
-      size: 10,
-    })
+    useMemoryList(1)
   const memories = data?.pages.flatMap(page => page.memories) || []
 
   const toggleViewMode = useCallback(() => {

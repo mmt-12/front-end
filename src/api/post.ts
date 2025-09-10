@@ -33,13 +33,14 @@ export function usePostList (
   memoryId: number,
   params?: PostListParams,
 ) {
+  const size = params?.size ?? 10
   return useInfiniteQuery({
-    queryKey: ['posts', communityId, memoryId, params?.size],
-    initialPageParam: params?.cursor ?? 0,
-    queryFn: ({ pageParam = 0 }) => {
+    queryKey: ['posts', communityId, memoryId, size],
+    initialPageParam: params?.cursor,
+    queryFn: ({ pageParam = undefined }) => {
       const searchParams = new URLSearchParams()
-      searchParams.append('cursor', pageParam.toString())
-      if (params?.size) searchParams.append('size', params.size.toString())
+      if (pageParam) searchParams.append('cursor', pageParam.toString())
+      if (size) searchParams.append('size', size.toString())
 
       return api
         .get(
