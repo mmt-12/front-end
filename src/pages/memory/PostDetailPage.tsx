@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { css, type Theme } from '@emotion/react'
-import { MagniferZoomIn } from '@solar-icons/react'
-import { useParams } from 'react-router-dom'
+import { ArrowLeft, MagniferZoomIn } from '@solar-icons/react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { usePost } from '@/api'
 import Profile from '@/components/common/Profile'
@@ -16,8 +16,15 @@ import { useUserStore } from '@/store/userStore'
 export default function PostDetailPage() {
   const { memoryId, postId } = useParams()
   const { communityId } = useUserStore()
+  const navigate = useNavigate()
 
   useHeader({
+    leftItem: {
+      icon: ArrowLeft,
+      onClick: () => {
+        navigate(-1)
+      },
+    },
     rightItem: {
       icon: null,
     },
