@@ -12,7 +12,6 @@ export default function VoiceList(props: ReactionListProps) {
           {...voice}
           onClick={e => props.onClick(e, voice.id)}
           isActive={voice.id === props.selectedId}
-          amount={props.showAmount ? voice.amount : undefined}
         />
       ))}
     </div>
@@ -23,6 +22,6 @@ const reactionsStyle = css({
   padding: '4px 16px',
   display: 'flex',
   alignItems: 'center',
-  gap: '12px',
+  gap: 16,
   overflowX: 'auto',
 })

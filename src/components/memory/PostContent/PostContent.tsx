@@ -81,8 +81,8 @@ const headerStyle = (theme: Theme) =>
   })
 
 const contentStyle = css({
-  padding: '4px 16px',
-  fontSize: '16px',
+  padding: 16,
+  fontSize: 16,
 })
 
 const profileLinkStyle = css({

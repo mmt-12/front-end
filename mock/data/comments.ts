@@ -1,7 +1,7 @@
 export const COMMENTS = {
   emojis: [
     {
-      id: 10000,
+      id: 1,
       authors: [
         {
           id: 1,
@@ -30,7 +30,7 @@ export const COMMENTS = {
       involved: true,
     },
     {
-      id: 10001,
+      id: 2,
       authors: [
         {
           id: 4,

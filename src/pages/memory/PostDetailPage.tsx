@@ -59,16 +59,14 @@ export default function PostDetailPage() {
         reactions={post.comments.emojis}
         onClick={handleReactionClick}
         selectedId={selectedReactionId}
-        showAmount
       />
       <VoiceList
         reactions={post.comments.voices}
         onClick={handleReactionClick}
         selectedId={selectedReactionId}
-        showAmount
       />
       {selectedReaction && (
-        <>
+        <div css={reactionDetailStyle}>
           <div css={reactionNameStyle}>
             <p>:{selectedReaction.name}:</p>
             <MagniferZoomIn weight='Linear' size={20} />
@@ -83,7 +81,7 @@ export default function PostDetailPage() {
               />
             ))}
           </div>
-        </>
+        </div>
       )}
       <ReactBar iconSize={44} customCss={reactBarStyle} />
     </div>
@@ -94,14 +92,21 @@ const containerStyle = css({
   padding: '0px 0px 40px 0px',
   display: 'flex',
   flexDirection: 'column',
-  gap: '10px',
+  gap: 4,
+})
+
+const reactionDetailStyle = css({
+  padding: 12,
+
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 20,
 })
 
 const reactionNameStyle = (theme: Theme) => ({
-  padding: '12px 28px',
   display: 'flex',
   alignItems: 'center',
-  gap: '8px',
+  gap: 8,
   color: theme.stone[500],
 })
 
@@ -109,7 +114,6 @@ const reactedProfilesStyle = css({
   display: 'flex',
   flexDirection: 'column',
   gap: '16px',
-  padding: '8px 16px',
 })
 
 const reactBarStyle = (theme: Theme) =>

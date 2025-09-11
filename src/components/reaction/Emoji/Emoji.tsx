@@ -7,64 +7,49 @@ export default function Emoji({
   id,
   url: imageUrl,
   size = 'md',
-  amount,
   isActive = false,
   involved = false,
   onClick,
 }: IReaction) {
   const theme = useTheme()
   return (
-    <div
-      onClick={e => onClick?.(e, id)}
-      css={containerStyle(theme, involved, isActive, !!amount)}
-    >
-      <div css={imageWrapperStyle(size, !!amount)}>
+    <div onClick={e => onClick?.(e, id)} css={containerStyle}>
+      <div css={imageWrapperStyle(theme, size, involved)}>
         <Img src={imageUrl} alt='Emoji' css={imageStyle} />
       </div>
-      {amount != null && <p>{amount}</p>}
+      <div css={activeBarStyle(theme, isActive)} />
     </div>
   )
 }
 
-const containerStyle = (
+const containerStyle = css({
+  width: 'fit-content',
+
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexShrink: 0,
+  gap: '6px',
+  borderRadius: '16px',
+})
+
+const imageWrapperStyle = (
   theme: Theme,
+  size: 'md' | 'lg',
   involved: boolean,
-  isActive: boolean,
-  isAmount: boolean,
 ) =>
   css({
-    width: 'fit-content',
-    padding: isAmount ? (isActive ? '6px' : '2px') : 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-    gap: '6px',
-    outline: involved
-      ? isAmount
-        ? 'none'
-        : `3px solid ${theme.sky[300]}`
-      : 'none',
-    borderRadius: '16px',
-    backgroundColor: isActive ? theme.stone[200] : 'transparent',
-
-    p: {
-      marginRight: '6px',
-      fontWeight: involved ? 'bold' : 'normal',
-      color: involved ? theme.sky[500] : theme.black,
-    },
-  })
-
-const imageWrapperStyle = (size: 'md' | 'lg', isAmount: boolean) =>
-  css({
-    width: size === 'md' ? (isAmount ? '40px' : '52px') : '120px',
-    height: size === 'md' ? (isAmount ? '40px' : '52px') : '120px',
+    width: size === 'md' ? '52px' : '120px',
+    height: size === 'md' ? '52px' : '120px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexShrink: 0,
     borderRadius: '12px',
     overflow: 'hidden',
+
+    outline: involved ? `3px solid ${theme.sky[300]}` : 'none',
   })
 
 const imageStyle = css({
@@ -72,3 +57,12 @@ const imageStyle = css({
   height: '100%',
   objectFit: 'cover',
 })
+
+const activeBarStyle = (theme: Theme, isActive: boolean) =>
+  css({
+    width: isActive ? 24 : 0,
+    height: isActive ? 4 : 0,
+    borderRadius: 2,
+    backgroundColor: theme.stone[300],
+    transition: 'height 0.2s ease-in-out, width 0.2s ease-in-out',
+  })
