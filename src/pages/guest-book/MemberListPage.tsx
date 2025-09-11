@@ -40,7 +40,7 @@ export default function MemberListPage() {
           fetchNext={fetchNextPage}
           hasNextPage={hasNextPage}
           isFetchingNext={isFetchingNextPage}
-          // customCSS={[flexGap(8), css({ margin: '0 16px 16px' })]}
+          customCSS={[flexGap(8), css({ margin: 12 })]}
         >
           {members.map(member => (
             <Link to={ROUTES.GUEST_BOOK(member.id)} key={member.id}>

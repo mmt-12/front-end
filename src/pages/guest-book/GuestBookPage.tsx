@@ -4,11 +4,11 @@ import { PenNewSquare, UsersGroupRounded } from '@solar-icons/react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { useAssociateProfile, useGuestBookList } from '@/api'
-import { Skeleton } from '@/components/common/Skeleton'
 import BadgeList from '@/components/guest-book/BadgeList'
 import Card from '@/components/guest-book/Card'
 import Comment from '@/components/guest-book/Comment'
 import GuestBookBoard from '@/components/guest-book/GuestBookBoard'
+import GuestBookBoardSkeleton from '@/components/guest-book/GuestBookBoard/GuestBookBoard.Skeleton'
 import GuestBookProfile, {
   GuestBookProfileSkeleton,
 } from '@/components/guest-book/GuestBookProfile'
@@ -94,32 +94,19 @@ export default function GuestBookPage() {
             </Card>
           </div>
           <Card title='GUEST BOOK'>
-            <div css={[flexGap(12), commentListStyle]}>
-              {isLoading ? (
-                <>
-                  {Array(4)
-                    .fill(0)
-                    .map((_, index) => (
-                      <Skeleton
-                        key={index}
-                        width='100%'
-                        height={32}
-                        radius={8}
-                      />
-                    ))}
-                </>
-              ) : (
-                <>
-                  {guestBookList?.pages[0].guestBooks.map(comment => (
-                    <Comment key={comment.id} {...comment} />
-                  ))}
-                  <WavyButton
-                    label='더보기'
-                    onClick={() => setMode('GUEST BOOK')}
-                  />
-                </>
-              )}
-            </div>
+            {isLoading ? (
+              <GuestBookBoardSkeleton />
+            ) : (
+              <div css={[flexGap(12), commentListStyle]}>
+                {guestBookList?.pages[0].guestBooks.map(comment => (
+                  <Comment key={comment.id} {...comment} />
+                ))}
+                <WavyButton
+                  label='더보기'
+                  onClick={() => setMode('GUEST BOOK')}
+                />
+              </div>
+            )}
           </Card>
         </>
       ) : (
