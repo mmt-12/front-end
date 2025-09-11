@@ -5,7 +5,10 @@ import { useCreateProfileImage, useProfileImageList } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import ImageInputField from '@/components/common/ImageInputField'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
-import ProfileImageList from '@/components/common/ProfileImageList'
+import Loader from '@/components/common/Loader'
+import ProfileImageList, {
+  ProfileImageListSkeleton,
+} from '@/components/common/ProfileImageList'
 import useHeader from '@/hooks/useHeader'
 import useStardust from '@/hooks/useStardust'
 import { flexGap } from '@/styles/common'
@@ -21,7 +24,7 @@ export default function ProfileImageRegisterPage() {
 
   const { associateId } = useParams()
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useProfileImageList(1, Number(associateId))
+    useProfileImageList(1, Number(associateId), { size: 9 })
   const { mutate: uploadProfileImages } = useCreateProfileImage(
     1,
     Number(associateId),
@@ -55,15 +58,18 @@ export default function ProfileImageRegisterPage() {
         maxLength={10}
         onChange={setNewImages}
       />
-      {images.length > 0 && (
-        <InfiniteScroll
-          fetchNext={fetchNextPage}
-          hasNextPage={hasNextPage}
-          isFetchingNext={isFetchingNextPage}
-        >
+      <InfiniteScroll
+        fetchNext={fetchNextPage}
+        hasNextPage={hasNextPage}
+        isFetchingNext={isFetchingNextPage}
+        loader={<Loader customCss={{ padding: 24 }} />}
+      >
+        {images.length > 0 ? (
           <ProfileImageList images={images} onImageClick={handleImageClick} />
-        </InfiniteScroll>
-      )}
+        ) : (
+          <ProfileImageListSkeleton />
+        )}
+      </InfiniteScroll>
       <BottomButton label='등록' onClick={handleSubmit} />
     </div>
   )

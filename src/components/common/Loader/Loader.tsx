@@ -1,10 +1,14 @@
-import { css, type Theme } from '@emotion/react'
+import { css, type Interpolation, type Theme } from '@emotion/react'
 
 import { rotation } from '@/styles/animation'
 
-export default function Loader() {
+interface Props {
+  customCss?: Interpolation<Theme>
+}
+
+export default function Loader({ customCss }: Props) {
   return (
-    <div css={loaderWrapperStyle}>
+    <div css={[loaderWrapperStyle, customCss]}>
       <div css={loaderStyle}></div>
     </div>
   )

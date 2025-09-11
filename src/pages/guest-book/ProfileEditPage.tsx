@@ -104,8 +104,6 @@ export default function EditProfilePage() {
     )
   }
 
-  if (!profile) return null
-
   return (
     <div css={[flexGap(8), { padding: '24px 0' }]}>
       <div

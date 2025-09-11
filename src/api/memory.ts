@@ -61,6 +61,7 @@ export function useMemoryList (communityId = 1, params?: MemoryListParams) {
   })
 }
 
+// 기억 상세 조회
 export function useMemoryDetail (communityId = 1, memoryId: number) {
   return useQuery({
     queryKey: ['memories', communityId, memoryId],
@@ -107,7 +108,7 @@ export function useMemoryImages (communityId = 1, memoryId: number) {
     queryKey: ['memory-images', communityId, memoryId],
     queryFn: () =>
       api
-        .get(`/v1/communities/${communityId}/memories/${memoryId}`)
+        .get(`/v1/communities/${communityId}/memories/${memoryId}/images`)
         .then(r => r.data as MemoryImagesResponse),
   })
 }

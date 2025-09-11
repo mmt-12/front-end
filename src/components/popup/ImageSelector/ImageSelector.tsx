@@ -5,7 +5,10 @@ import { useProfileImageList } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import Img from '@/components/common/Img'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
-import ProfileImageList from '@/components/common/ProfileImageList'
+import Loader from '@/components/common/Loader'
+import ProfileImageList, {
+  ProfileImageListSkeleton,
+} from '@/components/common/ProfileImageList'
 import WavyBox from '@/components/guest-book/WavyBox'
 
 interface Props {
@@ -18,7 +21,7 @@ export default function ImageSelector({ value, onSelect }: Props) {
   const [image, setImage] = useState<string>(value || '')
   const userId = 1
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useProfileImageList(1, userId)
+    useProfileImageList(1, userId, { size: 9 })
   const images = data?.pages.flatMap(page => page.profileImages) || []
   return (
     <>
@@ -32,19 +35,22 @@ export default function ImageSelector({ value, onSelect }: Props) {
           <Img src={image} alt='current profile' css={imageStyle} />
         </WavyBox>
       </div>
-      {images.length > 0 && (
-        <InfiniteScroll
-          fetchNext={fetchNextPage}
-          hasNextPage={hasNextPage}
-          isFetchingNext={isFetchingNextPage}
-        >
+      <InfiniteScroll
+        fetchNext={fetchNextPage}
+        hasNextPage={hasNextPage}
+        isFetchingNext={isFetchingNextPage}
+        loader={<Loader customCss={{ padding: 24 }} />}
+      >
+        {images.length > 0 ? (
           <ProfileImageList
             images={images}
             onImageClick={profileImage => setImage(profileImage.url)}
             selectedImageUrl={image}
           />
-        </InfiniteScroll>
-      )}
+        ) : (
+          <ProfileImageListSkeleton />
+        )}
+      </InfiniteScroll>
       <BottomButton label='이미지 수정' onClick={() => onSelect(image)} />
     </>
   )

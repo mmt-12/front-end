@@ -32,6 +32,13 @@ export default defineMock([
       MEMORIES[0]
     ,
   },
+  // 기억 이미지 조회
+  {
+    url: '/api/v1/communities/:communityId/memories/:memoryId/images',
+    body: {
+      pictures: MEMORIES[0].pictures,
+    },
+  },
   // 포스트 댓글 이모지 생성
   {
     url: '/api/v1/communities/:communityId/memories/:memoryId/posts/:postId/comments/emoji',
@@ -74,8 +81,8 @@ export default defineMock([
   {
     url: '/api/v1/communities/:communityId/associates/:associateId/guest-books',
     body: {
-      guestBooks: [],
-      nextCursor: 0,
+      guestBooks: GUEST_BOOK,
+      nextCursor: 20,
       hasNext: true
     },
   },
