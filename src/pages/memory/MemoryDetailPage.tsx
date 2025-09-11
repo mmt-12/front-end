@@ -6,7 +6,9 @@ import { useMemoryDetail } from '@/api/memory'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
 import MemoryInfo from '@/components/memory/MemoryInfo'
 import MemoryInfoSkeleton from '@/components/memory/MemoryInfo/MemoryInfo.Skeleton'
-import Post, { PostSkeleton } from '@/components/memory/Post'
+import PostListItem, {
+  PostListItemSkeleton,
+} from '@/components/memory/PostListItem'
 import useHeader from '@/hooks/useHeader'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
@@ -47,8 +49,10 @@ export default function MemoryDetailPage() {
       >
         <ol>
           {isLoading
-            ? Array.from({ length: 3 }).map((_, i) => <PostSkeleton key={i} />)
-            : posts.map(post => <Post key={post.id} {...post} />)}
+            ? Array.from({ length: 3 }).map((_, i) => (
+                <PostListItemSkeleton key={i} />
+              ))
+            : posts.map(post => <PostListItem key={post.id} {...post} />)}
         </ol>
       </InfiniteScroll>
     </>

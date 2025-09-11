@@ -5,8 +5,8 @@ import { useParams } from 'react-router-dom'
 
 import { usePost } from '@/api'
 import Profile from '@/components/common/Profile'
-import { PostSkeleton } from '@/components/memory/Post'
 import PostContent from '@/components/memory/PostContent/PostContent'
+import { PostListItemSkeleton } from '@/components/memory/PostListItem'
 import ReactBar from '@/components/memory/ReactBar/ReactBar'
 import EmojiList from '@/components/reaction/EmojiList'
 import VoiceList from '@/components/reaction/VoiceList'
@@ -39,7 +39,7 @@ export default function PostDetailPage() {
   if (!post)
     return (
       <div css={containerStyle}>
-        <PostSkeleton />
+        <PostListItemSkeleton />
       </div>
     )
 
