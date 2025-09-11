@@ -170,16 +170,16 @@ export default defineMock([
       voices: VOICES,
 
       nextCursor: 0,
-      hasNext: false,
+      hasNext: true,
     },
   },
   // Reaction - Get emojis in a community
   {
-    url: '/api/v1/communities/:communityId/emoji',
+    url: '/api/v1/communities/:communityId/emojis',
     body: {
-      emoji: EMOJIS,
+      emojis: EMOJIS,
       nextCursor: 0,
-      hasNext: false,
+      hasNext: true,
     },
   },
   // Notification - Get notifications

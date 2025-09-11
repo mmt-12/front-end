@@ -51,7 +51,6 @@ export default function VoicePickerModal() {
                 <Voice
                   key={voice.id}
                   {...voice}
-                  amount={undefined}
                   onClick={(_e, id) => handleSelectVoice(id)}
                 />
               ))}
@@ -81,7 +80,6 @@ export default function VoicePickerModal() {
                 <Voice
                   key={voice.id}
                   {...voice}
-                  amount={undefined}
                   onClick={(_e, id) => handleSelectVoice(id)}
                 />
               ))}
@@ -111,7 +109,7 @@ const voiceListStyle = css({
 
   flexWrap: 'wrap',
   display: 'flex',
-  gap: '12px 10px',
+  gap: '8px 10px',
 
   overflow: 'scroll',
 })

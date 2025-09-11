@@ -72,6 +72,7 @@ const containerStyle = css({
 
 const playButtonWrapperStyle = (theme: Theme, involved: boolean) =>
   css({
+    width: '100%',
     padding: '3px 12px 3px 4px',
     display: 'flex',
     flexGrow: 1,

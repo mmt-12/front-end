@@ -49,7 +49,8 @@ const imageWrapperStyle = (
     borderRadius: '12px',
     overflow: 'hidden',
 
-    outline: involved ? `3px solid ${theme.sky[300]}` : 'none',
+    outline: `${involved ? '3px' : '0px'} solid ${theme.sky[300]}`,
+    transition: 'outline 0.2s ease-in-out',
   })
 
 const imageStyle = css({
