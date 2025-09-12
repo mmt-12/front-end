@@ -24,6 +24,7 @@ export const getToken = () => {
 }
 
 export const setToken = (token: { accessToken: string; refreshToken: string }) => {
+  console.log(token.accessToken)
   localStorage.setItem('accessToken', token.accessToken)
   localStorage.setItem('refreshToken', token.refreshToken)
 }
@@ -56,7 +57,7 @@ api.interceptors.response.use(
   async response => {
     // 가짜 딜레이 추가 (개발용)
     if (import.meta.env.DEV) {
-      await delay(1000)
+      // await delay(1000)
     }
     // 로그인 응답에서 토큰 저장
     if (response.data?.token) {
@@ -68,9 +69,8 @@ api.interceptors.response.use(
   async (error: AxiosError) => {
     // 401 응답에 대해 refresh token으로 토큰 재발급 시도
     console.log(error)
-    if (error.response?.status === 401) {
+    if (error.response?.status === 401 && !error.config?.url?.includes('refresh')) {
       const newRequest = await handleUnauthorized(error.response)
-      // 재발급 성공 시 새로운 요청 시도
       if (newRequest !== null) return newRequest
     }
     return Promise.reject(error)
