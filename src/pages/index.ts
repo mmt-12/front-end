@@ -3,6 +3,7 @@ import { lazy } from 'react'
 import LoginPage from '@/pages/auth/LoginPage'
 import LandingPage from './auth/LandingPage'
 import TestPage from './TestPage'
+import GuestBookPage from '@/pages/guest-book/GuestBookPage'
 
 const CalendarPage = lazy(() => import('@/pages/CalendarPage'))
 const ErrorPage = lazy(() => import('@/pages/ErrorPage'))
@@ -10,7 +11,6 @@ const ProfileImageRegisterPage = lazy(
   () => import('@/pages/guest-book/ProfileImageRegisterPage'),
 )
 const EditProfilePage = lazy(() => import('@/pages/guest-book/ProfileEditPage'))
-const GuestBookPage = lazy(() => import('@/pages/guest-book/GuestBookPage'))
 const MapPage = lazy(() => import('@/pages/MapPage'))
 const MemoryDetailPage = lazy(() => import('@/pages/memory/MemoryDetailPage'))
 const MemberListPage = lazy(() => import('@/pages/guest-book/MemberListPage'))

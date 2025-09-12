@@ -153,7 +153,6 @@ export default function MapPage() {
         <Link
           css={memoryDetailStyle}
           to={ROUTES.MEMORY_DETAIL(selectedMemory.id)}
-          state={{ memory: selectedMemory }}
         >
           <MemoryInfo {...selectedMemory} description={undefined} />
           <div css={imagesListStyle}>

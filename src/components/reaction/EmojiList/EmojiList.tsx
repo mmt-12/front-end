@@ -9,25 +9,23 @@ interface Props extends ReactionListProps {
 
 export default function EmojiList(props: Props) {
   return (
-    <div css={reactionsStyle(props.showAmount)} className='no-scrollbar'>
+    <div css={reactionsStyle} className='no-scrollbar'>
       {props.reactions.map(emoji => (
         <Emoji
           key={emoji.id}
           {...emoji}
           onClick={e => props.onClick(e, emoji.id)}
-          isActive={emoji.id === props.selectedId}
-          amount={props.showAmount ? emoji.amount : undefined}
+          isActive={emoji.id == props.selectedId}
         />
       ))}
     </div>
   )
 }
 
-const reactionsStyle = (showAmount: boolean | undefined) =>
-  css({
-    padding: '4px 16px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: showAmount ? '8px' : '16px',
-    overflowX: 'auto',
-  })
+const reactionsStyle = css({
+  padding: '4px 16px',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '16px',
+  overflowX: 'auto',
+})

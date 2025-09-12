@@ -1,13 +1,16 @@
 import { css, type Theme } from '@emotion/react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import type { Post } from '@/api'
 import Album from '@/components/common/Album'
 import Img from '@/components/common/Img'
 import Profile from '@/components/common/Profile'
 import { ROUTES } from '@/routes/ROUTES'
-import type { IMemoryInfo } from '@/types/memory'
 import { formatDateTime } from '@/utils/date'
+
+interface Props extends Post {
+  link?: boolean
+}
 
 export default function PostContent({
   id,
@@ -15,8 +18,26 @@ export default function PostContent({
   createdAt,
   pictures,
   content,
-}: Post) {
-  const memory = useLocation().state.memory as IMemoryInfo
+  link = false,
+}: Props) {
+  const memoryId = useParams().memoryId
+
+  if (!memoryId) {
+    throw new Error('memoryId is not defined in PostContent')
+  }
+
+  const postContent = (
+    <>
+      <Album>
+        {pictures.map((image, index) => (
+          <div key={index}>
+            <Img src={image} alt={`Album image ${index}`} />
+          </div>
+        ))}
+      </Album>
+      <p css={contentStyle}>{content}</p>
+    </>
+  )
 
   return (
     <div>
@@ -26,16 +47,11 @@ export default function PostContent({
         </Link>
         <time>{formatDateTime(new Date(createdAt))}</time>
       </header>
-      <Link to={ROUTES.POST_DETAIL(id)} state={{ memory }}>
-        <Album>
-          {pictures.map((image, index) => (
-            <div key={index}>
-              <Img src={image} alt={`Album image ${index}`} />
-            </div>
-          ))}
-        </Album>
-        <p css={contentStyle}>{content}</p>
-      </Link>
+      {link ? (
+        <Link to={ROUTES.POST_DETAIL(memoryId, id)}>{postContent}</Link>
+      ) : (
+        postContent
+      )}
     </div>
   )
 }
@@ -65,8 +81,8 @@ const headerStyle = (theme: Theme) =>
   })
 
 const contentStyle = css({
-  padding: '4px 16px',
-  fontSize: '16px',
+  padding: 16,
+  fontSize: 16,
 })
 
 const profileLinkStyle = css({

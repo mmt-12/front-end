@@ -83,12 +83,11 @@ export default function GuestBookBoard({ communityId, associateId }: Props) {
           fetchNext={fetchNextPage}
           hasNextPage={hasNextPage}
           isFetchingNext={isFetchingNextPage}
+          customCSS={flexGap(16)}
         >
-          <div css={flexGap(16)}>
-            {comments.map(comment => (
-              <Comment key={comment.id} {...comment} />
-            ))}
-          </div>
+          {comments.map(comment => (
+            <Comment key={comment.id} {...comment} />
+          ))}
         </InfiniteScroll>
       )}
     </div>

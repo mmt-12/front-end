@@ -15,7 +15,7 @@ export default function MemoryListItem(props: Props) {
   return (
     <Link
       to={ROUTES.MEMORY_DETAIL(props.id)}
-      css={containerStyle(!!props.isGrid)}
+      css={containerStyle}
       state={{ memory: props as IMemoryInfo }}
     >
       <MemoryInfo
@@ -35,16 +35,17 @@ export default function MemoryListItem(props: Props) {
   )
 }
 
-const containerStyle = (isGrid: boolean) =>
-  css({
-    display: 'flex',
-    flexDirection: 'column',
-    padding: isGrid ? '12px 4px' : '16px',
-    gap: '4px',
-  })
+const containerStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '8px 4px',
+  gap: '4px',
+})
 
 const imagesListStyle = css({
   height: 'fit-content',
+  margin: '0px 8px',
+
   display: 'flex',
   flexDirection: 'row',
   gap: '4px',

@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
 import type { Interpolation, Theme } from '@emotion/react'
 
+import Loader from '../Loader/Loader'
+
 interface Props {
   children: React.ReactNode
   fetchNext: () => void | Promise<unknown>
@@ -49,9 +51,8 @@ export default function InfiniteScroll({
   return (
     <div css={customCSS}>
       {children}
+      {isFetchingNext && (loader ?? <Loader />)}
       <div ref={sentinelRef} />
-      {isFetchingNext &&
-        (loader ?? <div style={{ padding: 8 }}>Loading...</div>)}
     </div>
   )
 }

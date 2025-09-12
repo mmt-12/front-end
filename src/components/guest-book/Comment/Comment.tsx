@@ -32,6 +32,7 @@ const containerStyle = (theme: Theme) =>
     fontFamily: 'Pretendard Variable',
     backgroundColor: theme.stone[50],
     borderRadius: 4,
+    gap: 10,
   })
 
 const contentStyle = (theme: Theme) =>

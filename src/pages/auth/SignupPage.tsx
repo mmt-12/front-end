@@ -13,12 +13,11 @@ import { signupTitleStyle } from '@/styles/signupTitle'
 import { dateToId, formatDate } from '@/utils/date'
 
 export default function SignupPage() {
-  const navigate = useNavigate()
-
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [birthDate, setBirthDate] = useState<Date>()
 
+  const navigate = useNavigate()
   const userStore = useUserStore()
   const { mutate: signup } = useSignUp()
 
@@ -62,8 +61,9 @@ export default function SignupPage() {
               email: userStore.email,
             },
             {
-              onSuccess: () => {
+              onSuccess: res => {
                 userStore.signup(birthDate)
+                userStore.login(res)
                 navigate(ROUTES.MEMORY_LIST)
               },
             },

@@ -3,10 +3,12 @@ import { css, useTheme } from '@emotion/react'
 import type { Theme } from '@emotion/react'
 import { Pen, Soundwave } from '@solar-icons/react'
 
+import { useCreateVoice } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import BottomDrawer from '@/components/common/BottomDrawer'
 import Button from '@/components/common/Button'
 import InputField from '@/components/common/InputField'
+import { useModal } from '@/hooks/useModal'
 
 export default function VoiceRegisterModal() {
   const theme = useTheme()
@@ -16,6 +18,31 @@ export default function VoiceRegisterModal() {
   const [audio, setAudio] = useState<File | null>(null)
 
   const audioRef = useRef<HTMLAudioElement>(null)
+  const { closeModal } = useModal()
+
+  const { mutate } = useCreateVoice(1)
+
+  const handleSubmit = () => {
+    if (!audio) return alert('오디오 파일을 선택해주세요.')
+    if (!name) return alert('이름을 입력해주세요.')
+    if (!content) return alert('설명을 입력해주세요.')
+
+    const formData = new FormData()
+    formData.append(
+      'data',
+      new Blob([JSON.stringify({ name, content })], {
+        type: 'application/json',
+      }),
+    )
+    formData.append('voice', audio)
+
+    mutate(formData, {
+      onSuccess: () => {
+        alert('음성이 등록되었습니다.')
+        closeModal()
+      },
+    })
+  }
 
   return (
     <BottomDrawer>
@@ -74,15 +101,7 @@ export default function VoiceRegisterModal() {
           }
         }}
       />
-      <BottomButton
-        type='primary'
-        label='등록'
-        onClick={() => {
-          if (name && content && audio) {
-            // Handle voice registration
-          }
-        }}
-      />
+      <BottomButton type='primary' label='등록' onClick={handleSubmit} />
     </BottomDrawer>
   )
 }

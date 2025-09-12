@@ -23,7 +23,7 @@ export const MEMBERS: Record<string, { greeting: string; name: string }> = {
     greeting: '12반 웃음 담당 경완님! 빨리 와주세요~!',
     name: '박경완',
   },
-  '971101': {
+  '971201': {
     greeting: '승우님 어서오세요! 승근님이 기다리고 있어요.',
     name: '이승우',
   },

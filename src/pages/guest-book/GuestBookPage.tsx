@@ -1,26 +1,26 @@
-import { lazy, useState } from 'react'
-import { css, keyframes } from '@emotion/react'
+import { useState } from 'react'
+import { css } from '@emotion/react'
 import { PenNewSquare, UsersGroupRounded } from '@solar-icons/react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { useAssociateProfile, useGuestBookList } from '@/api'
-import { Skeleton } from '@/components/common/Skeleton'
 import BadgeList from '@/components/guest-book/BadgeList'
 import Card from '@/components/guest-book/Card'
 import Comment from '@/components/guest-book/Comment'
 import GuestBookBoard from '@/components/guest-book/GuestBookBoard'
+import GuestBookBoardSkeleton from '@/components/guest-book/GuestBookBoard/GuestBookBoard.Skeleton'
 import GuestBookProfile, {
   GuestBookProfileSkeleton,
 } from '@/components/guest-book/GuestBookProfile'
+import MbtiChart from '@/components/guest-book/MbtiChart'
 import MbtiTest from '@/components/guest-book/MbtiTest'
 import WavyButton from '@/components/guest-book/WavyButton'
 import useHeader from '@/hooks/useHeader'
 import useStardust from '@/hooks/useStardust'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
+import { flipIn, flipOut } from '@/styles/animation'
 import { flexGap } from '@/styles/common'
-
-const MbtiChart = lazy(() => import('@/components/guest-book/MbtiChart'))
 
 export default function GuestBookPage() {
   useStardust()
@@ -29,17 +29,18 @@ export default function GuestBookPage() {
     null,
   )
   const [isClosing, setIsClosing] = useState(false)
-  const { id } = useParams()
-  const { birthDate, communityId, associateId: myId } = useUserStore()
+  const { associateId: stringId } = useParams()
+  const { communityId, associateId: myId } = useUserStore()
 
-  const associateId = Number(id)
+  const associateId = Number(stringId)
   const { data: profile } = useAssociateProfile(communityId, associateId)
   const { data: guestBookList, isLoading } = useGuestBookList(
     communityId,
     associateId,
+    { size: 4 },
   )
 
-  const isMyPage = birthDate === profile?.birthday && myId === associateId
+  const isMyPage = myId === associateId
 
   useHeader({
     routeName: '방명록',
@@ -63,6 +64,7 @@ export default function GuestBookPage() {
             achievementId={profile.achievement?.id}
             isMyProfile={isMyPage}
             {...profile}
+            id={associateId}
           />
         ) : (
           <GuestBookProfileSkeleton />
@@ -92,35 +94,19 @@ export default function GuestBookPage() {
             </Card>
           </div>
           <Card title='GUEST BOOK'>
-            <div css={[flexGap(12), commentListStyle]}>
-              {isLoading ? (
-                <>
-                  {Array(4)
-                    .fill(0)
-                    .map((_, index) => (
-                      <Skeleton
-                        key={index}
-                        width='100%'
-                        height={37}
-                        radius={4}
-                      />
-                    ))}
-                  <Skeleton width={65} height={32} radius={2} />
-                </>
-              ) : (
-                <>
-                  {guestBookList?.pages[0].guestBooks
-                    .slice(0, 4)
-                    .map(comment => (
-                      <Comment key={comment.id} {...comment} />
-                    ))}
-                  <WavyButton
-                    label='더보기'
-                    onClick={() => setMode('GUEST BOOK')}
-                  />
-                </>
-              )}
-            </div>
+            {isLoading ? (
+              <GuestBookBoardSkeleton />
+            ) : (
+              <div css={[flexGap(12), commentListStyle]}>
+                {guestBookList?.pages[0].guestBooks.map(comment => (
+                  <Comment key={comment.id} {...comment} />
+                ))}
+                <WavyButton
+                  label='더보기'
+                  onClick={() => setMode('GUEST BOOK')}
+                />
+              </div>
+            )}
           </Card>
         </>
       ) : (
@@ -180,16 +166,6 @@ const rowStyle = css({
   gap: '10px',
 })
 
-const flipIn = keyframes({
-  from: { transform: 'perspective(1000px) rotateY(90deg)', opacity: 0 },
-  to: { transform: 'perspective(1000px) rotateY(0deg)', opacity: 1 },
-})
-
-const flipOut = keyframes({
-  from: { transform: 'perspective(1000px) rotateY(0deg)', opacity: 1 },
-  to: { transform: 'perspective(1000px) rotateY(90deg)', opacity: 0 },
-})
-
 const flipContainerStyle = css({
   perspective: '1000px',
 })
@@ -198,7 +174,6 @@ const flipCardStyle = (isClosing: boolean) =>
   css({
     position: 'relative',
     transformStyle: 'preserve-3d',
-    // isClosing에 따라 animation-name을 바꿔 "재시작"을 유도
     animation: `${isClosing ? flipOut : flipIn} 260ms cubic-bezier(0.22, 1, 0.36, 1) both`,
     willChange: 'transform, opacity',
   })

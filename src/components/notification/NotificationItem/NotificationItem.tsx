@@ -103,10 +103,10 @@ function getUrlAndIcon(
     url = ROUTES.GUEST_BOOK(myId)
     Icon = MedalStarCircle
   } else if (type === 'REACTION') {
-    url = ROUTES.POST_DETAIL(postId as number)
+    url = ROUTES.POST_DETAIL(memoryId as number, postId as number)
     Icon = StickerSmileCircle
   } else if (type === 'POST') {
-    url = ROUTES.POST_DETAIL(postId as number)
+    url = ROUTES.POST_DETAIL(memoryId as number, postId as number)
     Icon = GalleryAdd
   } else if (type === 'GUESTBOOK') {
     url = ROUTES.GUEST_BOOK(myId)

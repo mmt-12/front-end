@@ -10,7 +10,7 @@ import { api } from '../utils/api'
 import type { Post, PostListResponse } from '../types/api'
 
 // 포스트 상세 조회
-export function usePost(communityId = 1, memoryId: number, postId: number) {
+export function usePost (communityId = 1, memoryId: number, postId: number) {
   return useQuery({
     queryKey: ['post', communityId, memoryId, postId],
     queryFn: () =>
@@ -28,18 +28,19 @@ export interface PostListParams {
   size?: number
 }
 
-export function usePostList(
+export function usePostList (
   communityId = 1,
   memoryId: number,
   params?: PostListParams,
 ) {
+  const size = params?.size ?? 10
   return useInfiniteQuery({
-    queryKey: ['posts', communityId, memoryId, params?.size],
-    initialPageParam: params?.cursor ?? 0,
-    queryFn: ({ pageParam = 0 }) => {
+    queryKey: ['posts', communityId, memoryId, size],
+    initialPageParam: params?.cursor,
+    queryFn: ({ pageParam = undefined }) => {
       const searchParams = new URLSearchParams()
-      searchParams.append('cursor', pageParam.toString())
-      if (params?.size) searchParams.append('size', params.size.toString())
+      if (pageParam) searchParams.append('cursor', pageParam.toString())
+      if (size) searchParams.append('size', size.toString())
 
       return api
         .get(
@@ -48,12 +49,12 @@ export function usePostList(
         .then(r => r.data as PostListResponse)
     },
     getNextPageParam: lastPage =>
-      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
+      lastPage.hasNext ? lastPage.nextCursor : undefined,
   })
 }
 
 // 포스트 등록
-export function useCreatePost(communityId = 1, memoryId: number) {
+export function useCreatePost (communityId = 1, memoryId: number) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -78,7 +79,7 @@ export function useCreatePost(communityId = 1, memoryId: number) {
 }
 
 // 포스트 수정
-export function useUpdatePost(
+export function useUpdatePost (
   communityId = 1,
   memoryId: number,
   postId: number,
@@ -110,7 +111,7 @@ export function useUpdatePost(
 }
 
 // 포스트 삭제
-export function useDeletePost(communityId = 1, memoryId: number) {
+export function useDeletePost (communityId = 1, memoryId: number) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -129,7 +130,7 @@ export function useDeletePost(communityId = 1, memoryId: number) {
 }
 
 // 이모지 코멘트 등록
-export function useCreateEmojiComment(
+export function useCreateEmojiComment (
   communityId = 1,
   memoryId: number,
   postId: number,
@@ -156,7 +157,7 @@ export function useCreateEmojiComment(
 }
 
 // 보이스 코멘트 등록
-export function useCreateVoiceComment(
+export function useCreateVoiceComment (
   communityId = 1,
   memoryId: number,
   postId: number,
@@ -183,7 +184,7 @@ export function useCreateVoiceComment(
 }
 
 // 일회용 보이스 코멘트 등록
-export function useCreateBubbleComment(
+export function useCreateBubbleComment (
   communityId = 1,
   memoryId: number,
   postId: number,
@@ -215,7 +216,7 @@ export function useCreateBubbleComment(
 }
 
 // 코멘트 삭제
-export function useDeleteComment(
+export function useDeleteComment (
   communityId = 1,
   memoryId: number,
   postId: number,

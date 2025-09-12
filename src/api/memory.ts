@@ -9,6 +9,7 @@ import {
 import { api } from '@/utils/api'
 import type {
   CreateMemoryRequest,
+  Memory,
   MemoryImagesResponse,
   MemoryListResponse,
 } from '@/types/api'
@@ -22,7 +23,7 @@ export interface MemoryListParams {
 }
 
 // 기억 생성
-export function useCreateMemory(communityId = 1) {
+export function useCreateMemory (communityId = 1) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -37,14 +38,15 @@ export function useCreateMemory(communityId = 1) {
 }
 
 // 기억 목록 조회
-export function useMemoryList(communityId = 1, params?: MemoryListParams) {
-  const { size, keyword, startTime, endTime } = params || {}
+export function useMemoryList (communityId = 1, params?: MemoryListParams) {
+  const size = params?.size ?? 10
+  const { keyword, startTime, endTime } = params || {}
   return useInfiniteQuery({
     queryKey: ['memories', communityId, size, keyword, startTime, endTime],
-    initialPageParam: params?.cursor ?? 0,
-    queryFn: ({ pageParam = 0 }) => {
+    initialPageParam: params?.cursor,
+    queryFn: ({ pageParam = undefined }) => {
       const searchParams = new URLSearchParams()
-      searchParams.append('cursor', pageParam.toString())
+      if (pageParam) if (pageParam) searchParams.append('cursor', pageParam.toString())
       if (size) searchParams.append('size', size.toString())
       if (keyword) searchParams.append('keyword', keyword)
       if (startTime) searchParams.append('startTime', startTime)
@@ -55,12 +57,23 @@ export function useMemoryList(communityId = 1, params?: MemoryListParams) {
         .then(r => r.data as MemoryListResponse)
     },
     getNextPageParam: lastPage =>
-      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
+      lastPage.hasNext ? lastPage.nextCursor : undefined,
+  })
+}
+
+// 기억 상세 조회
+export function useMemoryDetail (communityId = 1, memoryId: number) {
+  return useQuery({
+    queryKey: ['memories', communityId, memoryId],
+    queryFn: () =>
+      api
+        .get(`/v1/communities/${communityId}/memories/${memoryId}`)
+        .then(r => r.data as Memory),
   })
 }
 
 // 기억 수정
-export function useUpdateMemory(communityId = 1, memoryId: number) {
+export function useUpdateMemory (communityId = 1, memoryId: number) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -75,7 +88,7 @@ export function useUpdateMemory(communityId = 1, memoryId: number) {
 }
 
 // 기억 삭제
-export function useDeleteMemory(communityId = 1) {
+export function useDeleteMemory (communityId = 1) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -90,12 +103,12 @@ export function useDeleteMemory(communityId = 1) {
 }
 
 // 기억 이미지 다운로드
-export function useMemoryImages(communityId = 1, memoryId: number) {
+export function useMemoryImages (communityId = 1, memoryId: number) {
   return useQuery({
     queryKey: ['memory-images', communityId, memoryId],
     queryFn: () =>
       api
-        .get(`/v1/communities/${communityId}/memories/${memoryId}`)
+        .get(`/v1/communities/${communityId}/memories/${memoryId}/images`)
         .then(r => r.data as MemoryImagesResponse),
   })
 }

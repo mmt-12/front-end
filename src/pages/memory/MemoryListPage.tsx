@@ -25,10 +25,7 @@ export default function MemoryListPage() {
   })
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useMemoryList(1, {
-      cursor: 0,
-      size: 10,
-    })
+    useMemoryList(1)
   const memories = data?.pages.flatMap(page => page.memories) || []
 
   const toggleViewMode = useCallback(() => {
@@ -63,7 +60,7 @@ export default function MemoryListPage() {
         </InfiniteScroll>
       ) : (
         <div>
-          {Array.from({ length: 6 }).map((_, idx) => (
+          {Array.from({ length: 3 }).map((_, idx) => (
             <MemoryListItemSkeleton
               key={idx}
               isGrid={memoryListView == 'grid'}

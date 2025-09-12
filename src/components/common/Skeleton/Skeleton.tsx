@@ -17,12 +17,17 @@ const shimmer = keyframes`
   100% { background-position: 200% 0; }
 `
 
-const baseStyle = (theme: Theme, width?: Size, height?: Size, radius?: Size) =>
+const baseStyle = (
+  theme: Theme,
+  width: Size = '100%',
+  height: Size = '1em',
+  radius: Size,
+) =>
   css({
     display: 'block',
     width: width ?? '100%',
     height: height ?? '1em',
-    borderRadius: radius ?? 8,
+    borderRadius: radius,
     backgroundColor: theme.stone[150],
     backgroundImage: `linear-gradient(90deg, ${theme.stone[150]} 0%, ${theme.stone[100]} 50%, ${theme.stone[150]} 100%)`,
     backgroundSize: '200% 100%',
@@ -32,7 +37,7 @@ const baseStyle = (theme: Theme, width?: Size, height?: Size, radius?: Size) =>
 export default function Skeleton({
   width,
   height,
-  radius,
+  radius = 8,
   style,
   className,
 }: SkeletonProps) {

@@ -36,7 +36,7 @@ export interface ProfileImageListParams {
 }
 
 // 프로필 조회
-export function useAssociateProfile(communityId = 1, associateId: number) {
+export function useAssociateProfile (communityId = 1, associateId: number) {
   return useQuery({
     queryKey: ['associate-profile', communityId, associateId],
     queryFn: () =>
@@ -47,30 +47,31 @@ export function useAssociateProfile(communityId = 1, associateId: number) {
 }
 
 // 참여자 목록 조회
-export function useAssociateList(
+export function useAssociateList (
   communityId = 1,
   params?: AssociateListParams,
 ) {
+  const size = params?.size ?? 10
   return useInfiniteQuery({
-    queryKey: ['associates', communityId, params?.keyword, params?.size],
-    initialPageParam: params?.cursor ?? 0,
-    queryFn: ({ pageParam = 0 }) => {
+    queryKey: ['associates', communityId, params?.keyword, size],
+    initialPageParam: params?.cursor,
+    queryFn: ({ pageParam = undefined }) => {
       const searchParams = new URLSearchParams()
       if (params?.keyword) searchParams.append('keyword', params.keyword)
-      if (params?.size) searchParams.append('size', params.size.toString())
-      searchParams.append('cursor', pageParam.toString())
+      if (size) searchParams.append('size', size.toString())
+      if (pageParam) searchParams.append('cursor', pageParam.toString())
 
       return api
         .get(`/v1/communities/${communityId}/associates?${searchParams}`)
         .then(r => r.data as AssociateListResponse)
     },
     getNextPageParam: lastPage =>
-      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
+      lastPage.hasNext ? lastPage.nextCursor : undefined,
   })
 }
 
 // 프로필 수정
-export function useUpdateAssociate(communityId = 1) {
+export function useUpdateAssociate (communityId = 1) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -88,7 +89,7 @@ export function useUpdateAssociate(communityId = 1) {
 }
 
 // 업적 조회
-export function useAchievements(communityId = 1, associateId: number) {
+export function useAchievements (communityId = 1, associateId: number) {
   return useQuery({
     queryKey: ['achievements', communityId, associateId],
     queryFn: () =>
@@ -101,18 +102,19 @@ export function useAchievements(communityId = 1, associateId: number) {
 }
 
 // 방명록 조회
-export function useGuestBookList(
+export function useGuestBookList (
   communityId = 1,
   associateId: number,
   params?: GuestBookListParams,
 ) {
+  const size = params?.size ?? 10
   return useInfiniteQuery({
-    queryKey: ['guestbooks', communityId, associateId, params?.size],
-    initialPageParam: params?.cursor ?? 0,
-    queryFn: ({ pageParam = 0 }) => {
+    queryKey: ['guestbooks', communityId, associateId, size],
+    initialPageParam: params?.cursor,
+    queryFn: ({ pageParam = undefined }) => {
       const searchParams = new URLSearchParams()
-      if (params?.size) searchParams.append('size', params.size.toString())
-      searchParams.append('cursor', pageParam.toString())
+      if (size) searchParams.append('size', size.toString())
+      if (pageParam) searchParams.append('cursor', pageParam.toString())
 
       return api
         .get(
@@ -121,12 +123,12 @@ export function useGuestBookList(
         .then(r => r.data as GuestBookListResponse)
     },
     getNextPageParam: lastPage =>
-      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
+      lastPage.hasNext ? lastPage.nextCursor : undefined,
   })
 }
 
 // 방명록 일회용 보이스 생성
-export function useCreateGuestBookBubble(communityId = 1, associateId: number) {
+export function useCreateGuestBookBubble (communityId = 1, associateId: number) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -151,7 +153,7 @@ export function useCreateGuestBookBubble(communityId = 1, associateId: number) {
 }
 
 // 방명록 리액션 생성
-export function useCreateGuestBookReaction(
+export function useCreateGuestBookReaction (
   communityId = 1,
   associateId: number,
 ) {
@@ -174,7 +176,7 @@ export function useCreateGuestBookReaction(
 }
 
 // 방명록 텍스트 생성
-export function useCreateGuestBookText(communityId = 1, associateId: number) {
+export function useCreateGuestBookText (communityId = 1, associateId: number) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -194,7 +196,7 @@ export function useCreateGuestBookText(communityId = 1, associateId: number) {
 }
 
 // 방명록 삭제
-export function useDeleteGuestBook(communityId = 1, associateId: number) {
+export function useDeleteGuestBook (communityId = 1, associateId: number) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -213,7 +215,7 @@ export function useDeleteGuestBook(communityId = 1, associateId: number) {
 }
 
 // MBTI 조회
-export function useMbtiTest(communityId = 1, associateId: number) {
+export function useMbtiTest (communityId = 1, associateId: number) {
   return useQuery({
     queryKey: ['mbti-test', communityId, associateId],
     queryFn: () =>
@@ -226,7 +228,7 @@ export function useMbtiTest(communityId = 1, associateId: number) {
 }
 
 // MBTI 등록
-export function useCreateMbtiTest(communityId = 1, associateId: number) {
+export function useCreateMbtiTest (communityId = 1, associateId: number) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -246,18 +248,19 @@ export function useCreateMbtiTest(communityId = 1, associateId: number) {
 }
 
 // 프로필 이미지 조회
-export function useProfileImageList(
+export function useProfileImageList (
   communityId = 1,
   associateId: number,
   params?: ProfileImageListParams,
 ) {
+  const size = params?.size ?? 10
   return useInfiniteQuery({
-    queryKey: ['profile-images', communityId, associateId, params?.size],
-    initialPageParam: params?.cursor ?? 0,
-    queryFn: ({ pageParam = 0 }) => {
+    queryKey: ['profile-images', communityId, associateId, size],
+    initialPageParam: params?.cursor,
+    queryFn: ({ pageParam = undefined }) => {
       const searchParams = new URLSearchParams()
-      if (params?.size) searchParams.append('size', params.size.toString())
-      searchParams.append('cursor', pageParam.toString())
+      if (size) searchParams.append('size', size.toString())
+      if (pageParam) searchParams.append('cursor', pageParam.toString())
 
       return api
         .get(
@@ -266,12 +269,12 @@ export function useProfileImageList(
         .then(r => r.data as ProfileImageListResponse)
     },
     getNextPageParam: lastPage =>
-      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
+      lastPage.hasNext ? lastPage.nextCursor : undefined,
   })
 }
 
 // 프로필 이미지 등록
-export function useCreateProfileImage(communityId = 1, associateId: number) {
+export function useCreateProfileImage (communityId = 1, associateId: number) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -296,7 +299,7 @@ export function useCreateProfileImage(communityId = 1, associateId: number) {
 }
 
 // 프로필 이미지 등록 취소
-export function useDeleteProfileImage(communityId = 1, associateId: number) {
+export function useDeleteProfileImage (communityId = 1, associateId: number) {
   const queryClient = useQueryClient()
 
   return useMutation({

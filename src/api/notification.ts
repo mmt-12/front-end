@@ -13,26 +13,27 @@ export interface NotificationListParams {
 }
 
 // 알림 목록 조회
-export function useNotificationList(params?: NotificationListParams) {
+export function useNotificationList (params?: NotificationListParams) {
+  const size = params?.size ?? 10
   return useInfiniteQuery({
-    queryKey: ['notifications', params?.size],
-    initialPageParam: params?.cursor ?? 0,
-    queryFn: ({ pageParam = 0 }) => {
+    queryKey: ['notifications', size],
+    initialPageParam: params?.cursor,
+    queryFn: ({ pageParam = undefined }) => {
       const searchParams = new URLSearchParams()
-      searchParams.append('cursor', pageParam.toString())
-      if (params?.size) searchParams.append('size', params.size.toString())
+      if (pageParam) searchParams.append('cursor', pageParam.toString())
+      if (size) searchParams.append('size', size.toString())
 
       return api
         .get(`/v1/notifications?${searchParams}`)
         .then(r => r.data as NotificationListResponse)
     },
     getNextPageParam: lastPage =>
-      lastPage.pageInfo.hasNext ? lastPage.pageInfo.nextCursor : undefined,
+      lastPage.hasNext ? lastPage.nextCursor : undefined,
   })
 }
 
 // 안읽은 알림 조회
-export function useUnreadNotifications() {
+export function useUnreadNotifications () {
   return useQuery({
     queryKey: ['unread-notifications'],
     queryFn: () =>

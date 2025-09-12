@@ -8,7 +8,6 @@ import type { IReaction } from '@/types/reaction'
 export default function Voice({
   id,
   url: audioUrl,
-  amount,
   isActive = false,
   involved = false,
   name,
@@ -31,11 +30,8 @@ export default function Voice({
     }
   }
   return (
-    <div
-      css={containerStyle(theme, involved, isActive, !!amount)}
-      onClick={e => onClick?.(e, id)}
-    >
-      <div css={playButtonWrapperStyle}>
+    <div css={containerStyle} onClick={e => onClick?.(e, id)}>
+      <div css={playButtonWrapperStyle(theme, involved)}>
         <button onClick={handleButtonClick} css={playButtonStyle}>
           {isPlaying ? (
             <PauseCircle weight='Bold' size={36} color={theme.white} />
@@ -49,7 +45,8 @@ export default function Voice({
           </Marquee>
         </div>
       </div>
-      {amount && <span>{amount}</span>}
+      <div css={activeBarStyle(theme, isActive)} />
+
       <audio
         src={audioUrl}
         ref={audioRef}
@@ -59,37 +56,23 @@ export default function Voice({
   )
 }
 
-const containerStyle = (
-  theme: Theme,
-  involved: boolean,
-  isActive: boolean,
-  isAmount: boolean,
-) =>
+const containerStyle = css({
+  padding: 0,
+
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexShrink: 0,
+  gap: 6,
+  flexGrow: 1,
+
+  borderRadius: 24,
+})
+
+const playButtonWrapperStyle = (theme: Theme, involved: boolean) =>
   css({
-    padding: isAmount ? (isActive ? '4px 12px 4px 4px' : '2px') : 0,
-
-    display: 'flex',
-    flexGrow: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '4px',
-
-    borderRadius: '24px',
-    backgroundColor: isActive ? theme.stone[200] : 'transparent',
-    outline: involved
-      ? isAmount
-        ? 'none'
-        : `3px solid ${theme.sky[300]}`
-      : 'none',
-
-    span: {
-      fontWeight: involved ? 'bold' : 'normal',
-      color: involved ? theme.sky[500] : theme.black,
-    },
-  })
-
-const playButtonWrapperStyle = (theme: Theme) =>
-  css({
+    width: '100%',
     padding: '3px 12px 3px 4px',
     display: 'flex',
     flexGrow: 1,
@@ -97,6 +80,8 @@ const playButtonWrapperStyle = (theme: Theme) =>
     gap: '4px',
     borderRadius: '24px',
     backgroundColor: theme.stone[600],
+
+    outline: involved ? `3px solid ${theme.sky[300]}` : 'none',
   })
 
 const marqueeStyle = css({
@@ -112,10 +97,19 @@ const nameStyle = css({
 })
 
 const playButtonStyle = css({
-  width: '38px',
+  width: '34px',
   aspectRatio: '1 / 1',
   display: 'flex',
   flexShrink: 0,
   alignItems: 'center',
   justifyContent: 'center',
 })
+
+const activeBarStyle = (theme: Theme, isActive: boolean) =>
+  css({
+    width: isActive ? 24 : 0,
+    height: isActive ? 4 : 0,
+    borderRadius: 2,
+    backgroundColor: theme.stone[300],
+    transition: 'height 0.2s ease-in-out, width 0.2s ease-in-out',
+  })

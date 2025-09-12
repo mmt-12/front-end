@@ -5,8 +5,9 @@ import {
   PenNewSquare,
   RoundAltArrowRight,
 } from '@solar-icons/react'
+import { useNavigate } from 'react-router-dom'
 
-import { useAssociateProfile } from '@/api'
+import { useAssociateProfile, useUpdateAssociate } from '@/api'
 import defaultImageUrl from '@/assets/images/mascot/default-profile.png'
 import Badge from '@/components/common/Badge'
 import BottomButton from '@/components/common/BottomButton'
@@ -21,9 +22,11 @@ import PopupModal from '@/components/popup/PopupModal'
 import { BADGES } from '@/consts/BADGES'
 import useHeader from '@/hooks/useHeader'
 import { useModal } from '@/hooks/useModal'
+import useStardust from '@/hooks/useStardust'
+import { ROUTES } from '@/routes/ROUTES'
+import { useUserStore } from '@/store/userStore'
 import { flexGap } from '@/styles/common'
 import type { IArrayInput, IArrayItem } from '@/types'
-import useStardust from '@/hooks/useStardust'
 
 export default function EditProfilePage() {
   useStardust()
@@ -33,17 +36,39 @@ export default function EditProfilePage() {
       icon: null,
     },
   })
+  const navigate = useNavigate()
 
-  const userId = 1
-  const { data: profile } = useAssociateProfile(1, userId)
+  const { associateId } = useUserStore()
+  const { data: profile } = useAssociateProfile(1, associateId)
 
   const theme = useTheme()
   const { openModal, closeModal } = useModal()
 
-  const [imagePath, setImagePath] = useState<string>()
+  const [imagePath, setImagePath] = useState<string>('no image')
   const [name, setName] = useState(profile?.nickname || '')
   const [introduction, setIntroduction] = useState(profile?.introduction || '')
   const [badgeId, setBadgeId] = useState(profile?.achievement?.id)
+  const { mutate: updateProfile } = useUpdateAssociate(1)
+
+  const handleSubmit = () => {
+    if (!name) return alert('이름을 입력해주세요.')
+    if (!badgeId) return alert('칭호를 선택해주세요.')
+
+    updateProfile(
+      {
+        nickname: name,
+        achievement: badgeId,
+        profileImageUrl: imagePath,
+        introduction,
+      },
+      {
+        onSuccess: () => {
+          alert('프로필이 수정되었습니다.')
+          navigate(ROUTES.GUEST_BOOK(associateId))
+        },
+      },
+    )
+  }
 
   const badgeItems = useMemo(
     () =>
@@ -78,8 +103,6 @@ export default function EditProfilePage() {
       </PopupModal>,
     )
   }
-
-  if (!profile) return null
 
   return (
     <div css={[flexGap(8), { padding: '24px 0' }]}>
@@ -137,7 +160,7 @@ export default function EditProfilePage() {
         value={introduction}
         onChange={e => setIntroduction(e.target.value)}
       />
-      <BottomButton label='수정하기' onClick={() => {}} />
+      <BottomButton label='수정하기' onClick={handleSubmit} />
     </div>
   )
 }

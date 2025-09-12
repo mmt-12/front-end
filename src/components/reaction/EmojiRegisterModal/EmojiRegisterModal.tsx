@@ -3,17 +3,44 @@ import { css, useTheme } from '@emotion/react'
 import type { Theme } from '@emotion/react'
 import { GalleryAdd } from '@solar-icons/react'
 
+import { useCreateEmoji } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import BottomDrawer from '@/components/common/BottomDrawer'
 import Button from '@/components/common/Button'
 import Img from '@/components/common/Img'
 import InputField from '@/components/common/InputField'
+import { useModal } from '@/hooks/useModal'
 
 export default function EmojiRegisterModal() {
   const theme = useTheme()
   const inputRef = useRef<HTMLInputElement>(null)
   const [emojiName, setEmojiName] = useState('')
   const [emojiImage, setEmojiImage] = useState<File | null>(null)
+
+  const { closeModal } = useModal()
+
+  const { mutate } = useCreateEmoji(1)
+
+  const handleSubmit = () => {
+    if (!emojiImage) return alert('이모지 이미지를 선택해주세요.')
+    if (!emojiName) return alert('이모지 이름을 입력해주세요.')
+
+    const formData = new FormData()
+    formData.append(
+      'data',
+      new Blob([JSON.stringify({ name: emojiName })], {
+        type: 'application/json',
+      }),
+    )
+    formData.append('emoji', emojiImage)
+
+    mutate(formData, {
+      onSuccess: () => {
+        alert('이모지가 등록되었습니다.')
+        closeModal()
+      },
+    })
+  }
 
   return (
     <BottomDrawer>
@@ -55,15 +82,7 @@ export default function EmojiRegisterModal() {
           if (file) setEmojiImage(file)
         }}
       />
-      <BottomButton
-        type='primary'
-        label='등록'
-        onClick={() => {
-          if (emojiName && emojiImage) {
-            // Handle emoji registration
-          }
-        }}
-      />
+      <BottomButton type='primary' label='등록' onClick={handleSubmit} />
     </BottomDrawer>
   )
 }

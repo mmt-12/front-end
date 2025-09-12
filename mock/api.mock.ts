@@ -20,16 +20,23 @@ export default defineMock([
   {
     url: '/api/v1/communities/:communityId/memories',
     body: {
-      pageInfo: { nextCursor: 0, hasNext: true },
       memories: MEMORIES,
+      nextCursor: 0,
+      hasNext: true
     },
   },
-  // 포스트 목록 조회
+  // 기억 상세 조회
   {
-    url: '/api/v1/communities/:communityId/memories/:memoryId/posts',
+    url: '/api/v1/communities/:communityId/memories/:memoryId',
+    body:
+      MEMORIES[0]
+    ,
+  },
+  // 기억 이미지 조회
+  {
+    url: '/api/v1/communities/:communityId/memories/:memoryId/images',
     body: {
-      posts: POSTS,
-      pageInfo: { nextCursor: 0, hasNext: true },
+      pictures: MEMORIES[0].pictures,
     },
   },
   // 포스트 댓글 이모지 생성
@@ -60,7 +67,7 @@ export default defineMock([
     body: {
       communityName: '싸피12반최고',
       associates: MEMBERS,
-      pageInfo: { nextCursor: 101, hasNext: true },
+      nextCursor: 101, hasNext: true
     },
   },
   // 방명록 - Get achievements for an associate
@@ -75,13 +82,26 @@ export default defineMock([
     url: '/api/v1/communities/:communityId/associates/:associateId/guest-books',
     body: {
       guestBooks: GUEST_BOOK,
-      pageInfo: { nextCursor: 0, hasNext: true },
+      nextCursor: 20,
+      hasNext: true
+    },
+  },
+  // 방명록 - 4개만 불러오기
+  {
+    url: '/api/v1/communities/:communityId/associates/:associateId/guest-books?size=4',
+    body: {
+      guestBooks: GUEST_BOOK.slice(0, 4),
+      nextCursor: 0,
+      hasNext: false,
     },
   },
   // 방명록 - Get MBTI tests for an associate
   {
     url: '/api/v1/communities/:communityId/associates/:associateId/mbti-tests',
     body: MBTI,
+    // 실패 응답 테스트
+    // status: 401,
+    // message: 'Unauthorized',
   },
   // 방명록 - MBTI 등록
   {
@@ -93,7 +113,8 @@ export default defineMock([
     url: '/api/v1/communities/:communityId/associates/:associateId/profile-images',
     body: {
       profileImages: PROFILE_IMAGES,
-      pageInfo: { nextCursor: 0, hasNext: true },
+      nextCursor: 0,
+      hasNext: true,
     },
   },
   // 방명록 리액션 생성
@@ -136,10 +157,10 @@ export default defineMock([
   },
   // 포스트 목록 조회
   {
-    url: '/api/v1/communities/:communityId/memories/:memoryId',
+    url: '/api/v1/communities/:communityId/memories/:memoryId/posts',
     body: {
       posts: POSTS,
-      pageInfo: { nextCursor: 0, hasNext: true },
+      nextCursor: 0, hasNext: true,
     },
   },
   // Reaction - Get voices in a community
@@ -147,21 +168,18 @@ export default defineMock([
     url: '/api/v1/communities/:communityId/voices',
     body: {
       voices: VOICES,
-      pageInfo: {
-        nextCursor: 0,
-        hasNext: true,
-      },
+
+      nextCursor: 0,
+      hasNext: true,
     },
   },
   // Reaction - Get emojis in a community
   {
-    url: '/api/v1/communities/:communityId/emoji',
+    url: '/api/v1/communities/:communityId/emojis',
     body: {
-      emoji: EMOJIS,
-      pageInfo: {
-        nextCursor: 0,
-        hasNext: true,
-      },
+      emojis: EMOJIS,
+      nextCursor: 0,
+      hasNext: true,
     },
   },
   // Notification - Get notifications
@@ -169,10 +187,9 @@ export default defineMock([
     url: '/api/v1/notifications',
     body: {
       notifications: NOTIFICATIONS,
-      pageInfo: {
-        nextCursor: 0,
-        hasNext: true,
-      },
+
+      nextCursor: 0,
+      hasNext: false,
     },
   },
   // Notification - Get unread notification count

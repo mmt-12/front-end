@@ -1,6 +1,8 @@
+import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { useLogin } from '@/api'
+import Loader from '@/components/common/Loader'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 
@@ -8,12 +10,15 @@ export default function LandingPage() {
   const [searchParams] = useSearchParams()
   const { data } = useLogin(searchParams.get('code') || '')
   const navigate = useNavigate()
-  const userStore = useUserStore()
+  const login = useUserStore(s => s.login)
 
-  if (data) {
-    userStore.login(data)
-    if (data.memberId) navigate(ROUTES.MEMORY_LIST)
-    else navigate(ROUTES.SIGNUP)
-  }
-  if (!data) return <div>회원 정보 불러오는 중...</div>
+  useEffect(() => {
+    if (data) {
+      login(data)
+      if (data.memberId) navigate(ROUTES.MEMORY_LIST)
+      else navigate(ROUTES.SIGNUP)
+    }
+  }, [data, navigate, login])
+
+  return <Loader />
 }
