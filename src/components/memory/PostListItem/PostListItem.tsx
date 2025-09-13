@@ -1,5 +1,4 @@
 import type { MouseEvent } from 'react'
-import { useQueryClient } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 
 import {
@@ -17,7 +16,6 @@ import PostContent from '../PostContent/PostContent'
 export default function PostListItem(props: PostType) {
   const { communityId } = useUserStore()
   const { memoryId } = useParams()
-  const queryClient = useQueryClient()
 
   const { mutate: commentEmoji } = useCreateEmojiComment(
     communityId,

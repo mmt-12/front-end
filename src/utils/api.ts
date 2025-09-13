@@ -2,10 +2,6 @@
 import { ROUTES } from '@/routes/ROUTES'
 import axios, { AxiosError, type AxiosResponse } from 'axios'
 
-// Fake delay utility
-function delay (ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
 
 export const api = axios.create({
   baseURL: import.meta.env.DEV
