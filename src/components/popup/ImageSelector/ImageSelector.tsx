@@ -20,7 +20,7 @@ export default function ImageSelector({ value, onSelect }: Props) {
   const theme = useTheme()
   const [image, setImage] = useState<string>(value || '')
   const userId = 1
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useProfileImageList(1, userId, { size: 9 })
   const images = data?.pages.flatMap(page => page.profileImages) || []
   return (
@@ -41,14 +41,14 @@ export default function ImageSelector({ value, onSelect }: Props) {
         isFetchingNext={isFetchingNextPage}
         loader={<Loader customCss={{ padding: 24 }} />}
       >
-        {images.length > 0 ? (
+        {isLoading ? (
+          <ProfileImageListSkeleton />
+        ) : (
           <ProfileImageList
             images={images}
             onImageClick={profileImage => setImage(profileImage.url)}
             selectedImageUrl={image}
           />
-        ) : (
-          <ProfileImageListSkeleton />
         )}
       </InfiniteScroll>
       <BottomButton label='이미지 수정' onClick={() => onSelect(image)} />
