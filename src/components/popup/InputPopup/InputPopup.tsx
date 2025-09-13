@@ -11,7 +11,7 @@ import type {
   IDateRangeInput,
   ILocationInput,
 } from '@/types'
-import PopupModal from '../PopupModal'
+import Popup from '../Popup'
 
 interface Props<T = IDateRangeInput | IArrayInput | ILocationInput> {
   label: string
@@ -39,7 +39,7 @@ export default function InputPopup<T extends IBaseInput>({
   const theme = useTheme()
 
   const modal = (
-    <PopupModal title={label} onClose={() => closeModal()}>
+    <Popup title={label} onClose={() => closeModal()}>
       {cloneElement(
         content as React.ReactElement<{
           onSelect: (_value: T) => void
@@ -48,7 +48,7 @@ export default function InputPopup<T extends IBaseInput>({
           onSelect: handlePopupSelect,
         },
       )}
-    </PopupModal>
+    </Popup>
   )
 
   return (

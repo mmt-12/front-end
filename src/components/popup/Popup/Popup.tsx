@@ -13,7 +13,7 @@ interface Props {
   onClose: () => void
 }
 
-export default function PopupModal({ title, children, onClose }: Props) {
+export default function Popup({ title, children, onClose }: Props) {
   useEffect(() => {
     if (!onClose) return
     window.history.pushState({ modal: true }, '', window.location.href)

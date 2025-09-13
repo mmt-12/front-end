@@ -7,8 +7,8 @@ import {
 } from '@solar-icons/react'
 import { Link } from 'react-router-dom'
 
-import BottomDrawer from '@/components/common/BottomDrawer'
 import Button from '@/components/common/Button'
+import BottomDrawer from '@/components/modal/BottomDrawer'
 import EmojiRegisterModal from '@/components/reaction/EmojiRegisterModal'
 import VoiceRegisterModal from '@/components/reaction/VoiceRegisterModal/VoiceRegisterModal'
 import { useModal } from '@/hooks/useModal'

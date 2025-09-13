@@ -8,7 +8,7 @@ import InfiniteScroll from '@/components/common/InfiniteScroll'
 import Loader from '@/components/common/Loader'
 import ProfileImageList, {
   ProfileImageListSkeleton,
-} from '@/components/common/ProfileImageList'
+} from '@/components/member/ProfileImageList'
 import useHeader from '@/hooks/useHeader'
 import useStardust from '@/hooks/useStardust'
 import { flexGap } from '@/styles/common'

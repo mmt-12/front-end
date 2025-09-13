@@ -5,9 +5,9 @@ import { Pen, Soundwave } from '@solar-icons/react'
 
 import { useCreateVoice } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
-import BottomDrawer from '@/components/common/BottomDrawer'
 import Button from '@/components/common/Button'
 import InputField from '@/components/common/InputField'
+import BottomDrawer from '@/components/modal/BottomDrawer'
 import { useModal } from '@/hooks/useModal'
 
 export default function VoiceRegisterModal() {

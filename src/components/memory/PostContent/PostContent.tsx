@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import type { Post } from '@/api'
 import Album from '@/components/common/Album'
 import Img from '@/components/common/Img'
-import Profile from '@/components/common/Profile'
+import Profile from '@/components/member/Profile'
 import { ROUTES } from '@/routes/ROUTES'
 import { formatDateTime } from '@/utils/date'
 

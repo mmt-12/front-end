@@ -18,7 +18,7 @@ import WavyBox from '@/components/guest-book/WavyBox'
 import ArraySelector from '@/components/popup/ArraySelector'
 import ImageSelector from '@/components/popup/ImageSelector/ImageSelector'
 import InputPopup from '@/components/popup/InputPopup'
-import PopupModal from '@/components/popup/PopupModal'
+import Popup from '@/components/popup/Popup'
 import { BADGES } from '@/consts/BADGES'
 import useHeader from '@/hooks/useHeader'
 import { useModal } from '@/hooks/useModal'
@@ -92,7 +92,7 @@ export default function EditProfilePage() {
 
   const handleImageClick = async () => {
     await openModal(
-      <PopupModal title={'프로필'} onClose={() => closeModal()}>
+      <Popup title={'프로필'} onClose={() => closeModal()}>
         <ImageSelector
           onSelect={(value: string) => {
             setImagePath(value)
@@ -100,7 +100,7 @@ export default function EditProfilePage() {
           }}
           value={imagePath}
         />
-      </PopupModal>,
+      </Popup>,
     )
   }
 

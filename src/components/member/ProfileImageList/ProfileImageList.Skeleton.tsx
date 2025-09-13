@@ -1,6 +1,6 @@
 import { css } from '@emotion/react'
 
-import { Skeleton } from '../Skeleton'
+import { Skeleton } from '@/components/common/Skeleton'
 
 export default function ProfileImageListSkeleton() {
   return (

@@ -6,10 +6,10 @@ import BottomButton from '@/components/common/BottomButton'
 import Img from '@/components/common/Img'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
 import Loader from '@/components/common/Loader'
+import WavyBox from '@/components/guest-book/WavyBox'
 import ProfileImageList, {
   ProfileImageListSkeleton,
-} from '@/components/common/ProfileImageList'
-import WavyBox from '@/components/guest-book/WavyBox'
+} from '@/components/member/ProfileImageList'
 
 interface Props {
   value?: string

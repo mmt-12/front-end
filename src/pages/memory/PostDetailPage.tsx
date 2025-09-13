@@ -4,7 +4,7 @@ import { MagniferZoomIn } from '@solar-icons/react'
 import { useParams } from 'react-router-dom'
 
 import { usePost } from '@/api'
-import Profile from '@/components/common/Profile'
+import Profile from '@/components/member/Profile'
 import PostContent from '@/components/memory/PostContent/PostContent'
 import { PostListItemSkeleton } from '@/components/memory/PostListItem'
 import ReactBar from '@/components/memory/ReactBar/ReactBar'

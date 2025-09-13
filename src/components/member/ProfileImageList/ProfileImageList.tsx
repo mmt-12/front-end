@@ -1,9 +1,9 @@
 import { css, useTheme } from '@emotion/react'
 import { CloseCircle } from '@solar-icons/react'
 
+import Img from '@/components/common/Img'
 import WavyBox from '@/components/guest-book/WavyBox'
 import type { IProfileImage } from '@/types'
-import Img from '../Img'
 
 interface Props {
   images: IProfileImage[]

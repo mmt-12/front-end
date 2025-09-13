@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import PopupModal from '.'
+
+import Popup from '.'
 
 const meta = {
-  title: 'components/popup/PopupModal',
-  component: PopupModal,
-} satisfies Meta<typeof PopupModal>
+  title: 'components/popup/Popup',
+  component: Popup,
+} satisfies Meta<typeof Popup>
 
 export default meta
 
