@@ -99,7 +99,7 @@ const spanStyle = (theme: Theme) =>
     fontSize: '14px',
     fontWeight: '500',
     letterSpacing: '0.5px',
-    color: theme.stone[600],
+    color: theme.colors.stone[600],
   })
 
 const emojiListStyle = css({

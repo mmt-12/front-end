@@ -64,7 +64,13 @@ export default function EmojiRegisterModal() {
             size='lg'
             type='secondary'
             label=''
-            icon={<GalleryAdd size={72} weight='Bold' color={theme.sky[600]} />}
+            icon={
+              <GalleryAdd
+                size={72}
+                weight='Bold'
+                color={theme.colors.sky[600]}
+              />
+            }
             onClick={() => {
               inputRef.current?.click()
             }}
@@ -106,5 +112,5 @@ const buttonWrapperStyle = (theme: Theme) =>
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.bg,
+    backgroundColor: theme.colors.bg,
   })

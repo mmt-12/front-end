@@ -75,7 +75,7 @@ const headerStyle = (theme: Theme) =>
     },
     time: {
       fontSize: '15px',
-      color: theme.stone[500],
+      color: theme.colors.stone[500],
       marginLeft: 'auto',
     },
   })

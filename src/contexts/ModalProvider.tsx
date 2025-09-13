@@ -12,7 +12,7 @@ type Modal = {
   closingKeyframe: Keyframes
 }
 
-type ModalReturnType = void | null | IBaseInput | string
+type ModalReturnType = void | null | IBaseInput | string | boolean
 
 interface ModalContextType {
   openModal: (
@@ -86,30 +86,38 @@ function ModalRenderer({
 
   return createPortal(
     <div
-      css={backgroundStyle(topModal)}
+      css={backgroundStyle}
       onClick={() => closeModal(null)}
       data-testid='modal-background'
     >
-      {content}
+      <div css={contentStyle(topModal)}>{content}</div>
     </div>,
     modalRoot,
   )
 }
 export { ModalProvider, ModalContext }
 
-const backgroundStyle = (modal: Modal) =>
+const backgroundStyle = css({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundColor: 'rgba(0, 0, 0, 0.25)',
+  zIndex: 30,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+  animation: `${fadeIn} 160ms ease-out`,
+})
+
+const contentStyle = (modal: Modal) =>
   css({
-    position: 'fixed',
-    top: 0,
-    left: 0,
+    position: 'relative',
     width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.25)',
-    zIndex: 30,
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    animation: modal.isClosing
-      ? `${modal.closingKeyframe} 160ms ease-in`
-      : `${fadeIn} 160ms ease-out`,
+    flexDirection: 'column',
+    alignItems: 'center',
+    animation: modal.isClosing ? `${modal.closingKeyframe} 160ms ease-in` : '',
   })

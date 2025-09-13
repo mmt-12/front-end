@@ -63,13 +63,13 @@ export default function GuestBookBoard({ communityId, associateId }: Props) {
               <CloseCircle
                 weight='Bold'
                 size={32}
-                color={theme.stone[300]}
+                color={theme.colors.stone[300]}
                 onClick={() => setInputValue('')}
               />
               <RoundArrowUp
                 weight='Bold'
                 size={32}
-                color={theme.sky[500]}
+                color={theme.colors.sky[500]}
                 onClick={handleCommentSubmit}
               />
             </div>

@@ -33,7 +33,7 @@ export default function ImageInputField({
               css={deleteButtonStyle}
               weight='Bold'
               size={48}
-              color={theme.white}
+              color={theme.colors.white}
               onClick={() => {
                 if (!confirm('이 이미지를 삭제할까요?')) return
                 const newImages = images.filter((_, i) => i !== index)
@@ -49,7 +49,11 @@ export default function ImageInputField({
               type='secondary'
               label=''
               icon={
-                <GalleryAdd size={72} weight='Bold' color={theme.sky[600]} />
+                <GalleryAdd
+                  size={72}
+                  weight='Bold'
+                  color={theme.colors.sky[600]}
+                />
               }
               onClick={() => {
                 inputRef.current?.click()

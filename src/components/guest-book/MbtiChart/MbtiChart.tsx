@@ -56,7 +56,7 @@ export default function MbtiChart({ communityId, associateId }: Props) {
                 fontWeight: 'bold',
                 color: '#fff',
                 align: 'center',
-                textBorderColor: theme.stone[700],
+                textBorderColor: theme.colors.stone[700],
                 textBorderWidth: 2,
               },
               percent: {
@@ -65,7 +65,7 @@ export default function MbtiChart({ communityId, associateId }: Props) {
                 fontWeight: 'bold',
                 color: '#fff',
                 align: 'center',
-                textBorderColor: theme.stone[700],
+                textBorderColor: theme.colors.stone[700],
                 textBorderWidth: 1.5,
               },
             },

@@ -27,7 +27,7 @@ export default function CreateButtonsModal() {
           textAlign: 'center',
           fontWeight: 'bold',
           fontSize: '16px',
-          color: theme.stone[800],
+          color: theme.colors.stone[800],
         }}
       >
         생성하기
@@ -69,7 +69,6 @@ export default function CreateButtonsModal() {
 
 const contentStyle = css({
   width: '100%',
-  padding: '16px',
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
   gap: '12px',

@@ -27,7 +27,7 @@ export default function ImageSelector({ value, onSelect }: Props) {
     <>
       <div css={imageWrapperStyle}>
         <WavyBox
-          strokeColor={theme.stone[600]}
+          strokeColor={theme.colors.stone[600]}
           strokeWidth={3}
           borderRadius={8}
           childrenOnTop={false}

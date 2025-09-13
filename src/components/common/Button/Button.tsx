@@ -74,31 +74,31 @@ const sizeStyles = {
 const typeStyles = (type: ButtonProps['type'], size: ButtonProps['size']) => {
   if (type === 'primary') {
     return css({
-      backgroundColor: theme.sky[500],
+      backgroundColor: theme.colors.sky[500],
       color: 'white',
       '&:hover': {
-        backgroundColor: theme.sky[600],
+        backgroundColor: theme.colors.sky[600],
       },
     })
   }
   if (type === 'secondary') {
     return css({
       backgroundColor: 'white',
-      color: theme.sky[500],
+      color: theme.colors.sky[500],
       borderWidth: size === 'lg' ? '3px' : '2px',
       borderStyle: 'solid',
-      borderColor: theme.sky[500],
+      borderColor: theme.colors.sky[500],
       '&:hover': {
-        backgroundColor: theme.sky[100],
+        backgroundColor: theme.colors.sky[100],
       },
     })
   }
   if (type === 'disabled') {
     return css({
-      backgroundColor: theme.stone[200],
-      color: theme.stone[400],
+      backgroundColor: theme.colors.stone[200],
+      color: theme.colors.stone[400],
       '&:hover': {
-        backgroundColor: theme.stone[300],
+        backgroundColor: theme.colors.stone[300],
       },
     })
   }

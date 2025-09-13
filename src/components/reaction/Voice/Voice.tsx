@@ -34,9 +34,9 @@ export default function Voice({
       <div css={playButtonWrapperStyle(theme, involved)}>
         <button onClick={handleButtonClick} css={playButtonStyle}>
           {isPlaying ? (
-            <PauseCircle weight='Bold' size={36} color={theme.white} />
+            <PauseCircle weight='Bold' size={36} color={theme.colors.white} />
           ) : (
-            <PlayCircle weight='Bold' size={36} color={theme.white} />
+            <PlayCircle weight='Bold' size={36} color={theme.colors.white} />
           )}
         </button>
         <div css={marqueeStyle}>
@@ -79,9 +79,9 @@ const playButtonWrapperStyle = (theme: Theme, involved: boolean) =>
     alignItems: 'center',
     gap: '4px',
     borderRadius: '24px',
-    backgroundColor: theme.stone[600],
+    backgroundColor: theme.colors.stone[600],
 
-    outline: involved ? `3px solid ${theme.sky[300]}` : 'none',
+    outline: involved ? `3px solid ${theme.colors.sky[300]}` : 'none',
   })
 
 const marqueeStyle = css({
@@ -110,6 +110,6 @@ const activeBarStyle = (theme: Theme, isActive: boolean) =>
     width: isActive ? 24 : 0,
     height: isActive ? 4 : 0,
     borderRadius: 2,
-    backgroundColor: theme.stone[300],
+    backgroundColor: theme.colors.stone[300],
     transition: 'height 0.2s ease-in-out, width 0.2s ease-in-out',
   })

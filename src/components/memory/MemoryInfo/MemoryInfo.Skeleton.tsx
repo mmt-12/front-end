@@ -59,7 +59,7 @@ const titleRowStyle = (theme: Theme) =>
 
     h2: {
       fontSize: '20px',
-      color: theme.sky[600],
+      color: theme.colors.sky[600],
     },
   })
 
@@ -74,11 +74,11 @@ const metaRowStyle = (theme: Theme, saveEnabled: boolean) =>
     fontWeight: '400',
 
     'p.location': {
-      color: theme.stone[800],
+      color: theme.colors.stone[800],
       fontSize: '14px',
     },
     'p.date': {
-      color: theme.stone[700],
+      color: theme.colors.stone[700],
       fontSize: '14px',
     },
   })

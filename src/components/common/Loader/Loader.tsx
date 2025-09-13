@@ -30,7 +30,7 @@ const loaderStyle = (theme: Theme) =>
     height: 36,
 
     flexShrink: 0,
-    border: `3.5px solid ${theme.sky[400]}`,
+    border: `3.5px solid ${theme.colors.sky[400]}`,
     borderBottomColor: 'transparent',
     borderRadius: '50%',
     boxSizing: 'border-box',

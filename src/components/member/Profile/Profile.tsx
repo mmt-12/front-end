@@ -97,6 +97,6 @@ const descriptionStyle = (theme: Theme) =>
     width: '100%',
     margin: 0,
     fontSize: '14px',
-    color: theme.stone[500],
+    color: theme.colors.stone[500],
     textOverflow: 'ellipsis',
   })

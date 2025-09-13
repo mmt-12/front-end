@@ -27,13 +27,13 @@ export default function ReactBar({ iconSize, customCss }: Props) {
       <StickerSmileSquare
         weight='Bold'
         size={iconSize}
-        color={theme.yellow}
+        color={theme.colors.yellow}
         onClick={handleEmojiClick}
       />
       <SoundwaveSquare
         weight='Bold'
         size={iconSize}
-        color={theme.sky[400]}
+        color={theme.colors.sky[400]}
         onClick={handleVoiceClick}
       />
     </div>

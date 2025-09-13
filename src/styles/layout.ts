@@ -15,6 +15,6 @@ export const headerStyle = (theme: Theme) =>
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: theme.white,
-    borderBottom: `1px solid ${theme.stone[150]}`,
+    backgroundColor: theme.colors.white,
+    borderBottom: `1px solid ${theme.colors.stone[150]}`,
   })

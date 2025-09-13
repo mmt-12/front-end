@@ -20,7 +20,7 @@ export default function ProfileImageList({
   const props = (isSelected: boolean) =>
     isSelected
       ? {
-          strokeColor: theme.sky[500],
+          strokeColor: theme.colors.sky[500],
           strokeWidth: 3,
           borderRadius: 4,
         }
@@ -45,7 +45,7 @@ export default function ProfileImageList({
               css={deleteButtonStyle}
               weight='Bold'
               size={34}
-              color={theme.white}
+              color={theme.colors.white}
               onClick={() => {}}
             />
           )}

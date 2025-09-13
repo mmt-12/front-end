@@ -32,7 +32,7 @@ export default function LoginPage() {
           <QuestionCircle
             weight='Bold'
             size={24}
-            color={theme.stone[400]}
+            color={theme.colors.stone[400]}
             width={16}
           />
           <span css={smallLabelStyle}>관리자에게 문의하기</span>
@@ -63,7 +63,7 @@ const subTitleStyle = css({ fontSize: 18, padding: 0, margin: 0 })
 const titleStyle = (theme: Theme) =>
   css({
     fontSize: '48px',
-    color: theme.stone[700],
+    color: theme.colors.stone[700],
     margin: '0',
     fontFamily: 'Pacifico, cursive',
   })
@@ -116,7 +116,7 @@ const kakaoIconStyle = css({
 
 const smallLabelStyle = (theme: Theme) =>
   css({
-    color: theme.stone[600],
+    color: theme.colors.stone[600],
     fontSize: 13,
     paddingTop: 2,
   })

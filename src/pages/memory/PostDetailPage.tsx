@@ -107,7 +107,7 @@ const reactionNameStyle = (theme: Theme) => ({
   display: 'flex',
   alignItems: 'center',
   gap: 8,
-  color: theme.stone[500],
+  color: theme.colors.stone[500],
 })
 
 const reactedProfilesStyle = css({
@@ -129,7 +129,7 @@ const reactBarStyle = (theme: Theme) =>
     display: 'flex',
     gap: '24px',
 
-    backgroundColor: theme.white,
+    backgroundColor: theme.colors.white,
     borderRadius: '24px',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   })

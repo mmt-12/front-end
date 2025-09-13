@@ -22,7 +22,7 @@ export default function ImageGrid({
         selectedImage === image ? (
           <WavyBox
             key={index}
-            strokeColor={theme.sky[500]}
+            strokeColor={theme.colors.sky[500]}
             strokeWidth={3}
             borderRadius={4}
             childrenOnTop={false}

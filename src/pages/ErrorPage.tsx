@@ -36,7 +36,7 @@ const containerStyle = (theme: Theme) =>
     justifyContent: 'center',
     gap: '16px',
 
-    backgroundColor: theme.bg,
+    backgroundColor: theme.colors.bg,
   })
 
 const imageWrapperStyle = css({

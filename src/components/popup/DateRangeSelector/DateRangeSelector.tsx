@@ -81,7 +81,7 @@ const containerStyle = (theme: Theme) =>
   css({
     position: 'relative',
     padding: 16,
-    backgroundColor: theme.white,
+    backgroundColor: theme.colors.white,
     borderRadius: 16,
     paddingBottom: '64px',
   })

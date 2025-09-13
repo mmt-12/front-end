@@ -69,7 +69,7 @@ export default function VoiceRegisterModal() {
           <Pen
             weight='Bold'
             size={24}
-            color={theme.stone[600]}
+            color={theme.colors.stone[600]}
             onClick={() => {
               inputRef.current?.click()
             }}
@@ -81,7 +81,13 @@ export default function VoiceRegisterModal() {
             size='lg'
             type='secondary'
             label=''
-            icon={<Soundwave size={72} weight='Bold' color={theme.sky[600]} />}
+            icon={
+              <Soundwave
+                size={72}
+                weight='Bold'
+                color={theme.colors.sky[600]}
+              />
+            }
             onClick={() => {
               inputRef.current?.click()
             }}
@@ -110,5 +116,5 @@ const buttonWrapperStyle = (theme: Theme) =>
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.bg,
+    backgroundColor: theme.colors.bg,
   })

@@ -116,7 +116,7 @@ export default function EditProfilePage() {
         onClick={handleImageClick}
       >
         <WavyBox
-          strokeColor={theme.stone[600]}
+          strokeColor={theme.colors.stone[600]}
           strokeWidth={3}
           borderRadius={8}
           childrenOnTop={false}
@@ -177,7 +177,7 @@ const buttonStyle = (theme: Theme) =>
     position: 'absolute',
     bottom: '4px',
     right: '4px',
-    background: theme.stone[700],
+    background: theme.colors.stone[700],
     border: 'none',
     borderRadius: '14px',
     padding: '6px 6px 4px',
