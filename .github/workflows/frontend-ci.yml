@@ -97,6 +97,19 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Ensure external network and infra services are up
+        run: |
+          # Ensure external proxy network exists (idempotent)
+          docker network inspect proxy-net >/dev/null 2>&1 || docker network create proxy-net
+          # Determine infra services based on env
+          if [ "${{ steps.env.outputs.env }}" = "prod" ]; then
+            INFRA_SVCS="prod-mysql prod-redis prod-minio"
+          else
+            INFRA_SVCS="dev-mysql dev-redis dev-minio"
+          fi
+          # Bring up infra services without touching volumes (idempotent)
+          docker compose -f /home/brokenfinger98/infra/${{ steps.env.outputs.env }}/docker-compose.yml up -d $INFRA_SVCS || true
+
       - name: Pull image
         run: |
           test -f /home/brokenfinger98/infra/${{ steps.env.outputs.env }}/.env || (echo "Missing .env at /home/brokenfinger98/infra/${{ steps.env.outputs.env }}/.env" && exit 1)
