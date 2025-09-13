@@ -18,7 +18,6 @@ export const Default: Story = {
     id: 1,
     url: '/test_images/image1.png',
     name: 'Smile',
-    amount: undefined,
     onClick: (e, id) => {
       e.stopPropagation()
       console.log(`Clicked on emoji with id: ${id}`)
@@ -46,7 +45,6 @@ export const WithAmount: Story = {
     id: 3,
     url: '/test_images/image3.png',
     name: 'Heart',
-    amount: 10,
     onClick: (e, id) => {
       e.stopPropagation()
       console.log(`Clicked on emoji with id: ${id}`)
@@ -60,7 +58,6 @@ export const Active: Story = {
     id: 3,
     url: '/test_images/image3.png',
     name: 'Heart',
-    amount: 5,
     isActive: true,
     onClick: (e, id) => {
       e.stopPropagation()

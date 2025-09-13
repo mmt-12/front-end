@@ -50,7 +50,6 @@ export default function EmojiPickerModal() {
                 <Emoji
                   key={emoji.id}
                   {...emoji}
-                  amount={undefined}
                   onClick={(_e, id) => handleSelectEmoji(id)}
                 />
               ))}
@@ -80,7 +79,6 @@ export default function EmojiPickerModal() {
                 <Emoji
                   key={emoji.id}
                   {...emoji}
-                  amount={undefined}
                   onClick={(_e, id) => handleSelectEmoji(id)}
                 />
               ))}
