@@ -6,9 +6,7 @@ import kakaoIcon from '@/assets/images/icons/kakao.png'
 import mainMascot from '@/assets/images/mascot/main.png'
 import Img from '@/components/common/Img'
 
-const BASE_URL = import.meta.env.DEV
-  ? import.meta.env.VITE_TEST_API_BASE_URL
-  : import.meta.env.VITE_PUBLIC_API_BASE_URL
+const BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 export default function LoginPage() {
   const theme = useTheme()
