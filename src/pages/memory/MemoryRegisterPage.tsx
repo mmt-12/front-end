@@ -5,8 +5,9 @@ import {
   UserRounded,
   UsersGroupTwoRounded,
 } from '@solar-icons/react'
+import { useNavigate } from 'react-router-dom'
 
-import { useAssociateList } from '@/api'
+import { useAssociateList, useCreateMemory } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import InputField from '@/components/common/InputField'
 import Profile from '@/components/common/Profile'
@@ -15,6 +16,8 @@ import DateRangeSelector from '@/components/popup/DateRangeSelector'
 import InputPopup from '@/components/popup/InputPopup'
 import MapLocationSelector from '@/components/popup/MapLocationSelector'
 import useHeader from '@/hooks/useHeader'
+import { ROUTES } from '@/routes/ROUTES'
+import { useUserStore } from '@/store/userStore'
 import type { IArrayInput, IDateRangeInput, ILocationInput } from '@/types'
 
 export default function MemoryRegisterPage() {
@@ -25,15 +28,48 @@ export default function MemoryRegisterPage() {
     },
   })
 
-  const { data: memberData } = useAssociateList(1)
-  const associates =
-    memberData?.pages.flatMap(page => page.associates) || []
+  const navigate = useNavigate()
+  const { communityId } = useUserStore()
+  const { mutate: createMemory } = useCreateMemory(communityId)
+  const { data: memberData } = useAssociateList(communityId)
+  const associates = memberData?.pages.flatMap(page => page.associates) || []
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [dateRange, setDateRange] = useState<IDateRangeInput>()
   const [location, setLocation] = useState<ILocationInput>()
   const [participants, setParticipants] = useState<IArrayInput>()
+
+  const handleSubmit = () => {
+    if (!title || !dateRange || !location) {
+      alert('제목과 날짜, 장소는 필수 입력 사항입니다.')
+      return
+    }
+    createMemory(
+      {
+        title,
+        description,
+        period: {
+          startTime: new Date(dateRange.startTime),
+          endTime: new Date(dateRange.endTime),
+        },
+        location: {
+          latitude: location.location.latitude,
+          longitude: location.location.longitude,
+          address: location.address,
+          name: '',
+          code: -1,
+        },
+        associates: participants?.items.map(p => p.id) || [],
+      },
+      {
+        onSuccess: () => {
+          alert('기억이 생성되었습니다.')
+          navigate(ROUTES.MEMORY_LIST)
+        },
+      },
+    )
+  }
 
   return (
     <>
@@ -82,7 +118,7 @@ export default function MemoryRegisterPage() {
           }
         />
       )}
-      <BottomButton label='저장' type='primary' onClick={() => {}} />
+      <BottomButton label='저장' type='primary' onClick={handleSubmit} />
     </>
   )
 }

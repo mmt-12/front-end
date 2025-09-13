@@ -57,8 +57,8 @@ export interface Memory {
 export interface CreateMemoryRequest {
   title: string
   period: {
-    startTime: string
-    endTime: string
+    startTime: Date
+    endTime: Date
   }
   description: string
   associates: number[]
