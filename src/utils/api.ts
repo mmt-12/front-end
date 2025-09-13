@@ -2,11 +2,10 @@
 import { ROUTES } from '@/routes/ROUTES'
 import axios, { AxiosError, type AxiosResponse } from 'axios'
 
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
 
 export const api = axios.create({
-  baseURL: import.meta.env.DEV
-    ? import.meta.env.VITE_TEST_API_BASE_URL
-    : import.meta.env.VITE_PUBLIC_API_BASE_URL,
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -53,7 +52,7 @@ api.interceptors.response.use(
   async response => {
     // 가짜 딜레이 추가 (개발용)
     if (import.meta.env.DEV) {
-      // await delay(1000)
+      await delay(1000)
     }
     // 로그인 응답에서 토큰 저장
     if (response.data?.token) {

@@ -7,7 +7,7 @@ import { formatDateString } from '@/utils/date'
 
 interface Props extends GuestBook {}
 
-export default function Comment({ id, type, content, createdAt }: Props) {
+export default function Comment({ id, type, content, createdAt, name }: Props) {
   return (
     <div css={containerStyle}>
       {type === 'TEXT' && <span css={contentStyle}>{content}</span>}
@@ -16,7 +16,7 @@ export default function Comment({ id, type, content, createdAt }: Props) {
           <Img src={content} alt='Emoji' css={imageStyle} />
         </div>
       )}
-      {type === 'VOICE' && <Voice id={id} url={content} name='' />}
+      {type === 'VOICE' && <Voice id={id} url={content} name={name} />}
       <span css={timeStyle}>{formatDateString(createdAt)}</span>
     </div>
   )

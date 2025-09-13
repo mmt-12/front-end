@@ -10,7 +10,7 @@ export default function Voice({
   url: audioUrl,
   isActive = false,
   involved = false,
-  name,
+  name = '',
   onClick,
 }: IReaction) {
   const audioRef = useRef<HTMLAudioElement>(null)

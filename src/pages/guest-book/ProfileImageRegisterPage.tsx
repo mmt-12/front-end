@@ -23,7 +23,7 @@ export default function ProfileImageRegisterPage() {
   })
 
   const { associateId } = useParams()
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useProfileImageList(1, Number(associateId), { size: 9 })
   const { mutate: uploadProfileImages } = useCreateProfileImage(
     1,
@@ -64,10 +64,10 @@ export default function ProfileImageRegisterPage() {
         isFetchingNext={isFetchingNextPage}
         loader={<Loader customCss={{ padding: 24 }} />}
       >
-        {images.length > 0 ? (
-          <ProfileImageList images={images} onImageClick={handleImageClick} />
-        ) : (
+        {isLoading ? (
           <ProfileImageListSkeleton />
+        ) : (
+          <ProfileImageList images={images} onImageClick={handleImageClick} />
         )}
       </InfiniteScroll>
       <BottomButton label='등록' onClick={handleSubmit} />

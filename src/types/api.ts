@@ -57,8 +57,8 @@ export interface Memory {
 export interface CreateMemoryRequest {
   title: string
   period: {
-    startTime: string
-    endTime: string
+    startTime: Date
+    endTime: Date
   }
   description: string
   associates: number[]
@@ -177,6 +177,7 @@ export interface GuestBook {
   type: GuestBookCommentType
   content: string
   createdAt: string
+  name: string
 }
 
 export interface GuestBookListResponse {
