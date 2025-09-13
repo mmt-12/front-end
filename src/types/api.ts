@@ -177,6 +177,7 @@ export interface GuestBook {
   type: GuestBookCommentType
   content: string
   createdAt: string
+  name: string
 }
 
 export interface GuestBookListResponse {
