@@ -10,6 +10,7 @@ import ProfileImageList, {
   ProfileImageListSkeleton,
 } from '@/components/member/ProfileImageList'
 import useHeader from '@/hooks/useHeader'
+import { useModal } from '@/hooks/useModal'
 import useStardust from '@/hooks/useStardust'
 import { flexGap } from '@/styles/common'
 
@@ -22,6 +23,7 @@ export default function ProfileImageRegisterPage() {
     },
   })
 
+  const { alert } = useModal()
   const { associateId } = useParams()
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useProfileImageList(1, Number(associateId), { size: 9 })

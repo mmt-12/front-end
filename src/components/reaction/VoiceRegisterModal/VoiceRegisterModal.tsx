@@ -18,7 +18,7 @@ export default function VoiceRegisterModal() {
   const [audio, setAudio] = useState<File | null>(null)
 
   const audioRef = useRef<HTMLAudioElement>(null)
-  const { closeModal } = useModal()
+  const { alert, closeModal } = useModal()
 
   const { mutate } = useCreateVoice(1)
 

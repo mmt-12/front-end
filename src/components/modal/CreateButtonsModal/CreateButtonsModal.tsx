@@ -1,4 +1,4 @@
-import { css, useTheme } from '@emotion/react'
+import { css, type Theme } from '@emotion/react'
 import {
   Box,
   SmileSquare,
@@ -16,22 +16,11 @@ import { ROUTES } from '@/routes/ROUTES'
 import { slideDown } from '@/styles/animation'
 
 export default function CreateButtonsModal() {
-  const theme = useTheme()
   const { closeModal, openModal } = useModal()
 
   return (
     <BottomDrawer>
-      <span
-        style={{
-          display: 'block',
-          textAlign: 'center',
-          fontWeight: 'bold',
-          fontSize: '16px',
-          color: theme.colors.stone[800],
-        }}
-      >
-        생성하기
-      </span>
+      <p css={titleStyle}>생성하기</p>
       <div css={contentStyle}>
         <Link to={ROUTES.MEMORY_REGISTER}>
           <Button
@@ -73,3 +62,13 @@ const contentStyle = css({
   gridTemplateColumns: 'repeat(2, 1fr)',
   gap: '12px',
 })
+
+const titleStyle = (theme: Theme) =>
+  css({
+    marginBottom: '14px',
+    display: 'block',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: '16px',
+    color: theme.colors.stone[800],
+  })

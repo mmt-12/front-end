@@ -42,7 +42,7 @@ export default function EditProfilePage() {
   const { data: profile } = useAssociateProfile(1, associateId)
 
   const theme = useTheme()
-  const { openModal, closeModal } = useModal()
+  const { alert, openModal, closeModal } = useModal()
 
   const [imagePath, setImagePath] = useState<string>('no image')
   const [name, setName] = useState(profile?.nickname || '')
@@ -127,7 +127,7 @@ export default function EditProfilePage() {
             onError={e => {
               e.currentTarget.src = defaultImageUrl
             }}
-            css={imageStyle}
+            customCss={imageStyle}
           />
         </WavyBox>
         <div css={buttonStyle}>

@@ -17,7 +17,7 @@ export default function EmojiRegisterModal() {
   const [emojiName, setEmojiName] = useState('')
   const [emojiImage, setEmojiImage] = useState<File | null>(null)
 
-  const { closeModal } = useModal()
+  const { closeModal, alert } = useModal()
 
   const { mutate } = useCreateEmoji(1)
 

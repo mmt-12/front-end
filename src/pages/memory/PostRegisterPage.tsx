@@ -8,6 +8,7 @@ import ImageInputField from '@/components/common/ImageInputField/ImageInputField
 import InputField from '@/components/common/InputField'
 import { Skeleton } from '@/components/common/Skeleton'
 import useHeader from '@/hooks/useHeader'
+import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 
@@ -21,6 +22,7 @@ export default function PostRegisterPage() {
 
   const navigate = useNavigate()
   const { communityId } = useUserStore()
+  const { alert } = useModal()
 
   const memoryId = Number(useParams().memoryId)
 

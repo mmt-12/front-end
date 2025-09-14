@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { useMemoryImages } from '@/api'
 import rightArrow from '@/assets/images/icons/rightArrow.svg'
 import Chip from '@/components/common/Chip'
+import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 import type { locationType } from '@/types/memory'
@@ -29,6 +30,7 @@ interface Props {
 
 export default function MemoryInfo(props: Props) {
   const theme = useTheme()
+  const { alert } = useModal()
 
   const formattedStartTime = formatDateString(props.period.startTime || '')
   const formattedEndTime = formatDateString(props.period.endTime || '')

@@ -2,8 +2,13 @@ import { createContext, useState, type ReactNode } from 'react'
 import { css, type Keyframes } from '@emotion/react'
 import { createPortal } from 'react-dom'
 
-import { fadeIn, fadeOut } from '@/styles/animation'
+import Alert from '@/components/modal/Alert'
+import Confirm from '@/components/modal/Confirm'
+import { fadeIn, fadeOut, slideDown } from '@/styles/animation'
 import type { IBaseInput } from '@/types'
+
+const FG_DURATION = 140
+const BG_DURATION = 320
 
 type Modal = {
   content: ReactNode
@@ -20,6 +25,8 @@ interface ModalContextType {
     _closingKeyframe?: Keyframes,
   ) => Promise<ModalReturnType>
   closeModal: (_value: ModalReturnType) => void
+  confirm: (_message: string) => Promise<ModalReturnType>
+  alert: (_message: string) => Promise<ModalReturnType>
 }
 
 const ModalContext = createContext<ModalContextType | null>(null)
@@ -60,11 +67,19 @@ function ModalProvider({ children }: { children: ReactNode }) {
         if (top) top.promiseResolver(value)
         return next.slice(0, -1)
       })
-    }, 160)
+    }, FG_DURATION)
+  }
+
+  const confirm = async (message: string) => {
+    return openModal(<Confirm>{message}</Confirm>, slideDown)
+  }
+
+  const alert = async (message: string) => {
+    return openModal(<Alert>{message}</Alert>, slideDown)
   }
 
   return (
-    <ModalContext.Provider value={{ openModal, closeModal }}>
+    <ModalContext.Provider value={{ openModal, closeModal, confirm, alert }}>
       {children}
       <ModalRenderer modals={modals} closeModal={closeModal} />
     </ModalContext.Provider>
@@ -86,7 +101,7 @@ function ModalRenderer({
 
   return createPortal(
     <div
-      css={backgroundStyle}
+      css={backgroundStyle(topModal)}
       onClick={() => closeModal(null)}
       data-testid='modal-background'
     >
@@ -97,20 +112,23 @@ function ModalRenderer({
 }
 export { ModalProvider, ModalContext }
 
-const backgroundStyle = css({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  backgroundColor: 'rgba(0, 0, 0, 0.25)',
-  zIndex: 30,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'flex-end',
-  alignItems: 'center',
-  animation: `${fadeIn} 160ms ease-out`,
-})
+const backgroundStyle = (modal: Modal) =>
+  css({
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.25)',
+    zIndex: 30,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    animation: modal.isClosing
+      ? `${fadeOut} ${FG_DURATION}ms ease-in`
+      : `${fadeIn} ${BG_DURATION}ms ease-out`,
+  })
 
 const contentStyle = (modal: Modal) =>
   css({
@@ -119,5 +137,7 @@ const contentStyle = (modal: Modal) =>
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    animation: modal.isClosing ? `${modal.closingKeyframe} 160ms ease-in` : '',
+    animation: modal.isClosing
+      ? `${modal.closingKeyframe} ${FG_DURATION}ms ease-in`
+      : '',
   })
