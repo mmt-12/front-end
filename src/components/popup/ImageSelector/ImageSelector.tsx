@@ -6,10 +6,10 @@ import BottomButton from '@/components/common/BottomButton'
 import Img from '@/components/common/Img'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
 import Loader from '@/components/common/Loader'
+import WavyBox from '@/components/guest-book/WavyBox'
 import ProfileImageList, {
   ProfileImageListSkeleton,
-} from '@/components/common/ProfileImageList'
-import WavyBox from '@/components/guest-book/WavyBox'
+} from '@/components/member/ProfileImageList'
 
 interface Props {
   value?: string
@@ -27,12 +27,12 @@ export default function ImageSelector({ value, onSelect }: Props) {
     <>
       <div css={imageWrapperStyle}>
         <WavyBox
-          strokeColor={theme.stone[600]}
+          strokeColor={theme.colors.stone[600]}
           strokeWidth={3}
           borderRadius={8}
           childrenOnTop={false}
         >
-          <Img src={image} alt='current profile' css={imageStyle} />
+          <Img src={image} alt='current profile' customCss={imageStyle} />
         </WavyBox>
       </div>
       <InfiniteScroll

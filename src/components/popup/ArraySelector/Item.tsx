@@ -18,14 +18,14 @@ export default function Item({ item, isSelected, onSelect }: Props) {
           <CheckCircle
             weight='Bold'
             size={40}
-            color={theme.sky[500]}
+            color={theme.colors.sky[500]}
             css={buttonStyle}
           />
         ) : (
           <AddCircle
             weight='Bold'
             size={40}
-            color={theme.stone[300]}
+            color={theme.colors.stone[300]}
             css={buttonStyle}
           />
         )}

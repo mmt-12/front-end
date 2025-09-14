@@ -20,7 +20,7 @@ export default function Card({
 
   return (
     <WavyBox
-      strokeColor={theme.stone[600]}
+      strokeColor={theme.colors.stone[600]}
       strokeWidth={2.2}
       backgroundColor='white'
       borderRadius={16}
@@ -33,7 +33,7 @@ export default function Card({
           {onButtonClick && (
             <Widget
               size={24}
-              color={theme.stone[700]}
+              color={theme.colors.stone[700]}
               weight='Bold'
               onClick={onButtonClick}
             />

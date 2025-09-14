@@ -44,11 +44,11 @@ const labelStyle = (theme: Theme) =>
     fontSize: '14px',
     fontWeight: '500',
     letterSpacing: '0.5px',
-    color: theme.stone[600],
+    color: theme.colors.stone[600],
     transition: 'color 0.1s ease-in-out',
 
     '&:has(+ input:focus), &:has(+ textarea:focus)': {
-      color: theme.sky[500],
+      color: theme.colors.sky[500],
     },
   })
 
@@ -59,9 +59,9 @@ const inputStyle = (theme: Theme) =>
 
     border: 'none',
     borderRadius: '12px',
-    outline: `2px solid ${theme.stone[400]}`,
+    outline: `2px solid ${theme.colors.stone[400]}`,
 
-    color: theme.black,
+    color: theme.colors.black,
     fontFamily: 'inherit',
     fontSize: '16px',
     fontWeight: '400',
@@ -70,6 +70,6 @@ const inputStyle = (theme: Theme) =>
     transition: 'outline 0.1s ease-in-out',
 
     '&:focus': {
-      outline: `2px solid ${theme.sky[400]}`,
+      outline: `2px solid ${theme.colors.sky[400]}`,
     },
   })

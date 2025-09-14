@@ -44,17 +44,17 @@ export default function NotificationItem({
     <>
       <Link to={url} css={containerStyle(isRead)} state={state}>
         <div css={iconWrapperStyle}>
-          <Icon weight='Bold' color={theme.stone[500]} size={22} />
+          <Icon weight='Bold' color={theme.colors.stone[500]} size={22} />
         </div>
         <div css={[{ width: '100%' }, flexGap(10)]}>
           <div css={infoRowStyle}>
             <span>{title}</span>
             <span>{formatTimeAgo(new Date(createdAt))}</span>
           </div>
-          <p css={{ fontColor: theme.stone[900] }}>{content}</p>
+          <p css={{ fontColor: theme.colors.stone[900] }}>{content}</p>
         </div>
       </Link>
-      <Border height={1} color={theme.stone[150]} />
+      <Border height={1} color={theme.colors.stone[150]} />
     </>
   )
 }
@@ -78,14 +78,14 @@ const iconWrapperStyle = (theme: Theme) =>
     padding: '8px',
 
     borderRadius: '50%',
-    border: `1px solid ${theme.stone[400]}`,
+    border: `1px solid ${theme.colors.stone[400]}`,
   })
 
 const infoRowStyle = (theme: Theme) =>
   css({
     display: 'flex',
     justifyContent: 'space-between',
-    color: theme.stone[700],
+    color: theme.colors.stone[700],
     fontWeight: 400,
     fontSize: '14px',
     letterSpacing: '-0.2px',

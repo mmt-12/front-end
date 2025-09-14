@@ -64,10 +64,18 @@ export default function CalendarPicker({
         </span>
         <div css={navigationStyle}>
           <button onClick={() => handleMonthChange(-1)}>
-            <AltArrowLeft weight='Linear' size={24} color={theme.stone[400]} />
+            <AltArrowLeft
+              weight='Linear'
+              size={24}
+              color={theme.colors.stone[400]}
+            />
           </button>
           <button onClick={() => handleMonthChange(1)}>
-            <AltArrowRight weight='Linear' size={24} color={theme.stone[400]} />
+            <AltArrowRight
+              weight='Linear'
+              size={24}
+              color={theme.colors.stone[400]}
+            />
           </button>
         </div>
       </div>
@@ -81,10 +89,10 @@ export default function CalendarPicker({
                 style={{
                   color:
                     day === '일'
-                      ? theme.red
+                      ? theme.colors.red
                       : day === '토'
-                        ? theme.blue
-                        : theme.stone[500],
+                        ? theme.colors.blue
+                        : theme.colors.stone[500],
                 }}
               >
                 {day}
@@ -128,7 +136,7 @@ const headerStyle = (theme: Theme) =>
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    borderBottom: `1px solid ${theme.stone[300]}`,
+    borderBottom: `1px solid ${theme.colors.stone[300]}`,
     letterSpacing: '0.04em',
   })
 
@@ -136,7 +144,7 @@ const headerTitleStyle = (theme: Theme) =>
   css({
     fontSize: 18,
     fontWeight: 600,
-    color: theme.stone[900],
+    color: theme.colors.stone[900],
   })
 
 const navigationStyle = css({
@@ -154,7 +162,7 @@ const tableHeaderStyle = (theme: Theme) =>
     padding: '8px 2px',
     fontWeight: '500',
     textAlign: 'center',
-    color: theme.stone[500],
+    color: theme.colors.stone[500],
   })
 
 const calendarWrapperStyle = css({

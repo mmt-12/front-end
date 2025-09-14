@@ -17,9 +17,9 @@ export default function WavyButton({
 
   return (
     <WavyBox
-      strokeColor={theme.stone[700]}
+      strokeColor={theme.colors.stone[700]}
       strokeWidth={2}
-      backgroundColor={theme.stone[700]}
+      backgroundColor={theme.colors.stone[700]}
       customCss={css({
         width: isFullWidth ? '100%' : 'fit-content',
       })}
@@ -45,6 +45,6 @@ const buttonStyle = (theme: Theme) =>
     wordBreak: 'keep-all',
 
     '&:active': {
-      backgroundColor: theme.stone[800],
+      backgroundColor: theme.colors.stone[800],
     },
   })

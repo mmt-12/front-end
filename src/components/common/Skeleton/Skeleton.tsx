@@ -28,8 +28,8 @@ const baseStyle = (
     width: width ?? '100%',
     height: height ?? '1em',
     borderRadius: radius,
-    backgroundColor: theme.stone[150],
-    backgroundImage: `linear-gradient(90deg, ${theme.stone[150]} 0%, ${theme.stone[100]} 50%, ${theme.stone[150]} 100%)`,
+    backgroundColor: theme.colors.stone[150],
+    backgroundImage: `linear-gradient(90deg, ${theme.colors.stone[150]} 0%, ${theme.colors.stone[100]} 50%, ${theme.colors.stone[150]} 100%)`,
     backgroundSize: '200% 100%',
     animation: `${shimmer} 1.2s ease-in-out infinite`,
   })

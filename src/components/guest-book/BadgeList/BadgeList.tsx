@@ -92,5 +92,5 @@ const conditionStyle = (theme: Theme) =>
   css({
     fontSize: 12,
     fontWeight: 'bold',
-    color: theme.stone[900],
+    color: theme.colors.stone[900],
   })

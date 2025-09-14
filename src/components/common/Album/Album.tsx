@@ -90,13 +90,13 @@ const albumContainerStyle = (theme: Theme) =>
 
       overflow: 'hidden',
       scrollSnapAlign: 'center',
-      backgroundColor: theme.stone[150],
+      backgroundColor: theme.colors.stone[150],
     },
     'div.action-wrapper': {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: theme.bg,
+      backgroundColor: theme.colors.bg,
     },
     img: {
       width: '100%',
@@ -116,10 +116,10 @@ const dotStyle = (theme: Theme) =>
     width: '6px',
     height: '6px',
     borderRadius: '50%',
-    backgroundColor: theme.stone[300],
+    backgroundColor: theme.colors.stone[300],
     transition: 'background-color 0.3s ease',
 
     '&.active': {
-      backgroundColor: theme.stone[900],
+      backgroundColor: theme.colors.stone[900],
     },
   })

@@ -18,7 +18,7 @@ import WavyBox from '@/components/guest-book/WavyBox'
 import ArraySelector from '@/components/popup/ArraySelector'
 import ImageSelector from '@/components/popup/ImageSelector/ImageSelector'
 import InputPopup from '@/components/popup/InputPopup'
-import PopupModal from '@/components/popup/PopupModal'
+import Popup from '@/components/popup/Popup'
 import { BADGES } from '@/consts/BADGES'
 import useHeader from '@/hooks/useHeader'
 import { useModal } from '@/hooks/useModal'
@@ -42,9 +42,9 @@ export default function EditProfilePage() {
   const { data: profile } = useAssociateProfile(1, associateId)
 
   const theme = useTheme()
-  const { openModal, closeModal } = useModal()
+  const { alert, openModal, closeModal } = useModal()
 
-  const [imagePath, setImagePath] = useState<string>('no image')
+  const [imagePath, setImagePath] = useState<string>('')
   const [name, setName] = useState(profile?.nickname || '')
   const [introduction, setIntroduction] = useState(profile?.introduction || '')
   const [badgeId, setBadgeId] = useState(profile?.achievement?.id)
@@ -92,7 +92,7 @@ export default function EditProfilePage() {
 
   const handleImageClick = async () => {
     await openModal(
-      <PopupModal title={'프로필'} onClose={() => closeModal()}>
+      <Popup title={'프로필'} onClose={() => closeModal()}>
         <ImageSelector
           onSelect={(value: string) => {
             setImagePath(value)
@@ -100,7 +100,7 @@ export default function EditProfilePage() {
           }}
           value={imagePath}
         />
-      </PopupModal>,
+      </Popup>,
     )
   }
 
@@ -116,7 +116,7 @@ export default function EditProfilePage() {
         onClick={handleImageClick}
       >
         <WavyBox
-          strokeColor={theme.stone[600]}
+          strokeColor={theme.colors.stone[600]}
           strokeWidth={3}
           borderRadius={8}
           childrenOnTop={false}
@@ -127,7 +127,7 @@ export default function EditProfilePage() {
             onError={e => {
               e.currentTarget.src = defaultImageUrl
             }}
-            css={imageStyle}
+            customCss={imageStyle}
           />
         </WavyBox>
         <div css={buttonStyle}>
@@ -177,7 +177,7 @@ const buttonStyle = (theme: Theme) =>
     position: 'absolute',
     bottom: '4px',
     right: '4px',
-    background: theme.stone[700],
+    background: theme.colors.stone[700],
     border: 'none',
     borderRadius: '14px',
     padding: '6px 6px 4px',

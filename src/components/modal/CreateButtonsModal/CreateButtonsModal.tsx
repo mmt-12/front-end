@@ -1,4 +1,4 @@
-import { css, useTheme } from '@emotion/react'
+import { css, type Theme } from '@emotion/react'
 import {
   Box,
   SmileSquare,
@@ -7,8 +7,8 @@ import {
 } from '@solar-icons/react'
 import { Link } from 'react-router-dom'
 
-import BottomDrawer from '@/components/common/BottomDrawer'
 import Button from '@/components/common/Button'
+import BottomDrawer from '@/components/modal/BottomDrawer'
 import EmojiRegisterModal from '@/components/reaction/EmojiRegisterModal'
 import VoiceRegisterModal from '@/components/reaction/VoiceRegisterModal/VoiceRegisterModal'
 import { useModal } from '@/hooks/useModal'
@@ -16,22 +16,11 @@ import { ROUTES } from '@/routes/ROUTES'
 import { slideDown } from '@/styles/animation'
 
 export default function CreateButtonsModal() {
-  const theme = useTheme()
   const { closeModal, openModal } = useModal()
 
   return (
     <BottomDrawer>
-      <span
-        style={{
-          display: 'block',
-          textAlign: 'center',
-          fontWeight: 'bold',
-          fontSize: '16px',
-          color: theme.stone[800],
-        }}
-      >
-        생성하기
-      </span>
+      <p css={titleStyle}>생성하기</p>
       <div css={contentStyle}>
         <Link to={ROUTES.MEMORY_REGISTER}>
           <Button
@@ -69,8 +58,17 @@ export default function CreateButtonsModal() {
 
 const contentStyle = css({
   width: '100%',
-  padding: '16px',
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
   gap: '12px',
 })
+
+const titleStyle = (theme: Theme) =>
+  css({
+    marginBottom: '14px',
+    display: 'block',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: '16px',
+    color: theme.colors.stone[800],
+  })

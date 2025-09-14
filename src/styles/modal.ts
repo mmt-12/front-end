@@ -9,7 +9,7 @@ export const modalStyle = (theme: Theme) =>
     margin: '0 auto',
     maxWidth: theme.maxWidth,
     overflowY: 'hidden',
-    background: theme.bg,
+    background: theme.colors.bg,
     zIndex: 31,
     flexDirection: 'column',
     justifyContent: 'flex-start',

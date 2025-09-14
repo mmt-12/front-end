@@ -4,10 +4,10 @@ import { css } from '@emotion/react'
 
 import { useEmojiList } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
-import BottomDrawer from '@/components/common/BottomDrawer'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
 import InputField from '@/components/common/InputField'
 import { Skeleton } from '@/components/common/Skeleton'
+import BottomDrawer from '@/components/modal/BottomDrawer'
 import { useModal } from '@/hooks/useModal'
 import { useReactionPicker } from '@/hooks/useReactionPicker'
 import { useUserStore } from '@/store/userStore'
@@ -99,7 +99,7 @@ const spanStyle = (theme: Theme) =>
     fontSize: '14px',
     fontWeight: '500',
     letterSpacing: '0.5px',
-    color: theme.stone[600],
+    color: theme.colors.stone[600],
   })
 
 const emojiListStyle = css({

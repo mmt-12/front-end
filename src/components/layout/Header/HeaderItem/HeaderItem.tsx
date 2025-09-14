@@ -1,6 +1,7 @@
-import type { IHeaderItem } from '@/types/common'
 import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
+
+import type { IHeaderItem } from '@/types/common'
 
 const ItemStyle = (theme: Theme) =>
   css({
@@ -9,12 +10,12 @@ const ItemStyle = (theme: Theme) =>
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    color: theme.stone[500],
+    color: theme.colors.stone[500],
     borderRadius: '50%',
     transition: 'transform 120ms ease, background-color 160ms ease',
     ':active': {
       transform: 'scale(0.94)',
-      backgroundColor: theme.stone[100],
+      backgroundColor: theme.colors.stone[100],
     },
   })
 

@@ -1,9 +1,9 @@
 import { css, type Theme } from '@emotion/react'
 
 import defaultImageUrl from '@/assets/images/mascot/default-profile.png'
+import Img from '@/components/common//Img'
 import Badge from '@/components/common/Badge'
 import type { IMember } from '@/types'
-import Img from '../Img'
 
 export interface Props extends IMember {
   size?: 'sm' | 'md'
@@ -22,7 +22,7 @@ export default function Profile({
         <Img
           src={imageUrl ? imageUrl : defaultImageUrl}
           alt={nickname}
-          css={imageStyle}
+          customCss={imageStyle}
         />
       </div>
       <div css={contentStyle}>
@@ -97,6 +97,6 @@ const descriptionStyle = (theme: Theme) =>
     width: '100%',
     margin: 0,
     fontSize: '14px',
-    color: theme.stone[500],
+    color: theme.colors.stone[500],
     textOverflow: 'ellipsis',
   })

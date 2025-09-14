@@ -11,7 +11,7 @@ import { MEMBERS } from 'mock/data/members'
 import { expect } from 'storybook/test'
 
 import Badge from '@/components/common/Badge'
-import Profile from '@/components/common/Profile'
+import Profile from '@/components/member/Profile'
 import { BADGES } from '@/consts/BADGES'
 import type { IArrayInput, IDateRangeInput, ILocationInput } from '@/types'
 import ArraySelector from '../ArraySelector'

@@ -46,6 +46,6 @@ const inputWrapperStyle = (theme: Theme) =>
     },
     input: {
       padding: '10px 12px !important',
-      outline: `1.5px solid ${theme.stone[300]}`,
+      outline: `1.5px solid ${theme.colors.stone[300]}`,
     },
   })

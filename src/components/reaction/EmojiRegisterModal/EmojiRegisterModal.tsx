@@ -5,10 +5,10 @@ import { GalleryAdd } from '@solar-icons/react'
 
 import { useCreateEmoji } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
-import BottomDrawer from '@/components/common/BottomDrawer'
 import Button from '@/components/common/Button'
 import Img from '@/components/common/Img'
 import InputField from '@/components/common/InputField'
+import BottomDrawer from '@/components/modal/BottomDrawer'
 import { useModal } from '@/hooks/useModal'
 
 export default function EmojiRegisterModal() {
@@ -17,7 +17,7 @@ export default function EmojiRegisterModal() {
   const [emojiName, setEmojiName] = useState('')
   const [emojiImage, setEmojiImage] = useState<File | null>(null)
 
-  const { closeModal } = useModal()
+  const { closeModal, alert } = useModal()
 
   const { mutate } = useCreateEmoji(1)
 
@@ -64,7 +64,13 @@ export default function EmojiRegisterModal() {
             size='lg'
             type='secondary'
             label=''
-            icon={<GalleryAdd size={72} weight='Bold' color={theme.sky[600]} />}
+            icon={
+              <GalleryAdd
+                size={72}
+                weight='Bold'
+                color={theme.colors.sky[600]}
+              />
+            }
             onClick={() => {
               inputRef.current?.click()
             }}
@@ -106,5 +112,5 @@ const buttonWrapperStyle = (theme: Theme) =>
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.bg,
+    backgroundColor: theme.colors.bg,
   })

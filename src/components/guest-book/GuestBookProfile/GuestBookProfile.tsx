@@ -46,7 +46,7 @@ export default function GuestBookProfile({
           <Img
             src={imageUrl || defaultImageUrl}
             alt={nickname}
-            css={imageStyle}
+            customCss={imageStyle}
           />
         </WavyBox>
         {!isMyProfile && (
@@ -110,14 +110,14 @@ const buttonStyle = (theme: Theme) =>
     position: 'absolute',
     top: '-8px',
     right: '-8px',
-    background: theme.stone[700],
+    background: theme.colors.stone[700],
     border: 'none',
     borderRadius: '14px',
     padding: '6px 6px 4px',
     boxShadow: '0 0 4px rgba(0, 0, 0, 0.15)',
     transition: 'background 0.2s ease',
     '&:hover': {
-      background: theme.stone[500],
+      background: theme.colors.stone[500],
     },
   })
 
@@ -126,14 +126,14 @@ const birthdayStyle = (theme: Theme) =>
     paddingTop: '6px',
     fontSize: '12px',
     fontWeight: 700,
-    color: theme.stone[700],
+    color: theme.colors.stone[700],
   })
 
 const introductionStyle = (theme: Theme) =>
   css({
     paddingTop: '16px',
     fontWeight: 700,
-    color: theme.stone[700],
+    color: theme.colors.stone[700],
     flexGrow: 1,
     wordBreak: 'break-word',
     whiteSpace: 'normal',

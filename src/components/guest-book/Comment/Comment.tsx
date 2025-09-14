@@ -13,7 +13,7 @@ export default function Comment({ id, type, content, createdAt, name }: Props) {
       {type === 'TEXT' && <span css={contentStyle}>{content}</span>}
       {type === 'EMOJI' && (
         <div css={imageWrapperStyle}>
-          <Img src={content} alt='Emoji' css={imageStyle} />
+          <Img src={content} alt='Emoji' customCss={imageStyle} />
         </div>
       )}
       {type === 'VOICE' && <Voice id={id} url={content} name={name} />}
@@ -30,7 +30,7 @@ const containerStyle = (theme: Theme) =>
     padding: '10px',
     width: '100%',
     fontFamily: 'Pretendard Variable',
-    backgroundColor: theme.stone[50],
+    backgroundColor: theme.colors.stone[50],
     borderRadius: 4,
     gap: 10,
   })
@@ -38,13 +38,13 @@ const containerStyle = (theme: Theme) =>
 const contentStyle = (theme: Theme) =>
   css({
     fontSize: '14px',
-    color: theme.stone[800],
+    color: theme.colors.stone[800],
   })
 
 const timeStyle = (theme: Theme) =>
   css({
     fontSize: '12px',
-    color: theme.stone[600],
+    color: theme.colors.stone[600],
   })
 
 const imageWrapperStyle = css({

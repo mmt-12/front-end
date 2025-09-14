@@ -32,7 +32,11 @@ export default function GreetingPopup() {
         </p>
       </div>
       <div css={mascotWrapperStyle}>
-        <Img src={greetingMascot} alt='Greeting Mascot' css={mascotStyle} />
+        <Img
+          src={greetingMascot}
+          alt='Greeting Mascot'
+          customCss={mascotStyle}
+        />
       </div>
     </div>
   )

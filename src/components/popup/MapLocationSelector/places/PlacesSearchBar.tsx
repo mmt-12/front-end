@@ -68,7 +68,7 @@ export const PlacesSearchBar = ({ onPlaceSelect }: Props) => {
         {suggestions.length > 0 && (
           <ToggleButton
             onClick={toggleHide}
-            color={theme.stone[500]}
+            color={theme.colors.stone[500]}
             size={32}
             css={toggleButtonStyle}
           />
@@ -86,7 +86,7 @@ export const PlacesSearchBar = ({ onPlaceSelect }: Props) => {
               >
                 <MapPoint
                   weight='Bold'
-                  color={theme.stone[400]}
+                  color={theme.colors.stone[400]}
                   size={24}
                   style={{ flexShrink: 0 }}
                 />
@@ -104,7 +104,7 @@ const listStyle = (theme: Theme) =>
   css({
     margin: '0px 16px 16px 16px',
     padding: 4,
-    backgroundColor: theme.white,
+    backgroundColor: theme.colors.white,
     borderRadius: 16,
     transition: 'height 0.2s ease-in-out',
   })

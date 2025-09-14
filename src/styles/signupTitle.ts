@@ -10,11 +10,11 @@ export const signupTitleStyle = (theme: Theme) =>
     h1: {
       fontSize: 26,
       fontWeight: 'bold',
-      color: theme.stone[700],
+      color: theme.colors.stone[700],
       margin: '0',
     },
     p: {
       fontSize: 18,
-      color: theme.stone[600],
+      color: theme.colors.stone[600],
     },
   })

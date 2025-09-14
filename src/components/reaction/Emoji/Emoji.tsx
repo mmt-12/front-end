@@ -15,7 +15,7 @@ export default function Emoji({
   return (
     <div onClick={e => onClick?.(e, id)} css={containerStyle}>
       <div css={imageWrapperStyle(theme, size, involved)}>
-        <Img src={imageUrl} alt='Emoji' css={imageStyle} />
+        <Img src={imageUrl} alt='Emoji' customCss={imageStyle} />
       </div>
       <div css={activeBarStyle(theme, isActive)} />
     </div>
@@ -49,7 +49,7 @@ const imageWrapperStyle = (
     borderRadius: '12px',
     overflow: 'hidden',
 
-    outline: `${involved ? '3px' : '0px'} solid ${theme.sky[300]}`,
+    outline: `${involved ? '3px' : '0px'} solid ${theme.colors.sky[300]}`,
     transition: 'outline 0.2s ease-in-out',
   })
 
@@ -64,6 +64,6 @@ const activeBarStyle = (theme: Theme, isActive: boolean) =>
     width: isActive ? 24 : 0,
     height: isActive ? 4 : 0,
     borderRadius: 2,
-    backgroundColor: theme.stone[300],
+    backgroundColor: theme.colors.stone[300],
     transition: 'height 0.2s ease-in-out, width 0.2s ease-in-out',
   })

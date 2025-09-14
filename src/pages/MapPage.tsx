@@ -176,7 +176,7 @@ const memoryDetailStyle = (theme: Theme) =>
     margin: '16px',
 
     boxSizing: 'border-box',
-    backgroundColor: theme.white,
+    backgroundColor: theme.colors.white,
     boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)',
     borderRadius: '24px',
     overflow: 'hidden',

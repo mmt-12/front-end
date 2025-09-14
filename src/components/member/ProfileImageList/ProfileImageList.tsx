@@ -1,9 +1,9 @@
 import { css, useTheme } from '@emotion/react'
 import { CloseCircle } from '@solar-icons/react'
 
+import Img from '@/components/common/Img'
 import WavyBox from '@/components/guest-book/WavyBox'
 import type { IProfileImage } from '@/types'
-import Img from '../Img'
 
 interface Props {
   images: IProfileImage[]
@@ -20,7 +20,7 @@ export default function ProfileImageList({
   const props = (isSelected: boolean) =>
     isSelected
       ? {
-          strokeColor: theme.sky[500],
+          strokeColor: theme.colors.sky[500],
           strokeWidth: 3,
           borderRadius: 4,
         }
@@ -38,14 +38,14 @@ export default function ProfileImageList({
             onClick={() => onImageClick?.(image)}
             src={image.url}
             alt={`Memory image ${index + 1}`}
-            css={imageStyle(selectedImageUrl == image.url)}
+            customCss={imageStyle(selectedImageUrl == image.url)}
           />
           {image.register && (
             <CloseCircle
               css={deleteButtonStyle}
               weight='Bold'
               size={34}
-              color={theme.white}
+              color={theme.colors.white}
               onClick={() => {}}
             />
           )}

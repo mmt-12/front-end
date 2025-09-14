@@ -1,8 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react-vite'
-import Button from '.'
 import { Box, GalleryAdd } from '@solar-icons/react'
-import { theme } from '@/styles/theme'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn } from 'storybook/test'
+
+import { theme } from '@/styles/theme'
+import Button from '.'
 
 const meta = {
   title: 'components/Button',
@@ -63,7 +64,7 @@ export const MediumButton: Story = {
   args: {
     size: 'md',
     type: 'secondary',
-    icon: <Box size={28} weight='Bold' color={theme.sky[500]} />,
+    icon: <Box size={28} weight='Bold' color={theme.colors.sky[500]} />,
     onClick: fn(),
   },
 }
@@ -73,7 +74,7 @@ export const LargeButton: Story = {
     label: '',
     size: 'lg',
     type: 'secondary',
-    icon: <GalleryAdd size={60} weight='Bold' color={theme.sky[600]} />,
+    icon: <GalleryAdd size={60} weight='Bold' color={theme.colors.sky[600]} />,
     onClick: fn(),
   },
 }

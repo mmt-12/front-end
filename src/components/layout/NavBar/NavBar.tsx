@@ -14,7 +14,7 @@ import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 import { slideDown } from '@/styles/animation'
-import CreateButtonsModal from '../CreateButtonsModal/CreateButtonsModal'
+import CreateButtonsModal from '../../modal/CreateButtonsModal/CreateButtonsModal'
 
 export default function NavBar() {
   const { openModal } = useModal()
@@ -89,7 +89,7 @@ const navBarStyle = (theme: Theme) =>
     display: 'flex',
     alignItems: 'center',
     backdropFilter: 'blur(3px)',
-    backgroundColor: theme.whiteBlur,
+    backgroundColor: theme.colors.whiteBlur,
     height: '56px',
     zIndex: 10,
   })
@@ -104,16 +104,16 @@ const navLinkStyle = (theme: Theme) =>
     gap: '2px',
     padding: '8px',
     'span.icon': {
-      color: theme.stone[300],
+      color: theme.colors.stone[300],
     },
     'span.title': {
-      color: theme.stone[400],
+      color: theme.colors.stone[400],
     },
     'span.icon.active': {
-      color: theme.stone[600],
+      color: theme.colors.stone[600],
     },
     'span.title.active': {
-      color: theme.stone[800],
+      color: theme.colors.stone[800],
     },
   })
 
@@ -124,6 +124,6 @@ const addButtonStyle = (theme: Theme) =>
     justifyContent: 'center',
     padding: '8px',
     border: 'none',
-    color: theme.sky[500],
+    color: theme.colors.sky[500],
     backgroundColor: 'transparent',
   })

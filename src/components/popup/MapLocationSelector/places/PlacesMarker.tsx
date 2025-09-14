@@ -27,13 +27,13 @@ const PlacesMarker = ({ place, setSelectedPlace, closeModal }: Props) => {
     <AdvancedMarker position={place.location}>
       <div css={markerStyle}>
         <div css={closeStyle} onClick={() => setSelectedPlace?.(null)}>
-          <CloseCircle weight='Bold' size={36} color={theme.white} />
+          <CloseCircle weight='Bold' size={36} color={theme.colors.white} />
         </div>
         {place.photos?.[0]?.getURI?.() && (
           <Img
             src={place.photos[0].getURI()}
             alt={place.displayName as string}
-            css={imageStyle}
+            customCss={imageStyle}
           />
         )}
         <div css={contentStyle}>
@@ -92,7 +92,7 @@ const contentStyle = (theme: Theme) =>
     p: {
       margin: '0',
       fontSize: '14px',
-      color: theme.stone[500],
+      color: theme.colors.stone[500],
     },
   })
 

@@ -68,13 +68,13 @@ const containerStyle = (theme: Theme) =>
     padding: '16px',
     flexGrow: 1,
 
-    backgroundColor: theme.sky[50],
+    backgroundColor: theme.colors.sky[50],
   })
 
 const memoryItemStyle = (theme: Theme) =>
   css({
     padding: '14px 16px',
-    backgroundColor: theme.bg,
+    backgroundColor: theme.colors.bg,
     borderRadius: '16px',
     boxShadow: theme.shadow,
   })
@@ -82,7 +82,7 @@ const memoryItemStyle = (theme: Theme) =>
 const dateStyle = (theme: Theme) =>
   css({
     padding: '4px',
-    color: theme.sky[600],
+    color: theme.colors.sky[600],
     fontSize: '15px',
     fontWeight: 600,
   })

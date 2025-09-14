@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { useMemoryImages } from '@/api'
 import rightArrow from '@/assets/images/icons/rightArrow.svg'
 import Chip from '@/components/common/Chip'
+import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 import type { locationType } from '@/types/memory'
@@ -29,6 +30,7 @@ interface Props {
 
 export default function MemoryInfo(props: Props) {
   const theme = useTheme()
+  const { alert } = useModal()
 
   const formattedStartTime = formatDateString(props.period.startTime || '')
   const formattedEndTime = formatDateString(props.period.endTime || '')
@@ -118,7 +120,7 @@ const titleRowStyle = (theme: Theme) =>
 
     h2: {
       fontSize: '20px',
-      color: theme.sky[600],
+      color: theme.colors.sky[600],
     },
   })
 
@@ -133,11 +135,11 @@ const metaRowStyle = (theme: Theme, saveEnabled: boolean) =>
     fontWeight: '400',
 
     'p.location': {
-      color: theme.stone[800],
+      color: theme.colors.stone[800],
       fontSize: '14px',
     },
     'p.date': {
-      color: theme.stone[700],
+      color: theme.colors.stone[700],
       fontSize: '14px',
     },
   })
@@ -150,7 +152,7 @@ const countChipsStyle = css({
 
 const descriptionStyle = (theme: Theme) => ({
   padding: '8px 0',
-  color: theme.stone[800],
+  color: theme.colors.stone[800],
   fontSize: '14px',
 })
 
@@ -162,7 +164,7 @@ const linkStyle = (theme: Theme) =>
     display: 'flex',
     justifyContent: 'space-between',
 
-    backgroundColor: theme.sky[100],
+    backgroundColor: theme.colors.sky[100],
     borderRadius: '12px',
     borderTopLeftRadius: '0px',
   })

@@ -22,7 +22,7 @@ export default function ImageGrid({
         selectedImage === image ? (
           <WavyBox
             key={index}
-            strokeColor={theme.sky[500]}
+            strokeColor={theme.colors.sky[500]}
             strokeWidth={3}
             borderRadius={4}
             childrenOnTop={false}
@@ -31,9 +31,7 @@ export default function ImageGrid({
               onClick={() => onImageClick?.(image)}
               src={image}
               alt={`Memory image ${index + 1}`}
-              css={{
-                borderRadius: 4,
-              }}
+              customCss={[imageStyle, { borderRadius: 4 }]}
             />
           </WavyBox>
         ) : (
@@ -42,6 +40,7 @@ export default function ImageGrid({
             key={index}
             src={image}
             alt={`Memory image ${index + 1}`}
+            customCss={imageStyle}
           />
         ),
       )}
@@ -53,11 +52,12 @@ const imagesGridStyle = css({
   display: 'grid',
   gridTemplateColumns: '1fr 1fr 1fr',
   gap: '4px',
-  img: {
-    width: '100%',
-    aspectRatio: '1 / 1',
-    objectFit: 'cover',
-    overflow: 'hidden',
-    objectPosition: 'center',
-  },
+})
+
+const imageStyle = css({
+  width: '100%',
+  aspectRatio: '1 / 1',
+  objectFit: 'cover',
+  overflow: 'hidden',
+  objectPosition: 'center',
 })

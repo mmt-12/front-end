@@ -48,15 +48,15 @@ const dayContainerStyle = (
     maxWidth: 52,
     margin: 'auto',
     padding: '6px',
-    background: date && isSelected ? theme.sky[300] : undefined,
+    background: date && isSelected ? theme.colors.sky[300] : undefined,
     color:
       date && isSelected
-        ? theme.white
+        ? theme.colors.white
         : colIdx === 0
-          ? theme.red
+          ? theme.colors.red
           : colIdx === 6
-            ? theme.blue
-            : theme.black,
+            ? theme.colors.blue
+            : theme.colors.black,
     fontWeight: 'bold',
     borderRadius: 14,
     textAlign: 'center',
@@ -70,7 +70,8 @@ const dayWrapperStyle = (theme: Theme, type: DayCellType) =>
     width: '190%',
     height: '80%',
     transform: 'translateY(-110%) translateX(-30%)',
-    backgroundColor: type === 'inRange' ? theme.stone[200] : 'transparent',
+    backgroundColor:
+      type === 'inRange' ? theme.colors.stone[200] : 'transparent',
     zIndex: 1,
   })
 
@@ -79,5 +80,5 @@ const dotStyle = (theme: Theme, isSelected: boolean) =>
     borderRadius: '50%',
     width: '6px',
     height: '6px',
-    backgroundColor: isSelected ? theme.white : theme.sky[500],
+    backgroundColor: isSelected ? theme.colors.white : theme.colors.sky[500],
   })

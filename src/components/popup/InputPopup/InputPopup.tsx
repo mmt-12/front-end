@@ -11,7 +11,7 @@ import type {
   IDateRangeInput,
   ILocationInput,
 } from '@/types'
-import PopupModal from '../PopupModal'
+import Popup from '../Popup'
 
 interface Props<T = IDateRangeInput | IArrayInput | ILocationInput> {
   label: string
@@ -39,7 +39,7 @@ export default function InputPopup<T extends IBaseInput>({
   const theme = useTheme()
 
   const modal = (
-    <PopupModal title={label} onClose={() => closeModal()}>
+    <Popup title={label} onClose={() => closeModal()}>
       {cloneElement(
         content as React.ReactElement<{
           onSelect: (_value: T) => void
@@ -48,7 +48,7 @@ export default function InputPopup<T extends IBaseInput>({
           onSelect: handlePopupSelect,
         },
       )}
-    </PopupModal>
+    </Popup>
   )
 
   return (
@@ -57,7 +57,7 @@ export default function InputPopup<T extends IBaseInput>({
 
       <button onClick={() => openModal(modal)} css={buttonStyle}>
         <div>{value?.render()}</div>
-        {<Icon weight='Bold' size={24} color={theme.stone[400]} />}
+        {<Icon weight='Bold' size={24} color={theme.colors.stone[400]} />}
       </button>
     </div>
   )
@@ -68,11 +68,11 @@ const labelStyle = (theme: Theme) =>
     fontSize: '14px',
     fontWeight: '500',
     letterSpacing: '0.5px',
-    color: theme.stone[600],
+    color: theme.colors.stone[600],
     transition: 'color 0.1s ease-in-out',
 
     '&:has(+ input:focus)': {
-      color: theme.sky[500],
+      color: theme.colors.sky[500],
     },
   })
 
@@ -84,22 +84,22 @@ const buttonStyle = (theme: Theme) =>
     alignItems: 'center',
     justifyContent: 'space-between',
 
-    color: theme.stone[700],
+    color: theme.colors.stone[700],
     fontSize: '15px',
     border: 'none',
     borderRadius: '12px',
-    outline: `2px solid ${theme.stone[400]}`,
-    backgroundColor: theme.white,
+    outline: `2px solid ${theme.colors.stone[400]}`,
+    backgroundColor: theme.colors.white,
     cursor: 'pointer',
 
     transition:
       'outline 100ms ease-in-out, transform 120ms ease, background-color 160ms ease',
 
     '&:hover': {
-      outline: `2px solid ${theme.sky[400]}`,
+      outline: `2px solid ${theme.colors.sky[400]}`,
     },
     ':active': {
       transform: 'scale(0.98)',
-      backgroundColor: theme.stone[50],
+      backgroundColor: theme.colors.stone[50],
     },
   })

@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { css, useTheme } from '@emotion/react'
 import { CloseCircle, GalleryAdd } from '@solar-icons/react'
 
+import { useModal } from '@/hooks/useModal'
 import Album from '../Album'
 import Button from '../Button'
 import Img from '../Img'
@@ -19,6 +20,7 @@ export default function ImageInputField({
 }: Props) {
   const theme = useTheme()
   const inputRef = useRef<HTMLInputElement>(null)
+  const { alert, confirm } = useModal()
 
   return (
     <>
@@ -33,9 +35,9 @@ export default function ImageInputField({
               css={deleteButtonStyle}
               weight='Bold'
               size={48}
-              color={theme.white}
-              onClick={() => {
-                if (!confirm('이 이미지를 삭제할까요?')) return
+              color={theme.colors.white}
+              onClick={async () => {
+                if (!(await confirm('이 이미지를 삭제할까요?'))) return
                 const newImages = images.filter((_, i) => i !== index)
                 onChange(newImages)
               }}
@@ -49,7 +51,11 @@ export default function ImageInputField({
               type='secondary'
               label=''
               icon={
-                <GalleryAdd size={72} weight='Bold' color={theme.sky[600]} />
+                <GalleryAdd
+                  size={72}
+                  weight='Bold'
+                  color={theme.colors.sky[600]}
+                />
               }
               onClick={() => {
                 inputRef.current?.click()

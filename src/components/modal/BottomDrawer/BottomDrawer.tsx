@@ -20,12 +20,12 @@ export default function BottomDrawer({ children }: Props) {
 
 const containerBaseStyle = (theme: Theme) =>
   css({
-    position: 'fixed',
     width: '100%',
+    height: 'fit-content',
     maxWidth: `calc(${theme.maxWidth} - 32px)`,
-    padding: '0px 2px 8px 2px',
+    padding: '0px 18px 24px 18px',
 
-    backgroundColor: theme.white,
+    backgroundColor: theme.colors.white,
     boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)',
 
     borderTopLeftRadius: '24px',
@@ -39,7 +39,7 @@ const barStyle = (theme: Theme) =>
     margin: '16px auto',
     width: '40px',
     height: '4px',
-    backgroundColor: theme.stone[300],
+    backgroundColor: theme.colors.stone[300],
     borderRadius: '2px',
   })
 

@@ -10,12 +10,13 @@ import { useNavigate } from 'react-router-dom'
 import { useAssociateList, useCreateMemory } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import InputField from '@/components/common/InputField'
-import Profile from '@/components/common/Profile'
+import Profile from '@/components/member/Profile'
 import ArraySelector from '@/components/popup/ArraySelector'
 import DateRangeSelector from '@/components/popup/DateRangeSelector'
 import InputPopup from '@/components/popup/InputPopup'
 import MapLocationSelector from '@/components/popup/MapLocationSelector'
 import useHeader from '@/hooks/useHeader'
+import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 import type { IArrayInput, IDateRangeInput, ILocationInput } from '@/types'
@@ -28,6 +29,7 @@ export default function MemoryRegisterPage() {
     },
   })
 
+  const { alert } = useModal()
   const navigate = useNavigate()
   const { communityId } = useUserStore()
   const { mutate: createMemory } = useCreateMemory(communityId)

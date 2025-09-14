@@ -210,6 +210,6 @@ const resultStyle = (mbti: MbtiType) =>
       fontFamily: 'PressStart2P',
       fontWeight: 900,
       color: MBTI_COLOR[mbti],
-      WebkitTextStroke: '1px ' + theme.stone[700],
+      WebkitTextStroke: '1px ' + theme.colors.stone[700],
     },
   })

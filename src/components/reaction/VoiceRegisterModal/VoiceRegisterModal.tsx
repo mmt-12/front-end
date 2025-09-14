@@ -5,9 +5,9 @@ import { Pen, Soundwave } from '@solar-icons/react'
 
 import { useCreateVoice } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
-import BottomDrawer from '@/components/common/BottomDrawer'
 import Button from '@/components/common/Button'
 import InputField from '@/components/common/InputField'
+import BottomDrawer from '@/components/modal/BottomDrawer'
 import { useModal } from '@/hooks/useModal'
 
 export default function VoiceRegisterModal() {
@@ -18,7 +18,7 @@ export default function VoiceRegisterModal() {
   const [audio, setAudio] = useState<File | null>(null)
 
   const audioRef = useRef<HTMLAudioElement>(null)
-  const { closeModal } = useModal()
+  const { alert, closeModal } = useModal()
 
   const { mutate } = useCreateVoice(1)
 
@@ -69,7 +69,7 @@ export default function VoiceRegisterModal() {
           <Pen
             weight='Bold'
             size={24}
-            color={theme.stone[600]}
+            color={theme.colors.stone[600]}
             onClick={() => {
               inputRef.current?.click()
             }}
@@ -81,7 +81,13 @@ export default function VoiceRegisterModal() {
             size='lg'
             type='secondary'
             label=''
-            icon={<Soundwave size={72} weight='Bold' color={theme.sky[600]} />}
+            icon={
+              <Soundwave
+                size={72}
+                weight='Bold'
+                color={theme.colors.sky[600]}
+              />
+            }
             onClick={() => {
               inputRef.current?.click()
             }}
@@ -110,5 +116,5 @@ const buttonWrapperStyle = (theme: Theme) =>
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.bg,
+    backgroundColor: theme.colors.bg,
   })
