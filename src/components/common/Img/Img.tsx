@@ -15,19 +15,29 @@ interface Props {
   height?: string | number
 }
 
-export default function Img(props: Props) {
-  const src = props.src || defaultProfile
+export default function Img({
+  alt,
+  src = defaultProfile,
+  onClick,
+  customCss,
+  onError,
+  width = '100%',
+  height = '100%',
+}: Props) {
   const [isLoaded, setIsLoaded] = useState(false)
 
   return (
     <>
       <img
-        {...props}
-        css={[defaultStyle(isLoaded), props.customCss]}
+        alt={alt}
+        width={width}
+        height={height}
+        onClick={onClick}
+        css={[defaultStyle(isLoaded), customCss]}
         src={src}
         onError={e => {
           e.currentTarget.src = defaultProfile
-          props.onError?.(e)
+          onError?.(e)
         }}
         onLoad={() => {
           setIsLoaded(true)
@@ -35,9 +45,9 @@ export default function Img(props: Props) {
       />
       {!isLoaded && (
         <Skeleton
-          width={props.width || '100%'}
-          height={props.height || '100%'}
-          css={props.customCss}
+          width={width || '100%'}
+          height={height || '100%'}
+          css={customCss}
         />
       )}
     </>
