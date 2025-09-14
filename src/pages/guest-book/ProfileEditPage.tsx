@@ -44,7 +44,7 @@ export default function EditProfilePage() {
   const theme = useTheme()
   const { alert, openModal, closeModal } = useModal()
 
-  const [imagePath, setImagePath] = useState<string>('no image')
+  const [imagePath, setImagePath] = useState<string>('')
   const [name, setName] = useState(profile?.nickname || '')
   const [introduction, setIntroduction] = useState(profile?.introduction || '')
   const [badgeId, setBadgeId] = useState(profile?.achievement?.id)
