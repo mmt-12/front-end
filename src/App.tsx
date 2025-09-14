@@ -1,8 +1,9 @@
-import Routes from '@/routes/index'
 import { Global, ThemeProvider } from '@emotion/react'
-import { theme } from '@/styles/theme'
-import { globalStyle } from '@/styles/global'
 import { APIProvider } from '@vis.gl/react-google-maps'
+
+import Routes from '@/routes/index'
+import { globalStyle } from '@/styles/global'
+import { theme } from '@/styles/theme'
 
 function App() {
   return (
