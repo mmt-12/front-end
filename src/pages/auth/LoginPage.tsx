@@ -1,6 +1,5 @@
 import { css, useTheme, type Theme } from '@emotion/react'
 import { QuestionCircle } from '@solar-icons/react'
-import { Link } from 'react-router-dom'
 
 import kakaoIcon from '@/assets/images/icons/kakao.png'
 import mainMascot from '@/assets/images/mascot/main.png'
