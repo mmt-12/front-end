@@ -1,0 +1,52 @@
+# .github/workflows/pnpm-ci.yml
+name: pnpm-ci
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    name: Build (pnpm)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm # enables lockfile-based cache
+
+      # ✅ Install pnpm (guaranteed on all runners)
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.14.0 # match your packageManager
+          run_install: false
+
+      - name: Show versions
+        run: |
+          node -v
+          pnpm -v
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Unit tests
+        run: pnpm run test -- --run
+
+      - name: Build
+        env:
+          VITE_API_BASE_URL: /api
+          VITE_GOOGLE_MAPS_API_KEY:
+            ${{ github.ref_name == 'main' &&
+            secrets.PROD_VITE_GOOGLE_MAPS_API_KEY ||
+            secrets.DEV_VITE_GOOGLE_MAPS_API_KEY }}
+        run: pnpm run build
