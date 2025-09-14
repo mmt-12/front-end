@@ -33,7 +33,7 @@ const PlacesMarker = ({ place, setSelectedPlace, closeModal }: Props) => {
           <Img
             src={place.photos[0].getURI()}
             alt={place.displayName as string}
-            css={imageStyle}
+            customCss={imageStyle}
           />
         )}
         <div css={contentStyle}>

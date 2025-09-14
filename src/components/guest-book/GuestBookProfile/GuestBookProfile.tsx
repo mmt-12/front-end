@@ -46,7 +46,7 @@ export default function GuestBookProfile({
           <Img
             src={imageUrl || defaultImageUrl}
             alt={nickname}
-            css={imageStyle}
+            customCss={imageStyle}
           />
         </WavyBox>
         {!isMyProfile && (

@@ -13,7 +13,7 @@ export default function Comment({ id, type, content, createdAt, name }: Props) {
       {type === 'TEXT' && <span css={contentStyle}>{content}</span>}
       {type === 'EMOJI' && (
         <div css={imageWrapperStyle}>
-          <Img src={content} alt='Emoji' css={imageStyle} />
+          <Img src={content} alt='Emoji' customCss={imageStyle} />
         </div>
       )}
       {type === 'VOICE' && <Voice id={id} url={content} name={name} />}

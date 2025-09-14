@@ -15,7 +15,7 @@ export default function Emoji({
   return (
     <div onClick={e => onClick?.(e, id)} css={containerStyle}>
       <div css={imageWrapperStyle(theme, size, involved)}>
-        <Img src={imageUrl} alt='Emoji' css={imageStyle} />
+        <Img src={imageUrl} alt='Emoji' customCss={imageStyle} />
       </div>
       <div css={activeBarStyle(theme, isActive)} />
     </div>

@@ -32,7 +32,7 @@ export default function ImageSelector({ value, onSelect }: Props) {
           borderRadius={8}
           childrenOnTop={false}
         >
-          <Img src={image} alt='current profile' css={imageStyle} />
+          <Img src={image} alt='current profile' customCss={imageStyle} />
         </WavyBox>
       </div>
       <InfiniteScroll

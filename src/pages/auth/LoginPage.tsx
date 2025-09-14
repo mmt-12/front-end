@@ -18,14 +18,18 @@ export default function LoginPage() {
         <p css={titleStyle}>Memento</p>
       </div>
       <div css={mascotWrapperStyle}>
-        <Img src={mainMascot} alt='memento mascot main' css={mascotStyle} />
+        <Img
+          src={mainMascot}
+          alt='memento mascot main'
+          customCss={mascotStyle}
+        />
       </div>
       <div css={buttonsContainerStyle}>
         <Link
           to={`${BASE_URL}/v1/sign-in`}
           css={[buttonStyle, kakaoButtonStyle]}
         >
-          <Img src={kakaoIcon} alt='kakao icon' css={kakaoIconStyle} />
+          <Img src={kakaoIcon} alt='kakao icon' customCss={kakaoIconStyle} />
           <p>카카오 로그인</p>
         </Link>
         <button css={buttonStyle}>
