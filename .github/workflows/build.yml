@@ -2,45 +2,28 @@ name: Build with pnpm
 
 on:
   push:
-    branches:
-      - '**'
+    branches: ['**']
   pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          # remove cache: 'pnpm' here because pnpm isn't installed yet
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+      # Install pnpm first (required before using cache: 'pnpm')
+      - uses: pnpm/action-setup@v3
         with:
           version: 9
           run_install: false
 
-      # Cache pnpm store
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - name: Cache pnpm store
-        uses: actions/cache@v4
+      # Now setup-node can cache pnpm store for you
+      - uses: actions/setup-node@v5
         with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          node-version: 20
+          cache: pnpm
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      # pnpm on CI defaults to --frozen-lockfile (pnpm >=6.10)
+      - run: pnpm install --frozen-lockfile
 
-      - name: Build
-        run: pnpm build
+      - run: pnpm build
