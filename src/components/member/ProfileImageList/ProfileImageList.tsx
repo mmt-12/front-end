@@ -38,7 +38,7 @@ export default function ProfileImageList({
             onClick={() => onImageClick?.(image)}
             src={image.url}
             alt={`Memory image ${index + 1}`}
-            css={imageStyle(selectedImageUrl == image.url)}
+            customCss={imageStyle(selectedImageUrl == image.url)}
           />
           {image.register && (
             <CloseCircle

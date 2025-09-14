@@ -22,7 +22,7 @@ export default function Profile({
         <Img
           src={imageUrl ? imageUrl : defaultImageUrl}
           alt={nickname}
-          css={imageStyle}
+          customCss={imageStyle}
         />
       </div>
       <div css={contentStyle}>
