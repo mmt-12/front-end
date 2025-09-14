@@ -65,6 +65,11 @@ export default function PostDetailPage() {
         onClick={handleReactionClick}
         selectedId={selectedReactionId}
       />
+      <VoiceList
+        reactions={post.comments.temporaryVoices}
+        onClick={handleReactionClick}
+        selectedId={selectedReactionId}
+      />
       {selectedReaction && (
         <div css={reactionDetailStyle}>
           <div css={reactionNameStyle}>
@@ -127,7 +132,7 @@ const reactBarStyle = (theme: Theme) =>
     padding: '10px 16px',
 
     display: 'flex',
-    gap: '24px',
+    gap: '16px',
 
     backgroundColor: theme.colors.white,
     borderRadius: '24px',

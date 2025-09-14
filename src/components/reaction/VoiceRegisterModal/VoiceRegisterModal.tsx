@@ -14,7 +14,6 @@ export default function VoiceRegisterModal() {
   const theme = useTheme()
   const inputRef = useRef<HTMLInputElement>(null)
   const [name, setName] = useState('')
-  const [content, setContent] = useState('')
   const [audio, setAudio] = useState<File | null>(null)
 
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -25,12 +24,11 @@ export default function VoiceRegisterModal() {
   const handleSubmit = () => {
     if (!audio) return alert('오디오 파일을 선택해주세요.')
     if (!name) return alert('이름을 입력해주세요.')
-    if (!content) return alert('설명을 입력해주세요.')
 
     const formData = new FormData()
     formData.append(
       'data',
-      new Blob([JSON.stringify({ name, content })], {
+      new Blob([JSON.stringify({ name })], {
         type: 'application/json',
       }),
     )
@@ -50,11 +48,6 @@ export default function VoiceRegisterModal() {
         label='이름'
         value={name}
         onChange={e => setName(e.target.value)}
-      />
-      <InputField
-        label='설명'
-        value={content}
-        onChange={e => setContent(e.target.value)}
       />
       {audio ? (
         <div

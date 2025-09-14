@@ -23,10 +23,10 @@ export default function VoicePickerModal() {
     useVoiceList(communityId, { keyword: searchKey })
   const voices = data?.pages.flatMap(page => page.voices) || []
 
-  const { selectReaction } = useReactionPicker('VOICE')
+  const { selectReaction } = useReactionPicker()
 
   const handleSelectVoice = (voiceId: number) => {
-    selectReaction(voiceId)
+    selectReaction('VOICE', voiceId)
     closeModal()
   }
 
