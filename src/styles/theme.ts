@@ -37,9 +37,5 @@ export const theme = {
   },
   shadow: '0 2px 12px #00000010',
   maxWidth: '720px',
-  animationLength: {
-    bg: 320,
-    fg: 180
-  }
 }
 export type ThemeType = typeof theme
