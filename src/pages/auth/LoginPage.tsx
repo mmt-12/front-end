@@ -25,13 +25,13 @@ export default function LoginPage() {
         />
       </div>
       <div css={buttonsContainerStyle}>
-        <Link
-          to={`${BASE_URL}/v1/sign-in`}
+        <a
+          href={`${BASE_URL}/v1/sign-in`}
           css={[buttonStyle, kakaoButtonStyle]}
         >
           <Img src={kakaoIcon} alt='kakao icon' customCss={kakaoIconStyle} />
           <p>카카오 로그인</p>
-        </Link>
+        </a>
         <button css={buttonStyle}>
           <QuestionCircle
             weight='Bold'
