@@ -61,16 +61,23 @@ export default function BubbleInputModal() {
       {audio ? (
         <div
           css={{
-            padding: '16px',
+            width: '100%',
+            padding: 16,
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
+            gap: 16,
           }}
         >
-          <audio src={URL.createObjectURL(audio)} ref={audioRef} controls />
+          <audio
+            src={URL.createObjectURL(audio)}
+            ref={audioRef}
+            controls
+            style={{ width: '100%' }}
+          />
           <CloseCircle
             weight='Bold'
-            size={24}
+            size={32}
             color={theme.colors.stone[600]}
             onClick={() => {
               setAudio(null)
