@@ -1,23 +1,24 @@
 import { css, type Theme } from '@emotion/react'
 import { MagniferZoomIn } from '@solar-icons/react'
 
-import type { Comment } from '@/api'
+import type { CommentAuthor } from '@/api'
 import Profile from '@/components/member/Profile'
 
 interface Props {
-  selectedReaction?: Comment
+  name?: string
+  authors?: CommentAuthor[]
 }
 
-export default function ReactedProfileList({ selectedReaction }: Props) {
-  if (!selectedReaction) return null
+export default function ReactedProfileList({ name, authors }: Props) {
+  if (!authors || authors.length === 0) return null
   return (
     <div css={reactionDetailStyle}>
       <div css={reactionNameStyle}>
-        <p>:{selectedReaction.name}:</p>
+        <p>:{name}:</p>
         <MagniferZoomIn weight='Linear' size={20} />
       </div>
       <div css={reactedProfilesStyle}>
-        {selectedReaction.authors.map(author => (
+        {authors.map(author => (
           <Profile
             key={author.id}
             {...author}

@@ -4,6 +4,7 @@ import Voice from '@/components/reaction/Voice'
 import type { ReactionListProps } from '@/types/reaction'
 
 export default function VoiceList(props: ReactionListProps) {
+  if (props.reactions.length === 0) return null
   return (
     <div css={reactionsStyle} className='no-scrollbar'>
       {props.reactions.map(voice => (
@@ -12,6 +13,7 @@ export default function VoiceList(props: ReactionListProps) {
           {...voice}
           onClick={e => props.onClick(e, voice.id)}
           isActive={voice.id === props.selectedId}
+          isPost
         />
       ))}
     </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { css, type Theme } from '@emotion/react'
 import { useParams } from 'react-router-dom'
 
@@ -34,16 +34,22 @@ export default function PostDetailPage() {
   const [selectedReactionId, setSelectedReactionId] =
     useState(initialSelectedId)
 
+  const selectedReaction = useMemo(
+    () =>
+      post?.comments.emojis.find(emoji => emoji.id === selectedReactionId) ||
+      post?.comments.voices.find(voice => voice.id === selectedReactionId) ||
+      post?.comments.temporaryVoices.find(
+        tempVoice => tempVoice.id === selectedReactionId,
+      ),
+    [post, selectedReactionId],
+  )
+
   if (!post)
     return (
       <div css={[flexGap(10), { marginBottom: '32px' }]}>
         <PostListItemSkeleton />
       </div>
     )
-
-  const selectedReaction =
-    post.comments.emojis.find(emoji => emoji.id === selectedReactionId) ||
-    post.comments.voices.find(voice => voice.id === selectedReactionId)
 
   const handleReactionClick = (e: React.MouseEvent, id: number) => {
     e.stopPropagation()
@@ -59,7 +65,7 @@ export default function PostDetailPage() {
         onTemporaryVoiceClick={handleReactionClick}
         selectedReactionId={selectedReactionId}
       />
-      <ReactedProfileList selectedReaction={selectedReaction} />
+      <ReactedProfileList {...selectedReaction} />
       <ReactBar iconSize={44} customCss={reactBarStyle} />
     </>
   )

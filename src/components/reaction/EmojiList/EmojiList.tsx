@@ -8,6 +8,7 @@ interface Props extends ReactionListProps {
 }
 
 export default function EmojiList(props: Props) {
+  if (props.reactions.length === 0) return null
   return (
     <div css={reactionsStyle} className='no-scrollbar'>
       {props.reactions.map(emoji => (
