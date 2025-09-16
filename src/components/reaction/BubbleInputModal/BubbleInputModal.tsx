@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { css, useTheme } from '@emotion/react'
 import type { Theme } from '@emotion/react'
 import { CloseCircle, Pause, Soundwave } from '@solar-icons/react'
@@ -9,15 +9,14 @@ import BottomButton from '@/components/common/BottomButton'
 import Button from '@/components/common/Button'
 import BottomDrawer from '@/components/modal/BottomDrawer'
 import { useModal } from '@/hooks/useModal'
+import useRecord from '@/hooks/useRecord'
 import { useUserStore } from '@/store/userStore'
 
 export default function BubbleInputModal() {
   const theme = useTheme()
-  const [isRecording, setIsRecording] = useState(false)
-  const [audio, setAudio] = useState<File | null>(null)
+  const { isRecording, audio, setAudio, stop, handleRecordClick } = useRecord()
 
   const audioRef = useRef<HTMLAudioElement>(null)
-  const mediaRecorderRef = useRef<MediaRecorder>(null)
 
   const { alert, closeModal } = useModal()
   const { communityId } = useUserStore()
@@ -57,42 +56,6 @@ export default function BubbleInputModal() {
     }
   }
 
-  const handleRecordClick = () => {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia({
-          audio: true,
-        })
-        .then(stream => {
-          const mediaRecorder = new MediaRecorder(stream)
-          mediaRecorderRef.current = mediaRecorder
-          setIsRecording(true)
-          mediaRecorder.start()
-
-          const chunks: Blob[] = []
-
-          mediaRecorder.ondataavailable = e => {
-            chunks.push(e.data)
-          }
-
-          mediaRecorder.onstop = () => {
-            const blob = new Blob(chunks, { type: 'audio/mp4; codecs=opus' })
-            const file = new File([blob], 'voice.mp4', {
-              type: 'audio/mp4; codecs=opus',
-            })
-            setAudio(file)
-            setIsRecording(false)
-          }
-        })
-        .catch(err => {
-          alert('음성 녹음 권한이 필요합니다.')
-          console.error(`The following getUserMedia error occurred: ${err}`)
-        })
-    } else {
-      alert('getUserMedia not supported on your browser!')
-    }
-  }
-
   return (
     <BottomDrawer>
       {audio ? (
@@ -128,7 +91,7 @@ export default function BubbleInputModal() {
                   color={theme.colors.stone[600]}
                 />
               }
-              onClick={() => mediaRecorderRef.current?.stop()}
+              onClick={() => stop()}
             />
           ) : (
             <Button

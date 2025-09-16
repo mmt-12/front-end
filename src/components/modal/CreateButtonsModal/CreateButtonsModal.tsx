@@ -58,6 +58,7 @@ export default function CreateButtonsModal() {
 
 const contentStyle = css({
   width: '100%',
+  padding: '0px 18px 24px 18px',
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
   gap: '12px',

@@ -23,10 +23,10 @@ const containerBaseStyle = (theme: Theme) =>
     width: '100%',
     height: 'fit-content',
     maxWidth: `calc(${theme.maxWidth} - 32px)`,
-    padding: '0px 18px 24px 18px',
 
     backgroundColor: theme.colors.white,
     boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)',
+    boxSizing: 'border-box',
 
     borderTopLeftRadius: '24px',
     borderTopRightRadius: '24px',
