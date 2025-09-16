@@ -65,7 +65,7 @@ export default function PostDetailPage() {
         onTemporaryVoiceClick={handleReactionClick}
         selectedReactionId={selectedReactionId}
       />
-      <ReactedProfileList {...selectedReaction} />
+      <ReactedProfileList key={selectedReactionId} {...selectedReaction} />
       <ReactBar iconSize={44} customCss={reactBarStyle} />
     </>
   )
