@@ -95,15 +95,7 @@ export interface CommentAuthor extends Author {
   createdAt: string
 }
 
-export interface EmojiComment {
-  id: number
-  name: string
-  url: string
-  authors: CommentAuthor[]
-  involved: boolean
-}
-
-export interface VoiceComment {
+export interface Comment {
   id: number
   name: string
   url: string
@@ -124,8 +116,8 @@ export interface Post {
   content: string
   createdAt: string
   comments: {
-    emojis: EmojiComment[]
-    voices: VoiceComment[]
+    emojis: Comment[]
+    voices: Comment[]
     temporaryVoices: TemporaryVoiceComment[]
   }
 }
