@@ -1,25 +1,21 @@
-import { css } from '@emotion/react'
+import { css, type Keyframes } from '@emotion/react'
 import { useLocation } from 'react-router-dom'
-
-import { fadeIn, slideInRight } from '@/styles/animation'
 
 interface Props {
   children: React.ReactNode
-  mode?: 'fade' | 'slide'
+  keyframe: Keyframes
 }
 
-export default function PageTransition({ children, mode = 'fade' }: Props) {
+export default function PageTransition({ children, keyframe }: Props) {
   const location = useLocation()
+  const isModal = window.history.state?.modal
+  console.log(isModal)
   return (
     <div
       key={location.key}
       css={[
         containerStyle,
-        mode === 'fade'
-          ? { animation: `${fadeIn} 180ms ease-out` }
-          : {
-              animation: `${slideInRight} 220ms cubic-bezier(0.22, 1, 0.36, 1)`,
-            },
+        isModal ? {} : { animation: `${keyframe} 180ms ease-out` },
       ]}
     >
       {children}

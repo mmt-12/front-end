@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import type { Interpolation } from '@emotion/react'
+import type { Interpolation, Keyframes } from '@emotion/react'
 import type { Icon } from '@solar-icons/react/lib/types'
 
 import type { Achievement } from './api'
@@ -61,3 +61,13 @@ export interface IProfileImage {
   url: string
   register: boolean
 }
+
+export type Modal = {
+  content: ReactNode
+  promiseResolver: (_value: ModalReturnType) => void
+  closingKeyframe: Keyframes
+  isClosing?: boolean
+  returnValue?: ModalReturnType
+}
+
+export type ModalReturnType = void | null | IBaseInput | string | boolean | IArrayInput | ILocationInput | IDateRangeInput

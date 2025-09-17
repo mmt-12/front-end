@@ -4,15 +4,13 @@ import type { Theme } from '@emotion/react'
 
 import BottomButton from '@/components/common/BottomButton'
 import CalendarPicker from '@/components/common/CalendarPicker/CalendarPicker'
-import type { IDateRangeInput } from '@/types'
+import { useModal } from '@/hooks/useModal'
 import { formatDate, formatDateRange } from '@/utils/date'
 
-interface Props {
-  onSelect?: (_range: IDateRangeInput) => void
-}
-
-export default function DateRangeSelector({ onSelect }: Props) {
+export default function DateRangeSelector() {
   const today = new Date()
+
+  const { closeModal } = useModal()
   const [viewYear, setViewYear] = useState(today.getFullYear())
   const [viewMonth, setViewMonth] = useState(today.getMonth())
   const [startTime, setStartDate] = useState<Date>()
@@ -62,7 +60,7 @@ export default function DateRangeSelector({ onSelect }: Props) {
         <BottomButton
           type='secondary'
           onClick={() => {
-            onSelect?.({
+            closeModal({
               startTime: startDateString,
               endTime: endDateString ? endDateString : startDateString,
               render: () => <span>{formatDateRange(startTime, endTime)}</span>,

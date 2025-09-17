@@ -3,8 +3,9 @@ import { css } from '@emotion/react'
 
 import BottomButton from '@/components/common/BottomButton'
 import SearchBar from '@/components/common/SearchBar'
+import { useModal } from '@/hooks/useModal'
 import { flexGap } from '@/styles/common'
-import type { IArrayInput, IArrayItem } from '@/types'
+import type { IArrayItem } from '@/types'
 import { filterByStringProp } from '@/utils/filter'
 import Item from './Item'
 
@@ -12,7 +13,6 @@ interface Props {
   items: IArrayItem[]
   initialItems?: IArrayItem[]
   searchBarIcon: JSX.ElementType
-  onSelect?: (_selectedItems: IArrayInput) => void
   renderPreview?: boolean
   multiple?: boolean
 }
@@ -21,10 +21,10 @@ export default function ArraySelector({
   items,
   initialItems = [],
   searchBarIcon,
-  onSelect,
   multiple = false,
   renderPreview = false,
 }: Props) {
+  const { closeModal } = useModal()
   const [selectedItems, setSelectedItems] = useState<IArrayItem[]>(initialItems)
   const [searchTerm, setSearchTerm] = useState('')
   const searchedItems = useMemo(
@@ -60,8 +60,8 @@ export default function ArraySelector({
       <BottomButton
         type='secondary'
         label='선택 완료'
-        onClick={() =>
-          onSelect?.({
+        onClick={() => {
+          const returnItems = {
             items: selectedItems,
             render: () => (
               <>
@@ -72,8 +72,10 @@ export default function ArraySelector({
                 )}
               </>
             ),
-          })
-        }
+          }
+          console.log('closing modal with', returnItems)
+          closeModal(returnItems)
+        }}
       />
     </>
   )

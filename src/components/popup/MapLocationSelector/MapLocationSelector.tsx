@@ -9,14 +9,12 @@ import {
 
 import BottomButton from '@/components/common/BottomButton'
 import { DEFAULT_LOCATION } from '@/consts/MAP'
-import type { ILocationInput } from '@/types'
+import { useModal } from '@/hooks/useModal'
 import PlacesMarker from './places/PlacesMarker'
 import AutocompleteControl from './places/PlacesSearchControl'
 
-interface Props {
-  onSelect?: (_region: ILocationInput) => void
-}
-export default function MapLocationSelector({ onSelect }: Props) {
+export default function MapLocationSelector() {
+  const { closeModal } = useModal()
   const [address, setAddress] = useState('서울')
 
   const [selectedPlace, setSelectedPlace] =
@@ -101,7 +99,7 @@ export default function MapLocationSelector({ onSelect }: Props) {
               selectedPlaceInfo?.displayName ||
               selectedPlaceInfo?.formattedAddress ||
               ''
-            onSelect?.({
+            closeModal({
               address: address,
               location: {
                 latitude:
@@ -127,7 +125,7 @@ export default function MapLocationSelector({ onSelect }: Props) {
           label={`${address}`}
           type='secondary'
           onClick={() =>
-            onSelect?.({
+            closeModal({
               address,
               location: {
                 latitude: cameraLocation?.lat() || DEFAULT_LOCATION.lat,
