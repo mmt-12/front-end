@@ -22,6 +22,12 @@ export default defineConfig({
     VitePWA({
       workbox: {
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024, // 3 MB
+        // API 경로는 네비게이션 폴백 대상에서 제외하여
+        // /api/v1/sign-in 등 서버 리다이렉트가 SW에 가로막히지 않도록 함
+        navigateFallbackDenylist: [
+          /^\/api\//,
+          /^\/v1\//,
+        ],
       },
       injectRegister: 'auto',
       devOptions: {
