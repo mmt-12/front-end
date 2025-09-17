@@ -26,12 +26,19 @@ type Modal = {
 
 type ModalReturnType = void | null | IBaseInput | string | boolean
 
+type CloseModalOptions = {
+  skipHistoryBack?: boolean
+}
+
 interface ModalContextType {
   openModal: (
     _content: ReactNode,
     _closingKeyframe?: Keyframes,
   ) => Promise<ModalReturnType>
-  closeModal: (_value: ModalReturnType) => Promise<void>
+  closeModal: (
+    _value?: ModalReturnType,
+    _options?: CloseModalOptions,
+  ) => Promise<void>
   confirm: (_message: string) => Promise<ModalReturnType>
   alert: (_message: string) => Promise<ModalReturnType>
 }
@@ -53,31 +60,60 @@ function ModalProvider({ children }: { children: ReactNode }) {
     [],
   )
 
-  const closeModal = useCallback(async (value: ModalReturnType) => {
-    if (window.history.state?.modal) {
-      window.history.back()
-    }
+  const closeModal = useCallback(
+    (
+      value?: ModalReturnType,
+      options: CloseModalOptions = {},
+    ): Promise<void> => {
+      const shouldGoBack =
+        !options.skipHistoryBack && window.history.state?.modal
 
-    setModals(prev => {
-      if (!prev.length) return prev
-      const next = [...prev]
-      next[next.length - 1] = { ...next[next.length - 1], isClosing: true }
-      return next
-    })
+      let shouldStartClosing = false
 
-    return new Promise<void>(resolve => {
-      setTimeout(() => {
-        setModals(prev => {
-          if (!prev.length) return prev
-          const next = [...prev]
-          const top = next[next.length - 1]
-          if (top) top.promiseResolver(value)
-          return next.slice(0, -1)
-        })
-        resolve()
-      }, FG_DURATION)
-    })
-  }, [])
+      setModals(prev => {
+        if (!prev.length) return prev
+
+        const next = [...prev]
+        const topIndex = next.length - 1
+        const top = next[topIndex]
+
+        if (!top || top.isClosing) {
+          return prev
+        }
+
+        shouldStartClosing = true
+        next[topIndex] = { ...top, isClosing: true }
+
+        return next
+      })
+
+      if (!shouldStartClosing) {
+        return Promise.resolve()
+      }
+
+      if (shouldGoBack) {
+        window.history.back()
+      }
+
+      return new Promise<void>(resolve => {
+        setTimeout(() => {
+          setModals(prev => {
+            if (!prev.length) return prev
+
+            const next = [...prev]
+            const top = next[next.length - 1]
+
+            if (top) top.promiseResolver(value)
+
+            return next.slice(0, -1)
+          })
+
+          resolve()
+        }, FG_DURATION)
+      })
+    },
+    [],
+  )
 
   const confirm = async (message: string) => {
     return openModal(<Confirm>{message}</Confirm>, slideDown)
@@ -124,7 +160,7 @@ function ModalWrapper({ children }: { children: ReactNode }) {
     if (!closeModal) return
 
     const onPopState = () => {
-      closeModal(null)
+      closeModal(null, { skipHistoryBack: true })
     }
 
     window.history.pushState({ modal: true }, '', window.location.href + '#')
