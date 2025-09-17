@@ -4,17 +4,14 @@ import { useParams } from 'react-router-dom'
 import {
   useCreateEmojiComment,
   useCreateVoiceComment,
+  useDeleteComment,
   type Post as PostType,
 } from '@/api'
-import Border from '@/components/common/Border'
+import Post from '@/components/memory/Post'
 import { useUserStore } from '@/store/userStore'
-import { flexGap } from '@/styles/common'
-import EmojiList from '../../reaction/EmojiList'
-import VoiceList from '../../reaction/VoiceList'
-import PostContent from '../PostContent/PostContent'
 
 export default function PostListItem(props: PostType) {
-  const { communityId } = useUserStore()
+  const { communityId, associateId } = useUserStore()
   const { memoryId } = useParams()
 
   const { mutate: commentEmoji } = useCreateEmojiComment(
@@ -29,33 +26,39 @@ export default function PostListItem(props: PostType) {
     props.id,
   )
 
-  const handleEmojiClick = (e: MouseEvent, _id: number) => {
+  const { mutate: deleteComment } = useDeleteComment(
+    communityId,
+    Number(memoryId),
+    props.id,
+  )
+
+  const handleEmojiClick = (e: MouseEvent, id: number) => {
     e.stopPropagation()
 
-    commentEmoji({ emojiId: _id })
+    if (props.comments.emojis.find(emoji => emoji.id === id)?.involved) {
+      const commentId = props.comments.emojis
+        .find(emoji => emoji.id === id)
+        ?.authors.find(author => author.id === associateId)?.commentId
+      if (commentId) deleteComment(commentId)
+    } else commentEmoji({ emojiId: id })
   }
 
-  const handleVoiceClick = (e: MouseEvent, _id: number) => {
+  const handleVoiceClick = (e: MouseEvent, id: number) => {
     e.stopPropagation()
 
-    commentVoice({ voiceId: _id })
+    if (props.comments.voices.find(voice => voice.id === id)?.involved) {
+      const commentId = props.comments.voices
+        .find(voice => voice.id === id)
+        ?.authors.find(author => author.id === associateId)?.commentId
+      if (commentId) deleteComment(commentId)
+    } else commentVoice({ voiceId: id })
   }
   return (
-    <>
-      <div css={[flexGap(10), { marginBottom: '32px' }]}>
-        <div>
-          <Border />
-          <PostContent {...props} link />
-        </div>
-        <EmojiList
-          reactions={props.comments.emojis}
-          onClick={handleEmojiClick}
-        />
-        <VoiceList
-          reactions={props.comments.voices}
-          onClick={handleVoiceClick}
-        />
-      </div>
-    </>
+    <Post
+      post={props}
+      onEmojiClick={handleEmojiClick}
+      onVoiceClick={handleVoiceClick}
+      link
+    />
   )
 }

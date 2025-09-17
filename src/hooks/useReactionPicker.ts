@@ -4,7 +4,7 @@ import { useCreateGuestBookReaction } from '@/api'
 import { useCreateEmojiComment, useCreateVoiceComment } from '@/api/post'
 import { useUserStore } from '@/store/userStore'
 
-export function useReactionPicker (type: 'EMOJI' | 'VOICE') {
+export function useReactionPicker () {
   const { communityId } = useUserStore()
   const { memoryId, postId, associateId } = useParams()
   const entityId = Number(postId ?? associateId)
@@ -19,7 +19,7 @@ export function useReactionPicker (type: 'EMOJI' | 'VOICE') {
   const { mutate: createGuestBookReaction, isPending: isGuestBookPending } =
     useCreateGuestBookReaction(communityId, entityId)
 
-  const selectReaction = (reactionId: number) => {
+  const selectReaction = (type: 'EMOJI' | 'VOICE', reactionId: number) => {
     if (!entityId || isEmojiPending || isVoicePending || isGuestBookPending)
       return
 
@@ -34,5 +34,5 @@ export function useReactionPicker (type: 'EMOJI' | 'VOICE') {
     }
   }
 
-  return { selectReaction }
+  return { selectReaction, isPostDetailPage, isGuestBookPage }
 }

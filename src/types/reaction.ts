@@ -3,7 +3,7 @@ import type { MouseEvent } from 'react'
 export interface IReaction {
   id: number
   url: string
-  name: string
+  name?: string
   size?: 'md' | 'lg'
   isActive?: boolean
   involved?: boolean

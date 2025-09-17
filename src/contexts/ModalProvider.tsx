@@ -24,7 +24,7 @@ interface ModalContextType {
     _content: ReactNode,
     _closingKeyframe?: Keyframes,
   ) => Promise<ModalReturnType>
-  closeModal: (_value: ModalReturnType) => void
+  closeModal: (_value: ModalReturnType) => Promise<void>
   confirm: (_message: string) => Promise<ModalReturnType>
   alert: (_message: string) => Promise<ModalReturnType>
 }
@@ -46,7 +46,7 @@ function ModalProvider({ children }: { children: ReactNode }) {
     })
   }
 
-  const closeModal = (value: ModalReturnType) => {
+  async function closeModal(value: ModalReturnType) {
     // 뒤로가기 방지를 위해 임의로 생성된 주소인 경우 한번 더 뒤로가기 호출
     if (window.history.state?.modal) {
       window.history.back()
@@ -59,15 +59,18 @@ function ModalProvider({ children }: { children: ReactNode }) {
       return next
     })
 
-    setTimeout(() => {
-      setModals(prev => {
-        if (!prev.length) return prev
-        const next = [...prev]
-        const top = next[next.length - 1]
-        if (top) top.promiseResolver(value)
-        return next.slice(0, -1)
-      })
-    }, FG_DURATION)
+    return new Promise<void>(resolve => {
+      setTimeout(() => {
+        setModals(prev => {
+          if (!prev.length) return prev
+          const next = [...prev]
+          const top = next[next.length - 1]
+          if (top) top.promiseResolver(value)
+          return next.slice(0, -1)
+        })
+        resolve()
+      }, FG_DURATION)
+    })
   }
 
   const confirm = async (message: string) => {
@@ -91,7 +94,7 @@ function ModalRenderer({
   closeModal,
 }: {
   modals: Modal[]
-  closeModal: (_value: ModalReturnType) => void
+  closeModal: (_value: ModalReturnType) => Promise<void>
 }) {
   const modalRoot = document.getElementById('modal-root')
   if (!modalRoot || !modals.length) return null

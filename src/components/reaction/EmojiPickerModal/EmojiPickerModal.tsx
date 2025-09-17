@@ -25,10 +25,10 @@ export default function EmojiPickerModal() {
     })
   const emojis = data?.pages.flatMap(page => page.emojis) || []
 
-  const { selectReaction } = useReactionPicker('EMOJI')
+  const { selectReaction } = useReactionPicker()
 
   const handleSelectEmoji = (emojiId: number) => {
-    selectReaction(emojiId)
+    selectReaction('EMOJI', emojiId)
     closeModal()
   }
 

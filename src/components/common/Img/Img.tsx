@@ -6,7 +6,7 @@ import defaultProfile from '@/assets/images/mascot/default-profile.png'
 import { Skeleton } from '../Skeleton'
 
 interface Props {
-  alt: string
+  alt?: string
   src?: string
   onClick?: () => void
   customCss?: Interpolation<Theme>
@@ -16,7 +16,7 @@ interface Props {
 }
 
 export default function Img({
-  alt,
+  alt = '',
   src = defaultProfile,
   onClick,
   customCss,

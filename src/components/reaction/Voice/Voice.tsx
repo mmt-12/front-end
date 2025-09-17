@@ -5,14 +5,19 @@ import { PauseCircle, PlayCircle } from '@solar-icons/react'
 import Marquee from '@/components/common/Marquee'
 import type { IReaction } from '@/types/reaction'
 
+interface Props extends IReaction {
+  isPost?: boolean
+}
+
 export default function Voice({
   id,
   url: audioUrl,
   isActive = false,
   involved = false,
   name = '',
+  isPost = false,
   onClick,
-}: IReaction) {
+}: Props) {
   const audioRef = useRef<HTMLAudioElement>(null)
   const theme = useTheme()
   const [isPlaying, setIsPlaying] = useState(false)
@@ -45,8 +50,7 @@ export default function Voice({
           </Marquee>
         </div>
       </div>
-      <div css={activeBarStyle(theme, isActive)} />
-
+      {isPost && <div css={activeBarStyle(theme, isActive)} />}
       <audio
         src={audioUrl}
         ref={audioRef}
