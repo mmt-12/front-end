@@ -27,6 +27,8 @@ export default function LoginPage() {
         <a
           href={`${BASE_URL}/v1/sign-in`}
           css={[buttonStyle, kakaoButtonStyle]}
+          target='_blank'
+          rel='noopener noreferrer'
         >
           <Img src={kakaoIcon} alt='kakao icon' customCss={kakaoIconStyle} />
           <p>카카오 로그인</p>
