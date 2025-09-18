@@ -73,7 +73,6 @@ export default function ArraySelector({
               </>
             ),
           }
-          console.log('closing modal with', returnItems)
           closeModal(returnItems)
         }}
       />

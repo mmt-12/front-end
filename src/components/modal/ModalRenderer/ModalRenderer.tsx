@@ -34,6 +34,9 @@ function ModalWrapper({ children }: { children: ReactNode }) {
     if (!closeModal) return
 
     const onPopState = () => {
+      console.log(window.location.href)
+      console.log('pop!')
+      window.history.pushState({ modal: true }, '', window.location.href)
       closeModal(null, { withoutRoute: true })
     }
 

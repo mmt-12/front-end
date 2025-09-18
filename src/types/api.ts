@@ -154,10 +154,10 @@ export interface AssociateListResponse {
 }
 
 export interface UpdateAssociateRequest {
-  profileImageUrl: string
+  profileImageUrl?: string
   nickname: string
-  achievement: number
-  introduction: string
+  achievement?: number
+  introduction?: string
 }
 
 export interface AchievementListResponse {

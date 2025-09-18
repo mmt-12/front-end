@@ -48,12 +48,10 @@ export default function EditProfilePage() {
   const [name, setName] = useState(profile?.nickname || '')
   const [introduction, setIntroduction] = useState(profile?.introduction || '')
   const [badgeId, setBadgeId] = useState(profile?.achievement?.id)
+
   const { mutate: updateProfile } = useUpdateAssociate(1)
 
   const handleSubmit = () => {
-    if (!name) return alert('이름을 입력해주세요.')
-    if (!badgeId) return alert('칭호를 선택해주세요.')
-
     updateProfile(
       {
         nickname: name,
@@ -62,8 +60,8 @@ export default function EditProfilePage() {
         introduction,
       },
       {
-        onSuccess: () => {
-          alert('프로필이 수정되었습니다.')
+        onSuccess: async () => {
+          await alert('프로필이 수정되었습니다.')
           navigate(ROUTES.GUEST_BOOK(associateId))
         },
       },
@@ -87,7 +85,8 @@ export default function EditProfilePage() {
 
   const arrayInput: IArrayInput = {
     items: filteredBadgeItems,
-    render: () => <Badge id={badgeId || 0} key={badgeId || 0} />,
+    render: () =>
+      filteredBadgeItems.map(item => <Badge id={item.id} key={item.id} />),
   }
 
   const handleImageClick = async () => {
@@ -143,7 +142,10 @@ export default function EditProfilePage() {
         label='칭호'
         icon={RoundAltArrowRight}
         value={arrayInput}
-        onChange={({ items }: IArrayInput) => setBadgeId(items[0].id)}
+        onChange={(value: IArrayInput) => {
+          if (!value) return
+          setBadgeId(value.items[0]?.id || undefined)
+        }}
         content={
           <ArraySelector
             initialItems={filteredBadgeItems}

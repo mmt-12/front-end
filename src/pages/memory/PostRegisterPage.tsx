@@ -45,8 +45,8 @@ export default function PostRegisterPage() {
       }),
     )
     registerPost(formData, {
-      onSuccess: () => {
-        alert('포스트가 등록되었습니다.')
+      onSuccess: async () => {
+        await alert('포스트가 등록되었습니다.')
         navigate(ROUTES.MEMORY_DETAIL(memoryId))
       },
     })

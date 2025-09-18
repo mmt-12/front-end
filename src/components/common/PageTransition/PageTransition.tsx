@@ -9,7 +9,6 @@ interface Props {
 export default function PageTransition({ children, keyframe }: Props) {
   const location = useLocation()
   const isModal = window.history.state?.modal
-  console.log(isModal)
   return (
     <div
       key={location.key}
