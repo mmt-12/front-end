@@ -33,8 +33,8 @@ export default function BubbleInputModal() {
   )
 
   const onSuccess = async () => {
-    await closeModal()
-    alert('등록되었습니다.')
+    await alert('등록되었습니다.')
+    closeModal()
   }
 
   const handleSubmit = () => {
