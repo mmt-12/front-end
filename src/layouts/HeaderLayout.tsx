@@ -3,13 +3,14 @@ import { Outlet } from 'react-router-dom'
 
 import PageTransition from '@/components/common/PageTransition'
 import Header from '@/components/layout/Header'
+import { slideInRight } from '@/styles/animation'
 
 export default function HeaderLayout() {
   return (
     <>
       <Header />
       <main css={[mainStyle]}>
-        <PageTransition mode='slide'>
+        <PageTransition keyframe={slideInRight}>
           <Outlet />
         </PageTransition>
       </main>

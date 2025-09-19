@@ -1,5 +1,7 @@
-import { Children, useEffect, useRef, useState } from 'react'
+import { Children, useState } from 'react'
 import { css, type Theme } from '@emotion/react'
+
+import Sentinel from '../Sentinel'
 
 export interface Props {
   children: React.ReactNode
@@ -7,52 +9,30 @@ export interface Props {
 
 export default function Album({ children }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const albumContainerRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const container = albumContainerRef.current
-      if (!container) return
-
-      const scrollLeft = container.scrollLeft
-      const containerWidth = container.clientWidth
-      const newIndex = Math.round(scrollLeft / containerWidth)
-      setCurrentIndex(newIndex)
-    }
-
-    const container = albumContainerRef.current
-    container?.addEventListener('scroll', handleScroll)
-
-    return () => {
-      container?.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (albumContainerRef.current) albumContainerRef.current.scrollLeft = 0
-  }, [children])
 
   return (
     <div css={contianerStyle}>
-      <div
-        ref={albumContainerRef}
-        css={albumContainerStyle}
-        className='no-scrollbar'
-      >
-        {children}
+      <div css={albumContainerStyle} className='no-scrollbar'>
+        {Children.map(children, (child, index) => (
+          <>
+            {child}
+            <Sentinel
+              horizontal
+              onVisible={() => {
+                setCurrentIndex(index)
+                console.log('visible')
+              }}
+            />
+          </>
+        ))}
       </div>
       <div css={dotContainerStyle}>
-        {Children.map(
-          children,
-          (child, index) =>
-            child && (
-              <div
-                key={index}
-                css={dotStyle}
-                className={currentIndex === index ? 'active' : ''}
-              ></div>
-            ),
-        )}
+        {Children.map(children, (_, index) => (
+          <div
+            css={dotStyle}
+            className={index === currentIndex ? 'active' : ''}
+          />
+        ))}
       </div>
     </div>
   )
@@ -78,20 +58,6 @@ const albumContainerStyle = (theme: Theme) =>
 
     overflowX: 'scroll',
     scrollSnapType: 'x mandatory',
-    div: {
-      width: '100vw',
-      maxWidth: theme.maxWidth,
-      maxHeight: `min(calc(${theme.maxWidth} - 200px), 100vw)`,
-
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexShrink: 0,
-
-      overflow: 'hidden',
-      scrollSnapAlign: 'center',
-      backgroundColor: theme.colors.stone[150],
-    },
     'div.action-wrapper': {
       display: 'flex',
       justifyContent: 'center',

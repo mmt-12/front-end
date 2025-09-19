@@ -35,8 +35,8 @@ export default function EmojiRegisterModal() {
     formData.append('emoji', emojiImage)
 
     mutate(formData, {
-      onSuccess: () => {
-        alert('이모지가 등록되었습니다.')
+      onSuccess: async () => {
+        await alert('이모지가 등록되었습니다.')
         closeModal()
       },
     })

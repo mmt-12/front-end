@@ -37,5 +37,11 @@ export const theme = {
   },
   shadow: '0 2px 12px #00000010',
   maxWidth: '720px',
+  transition: {
+    duration: {
+      fg: 140,
+      bg: 320,
+    }
+  }
 }
 export type ThemeType = typeof theme

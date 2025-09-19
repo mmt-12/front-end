@@ -1,4 +1,3 @@
-import { cloneElement } from 'react'
 import { css, useTheme } from '@emotion/react'
 import type { Theme } from '@emotion/react'
 import type { Icon } from '@solar-icons/react/lib/types'
@@ -30,24 +29,12 @@ export default function InputPopup<T extends IBaseInput>({
 }: Props<T>) {
   const { openModal, closeModal } = useModal()
 
-  const handlePopupSelect = (result: T): void => {
-    closeModal(result)
-    onChange(result)
-  }
-
   const Icon = icon as Icon
   const theme = useTheme()
 
   const modal = (
     <Popup title={label} onClose={() => closeModal()}>
-      {cloneElement(
-        content as React.ReactElement<{
-          onSelect: (_value: T) => void
-        }>,
-        {
-          onSelect: handlePopupSelect,
-        },
-      )}
+      {content}
     </Popup>
   )
 
@@ -55,7 +42,14 @@ export default function InputPopup<T extends IBaseInput>({
     <div css={inputContainerStyle}>
       <label css={labelStyle}>{label}</label>
 
-      <button onClick={() => openModal(modal)} css={buttonStyle}>
+      <button
+        onClick={async () => {
+          const value = await openModal(modal)
+          console.log('openModal returned value', value)
+          onChange(value as T)
+        }}
+        css={buttonStyle}
+      >
         <div>{value?.render()}</div>
         {<Icon weight='Bold' size={24} color={theme.colors.stone[400]} />}
       </button>
