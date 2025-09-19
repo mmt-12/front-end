@@ -1,12 +1,7 @@
-import {
-  createContext,
-  useCallback,
-  useEffect,
-  useState,
-  type ReactNode,
-} from 'react'
+import { createContext, useCallback, useState, type ReactNode } from 'react'
 import { css, useTheme, type Keyframes, type Theme } from '@emotion/react'
 import { createPortal } from 'react-dom'
+import { useBlocker } from 'react-router-dom'
 
 import Alert from '@/components/modal/Alert'
 import Confirm from '@/components/modal/Confirm'
@@ -22,10 +17,9 @@ interface ModalContextType {
   closeModal: (
     _value: ModalReturnType,
     _options?: { withoutRoute?: boolean },
-  ) => void
+  ) => Promise<void>
   confirm: (_message: string) => Promise<ModalReturnType>
   alert: (_message: string) => Promise<ModalReturnType>
-  popStateHandler: () => void
 }
 
 const ModalContext = createContext<ModalContextType | null>(null)
@@ -36,8 +30,6 @@ function ModalProvider({ children }: { children: ReactNode }) {
 
   const openModal = useCallback(
     async (content: ReactNode, closingKeyframe: Keyframes = fadeOut) => {
-      window.history.replaceState({ modal: true }, '')
-      window.history.pushState({ modal: true }, '', window.location.href)
       return new Promise<ModalReturnType>(resolve => {
         setModals(prev => [
           ...prev,
@@ -49,40 +41,30 @@ function ModalProvider({ children }: { children: ReactNode }) {
   )
 
   const closeModal = useCallback(
-    async (value: ModalReturnType, options?: { withoutRoute?: boolean }) => {
-      if (value) {
-        // openModal의 Promise를 value로 resolve
-        setModals(prev => {
-          if (!prev.length) return prev
-          const next = [...prev]
-          const top = next[next.length - 1]
-          top.promiseResolver(value)
-          next[next.length - 1] = {
-            ...next[next.length - 1],
-          }
-          return next
-        })
-      }
-      if (!options?.withoutRoute) window.history.back()
+    async (value: ModalReturnType) => {
+      setModals(prev => {
+        if (!prev.length) return prev
+        const next = [...prev]
+        next[next.length - 1] = {
+          ...next[next.length - 1],
+          isClosing: true,
+        }
+        return next
+      })
+
+      return new Promise<void>(resolve => {
+        setTimeout(() => {
+          resolve()
+          setModals(prev => {
+            if (!prev.length) return prev
+            prev[prev.length - 1].promiseResolver(value)
+            return prev.slice(0, -1)
+          })
+        }, theme.transition.duration.fg)
+      })
     },
-    [],
+    [theme.transition.duration.fg],
   )
-
-  const popStateHandler = useCallback(() => {
-    setModals(prev => {
-      if (!prev.length) return prev
-      const next = [...prev]
-      next[next.length - 1] = {
-        ...next[next.length - 1],
-        isClosing: true,
-      }
-      return next
-    })
-
-    setTimeout(() => {
-      setModals(prev => prev.slice(0, -1))
-    }, theme.transition.duration.fg)
-  }, [theme.transition.duration.fg])
 
   const confirm = async (message: string) => {
     return openModal(<Confirm>{message}</Confirm>, slideDown)
@@ -93,9 +75,7 @@ function ModalProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <ModalContext.Provider
-      value={{ openModal, closeModal, confirm, alert, popStateHandler }}
-    >
+    <ModalContext.Provider value={{ openModal, closeModal, confirm, alert }}>
       {children}
       <ModalRenderer modals={modals} />
     </ModalContext.Provider>
@@ -107,6 +87,12 @@ export { ModalProvider, ModalContext }
 function ModalRenderer({ modals }: { modals: Modal[] }) {
   const theme = useTheme()
   const { closeModal } = useModal()
+  useBlocker(() => {
+    if (modals.length == 0) return false
+    closeModal()
+    return true
+  })
+
   const modalRoot = document.getElementById('modal-root')
   if (!modalRoot || !modals.length) return null
   const topModal = modals[modals.length - 1]
@@ -115,34 +101,13 @@ function ModalRenderer({ modals }: { modals: Modal[] }) {
   return createPortal(
     <div
       css={backgroundStyle(theme, topModal)}
-      onClick={() => closeModal(null)}
+      onClick={() => closeModal()}
       data-testid='modal-background'
     >
-      <div css={contentStyle(theme, topModal)}>
-        <ModalWrapper>{content}</ModalWrapper>
-      </div>
+      <div css={contentStyle(theme, topModal)}>{content}</div>
     </div>,
     modalRoot,
   )
-}
-
-function ModalWrapper({ children }: { children: ReactNode }) {
-  const { closeModal, popStateHandler } = useModal()
-  useEffect(() => {
-    if (!closeModal) return
-
-    const onPopState = () => {
-      closeModal(null, { withoutRoute: true })
-      popStateHandler()
-    }
-
-    window.addEventListener('popstate', onPopState)
-
-    return () => {
-      window.removeEventListener('popstate', onPopState)
-    }
-  }, [closeModal, popStateHandler])
-  return <>{children}</>
 }
 
 const backgroundStyle = (theme: Theme, modal: Modal) =>
