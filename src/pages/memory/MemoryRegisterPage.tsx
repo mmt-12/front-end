@@ -65,8 +65,8 @@ export default function MemoryRegisterPage() {
         associates: participants?.items.map(p => p.id) || [],
       },
       {
-        onSuccess: () => {
-          alert('기억이 생성되었습니다.')
+        onSuccess: async () => {
+          await alert('기억이 생성되었습니다.')
           navigate(ROUTES.MEMORY_LIST)
         },
       },

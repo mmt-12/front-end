@@ -30,7 +30,7 @@ interface Props {
 
 export default function MemoryInfo(props: Props) {
   const theme = useTheme()
-  const { alert } = useModal()
+  const { alert, confirm } = useModal()
 
   const formattedStartTime = formatDateString(props.period.startTime || '')
   const formattedEndTime = formatDateString(props.period.endTime || '')
@@ -39,9 +39,12 @@ export default function MemoryInfo(props: Props) {
 
   const { data: pictureData } = useMemoryImages(communityId, props.id)
 
-  const handleSaveClick = useCallback(() => {
+  const handleSaveClick = useCallback(async () => {
     if (!pictureData || pictureData.pictures.length === 0) {
       alert('저장할 사진이 없습니다.')
+      return
+    }
+    if (!(await confirm('기억의 모든 사진을 저장하시겠습니까?'))) {
       return
     }
     try {
@@ -52,7 +55,7 @@ export default function MemoryInfo(props: Props) {
       console.error('Error during image compression or download:', error)
       alert('사진 저장 중 오류가 발생했습니다. 다시 시도해주세요.')
     }
-  }, [pictureData, props.id])
+  }, [pictureData, props.id, alert, confirm])
 
   const renderMeta = () => {
     return (

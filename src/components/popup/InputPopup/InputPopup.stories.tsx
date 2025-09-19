@@ -38,9 +38,7 @@ export const Date: Story = {
     label: '날짜 선택',
     onChange: value => console.log('Input changed:', value),
     icon: CalendarMinimalistic,
-    content: (
-      <DateRangeSelector onSelect={val => console.log('선택된 날짜:', val)} />
-    ),
+    content: <DateRangeSelector />,
   },
   render: () => {
     const [dateRange, setDateRange] = useState<IDateRangeInput>()
@@ -50,7 +48,7 @@ export const Date: Story = {
         value={dateRange}
         onChange={ds => setDateRange(ds as IDateRangeInput)}
         icon={CalendarMinimalistic}
-        content={<DateRangeSelector onSelect={setDateRange} />}
+        content={<DateRangeSelector />}
       />
     )
   },
@@ -61,9 +59,7 @@ export const Location: Story = {
     label: '위치 선택',
     onChange: value => console.log('Input changed:', value),
     icon: Map,
-    content: (
-      <MapLocationSelector onSelect={val => console.log('선택된 위치:', val)} />
-    ),
+    content: <MapLocationSelector />,
   },
   render: () => {
     const [location, setLocation] = useState<ILocationInput>()
@@ -93,7 +89,6 @@ export const Array: Story = {
           label: badge.name,
           render: () => <Badge id={Number(id)} />,
         }))}
-        onSelect={val => console.log('선택된 아이템:', val)}
       />
     ),
   },

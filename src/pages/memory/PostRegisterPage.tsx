@@ -46,8 +46,8 @@ export default function PostRegisterPage() {
     )
     registerPost(formData, {
       onSuccess: () => {
-        alert('포스트가 등록되었습니다.')
         navigate(ROUTES.MEMORY_DETAIL(memoryId))
+        alert('포스트가 등록되었습니다.')
       },
     })
   }
@@ -65,7 +65,7 @@ export default function PostRegisterPage() {
         <p css={{ fontSize: 16 }}>에서 있었던 일을 공유해요.</p>
       </div>
       <ImageInputField
-        maxLength={30}
+        maxLength={10}
         images={images}
         onChange={is => setImages(is)}
       />
