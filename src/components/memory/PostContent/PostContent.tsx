@@ -30,7 +30,7 @@ export default function PostContent({
     <>
       <Album>
         {pictures.map((image, index) => (
-          <div key={index}>
+          <div key={index} css={imageWrapperStyle}>
             <Img src={image} alt={`Album image ${index}`} />
           </div>
         ))}
@@ -89,3 +89,20 @@ const profileLinkStyle = css({
   display: 'flex',
   alignItems: 'center',
 })
+
+const imageWrapperStyle = (theme: Theme) =>
+  css({
+    position: 'relative',
+    width: '100vw',
+    maxWidth: theme.maxWidth,
+    maxHeight: `min(calc(${theme.maxWidth} - 200px), 100vw)`,
+
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexShrink: 0,
+
+    overflow: 'hidden',
+    scrollSnapAlign: 'center',
+    backgroundColor: theme.colors.stone[150],
+  })
