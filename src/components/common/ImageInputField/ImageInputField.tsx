@@ -1,8 +1,9 @@
 import { useRef } from 'react'
-import { css, useTheme } from '@emotion/react'
+import { css, useTheme, type Theme } from '@emotion/react'
 import { CloseCircle, GalleryAdd } from '@solar-icons/react'
 
 import { useModal } from '@/hooks/useModal'
+import { compressImage } from '@/utils/image'
 import Album from '../Album'
 import Button from '../Button'
 import Img from '../Img'
@@ -26,7 +27,7 @@ export default function ImageInputField({
     <>
       <Album>
         {images.map((image, index) => (
-          <div key={index} css={{ position: 'relative' }}>
+          <div key={index} css={imageWrapperStyle}>
             <Img
               src={URL.createObjectURL(image)}
               alt={`Album image ${index}`}
@@ -45,7 +46,7 @@ export default function ImageInputField({
           </div>
         ))}
         {images.length < maxLength && (
-          <div className='action-wrapper'>
+          <div className='action-wrapper' css={imageWrapperStyle}>
             <Button
               size='lg'
               type='secondary'
@@ -71,14 +72,17 @@ export default function ImageInputField({
         accept='image/*'
         hidden
         multiple
-        onChange={e => {
+        onChange={async e => {
           const files = Array.from(e.target.files || [])
           const length = images.length + files.length
           if (length > maxLength) {
             files.splice(0, length - maxLength)
             alert(`최대 ${maxLength}장 씩만 업로드 합시다.`)
           }
-          const newFiles = files.concat(images)
+          const compressedFiles = await Promise.all(
+            files.map(file => compressImage(file)),
+          )
+          const newFiles = compressedFiles
           onChange(newFiles)
         }}
       />
@@ -94,3 +98,20 @@ const deleteButtonStyle = css({
   zIndex: 12,
   filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.4))',
 })
+
+const imageWrapperStyle = (theme: Theme) =>
+  css({
+    position: 'relative',
+    width: '100vw',
+    maxWidth: theme.maxWidth,
+    maxHeight: `min(calc(${theme.maxWidth} - 200px), 100vw)`,
+
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexShrink: 0,
+
+    overflow: 'hidden',
+    scrollSnapAlign: 'center',
+    backgroundColor: theme.colors.stone[150],
+  })

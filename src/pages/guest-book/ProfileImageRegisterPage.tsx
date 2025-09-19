@@ -57,7 +57,7 @@ export default function ProfileImageRegisterPage() {
     <div css={flexGap(12)}>
       <ImageInputField
         images={newImages}
-        maxLength={10}
+        maxLength={1}
         onChange={setNewImages}
       />
       <InfiniteScroll

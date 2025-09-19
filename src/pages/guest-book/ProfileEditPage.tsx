@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { css, useTheme, type Theme } from '@emotion/react'
 import {
   MedalRibbonStar,
@@ -14,6 +14,7 @@ import BottomButton from '@/components/common/BottomButton'
 import DateInputField from '@/components/common/DateInputField'
 import Img from '@/components/common/Img'
 import InputField from '@/components/common/InputField'
+import Loader from '@/components/common/Loader'
 import WavyBox from '@/components/guest-book/WavyBox'
 import ArraySelector from '@/components/popup/ArraySelector'
 import ImageSelector from '@/components/popup/ImageSelector/ImageSelector'
@@ -39,15 +40,23 @@ export default function EditProfilePage() {
   const navigate = useNavigate()
 
   const { associateId } = useUserStore()
-  const { data: profile } = useAssociateProfile(1, associateId)
+  const { data: profile, isLoading } = useAssociateProfile(1, associateId)
 
   const theme = useTheme()
   const { alert, openModal, closeModal } = useModal()
 
   const [imagePath, setImagePath] = useState<string>('')
-  const [name, setName] = useState(profile?.nickname || '')
-  const [introduction, setIntroduction] = useState(profile?.introduction || '')
-  const [badgeId, setBadgeId] = useState(profile?.achievement?.id)
+  const [name, setName] = useState<string>('')
+  const [introduction, setIntroduction] = useState<string>('')
+  const [badgeId, setBadgeId] = useState<number>()
+
+  useEffect(() => {
+    if (!profile) return
+    setName(profile.nickname ?? '')
+    setIntroduction(profile.introduction ?? '')
+    setBadgeId(profile.achievement?.id)
+    setImagePath(profile.imageUrl ?? '')
+  }, [profile])
 
   const { mutate: updateProfile } = useUpdateAssociate(1)
 
@@ -61,8 +70,8 @@ export default function EditProfilePage() {
       },
       {
         onSuccess: async () => {
-          await alert('프로필이 수정되었습니다.')
           navigate(ROUTES.GUEST_BOOK(associateId))
+          alert('프로필이 수정되었습니다.')
         },
       },
     )
@@ -102,6 +111,8 @@ export default function EditProfilePage() {
       </Popup>,
     )
   }
+
+  if (isLoading) return <Loader />
 
   return (
     <div css={[flexGap(8), { padding: '24px 0' }]}>
@@ -144,7 +155,7 @@ export default function EditProfilePage() {
         value={arrayInput}
         onChange={(value: IArrayInput) => {
           if (!value) return
-          setBadgeId(value.items[0]?.id || undefined)
+          setBadgeId(value.items[0]?.id)
         }}
         content={
           <ArraySelector
