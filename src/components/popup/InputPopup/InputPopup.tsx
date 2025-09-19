@@ -38,8 +38,6 @@ export default function InputPopup<T extends IBaseInput>({
     </Popup>
   )
 
-  console.log('value of inputPopup:', value)
-
   return (
     <div css={inputContainerStyle}>
       <label css={labelStyle}>{label}</label>

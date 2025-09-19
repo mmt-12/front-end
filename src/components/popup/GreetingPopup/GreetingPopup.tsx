@@ -49,7 +49,6 @@ const containerStyle = css({
 
 const mascotWrapperStyle = css({
   width: '100%',
-  maxHeight: '400px',
   height: 'auto',
   display: 'flex',
   justifyContent: 'center',
