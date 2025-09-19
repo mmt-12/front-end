@@ -5,18 +5,28 @@ export interface Props {
   label: string
   onChange: (_value: Date) => void
   disabled?: boolean
+  value?: Date
 }
 
 export default function DateInputField({
   label,
   onChange,
   disabled = false,
+  value,
 }: Props) {
   const theme = useTheme()
 
   const [year, setYear] = useState<number>(new Date().getFullYear())
   const [month, setMonth] = useState<number>(new Date().getMonth())
   const [day, setDay] = useState<number>(new Date().getDate())
+
+  useEffect(() => {
+    if (value) {
+      setYear(value.getFullYear())
+      setMonth(value.getMonth())
+      setDay(value.getDate())
+    }
+  }, [value])
 
   const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newYear = parseInt(e.target.value, 10)

@@ -166,7 +166,12 @@ export default function EditProfilePage() {
           />
         }
       />
-      <DateInputField disabled label='생년월일' onChange={() => {}} />
+      <DateInputField
+        disabled
+        label='생년월일'
+        onChange={() => {}}
+        value={new Date(profile?.birthday || '')}
+      />
       <InputField
         label='한줄소개'
         type='textarea'
