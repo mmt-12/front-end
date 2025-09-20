@@ -20,5 +20,8 @@ export default function PageTransition({ children, keyframe }: Props) {
 }
 
 const containerStyle = css({
+  height: '100%',
   flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
 })

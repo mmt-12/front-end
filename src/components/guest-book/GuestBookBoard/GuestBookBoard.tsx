@@ -5,6 +5,7 @@ import { CloseCircle, RoundArrowUp } from '@solar-icons/react'
 import { useCreateGuestBookText, useGuestBookList } from '@/api/guestbook'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
 import InputField from '@/components/common/InputField'
+import NoContentFallback from '@/components/common/NoContentFallback'
 import Comment from '@/components/guest-book/Comment'
 import ReactBar from '@/components/memory/ReactBar/ReactBar'
 import { flexGap } from '@/styles/common'
@@ -78,6 +79,11 @@ export default function GuestBookBoard({ communityId, associateId }: Props) {
       </div>
       {isLoading ? (
         <GuestBookBoardSkeleton />
+      ) : comments.length === 0 ? (
+        <NoContentFallback
+          size='block'
+          message='아무도 방명록을 남기지 않았어요. 🥲'
+        />
       ) : (
         <InfiniteScroll
           fetchNext={fetchNextPage}

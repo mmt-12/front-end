@@ -6,6 +6,7 @@ import BottomButton from '@/components/common/BottomButton'
 import Img from '@/components/common/Img'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
 import Loader from '@/components/common/Loader'
+import NoContentFallback from '@/components/common/NoContentFallback'
 import WavyBox from '@/components/guest-book/WavyBox'
 import ProfileImageList, {
   ProfileImageListSkeleton,
@@ -23,6 +24,7 @@ export default function ImageSelector({ value, onSelect }: Props) {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useProfileImageList(1, userId, { size: 9 })
   const images = data?.pages.flatMap(page => page.profileImages) || []
+  const isEmpty = !isLoading && images.length === 0
   return (
     <>
       <div css={imageWrapperStyle}>
@@ -40,14 +42,20 @@ export default function ImageSelector({ value, onSelect }: Props) {
         hasNextPage={hasNextPage}
         isFetchingNext={isFetchingNextPage}
         loader={<Loader customCss={{ padding: 24 }} />}
+        disabled={isEmpty}
       >
         {isLoading ? (
           <ProfileImageListSkeleton />
-        ) : (
+        ) : images.length > 0 ? (
           <ProfileImageList
             images={images}
             onImageClick={profileImage => setImage(profileImage.url)}
             selectedImageUrl={image}
+          />
+        ) : (
+          <NoContentFallback
+            size='block'
+            message='등록된 이미지가 없어요. 멤버에게 등록을 부탁해보세요!'
           />
         )}
       </InfiniteScroll>
