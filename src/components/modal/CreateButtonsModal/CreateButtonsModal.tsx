@@ -16,7 +16,7 @@ import { ROUTES } from '@/routes/ROUTES'
 import { slideDown } from '@/styles/animation'
 
 export default function CreateButtonsModal() {
-  const { closeModal, openModal } = useModal()
+  const { openModal } = useModal()
 
   return (
     <BottomDrawer>
@@ -24,7 +24,6 @@ export default function CreateButtonsModal() {
       <div css={contentStyle}>
         <Link to={ROUTES.MEMORY_REGISTER}>
           <Button
-            onClick={() => closeModal(null, { withoutRoute: true })}
             type='primary'
             size='md'
             label='기억'

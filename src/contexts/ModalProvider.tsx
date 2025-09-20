@@ -18,6 +18,7 @@ interface ModalContextType {
     _value: ModalReturnType,
     _options?: { withoutRoute?: boolean },
   ) => Promise<void>
+  closeAllModals: () => Promise<void>
   confirm: (_message: string) => Promise<ModalReturnType>
   alert: (_message: string) => Promise<ModalReturnType>
 }
@@ -66,6 +67,10 @@ function ModalProvider({ children }: { children: ReactNode }) {
     [theme.transition.duration.fg],
   )
 
+  const closeAllModals = useCallback(async () => {
+    setModals([])
+  }, [])
+
   const confirm = async (message: string) => {
     return openModal(<Confirm>{message}</Confirm>, slideDown)
   }
@@ -75,7 +80,9 @@ function ModalProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <ModalContext.Provider value={{ openModal, closeModal, confirm, alert }}>
+    <ModalContext.Provider
+      value={{ openModal, closeModal, confirm, alert, closeAllModals }}
+    >
       {children}
       <ModalRenderer modals={modals} />
     </ModalContext.Provider>
@@ -86,8 +93,12 @@ export { ModalProvider, ModalContext }
 
 function ModalRenderer({ modals }: { modals: Modal[] }) {
   const theme = useTheme()
-  const { closeModal } = useModal()
-  useBlocker(() => {
+  const { closeModal, closeAllModals } = useModal()
+  useBlocker(({ historyAction }) => {
+    if (historyAction === 'PUSH') {
+      closeAllModals()
+      return false
+    }
     if (modals.length == 0) return false
     closeModal()
     return true
