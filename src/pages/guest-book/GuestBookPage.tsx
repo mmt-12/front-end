@@ -34,11 +34,8 @@ export default function GuestBookPage() {
 
   const associateId = Number(stringId)
   const { data: profile } = useAssociateProfile(communityId, associateId)
-  const { data: guestBookList, isLoading } = useGuestBookList(
-    communityId,
-    associateId,
-    { size: 4 },
-  )
+  const { data: guestBookList, isLoading: guestBookListLoading } =
+    useGuestBookList(communityId, associateId, { size: 4 })
 
   const isMyPage = myId === associateId
 
@@ -73,40 +70,28 @@ export default function GuestBookPage() {
       {mode === null ? (
         <>
           <div css={rowStyle}>
-            <Card title='MBTI'>
-              <div
-                onClick={() => setMode('MBTI')}
-                style={{ width: '100%', height: '140px' }}
-              >
-                <MbtiChart
-                  communityId={communityId}
-                  associateId={associateId}
-                />
-              </div>
+            <Card
+              title='MBTI'
+              onClick={() => setMode('MBTI')}
+              customCss={{ minHeight: 240 }}
+            >
+              <MbtiChart communityId={communityId} associateId={associateId} />
             </Card>
-            <Card title='MEDALS'>
-              <div onClick={() => setMode('MEDALS')}>
-                <BadgeList
-                  communityId={communityId}
-                  associateId={associateId}
-                />
-              </div>
+            <Card title='MEDALS' onClick={() => setMode('MEDALS')}>
+              <BadgeList communityId={communityId} associateId={associateId} />
             </Card>
           </div>
           <Card title='GUEST BOOK'>
-            {isLoading ? (
+            {guestBookListLoading ? (
               <GuestBookBoardSkeleton />
             ) : (
               <div css={[flexGap(12), commentListStyle]}>
                 {guestBookList?.pages[0].guestBooks.map(comment => (
                   <Comment key={comment.id} {...comment} />
                 ))}
-                <WavyButton
-                  label='더보기'
-                  onClick={() => setMode('GUEST BOOK')}
-                />
               </div>
             )}
+            <WavyButton label='더보기' onClick={() => setMode('GUEST BOOK')} />
           </Card>
         </>
       ) : (
