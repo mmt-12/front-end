@@ -5,6 +5,7 @@ import WavyBox from '@/components/guest-book/WavyBox'
 
 interface Props {
   title: string
+  onClick?: () => void
   onButtonClick?: () => void
   children: React.ReactNode
   customCss?: Interpolation<Theme>
@@ -12,6 +13,7 @@ interface Props {
 
 export default function Card({
   title,
+  onClick,
   onButtonClick,
   children,
   customCss,
@@ -26,7 +28,7 @@ export default function Card({
       borderRadius={16}
       customCss={[containerStyle, customCss]}
     >
-      <div css={contentStyle}>
+      <div css={contentStyle} onClick={onClick}>
         <div css={headerStyle}>
           {onButtonClick && <div css={sideAreaStyle} />}
           <p css={cardTitleStyle}>{`#${title}`}</p>
