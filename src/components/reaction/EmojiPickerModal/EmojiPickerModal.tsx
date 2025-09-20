@@ -10,10 +10,13 @@ import { Skeleton } from '@/components/common/Skeleton'
 import BottomDrawer from '@/components/modal/BottomDrawer'
 import { useModal } from '@/hooks/useModal'
 import { useReactionPicker } from '@/hooks/useReactionPicker'
+import { useRecentReactionStore } from '@/store/recentReactionStore'
 import { useUserStore } from '@/store/userStore'
 import { slideDown } from '@/styles/animation'
 import Emoji from '../Emoji/Emoji'
 import EmojiRegisterModal from '../EmojiRegisterModal'
+
+import type { RecentEmoji } from '@/store/recentReactionStore'
 
 export default function EmojiPickerModal() {
   const { openModal, closeModal } = useModal()
@@ -26,9 +29,24 @@ export default function EmojiPickerModal() {
   const emojis = data?.pages.flatMap(page => page.emojis) || []
 
   const { selectReaction } = useReactionPicker()
+  const { recentEmojis, addRecentEmoji } = useRecentReactionStore()
 
-  const handleSelectEmoji = (emojiId: number) => {
-    selectReaction('EMOJI', emojiId)
+  const fallbackRecentEmojis: RecentEmoji[] = emojis
+    .slice(0, 6)
+    .map(({ id, name, url, involved }) => ({
+      id,
+      name,
+      url,
+      involved,
+    }))
+  const recentEmojiList =
+    recentEmojis.length > 0 ? recentEmojis : fallbackRecentEmojis
+  const isRecentLoading =
+    isLoading && recentEmojis.length === 0 && fallbackRecentEmojis.length === 0
+
+  const handleSelectEmoji = (emoji: RecentEmoji) => {
+    addRecentEmoji(emoji)
+    selectReaction('EMOJI', emoji.id)
     closeModal()
   }
 
@@ -40,19 +58,17 @@ export default function EmojiPickerModal() {
     <BottomDrawer>
       <p css={spanStyle}>최근 사용</p>
       <div css={[emojiListStyle, { marginBottom: '4px' }]}>
-        {isLoading
+        {isRecentLoading
           ? Array.from({ length: 6 }).map((_, i) => (
               <Skeleton key={i} width={48} height={48} radius={12} />
             ))
-          : emojis
-              .slice(0, 6)
-              .map(emoji => (
-                <Emoji
-                  key={emoji.id}
-                  {...emoji}
-                  onClick={(_e, id) => handleSelectEmoji(id)}
-                />
-              ))}
+          : recentEmojiList.map(emoji => (
+              <Emoji
+                key={emoji.id}
+                {...emoji}
+                onClick={(_e, _id) => handleSelectEmoji(emoji)}
+              />
+            ))}
       </div>
       <InputField
         label='검색'
@@ -79,7 +95,14 @@ export default function EmojiPickerModal() {
                 <Emoji
                   key={emoji.id}
                   {...emoji}
-                  onClick={(_e, id) => handleSelectEmoji(id)}
+                  onClick={(_e, _id) =>
+                    handleSelectEmoji({
+                      id: emoji.id,
+                      name: emoji.name,
+                      url: emoji.url,
+                      involved: emoji.involved,
+                    })
+                  }
                 />
               ))}
         </InfiniteScroll>
