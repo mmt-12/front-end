@@ -124,6 +124,7 @@ export function useGuestBookList (
     },
     getNextPageParam: lastPage =>
       lastPage.hasNext ? lastPage.nextCursor : undefined,
+    refetchInterval: 1000,
   })
 }
 
