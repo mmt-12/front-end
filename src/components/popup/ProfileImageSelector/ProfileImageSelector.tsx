@@ -12,16 +12,20 @@ import ProfileImageList, {
 } from '@/components/member/ProfileImageList'
 
 interface Props {
+  associateId: number
   value?: string
   onSelect: (_value: string) => void
 }
 
-export default function ImageSelector({ value, onSelect }: Props) {
+export default function ProfileImageSelector({
+  associateId,
+  value,
+  onSelect,
+}: Props) {
   const theme = useTheme()
   const [image, setImage] = useState<string>(value || '')
-  const userId = 1
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useProfileImageList(1, userId, { size: 9 })
+    useProfileImageList(1, associateId, { size: 9 })
   const images = data?.pages.flatMap(page => page.profileImages) || []
   return (
     <>
