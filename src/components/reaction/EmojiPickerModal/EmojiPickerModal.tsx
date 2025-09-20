@@ -10,8 +10,10 @@ import { Skeleton } from '@/components/common/Skeleton'
 import BottomDrawer from '@/components/modal/BottomDrawer'
 import { useModal } from '@/hooks/useModal'
 import { useReactionPicker } from '@/hooks/useReactionPicker'
+import { useRecentReactionStore } from '@/store/recentReactionStore'
 import { useUserStore } from '@/store/userStore'
 import { slideDown } from '@/styles/animation'
+import type { Emoji as EmojiType } from '@/types/api'
 import Emoji from '../Emoji/Emoji'
 import EmojiRegisterModal from '../EmojiRegisterModal'
 
@@ -23,12 +25,14 @@ export default function EmojiPickerModal() {
     useEmojiList(communityId, {
       keyword: searchKey,
     })
-  const emojis = data?.pages.flatMap(page => page.emojis) || []
+  const emojis: EmojiType[] = data?.pages.flatMap(page => page.emojis) || []
 
   const { selectReaction } = useReactionPicker()
+  const { recentEmojis, addRecentEmoji } = useRecentReactionStore()
 
-  const handleSelectEmoji = (emojiId: number) => {
-    selectReaction('EMOJI', emojiId)
+  const handleSelectEmoji = (emoji: EmojiType) => {
+    addRecentEmoji(emoji)
+    selectReaction('EMOJI', emoji.id)
     closeModal()
   }
 
@@ -40,19 +44,21 @@ export default function EmojiPickerModal() {
     <BottomDrawer>
       <p css={spanStyle}>최근 사용</p>
       <div css={[emojiListStyle, { marginBottom: '4px' }]}>
-        {isLoading
-          ? Array.from({ length: 6 }).map((_, i) => (
-              <Skeleton key={i} width={48} height={48} radius={12} />
+        {recentEmojis.length
+          ? recentEmojis.map(emoji => (
+              <Emoji
+                key={`recent-${emoji.id}`}
+                {...emoji}
+                onClick={() => handleSelectEmoji(emoji)}
+              />
             ))
-          : emojis
-              .slice(0, 6)
-              .map(emoji => (
-                <Emoji
-                  key={emoji.id}
-                  {...emoji}
-                  onClick={(_e, id) => handleSelectEmoji(id)}
-                />
-              ))}
+          : isLoading
+            ? Array.from({ length: 6 }).map((_, i) => (
+                <Skeleton key={i} width={48} height={48} radius={12} />
+              ))
+            : (
+                <p css={emptyRecentStyle}>최근 사용한 이모지가 없어요</p>
+              )}
       </div>
       <InputField
         label='검색'
@@ -79,7 +85,7 @@ export default function EmojiPickerModal() {
                 <Emoji
                   key={emoji.id}
                   {...emoji}
-                  onClick={(_e, id) => handleSelectEmoji(id)}
+                  onClick={() => handleSelectEmoji(emoji)}
                 />
               ))}
         </InfiniteScroll>
@@ -100,6 +106,15 @@ const spanStyle = (theme: Theme) =>
     fontWeight: '500',
     letterSpacing: '0.5px',
     color: theme.colors.stone[600],
+  })
+
+const emptyRecentStyle = (theme: Theme) =>
+  css({
+    width: '100%',
+    padding: '12px 0',
+    textAlign: 'center',
+    fontSize: '14px',
+    color: theme.colors.stone[400],
   })
 
 const emojiListStyle = css({

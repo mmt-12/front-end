@@ -10,8 +10,10 @@ import { Skeleton } from '@/components/common/Skeleton'
 import BottomDrawer from '@/components/modal/BottomDrawer'
 import { useModal } from '@/hooks/useModal'
 import { useReactionPicker } from '@/hooks/useReactionPicker'
+import { useRecentReactionStore } from '@/store/recentReactionStore'
 import { useUserStore } from '@/store/userStore'
 import { slideDown } from '@/styles/animation'
+import type { Voice as VoiceType } from '@/types/api'
 import Voice from '../Voice'
 import VoiceRegisterModal from '../VoiceRegisterModal/VoiceRegisterModal'
 
@@ -21,12 +23,14 @@ export default function VoicePickerModal() {
   const { communityId } = useUserStore()
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useVoiceList(communityId, { keyword: searchKey })
-  const voices = data?.pages.flatMap(page => page.voices) || []
+  const voices: VoiceType[] = data?.pages.flatMap(page => page.voices) || []
 
   const { selectReaction } = useReactionPicker()
+  const { recentVoices, addRecentVoice } = useRecentReactionStore()
 
-  const handleSelectVoice = (voiceId: number) => {
-    selectReaction('VOICE', voiceId)
+  const handleSelectVoice = (voice: VoiceType) => {
+    addRecentVoice(voice)
+    selectReaction('VOICE', voice.id)
     closeModal()
   }
 
@@ -41,19 +45,21 @@ export default function VoicePickerModal() {
         css={[voiceListStyle, { flexWrap: 'nowrap', marginBottom: '4px' }]}
         className='no-scrollbar'
       >
-        {isLoading
-          ? Array.from({ length: 4 }).map((_, i) => (
-              <Skeleton key={i} width={120} height={36} radius={24} />
+        {recentVoices.length
+          ? recentVoices.map(voice => (
+              <Voice
+                key={`recent-${voice.id}`}
+                {...voice}
+                onClick={() => handleSelectVoice(voice)}
+              />
             ))
-          : voices
-              .slice(0, 6)
-              .map(voice => (
-                <Voice
-                  key={voice.id}
-                  {...voice}
-                  onClick={(_e, id) => handleSelectVoice(id)}
-                />
-              ))}
+          : isLoading
+            ? Array.from({ length: 4 }).map((_, i) => (
+                <Skeleton key={i} width={120} height={36} radius={24} />
+              ))
+            : (
+                <p css={emptyRecentStyle}>최근 사용한 보이스가 없어요</p>
+              )}
       </div>
       <InputField
         label='검색'
@@ -80,7 +86,7 @@ export default function VoicePickerModal() {
                 <Voice
                   key={voice.id}
                   {...voice}
-                  onClick={(_e, id) => handleSelectVoice(id)}
+                  onClick={() => handleSelectVoice(voice)}
                 />
               ))}
         </InfiniteScroll>
@@ -101,6 +107,16 @@ const spanStyle = (theme: Theme) =>
     fontWeight: '500',
     letterSpacing: '0.5px',
     color: theme.colors.stone[600],
+  })
+
+const emptyRecentStyle = (theme: Theme) =>
+  css({
+    width: '100%',
+    padding: '8px 0',
+    textAlign: 'center',
+    fontSize: '14px',
+    color: theme.colors.stone[400],
+    flexShrink: 0,
   })
 
 const voiceListStyle = css({
