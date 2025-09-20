@@ -19,12 +19,15 @@ export default function BadgeList({
 
   if (!data) return <BadgeListSkeleton isExpanded={isExpanded} />
 
+  const obtainedAchievements = data.achievements.filter(badge => badge.obtained)
+
   if (!isExpanded) {
-    const visibleBadges = data.achievements
+    const visibleBadges = obtainedAchievements
       .filter(badge => badge.type !== 'HIDDEN')
       .slice(0, 4)
+
     const hiddenCount =
-      data.achievements.filter(badge => badge.type !== 'HIDDEN').length -
+      obtainedAchievements.filter(badge => badge.type !== 'HIDDEN').length -
       visibleBadges.length
 
     return (
@@ -39,7 +42,7 @@ export default function BadgeList({
 
   return (
     <div css={expandedContainerStyle}>
-      {data.achievements
+      {obtainedAchievements
         .filter(badge => badge.type !== 'HIDDEN')
         .map(badge => (
           <div css={medalInfoStyle} key={badge.id}>
