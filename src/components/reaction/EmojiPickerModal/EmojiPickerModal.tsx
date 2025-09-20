@@ -10,7 +10,10 @@ import { Skeleton } from '@/components/common/Skeleton'
 import BottomDrawer from '@/components/modal/BottomDrawer'
 import { useModal } from '@/hooks/useModal'
 import { useReactionPicker } from '@/hooks/useReactionPicker'
-import { useRecentReactionStore } from '@/store/recentReactionStore'
+import {
+  createRecentReactionContextKey,
+  useRecentReactionStore,
+} from '@/store/recentReactionStore'
 import { useUserStore } from '@/store/userStore'
 import { slideDown } from '@/styles/animation'
 import type { Emoji as EmojiType } from '@/types/api'
@@ -20,7 +23,7 @@ import EmojiRegisterModal from '../EmojiRegisterModal'
 export default function EmojiPickerModal() {
   const { openModal, closeModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
-  const { communityId } = useUserStore()
+  const { communityId, memberId } = useUserStore()
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useEmojiList(communityId, {
       keyword: searchKey,
@@ -28,10 +31,14 @@ export default function EmojiPickerModal() {
   const emojis: EmojiType[] = data?.pages.flatMap(page => page.emojis) || []
 
   const { selectReaction } = useReactionPicker()
-  const { recentEmojis, addRecentEmoji } = useRecentReactionStore()
+  const contextKey = createRecentReactionContextKey({ memberId, communityId })
+  const recentEmojis = useRecentReactionStore(
+    state => state.recentsByContext[contextKey]?.emojis ?? [],
+  )
+  const addRecentEmoji = useRecentReactionStore(state => state.addRecentEmoji)
 
   const handleSelectEmoji = (emoji: EmojiType) => {
-    addRecentEmoji(emoji)
+    addRecentEmoji(emoji, { memberId, communityId })
     selectReaction('EMOJI', emoji.id)
     closeModal()
   }

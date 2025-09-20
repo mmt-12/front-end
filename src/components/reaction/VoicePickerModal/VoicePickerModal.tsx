@@ -10,7 +10,10 @@ import { Skeleton } from '@/components/common/Skeleton'
 import BottomDrawer from '@/components/modal/BottomDrawer'
 import { useModal } from '@/hooks/useModal'
 import { useReactionPicker } from '@/hooks/useReactionPicker'
-import { useRecentReactionStore } from '@/store/recentReactionStore'
+import {
+  createRecentReactionContextKey,
+  useRecentReactionStore,
+} from '@/store/recentReactionStore'
 import { useUserStore } from '@/store/userStore'
 import { slideDown } from '@/styles/animation'
 import type { Voice as VoiceType } from '@/types/api'
@@ -20,16 +23,20 @@ import VoiceRegisterModal from '../VoiceRegisterModal/VoiceRegisterModal'
 export default function VoicePickerModal() {
   const { openModal, closeModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
-  const { communityId } = useUserStore()
+  const { communityId, memberId } = useUserStore()
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useVoiceList(communityId, { keyword: searchKey })
   const voices: VoiceType[] = data?.pages.flatMap(page => page.voices) || []
 
   const { selectReaction } = useReactionPicker()
-  const { recentVoices, addRecentVoice } = useRecentReactionStore()
+  const contextKey = createRecentReactionContextKey({ memberId, communityId })
+  const recentVoices = useRecentReactionStore(
+    state => state.recentsByContext[contextKey]?.voices ?? [],
+  )
+  const addRecentVoice = useRecentReactionStore(state => state.addRecentVoice)
 
   const handleSelectVoice = (voice: VoiceType) => {
-    addRecentVoice(voice)
+    addRecentVoice(voice, { memberId, communityId })
     selectReaction('VOICE', voice.id)
     closeModal()
   }
