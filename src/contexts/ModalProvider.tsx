@@ -87,7 +87,10 @@ export { ModalProvider, ModalContext }
 function ModalRenderer({ modals }: { modals: Modal[] }) {
   const theme = useTheme()
   const { closeModal } = useModal()
-  useBlocker(() => {
+  useBlocker(({ historyAction }) => {
+    if (historyAction === 'PUSH') {
+      return false
+    }
     if (modals.length == 0) return false
     closeModal()
     return true

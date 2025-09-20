@@ -49,6 +49,9 @@ export default function MemoryDetailPage() {
         hasNextPage={hasNextPage}
         isFetchingNext={isFetchingNextPage}
         disabled={isEmpty}
+        customCSS={{
+          flex: 1,
+        }}
       >
         {isLoading ? (
           <ol>
@@ -63,7 +66,10 @@ export default function MemoryDetailPage() {
             ))}
           </ol>
         ) : (
-          <NoContentFallback size='block' message='아직 작성된 글이 없어요. 🥲' />
+          <NoContentFallback
+            size='full'
+            message='아직 작성된 글이 없어요. 🥲'
+          />
         )}
       </InfiniteScroll>
     </>

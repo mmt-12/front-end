@@ -18,33 +18,25 @@ export default function NotificationPage() {
     useNotificationList({})
   const notifications = data?.pages.flatMap(page => page.notifications) || []
 
-  const content = !data
-    ? (
-        <div>
-          {Array.from({ length: 6 }).map((_, idx) => (
-            <NotificationItemSkeleton key={idx} />
-          ))}
-        </div>
-      )
-    : notifications.length === 0
-      ? (
-          <NoContentFallback
-            size='full'
-            message='도착한 알림이 없어요.'
-            image
-          />
-        )
-      : (
-          <InfiniteScroll
-            fetchNext={fetchNextPage}
-            hasNextPage={hasNextPage}
-            isFetchingNext={isFetchingNextPage}
-          >
-            {notifications.map(notification => (
-              <NotificationItem key={notification.id} {...notification} />
-            ))}
-          </InfiniteScroll>
-        )
+  const content = !data ? (
+    <div>
+      {Array.from({ length: 6 }).map((_, idx) => (
+        <NotificationItemSkeleton key={idx} />
+      ))}
+    </div>
+  ) : notifications.length === 0 ? (
+    <NoContentFallback size='full' message='도착한 알림이 없어요.' image />
+  ) : (
+    <InfiniteScroll
+      fetchNext={fetchNextPage}
+      hasNextPage={hasNextPage}
+      isFetchingNext={isFetchingNextPage}
+    >
+      {notifications.map(notification => (
+        <NotificationItem key={notification.id} {...notification} />
+      ))}
+    </InfiniteScroll>
+  )
 
   return <>{content}</>
 }

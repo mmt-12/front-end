@@ -26,19 +26,17 @@ export default function NoContentFallback({
 }: NoContentFallbackProps) {
   const theme = useTheme()
 
-  const actionNode = action
-    ? action.to
-      ? (
-          <Link to={action.to} css={actionWrapperStyle}>
-            <Button label={action.label} size='md' onClick={action.onClick} />
-          </Link>
-        )
-      : (
-          <div css={actionWrapperStyle}>
-            <Button label={action.label} size='md' onClick={action.onClick} />
-          </div>
-        )
-    : null
+  const actionNode = action ? (
+    action.to ? (
+      <Link to={action.to} css={actionWrapperStyle}>
+        <Button label={action.label} size='md' onClick={action.onClick} />
+      </Link>
+    ) : (
+      <div css={actionWrapperStyle}>
+        <Button label={action.label} size='md' onClick={action.onClick} />
+      </div>
+    )
+  ) : null
 
   return (
     <div css={containerStyle(size, theme)}>
@@ -67,7 +65,8 @@ const containerStyle = (size: 'full' | 'block', theme: Theme) =>
     textAlign: 'center',
     gap: size === 'full' ? 24 : 16,
     padding: size === 'full' ? '64px 24px' : '32px 16px',
-    minHeight: size === 'full' ? 'calc(100vh - 160px)' : 'auto',
+    minHeight: size === 'full' ? 'calc(100vh - 240px)' : 'auto',
+    flexGrow: size === 'full' ? 1 : 0,
     margin: '0 auto',
     color: theme.colors.stone[500],
   })

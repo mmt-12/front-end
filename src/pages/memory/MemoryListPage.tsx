@@ -43,44 +43,37 @@ export default function MemoryListPage() {
     })
   }, [memoryListView, setLeftItem, toggleViewMode])
 
-  const content = !data
-    ? (
-        <div>
-          {Array.from({ length: 3 }).map((_, idx) => (
-            <MemoryListItemSkeleton
-              key={idx}
-              isGrid={memoryListView == 'grid'}
-            />
-          ))}
-        </div>
-      )
-    : memories.length === 0
-      ? (
-          <NoContentFallback
-            size='full'
-            message='아직 등록된 기억이 없어요. 소중한 기억을 추가해보세요!'
-            image
-            action={{
-              label: '기억 등록하러 가기',
-              to: ROUTES.MEMORY_REGISTER,
-            }}
-          />
-        )
-      : (
-          <InfiniteScroll
-            fetchNext={fetchNextPage}
-            hasNextPage={hasNextPage}
-            isFetchingNext={isFetchingNextPage}
-          >
-            {memories.map(memory => (
-              <MemoryListItem
-                key={memory.id}
-                {...memory}
-                isGrid={memoryListView == 'grid'}
-              />
-            ))}
-          </InfiniteScroll>
-        )
+  const content = !data ? (
+    <div>
+      {Array.from({ length: 3 }).map((_, idx) => (
+        <MemoryListItemSkeleton key={idx} isGrid={memoryListView == 'grid'} />
+      ))}
+    </div>
+  ) : memories.length === 0 ? (
+    <NoContentFallback
+      size='full'
+      message='아직 등록된 기억이 없어요. 소중한 기억을 추가해보세요!'
+      image
+      action={{
+        label: '기억 등록하러 가기',
+        to: ROUTES.MEMORY_REGISTER,
+      }}
+    />
+  ) : (
+    <InfiniteScroll
+      fetchNext={fetchNextPage}
+      hasNextPage={hasNextPage}
+      isFetchingNext={isFetchingNextPage}
+    >
+      {memories.map(memory => (
+        <MemoryListItem
+          key={memory.id}
+          {...memory}
+          isGrid={memoryListView == 'grid'}
+        />
+      ))}
+    </InfiniteScroll>
+  )
 
   return (
     <>
