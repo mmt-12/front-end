@@ -7,7 +7,7 @@ import {
 } from '@solar-icons/react'
 import { useNavigate } from 'react-router-dom'
 
-import { useAssociateProfile, useUpdateAssociate } from '@/api'
+import { useAchievements, useAssociateProfile, useUpdateAssociate } from '@/api'
 import defaultImageUrl from '@/assets/images/mascot/default-profile.png'
 import Badge from '@/components/common/Badge'
 import BottomButton from '@/components/common/BottomButton'
@@ -20,7 +20,6 @@ import ArraySelector from '@/components/popup/ArraySelector'
 import InputPopup from '@/components/popup/InputPopup'
 import Popup from '@/components/popup/Popup'
 import ProfileImageSelector from '@/components/popup/ProfileImageSelector'
-import { BADGES } from '@/consts/BADGES'
 import useHeader from '@/hooks/useHeader'
 import { useModal } from '@/hooks/useModal'
 import useStardust from '@/hooks/useStardust'
@@ -39,8 +38,9 @@ export default function EditProfilePage() {
   })
   const navigate = useNavigate()
 
-  const { associateId } = useUserStore()
+  const { communityId, associateId } = useUserStore()
   const { data: profile, isLoading } = useAssociateProfile(1, associateId)
+  const { data: achievements } = useAchievements(communityId, associateId)
 
   const theme = useTheme()
   const { alert, openModal, closeModal } = useModal()
@@ -49,6 +49,10 @@ export default function EditProfilePage() {
   const [name, setName] = useState<string>('')
   const [introduction, setIntroduction] = useState<string>('')
   const [badgeId, setBadgeId] = useState<number>()
+
+  const obtainedAchievements = useMemo(() => {
+    return achievements?.achievements.filter(badge => badge.obtained) || []
+  }, [achievements])
 
   useEffect(() => {
     if (!profile) return
@@ -79,12 +83,12 @@ export default function EditProfilePage() {
 
   const badgeItems = useMemo(
     () =>
-      Object.entries(BADGES).map(([id, badge]) => ({
-        id: Number(id),
+      obtainedAchievements.map(badge => ({
+        id: badge.id,
         label: badge.name,
-        render: () => <Badge key={id} id={Number(id)} />,
+        render: () => <Badge key={badge.id} id={badge.id} />,
       })),
-    [],
+    [obtainedAchievements],
   )
 
   const filteredBadgeItems = useMemo<IArrayItem[]>(
