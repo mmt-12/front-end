@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { css, type Theme } from '@emotion/react'
 import { useParams } from 'react-router-dom'
 
@@ -23,26 +23,32 @@ export default function PostDetailPage() {
 
   const { data: post } = usePost(communityId, Number(memoryId), Number(postId))
 
-  const initialSelectedId = post
-    ? post.comments.emojis.length > 0
-      ? post.comments.emojis[0].id
-      : post.comments.voices.length > 0
-        ? post.comments.voices[0].id
-        : 0
-    : 0
+  const initialSelectedId =
+    post?.comments.emojis[0]?.id ??
+    post?.comments.voices[0]?.id ??
+    post?.comments.temporaryVoices[0]?.id ??
+    -1
 
   const [selectedReactionId, setSelectedReactionId] =
     useState(initialSelectedId)
+  const selectedReactionType = useRef<'EMOJI' | 'VOICE' | 'BUBBLE'>('EMOJI')
 
-  const selectedReaction = useMemo(
-    () =>
-      post?.comments.emojis.find(emoji => emoji.id === selectedReactionId) ||
-      post?.comments.voices.find(voice => voice.id === selectedReactionId) ||
-      post?.comments.temporaryVoices.find(
-        tempVoice => tempVoice.id === selectedReactionId,
-      ),
-    [post, selectedReactionId],
-  )
+  const selectedReaction = useMemo(() => {
+    console.log(selectedReactionType.current, selectedReactionId)
+    if (selectedReactionType.current === 'EMOJI') {
+      return post?.comments.emojis.find(
+        emoji => emoji.id === selectedReactionId,
+      )
+    } else if (selectedReactionType.current === 'VOICE') {
+      return post?.comments.voices.find(
+        voice => voice.id === selectedReactionId,
+      )
+    } else {
+      return post?.comments.temporaryVoices.find(
+        bubble => bubble.id === selectedReactionId,
+      )
+    }
+  }, [post, selectedReactionId])
 
   if (!post)
     return (
@@ -51,8 +57,21 @@ export default function PostDetailPage() {
       </div>
     )
 
-  const handleReactionClick = (e: React.MouseEvent, id: number) => {
+  const onEmojiClick = (e: React.MouseEvent, id: number) => {
     e.stopPropagation()
+    selectedReactionType.current = 'EMOJI'
+    setSelectedReactionId(id)
+  }
+
+  const onVoiceClick = (e: React.MouseEvent, id: number) => {
+    e.stopPropagation()
+    selectedReactionType.current = 'VOICE'
+    setSelectedReactionId(id)
+  }
+
+  const onBubbleClick = (e: React.MouseEvent, id: number) => {
+    e.stopPropagation()
+    selectedReactionType.current = 'BUBBLE'
     setSelectedReactionId(id)
   }
 
@@ -60,12 +79,12 @@ export default function PostDetailPage() {
     <>
       <Post
         post={post}
-        onEmojiClick={handleReactionClick}
-        onVoiceClick={handleReactionClick}
-        onTemporaryVoiceClick={handleReactionClick}
-        selectedReactionId={selectedReactionId}
+        onEmojiClick={onEmojiClick}
+        onVoiceClick={onVoiceClick}
+        onBubbleClick={onBubbleClick}
+        selectedReactionUrl={selectedReaction?.url}
       />
-      <ReactedProfileList key={selectedReactionId} {...selectedReaction} />
+      <ReactedProfileList key={selectedReaction?.url} {...selectedReaction} />
       <ReactBar iconSize={44} customCss={reactBarStyle} />
     </>
   )

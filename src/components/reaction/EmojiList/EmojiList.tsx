@@ -16,7 +16,7 @@ export default function EmojiList(props: Props) {
           key={emoji.id}
           {...emoji}
           onClick={e => props.onClick(e, emoji.id)}
-          isActive={emoji.id == props.selectedId}
+          isActive={emoji.url == props.selectedUrl}
         />
       ))}
     </div>

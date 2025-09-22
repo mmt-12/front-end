@@ -12,7 +12,7 @@ export default function VoiceList(props: ReactionListProps) {
           key={voice.id}
           {...voice}
           onClick={e => props.onClick(e, voice.id)}
-          isActive={voice.id === props.selectedId}
+          isActive={voice.url === props.selectedUrl}
           isPost
         />
       ))}

@@ -12,6 +12,6 @@ export interface IReaction {
 
 export interface ReactionListProps {
   onClick: (_e: React.MouseEvent<HTMLDivElement>, _id: number) => void
-  selectedId?: number
+  selectedUrl?: string
   reactions: IReaction[]
 }

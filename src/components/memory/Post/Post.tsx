@@ -9,11 +9,8 @@ interface Props {
   post: PostType
   onEmojiClick: (_e: React.MouseEvent, _emojiId: number) => void
   onVoiceClick: (_e: React.MouseEvent, _voiceId: number) => void
-  onTemporaryVoiceClick?: (
-    _e: React.MouseEvent,
-    _temporaryVoiceId: number,
-  ) => void
-  selectedReactionId?: number
+  onBubbleClick?: (_e: React.MouseEvent, _temporaryVoiceId: number) => void
+  selectedReactionUrl?: string
   link?: boolean
 }
 
@@ -21,8 +18,8 @@ export default function Post({
   post,
   onEmojiClick,
   onVoiceClick,
-  onTemporaryVoiceClick = () => {},
-  selectedReactionId,
+  onBubbleClick = () => {},
+  selectedReactionUrl,
   link = false,
 }: Props) {
   return (
@@ -34,17 +31,17 @@ export default function Post({
       <EmojiList
         reactions={post.comments.emojis}
         onClick={onEmojiClick}
-        selectedId={selectedReactionId}
+        selectedUrl={selectedReactionUrl}
       />
       <VoiceList
         reactions={post.comments.voices}
         onClick={onVoiceClick}
-        selectedId={selectedReactionId}
+        selectedUrl={selectedReactionUrl}
       />
       <VoiceList
         reactions={post.comments.temporaryVoices}
-        onClick={onTemporaryVoiceClick}
-        selectedId={selectedReactionId}
+        onClick={onBubbleClick}
+        selectedUrl={selectedReactionUrl}
       />
     </div>
   )
