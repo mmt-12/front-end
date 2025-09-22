@@ -1,8 +1,10 @@
 import { css, type Theme } from '@emotion/react'
 import { MagniferZoomIn } from '@solar-icons/react'
+import { Link } from 'react-router-dom'
 
 import type { CommentAuthor } from '@/api'
 import Profile from '@/components/member/Profile'
+import { ROUTES } from '@/routes/ROUTES'
 
 interface Props {
   name?: string
@@ -19,12 +21,14 @@ export default function ReactedProfileList({ name, authors }: Props) {
       </div>
       <div css={reactedProfilesStyle}>
         {authors.map(author => (
-          <Profile
-            key={author.id}
-            {...author}
-            size='sm'
-            introduction={undefined}
-          />
+          <Link to={ROUTES.GUEST_BOOK(author.id)} key={author.id}>
+            <Profile
+              key={author.id}
+              {...author}
+              size='sm'
+              introduction={undefined}
+            />
+          </Link>
         ))}
       </div>
     </div>
