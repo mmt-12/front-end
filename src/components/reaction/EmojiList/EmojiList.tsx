@@ -17,6 +17,7 @@ export default function EmojiList(props: Props) {
           {...emoji}
           onClick={e => props.onClick(e, emoji.id)}
           isActive={emoji.id == props.selectedId}
+          isPost
         />
       ))}
     </div>

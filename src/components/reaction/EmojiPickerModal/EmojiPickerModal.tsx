@@ -76,6 +76,7 @@ export default function EmojiPickerModal() {
         css={{
           maxHeight: '240px',
           overflow: 'auto',
+          marginBottom: '6px',
         }}
       >
         <InfiniteScroll
@@ -129,5 +130,5 @@ const emojiListStyle = css({
 
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fill, minmax(40px, 1fr))',
-  gap: '16px 18px',
+  gap: '8px 18px',
 })

@@ -9,6 +9,7 @@ export default function Emoji({
   size = 'md',
   isActive = false,
   involved = false,
+  isPost = false,
   onClick,
 }: IReaction) {
   const theme = useTheme()
@@ -17,7 +18,7 @@ export default function Emoji({
       <div css={imageWrapperStyle(theme, size, involved)}>
         <Img src={imageUrl} alt='Emoji' customCss={imageStyle} />
       </div>
-      <div css={activeBarStyle(theme, isActive)} />
+      {isPost && <div css={activeBarStyle(theme, isActive)} />}
     </div>
   )
 }
