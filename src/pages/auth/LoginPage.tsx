@@ -24,7 +24,10 @@ export default function LoginPage() {
         />
       </div>
       <div css={buttonsContainerStyle}>
-        <a href={`${BASE_URL}/v1/sign-in`} css={[buttonStyle, kakaoButtonStyle]}>
+        <a
+          href={`${BASE_URL}/v1/sign-in`}
+          css={[buttonStyle, kakaoButtonStyle]}
+        >
           <Img src={kakaoIcon} alt='kakao icon' customCss={kakaoIconStyle} />
           <p>카카오 로그인</p>
         </a>
