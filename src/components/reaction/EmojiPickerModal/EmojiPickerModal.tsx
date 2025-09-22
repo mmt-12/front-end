@@ -32,9 +32,10 @@ export default function EmojiPickerModal() {
 
   const { selectReaction } = useReactionPicker()
   const contextKey = createRecentReactionContextKey({ memberId, communityId })
-  const recentEmojis = useRecentReactionStore(
-    state => state.recentsByContext[contextKey]?.emojis ?? [],
-  )
+  const recentEmojis =
+    useRecentReactionStore(
+      state => state.recentsByContext[contextKey]?.emojis,
+    ) || []
   const addRecentEmoji = useRecentReactionStore(state => state.addRecentEmoji)
 
   const handleSelectEmoji = (emoji: EmojiType) => {
