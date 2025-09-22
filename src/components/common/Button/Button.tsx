@@ -33,10 +33,6 @@ const buttonStyle = css({
   border: 'none',
   fontFamily: 'inherit',
   borderRadius: '12px',
-  transition: 'transform 120ms ease, background-color 160ms ease',
-  ':active': {
-    transform: 'scale(0.98)',
-  },
 })
 
 const sizeStyles = {

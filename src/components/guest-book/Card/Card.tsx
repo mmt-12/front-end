@@ -34,6 +34,7 @@ export default function Card({
           <p css={cardTitleStyle}>{`#${title}`}</p>
           {onButtonClick && (
             <Widget
+              className='button'
               size={24}
               color={theme.colors.stone[700]}
               weight='Bold'

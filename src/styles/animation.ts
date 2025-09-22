@@ -20,20 +20,6 @@ export const slideDown = keyframes({
   to: { transform: 'translateY(160px)', opacity: 0.5 },
 })
 
-export const scaleIn = keyframes({
-  from: { transform: 'scale(0.98)', opacity: 0.5 },
-  to: { transform: 'scale(1)', opacity: 1 },
-})
-
-export const flipInY = keyframes({
-  from: { transform: 'perspective(1000px) rotateY(90deg)', opacity: 0.5 },
-  to: { transform: 'perspective(1000px) rotateY(0deg)', opacity: 1 },
-})
-
-export const flipOutY = keyframes({
-  from: { transform: 'perspective(1000px) rotateY(0deg)', opacity: 1 },
-  to: { transform: 'perspective(1000px) rotateY(90deg)', opacity: 0.5 },
-})
 
 export const slideInRight = keyframes({
   from: { transform: 'translateX(160px)', opacity: 0.5 },

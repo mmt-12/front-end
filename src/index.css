@@ -2,3 +2,7 @@ html {
   max-width: 720px;
   margin: 0 auto;
 }
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
