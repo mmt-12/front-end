@@ -8,6 +8,7 @@ export interface IReaction {
   isActive?: boolean
   involved?: boolean
   onClick?: (_e: MouseEvent<HTMLDivElement>, _id: number) => void
+  isPost?: boolean
 }
 
 export interface ReactionListProps {
