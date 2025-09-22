@@ -14,7 +14,7 @@ export default function MemoryListItemSkeleton({
       {isGrid ? (
         <div css={gridStyle}>
           {Array.from({ length: 9 }).map((_, idx) => (
-            <Skeleton key={idx} style={gridItemStyle} />
+            <Skeleton key={idx} css={gridItemStyle} />
           ))}
         </div>
       ) : (

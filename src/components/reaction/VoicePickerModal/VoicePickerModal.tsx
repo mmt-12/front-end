@@ -81,7 +81,13 @@ export default function VoicePickerModal({
         >
           {isLoading
             ? Array.from({ length: 7 }).map((_, i) => (
-                <Skeleton key={i} width={150} height={34} radius={24} />
+                <Skeleton
+                  key={i}
+                  width={150}
+                  height={34}
+                  radius={24}
+                  css={{ flexGrow: 1 }}
+                />
               ))
             : voices.map(voice => (
                 <Voice
