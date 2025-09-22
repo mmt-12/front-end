@@ -82,10 +82,14 @@ export const globalStyle = (theme: Theme) => css({
   },
 
   'button, a, .button': {
-    transition: 'transform 120ms ease, background-color 160ms ease',
+    transition: 'transform 200ms ease, background-color 240ms ease',
+    borderRadius: '8px',
     ':active': {
-      transform: 'scale(0.94)',
+      transform: 'scale(0.95)',
       backgroundColor: theme.colors.stone[100],
     }
+  },
+  'button.lg:active, .button.lg:active, a.lg:active': {
+    transform: 'scale(0.97)'
   }
 })

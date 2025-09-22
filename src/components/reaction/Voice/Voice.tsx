@@ -35,7 +35,11 @@ export default function Voice({
     }
   }
   return (
-    <div css={containerStyle} onClick={e => onClick?.(e, id)}>
+    <div
+      css={containerStyle}
+      onClick={e => onClick?.(e, id)}
+      className='button'
+    >
       <div css={playButtonWrapperStyle(theme, involved)}>
         <button onClick={handleButtonClick} css={playButtonStyle}>
           {isPlaying ? (
@@ -86,6 +90,7 @@ const playButtonWrapperStyle = (theme: Theme, involved: boolean) =>
     backgroundColor: theme.colors.stone[600],
 
     outline: involved ? `3px solid ${theme.colors.sky[300]}` : 'none',
+    filter: involved ? 'sepia(10%);' : 'none',
   })
 
 const marqueeStyle = css({

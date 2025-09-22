@@ -13,7 +13,11 @@ export default function Emoji({
 }: IReaction) {
   const theme = useTheme()
   return (
-    <div onClick={e => onClick?.(e, id)} css={containerStyle}>
+    <div
+      onClick={e => onClick?.(e, id)}
+      css={containerStyle}
+      className='button'
+    >
       <div css={imageWrapperStyle(theme, size, involved)}>
         <Img src={imageUrl} alt='Emoji' customCss={imageStyle} />
       </div>
@@ -51,6 +55,7 @@ const imageWrapperStyle = (
 
     outline: `${involved ? '3px' : '0px'} solid ${theme.colors.sky[300]}`,
     transition: 'outline 0.2s ease-in-out',
+    filter: involved ? 'sepia(10%);' : 'none',
   })
 
 const imageStyle = css({

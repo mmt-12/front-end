@@ -13,6 +13,7 @@ interface Props {
   onError?: (_e: React.SyntheticEvent<HTMLImageElement>) => void
   width?: string | number
   height?: string | number
+  className?: string
 }
 
 export default function Img({
@@ -23,6 +24,7 @@ export default function Img({
   onError,
   width = '100%',
   height = '100%',
+  className,
 }: Props) {
   const [isLoaded, setIsLoaded] = useState(false)
 
@@ -34,6 +36,7 @@ export default function Img({
         height={height}
         onClick={onClick}
         css={[defaultStyle(isLoaded), customCss]}
+        className={className}
         src={src}
         onError={e => {
           e.currentTarget.src = defaultProfile

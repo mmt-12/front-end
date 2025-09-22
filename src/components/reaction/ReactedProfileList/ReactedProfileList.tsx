@@ -37,6 +37,7 @@ export default function ReactedProfileList({ name, authors }: Props) {
 
 const reactionDetailStyle = css({
   padding: 12,
+  paddingBottom: 32,
 
   display: 'flex',
   flexDirection: 'column',

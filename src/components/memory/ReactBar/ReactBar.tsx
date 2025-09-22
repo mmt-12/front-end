@@ -33,6 +33,7 @@ export default function ReactBar({ iconSize, customCss }: Props) {
   return (
     <div css={customCss}>
       <Img
+        className='button'
         src={bubble}
         alt='bubble icon'
         width={iconSize}
@@ -40,12 +41,14 @@ export default function ReactBar({ iconSize, customCss }: Props) {
         onClick={handleBubbleClick}
       />
       <StickerSmileSquare
+        className='button'
         weight='Bold'
         size={iconSize}
         color={theme.colors.yellow}
         onClick={handleEmojiClick}
       />
       <SoundwaveSquare
+        className='button'
         weight='Bold'
         size={iconSize}
         color={theme.colors.sky[400]}

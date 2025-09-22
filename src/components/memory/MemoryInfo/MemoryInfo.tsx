@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { useMemoryImages } from '@/api'
 import rightArrow from '@/assets/images/icons/rightArrow.svg'
+import Button from '@/components/common/Button'
 import Chip from '@/components/common/Chip'
 import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
@@ -44,7 +45,7 @@ export default function MemoryInfo(props: Props) {
       alert('저장할 사진이 없습니다.')
       return
     }
-    if (!(await confirm('기억의 모든 사진을 저장하시겠습니까?'))) {
+    if (!(await confirm(`'${props.title}'의 모든 사진을 저장하시겠습니까?`))) {
       return
     }
     try {
@@ -55,7 +56,7 @@ export default function MemoryInfo(props: Props) {
       console.error('Error during image compression or download:', error)
       alert('사진 저장 중 오류가 발생했습니다. 다시 시도해주세요.')
     }
-  }, [pictureData, props.id, alert, confirm])
+  }, [pictureData, props.id, alert, confirm, props.title])
 
   const renderMeta = () => {
     return (
@@ -86,9 +87,11 @@ export default function MemoryInfo(props: Props) {
         {props.saveEnabled ? (
           <>
             <div>{renderMeta()}</div>
-            <Chip
-              Icon={DownloadSquare}
-              label='사진 모두 저장'
+            <Button
+              icon={<DownloadSquare size={20} weight='Bold' />}
+              size='sm'
+              label='사진 저장'
+              type='secondary'
               onClick={handleSaveClick}
               customCss={chipCustomStyle}
             />
@@ -173,5 +176,10 @@ const linkStyle = (theme: Theme) =>
   })
 
 const chipCustomStyle = css({
-  padding: '6px 12px',
+  flexDirection: 'row',
+  gap: '4px',
+  fontWeight: '500',
+  fontSize: '14px',
+  borderWidth: '1px',
+  padding: '4px 8px',
 })
