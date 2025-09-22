@@ -30,9 +30,10 @@ export default function VoicePickerModal() {
 
   const { selectReaction } = useReactionPicker()
   const contextKey = createRecentReactionContextKey({ memberId, communityId })
-  const recentVoices = useRecentReactionStore(
-    state => state.recentsByContext[contextKey]?.voices ?? [],
-  )
+  const recentVoices =
+    useRecentReactionStore(
+      state => state.recentsByContext[contextKey]?.voices,
+    ) || []
   const addRecentVoice = useRecentReactionStore(state => state.addRecentVoice)
 
   const handleSelectVoice = (voice: VoiceType) => {
@@ -52,21 +53,21 @@ export default function VoicePickerModal() {
         css={[voiceListStyle, { flexWrap: 'nowrap', marginBottom: '4px' }]}
         className='no-scrollbar'
       >
-        {recentVoices.length
-          ? recentVoices.map(voice => (
-              <Voice
-                key={`recent-${voice.id}`}
-                {...voice}
-                onClick={() => handleSelectVoice(voice)}
-              />
-            ))
-          : isLoading
-            ? Array.from({ length: 4 }).map((_, i) => (
-                <Skeleton key={i} width={120} height={36} radius={24} />
-              ))
-            : (
-                <p css={emptyRecentStyle}>최근 사용한 보이스가 없어요</p>
-              )}
+        {recentVoices.length ? (
+          recentVoices.map(voice => (
+            <Voice
+              key={`recent-${voice.id}`}
+              {...voice}
+              onClick={() => handleSelectVoice(voice)}
+            />
+          ))
+        ) : isLoading ? (
+          Array.from({ length: 4 }).map((_, i) => (
+            <Skeleton key={i} width={120} height={36} radius={24} />
+          ))
+        ) : (
+          <p css={emptyRecentStyle}>최근 사용한 보이스가 없어요</p>
+        )}
       </div>
       <InputField
         label='검색'

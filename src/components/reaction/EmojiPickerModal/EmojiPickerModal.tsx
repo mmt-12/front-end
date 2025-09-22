@@ -51,22 +51,21 @@ export default function EmojiPickerModal() {
     <BottomDrawer>
       <p css={spanStyle}>최근 사용</p>
       <div css={[emojiListStyle, { marginBottom: '4px' }]}>
-        {recentEmojis.length
-          ? recentEmojis.map(emoji => (
+        {isLoading
+          ? Array.from({ length: 6 }).map((_, i) => (
+              <Skeleton key={i} width={48} height={48} radius={12} />
+            ))
+          : recentEmojis.map(emoji => (
               <Emoji
                 key={`recent-${emoji.id}`}
                 {...emoji}
                 onClick={() => handleSelectEmoji(emoji)}
               />
-            ))
-          : isLoading
-            ? Array.from({ length: 6 }).map((_, i) => (
-                <Skeleton key={i} width={48} height={48} radius={12} />
-              ))
-            : (
-                <p css={emptyRecentStyle}>최근 사용한 이모지가 없어요</p>
-              )}
+            ))}
       </div>
+      {!isLoading && recentEmojis.length === 0 && (
+        <p css={emptyRecentStyle}>최근 사용한 이모지가 없어요</p>
+      )}
       <InputField
         label='검색'
         value={searchKey}
