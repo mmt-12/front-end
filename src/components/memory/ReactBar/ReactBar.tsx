@@ -1,6 +1,7 @@
 import { useTheme, type Interpolation, type Theme } from '@emotion/react'
 import { SoundwaveSquare, StickerSmileSquare } from '@solar-icons/react'
 
+import type { Comment } from '@/api'
 import bubble from '@/assets/images/icons/bubble.png'
 import Img from '@/components/common/Img'
 import BubbleInputModal from '@/components/reaction/BubbleInputModal'
@@ -12,9 +13,20 @@ import { slideDown } from '@/styles/animation'
 interface Props {
   iconSize: number
   customCss?: Interpolation<Theme>
+  comments?: {
+    emojis: Comment[]
+    voices: Comment[]
+  }
 }
 
-export default function ReactBar({ iconSize, customCss }: Props) {
+export default function ReactBar({
+  iconSize,
+  customCss,
+  comments = {
+    emojis: [],
+    voices: [],
+  },
+}: Props) {
   const theme = useTheme()
   const { openModal } = useModal()
 
@@ -23,11 +35,11 @@ export default function ReactBar({ iconSize, customCss }: Props) {
   }
 
   const handleEmojiClick = () => {
-    openModal(<EmojiPickerModal />, slideDown)
+    openModal(<EmojiPickerModal comments={comments.emojis} />, slideDown)
   }
 
   const handleVoiceClick = () => {
-    openModal(<VoicePickerModal />, slideDown)
+    openModal(<VoicePickerModal comments={comments.voices} />, slideDown)
   }
 
   return (

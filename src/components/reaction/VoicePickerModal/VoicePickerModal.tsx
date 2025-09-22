@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 
-import { useVoiceList } from '@/api'
+import { useVoiceList, type Comment } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
 import InputField from '@/components/common/InputField'
@@ -15,7 +15,11 @@ import { slideDown } from '@/styles/animation'
 import Voice from '../Voice'
 import VoiceRegisterModal from '../VoiceRegisterModal/VoiceRegisterModal'
 
-export default function VoicePickerModal() {
+export default function VoicePickerModal({
+  comments,
+}: {
+  comments: Comment[]
+}) {
   const { openModal, closeModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
   const { communityId } = useUserStore()
@@ -52,6 +56,9 @@ export default function VoicePickerModal() {
                   key={voice.id}
                   {...voice}
                   onClick={(_e, id) => handleSelectVoice(id)}
+                  involved={
+                    comments.find(comment => comment.id === voice.id)?.involved
+                  }
                 />
               ))}
       </div>

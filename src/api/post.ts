@@ -183,6 +183,72 @@ export function useCreateVoiceComment (
   })
 }
 
+export function useToggleEmojiComment (
+  communityId = 1,
+  memoryId: number,
+  postId: number,
+) {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data: { id: number, involved: boolean }) =>
+      data.involved ?
+        api
+          .delete(
+            `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/${data.id}`,
+          )
+          .then(r => r.data)
+        :
+        api
+          .post(
+            `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/emoji`,
+            { emojiId: data.id },
+          )
+          .then(r => r.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['post', communityId, memoryId, postId],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['posts', communityId, memoryId],
+      })
+    },
+  })
+}
+
+export function useToggleVoiceComment (
+  communityId = 1,
+  memoryId: number,
+  postId: number,
+) {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data: { id: number, involved: boolean }) =>
+      data.involved ?
+        api
+          .delete(
+            `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/${data.id}`,
+          )
+          .then(r => r.data)
+        :
+        api
+          .post(
+            `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/voices`,
+            { voiceId: data.id },
+          )
+          .then(r => r.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['post', communityId, memoryId, postId],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['posts', communityId, memoryId],
+      })
+    },
+  })
+}
+
 // 일회용 보이스 코멘트 등록
 export function useCreateBubbleComment (
   communityId = 1,

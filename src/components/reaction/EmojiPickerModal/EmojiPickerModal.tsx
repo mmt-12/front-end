@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 
-import { useEmojiList } from '@/api'
+import { useEmojiList, type Comment } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
 import InputField from '@/components/common/InputField'
@@ -15,7 +15,11 @@ import { slideDown } from '@/styles/animation'
 import Emoji from '../Emoji/Emoji'
 import EmojiRegisterModal from '../EmojiRegisterModal'
 
-export default function EmojiPickerModal() {
+export default function EmojiPickerModal({
+  comments,
+}: {
+  comments: Comment[]
+}) {
   const { openModal, closeModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
   const { communityId } = useUserStore()
@@ -36,6 +40,12 @@ export default function EmojiPickerModal() {
     openModal(<EmojiRegisterModal />, slideDown)
   }
 
+  const getInvolved = useCallback(
+    (emojiId: number) =>
+      comments.find(comment => comment.id === emojiId)?.involved,
+    [comments],
+  )
+
   return (
     <BottomDrawer>
       <p css={spanStyle}>최근 사용</p>
@@ -51,6 +61,7 @@ export default function EmojiPickerModal() {
                   key={emoji.id}
                   {...emoji}
                   onClick={(_e, id) => handleSelectEmoji(id)}
+                  involved={getInvolved(emoji.id)}
                 />
               ))}
       </div>
@@ -80,6 +91,7 @@ export default function EmojiPickerModal() {
                   key={emoji.id}
                   {...emoji}
                   onClick={(_e, id) => handleSelectEmoji(id)}
+                  involved={getInvolved(emoji.id)}
                 />
               ))}
         </InfiniteScroll>

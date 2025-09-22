@@ -85,7 +85,11 @@ export default function PostDetailPage() {
         selectedReactionUrl={selectedReaction?.url}
       />
       <ReactedProfileList key={selectedReaction?.url} {...selectedReaction} />
-      <ReactBar iconSize={44} customCss={reactBarStyle} />
+      <ReactBar
+        iconSize={44}
+        customCss={reactBarStyle}
+        comments={post?.comments}
+      />
     </>
   )
 }

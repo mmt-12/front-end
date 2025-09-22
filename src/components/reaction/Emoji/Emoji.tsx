@@ -53,7 +53,7 @@ const imageWrapperStyle = (
     borderRadius: '12px',
     overflow: 'hidden',
 
-    outline: `${involved ? '3px' : '0px'} solid ${theme.colors.sky[300]}`,
+    border: `${involved ? '3px' : '0px'} solid ${theme.colors.sky[300]}`,
     transition: 'outline 0.2s ease-in-out',
     filter: involved ? 'sepia(10%);' : 'none',
   })

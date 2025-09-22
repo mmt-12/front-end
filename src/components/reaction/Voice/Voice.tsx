@@ -89,7 +89,7 @@ const playButtonWrapperStyle = (theme: Theme, involved: boolean) =>
     borderRadius: '24px',
     backgroundColor: theme.colors.stone[600],
 
-    outline: involved ? `3px solid ${theme.colors.sky[300]}` : 'none',
+    border: involved ? `3px solid ${theme.colors.sky[300]}` : 'none',
     filter: involved ? 'sepia(10%);' : 'none',
   })
 
