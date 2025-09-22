@@ -4,6 +4,7 @@ import { PenNewSquare, UsersGroupRounded } from '@solar-icons/react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { useAssociateProfile, useGuestBookList } from '@/api'
+import NoContentFallback from '@/components/common/NoContentFallback'
 import BadgeList from '@/components/guest-book/BadgeList'
 import Card from '@/components/guest-book/Card'
 import Comment from '@/components/guest-book/Comment'
@@ -39,6 +40,8 @@ export default function GuestBookPage() {
     associateId,
     { size: 4 },
   )
+
+  const comments = guestBookList?.pages.flatMap(page => page.guestBooks) || []
 
   const isMyPage = myId === associateId
 
@@ -98,9 +101,16 @@ export default function GuestBookPage() {
               <GuestBookBoardSkeleton />
             ) : (
               <div css={[flexGap(12), commentListStyle]}>
-                {guestBookList?.pages[0].guestBooks.map(comment => (
-                  <Comment key={comment.id} {...comment} />
-                ))}
+                {comments.length > 0 ? (
+                  comments.map(comment => (
+                    <Comment key={comment.id} {...comment} />
+                  ))
+                ) : (
+                  <NoContentFallback
+                    size='block'
+                    message='아무도 방명록을 남기지 않았어요. 🥲'
+                  />
+                )}
                 <WavyButton
                   label='더보기'
                   onClick={() => setMode('GUEST BOOK')}
