@@ -1,6 +1,5 @@
-import { css } from '@emotion/react'
-
 import Voice from '@/components/reaction/Voice'
+import { reactionsStyle } from '@/styles/post'
 import type { ReactionListProps } from '@/types/reaction'
 
 export default function VoiceList(props: ReactionListProps) {
@@ -20,12 +19,3 @@ export default function VoiceList(props: ReactionListProps) {
     </div>
   )
 }
-
-const reactionsStyle = (size: 'sm' | 'md') =>
-  css({
-    padding: '4px 16px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: size === 'sm' ? 8 : 16,
-    overflowX: 'auto',
-  })

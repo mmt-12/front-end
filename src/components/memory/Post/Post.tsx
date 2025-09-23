@@ -25,7 +25,7 @@ export default function Post({
   size = 'md',
 }: Props) {
   return (
-    <div css={[flexGap(10), { marginBottom: '32px' }]}>
+    <div css={[flexGap(6), { marginBottom: '32px' }]}>
       <div>
         <Border />
         <PostContent {...post} link={link} />

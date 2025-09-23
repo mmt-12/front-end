@@ -1,6 +1,5 @@
-import { css } from '@emotion/react'
-
 import Emoji from '@/components/reaction/Emoji'
+import { reactionsStyle } from '@/styles/post'
 import type { IReaction, ReactionListProps } from '@/types/reaction'
 
 interface Props extends ReactionListProps {
@@ -28,13 +27,3 @@ export default function EmojiList({
     </div>
   )
 }
-
-const reactionsStyle = (size: 'sm' | 'md') =>
-  css({
-    padding: '4px 16px',
-
-    display: 'flex',
-    alignItems: 'center',
-    gap: size === 'sm' ? '8px' : '16px',
-    overflowX: 'auto',
-  })

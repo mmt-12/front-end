@@ -93,6 +93,7 @@ const playButtonWrapperStyle = (theme: Theme, involved: boolean) =>
 
     border: involved ? `3px solid ${theme.colors.sky[300]}` : 'none',
     filter: involved ? 'sepia(10%);' : 'none',
+    transition: 'border 180ms ease-out, filter 180ms ease-out',
   })
 
 const marqueeStyle = css({
