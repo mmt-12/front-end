@@ -62,7 +62,7 @@ export function useMemoryList (communityId = 1, params?: MemoryListParams) {
               const additionalPictures = await api
                 .get(`/v1/communities/${communityId}/memories/${memory.id}/images`)
                 .then(r => r.data as MemoryImagesResponse)
-                .then(res => res.pictures)
+                .then(res => res.pictures.slice(0, 30))
               return {
                 ...memory,
                 pictures: [...memory.pictures, ...additionalPictures]
