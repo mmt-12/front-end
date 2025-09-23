@@ -118,6 +118,8 @@ const activeBarStyle = (theme: Theme, isActive: boolean) =>
   css({
     width: isActive ? 24 : 0,
     height: isActive ? 4 : 0,
+    marginTop: 4,
+
     borderRadius: 2,
     backgroundColor: theme.colors.stone[300],
     transition: 'height 0.2s ease-in-out, width 0.2s ease-in-out',

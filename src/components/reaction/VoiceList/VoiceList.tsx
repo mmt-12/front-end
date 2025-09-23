@@ -6,7 +6,7 @@ import type { ReactionListProps } from '@/types/reaction'
 export default function VoiceList(props: ReactionListProps) {
   if (props.reactions.length === 0) return null
   return (
-    <div css={reactionsStyle} className='no-scrollbar'>
+    <div css={reactionsStyle(props.size)} className='no-scrollbar'>
       {props.reactions.map(voice => (
         <Voice
           key={voice.id}
@@ -14,16 +14,18 @@ export default function VoiceList(props: ReactionListProps) {
           onClick={e => props.onClick(e, voice.id)}
           isActive={voice.url === props.selectedUrl}
           isPost
+          size={props.size}
         />
       ))}
     </div>
   )
 }
 
-const reactionsStyle = css({
-  padding: '4px 16px',
-  display: 'flex',
-  alignItems: 'center',
-  gap: 16,
-  overflowX: 'auto',
-})
+const reactionsStyle = (size: 'sm' | 'md') =>
+  css({
+    padding: '4px 16px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: size === 'sm' ? 8 : 16,
+    overflowX: 'auto',
+  })

@@ -4,7 +4,7 @@ export interface IReaction {
   id: number
   url: string
   name?: string
-  size?: 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg'
   isActive?: boolean
   involved?: boolean
   onClick?: (_e: MouseEvent<HTMLDivElement>, _id: number) => void
@@ -14,4 +14,5 @@ export interface ReactionListProps {
   onClick: (_e: React.MouseEvent<HTMLDivElement>, _id: number) => void
   selectedUrl?: string
   reactions: IReaction[]
+  size: 'sm' | 'md'
 }

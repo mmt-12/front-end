@@ -21,7 +21,12 @@ export default function ReactedProfileList({ name, authors }: Props) {
       </div>
       <div css={reactedProfilesStyle}>
         {authors.map(author => (
-          <Link to={ROUTES.GUEST_BOOK(author.id)} key={author.id}>
+          <Link
+            to={ROUTES.GUEST_BOOK(author.id)}
+            key={author.id}
+            className='lg'
+            css={profileWrapperStyle}
+          >
             <Profile
               key={author.id}
               {...author}
@@ -36,23 +41,29 @@ export default function ReactedProfileList({ name, authors }: Props) {
 }
 
 const reactionDetailStyle = css({
-  padding: 12,
+  padding: 4,
   paddingBottom: 32,
 
   display: 'flex',
   flexDirection: 'column',
-  gap: 20,
+  gap: 12,
 })
 
 const reactionNameStyle = (theme: Theme) => ({
+  padding: '4px 12px',
+
   display: 'flex',
   alignItems: 'center',
-  gap: 8,
+  gap: 6,
   color: theme.colors.stone[500],
 })
 
 const reactedProfilesStyle = css({
   display: 'flex',
   flexDirection: 'column',
-  gap: '16px',
+  gap: '8px',
+})
+
+const profileWrapperStyle = css({
+  padding: '4px 8px',
 })

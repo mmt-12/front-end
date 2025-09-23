@@ -34,18 +34,17 @@ const containerStyle = css({
   alignItems: 'center',
   justifyContent: 'center',
   flexShrink: 0,
-  gap: '6px',
   borderRadius: '16px',
 })
 
 const imageWrapperStyle = (
   theme: Theme,
-  size: 'md' | 'lg',
+  size: 'sm' | 'md' | 'lg',
   involved: boolean,
 ) =>
   css({
-    width: size === 'md' ? '52px' : '120px',
-    height: size === 'md' ? '52px' : '120px',
+    width: size === 'sm' ? '48px' : size === 'md' ? '64px' : '120px',
+    height: size === 'sm' ? '48px' : size === 'md' ? '64px' : '120px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -68,6 +67,8 @@ const activeBarStyle = (theme: Theme, isActive: boolean) =>
   css({
     width: isActive ? 24 : 0,
     height: isActive ? 4 : 0,
+    marginTop: 4,
+
     borderRadius: 2,
     backgroundColor: theme.colors.stone[300],
     transition: 'height 0.2s ease-in-out, width 0.2s ease-in-out',

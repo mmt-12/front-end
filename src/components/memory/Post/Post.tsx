@@ -12,6 +12,7 @@ interface Props {
   onBubbleClick?: (_e: React.MouseEvent, _temporaryVoiceId: number) => void
   selectedReactionUrl?: string
   link?: boolean
+  size?: 'sm' | 'md'
 }
 
 export default function Post({
@@ -21,6 +22,7 @@ export default function Post({
   onBubbleClick = () => {},
   selectedReactionUrl,
   link = false,
+  size = 'md',
 }: Props) {
   return (
     <div css={[flexGap(10), { marginBottom: '32px' }]}>
@@ -32,16 +34,19 @@ export default function Post({
         reactions={post.comments.emojis}
         onClick={onEmojiClick}
         selectedUrl={selectedReactionUrl}
+        size={size}
       />
       <VoiceList
         reactions={post.comments.voices}
         onClick={onVoiceClick}
         selectedUrl={selectedReactionUrl}
+        size={size}
       />
       <VoiceList
         reactions={post.comments.temporaryVoices}
         onClick={onBubbleClick}
         selectedUrl={selectedReactionUrl}
+        size={size}
       />
     </div>
   )

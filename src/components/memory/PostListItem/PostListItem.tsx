@@ -49,6 +49,7 @@ export default function PostListItem(props: PostType) {
       post={props}
       onEmojiClick={handleEmojiClick}
       onVoiceClick={handleVoiceClick}
+      size='sm'
       link
     />
   )
