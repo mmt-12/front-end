@@ -21,7 +21,7 @@ export default function BadgeList({
   if (!data) return <BadgeListSkeleton isExpanded={isExpanded} />
 
   const visibleBadges = data.achievements.filter(
-    badge => badge.type !== 'HIDDEN',
+    badge => badge.type !== 'HIDDEN' && badge.obtained,
   )
 
   if (visibleBadges.length === 0) {

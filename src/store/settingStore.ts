@@ -11,7 +11,7 @@ interface SettingState {
 export const useSettingStore = create<SettingState>()(
   persist(
     set => ({
-      memoryListView: 'list',
+      memoryListView: 'grid',
       setMemoryListView: (view: 'list' | 'grid') =>
         set({ memoryListView: view }),
     }),

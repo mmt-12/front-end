@@ -103,7 +103,7 @@ export interface Comment {
   involved: boolean
 }
 
-export interface TemporaryVoiceComment {
+export interface BubbleComment {
   id: number
   url: string
   authors: CommentAuthor[]
@@ -118,7 +118,7 @@ export interface Post {
   comments: {
     emojis: Comment[]
     voices: Comment[]
-    temporaryVoices: TemporaryVoiceComment[]
+    temporaryVoices: BubbleComment[]
   }
 }
 

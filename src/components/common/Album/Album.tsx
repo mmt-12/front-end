@@ -20,7 +20,6 @@ export default function Album({ children }: Props) {
               horizontal
               onVisible={() => {
                 setCurrentIndex(index)
-                console.log('visible')
               }}
             />
           </>

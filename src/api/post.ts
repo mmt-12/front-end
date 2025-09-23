@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-query'
 
 import { api } from '../utils/api'
-import type { Post, PostListResponse } from '../types/api'
+import type { BubbleComment, Comment, Post, PostListResponse } from '../types/api'
 
 // 포스트 상세 조회
 export function usePost (communityId = 1, memoryId: number, postId: number) {
@@ -183,6 +183,93 @@ export function useCreateVoiceComment (
   })
 }
 
+export function useToggleEmojiComment (
+  communityId = 1,
+  memoryId: number,
+  postId: number,
+  authorId: number
+) {
+
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data: { emojiId: number, comments: Comment[] }) => {
+      const involved = data.comments.find(
+        emoji => emoji.id === data.emojiId,
+      )?.involved
+
+      const commentId = data.comments
+        .find(emoji => emoji.id === data.emojiId)
+        ?.authors.find(author => author.id === authorId)?.commentId // TODO: userId
+
+      return (involved && commentId) ?
+        api
+          .delete(
+            `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/${commentId}`,
+          )
+          .then(r => r.data)
+        :
+        api
+          .post(
+            `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/emoji`,
+            { emojiId: data.emojiId },
+          )
+          .then(r => r.data)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['post', communityId, memoryId, postId],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['posts', communityId, memoryId],
+      })
+    },
+  })
+}
+
+export function useToggleVoiceComment (
+  communityId = 1,
+  memoryId: number,
+  postId: number,
+  authorId: number
+) {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data: { voiceId: number, comments: Comment[] }) => {
+      const involved = data.comments.find(
+        voice => voice.id === data.voiceId,
+      )?.involved
+
+      const commentId = data.comments
+        .find(voice => voice.id === data.voiceId)
+        ?.authors.find(author => author.id === authorId)?.commentId // TODO: userId
+
+      return (involved && commentId) ?
+        api
+          .delete(
+            `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/${commentId}`,
+          )
+          .then(r => r.data)
+        :
+        api
+          .post(
+            `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/voices`,
+            { voiceId: data.voiceId },
+          )
+          .then(r => r.data)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['post', communityId, memoryId, postId],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['posts', communityId, memoryId],
+      })
+    },
+  })
+}
+
 // 일회용 보이스 코멘트 등록
 export function useCreateBubbleComment (
   communityId = 1,
@@ -230,6 +317,45 @@ export function useDeleteComment (
           `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/${commentId}`,
         )
         .then(r => r.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['post', communityId, memoryId, postId],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['posts', communityId, memoryId],
+      })
+    },
+  })
+}
+
+// 버블 삭제
+export function useDeleteBubble (
+  communityId = 1,
+  memoryId: number,
+  postId: number,
+  authorId: number
+) {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data: { bubbleId: number, comments: BubbleComment[] }) => {
+      const involved = data.comments.find(
+        bubble => bubble.id === data.bubbleId,
+      )?.authors.some(author => author.id === authorId)
+
+      const commentId = data.comments
+        .find(bubble => bubble.id === data.bubbleId)
+        ?.authors.find(author => author.id === authorId)?.commentId
+
+      if (!involved || !commentId) {
+        throw new Error('Cannot delete a bubble you are not involved in.')
+      }
+      return api
+        .delete(
+          `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/${commentId}`,
+        )
+        .then(r => r.data)
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['post', communityId, memoryId, postId],

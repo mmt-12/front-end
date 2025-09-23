@@ -3,12 +3,11 @@ import { css, useTheme, type Theme } from '@emotion/react'
 import { DownloadSquare, GalleryCircle, UserCircle } from '@solar-icons/react'
 import { Link } from 'react-router-dom'
 
-import { useMemoryImages } from '@/api'
 import rightArrow from '@/assets/images/icons/rightArrow.svg'
+import Button from '@/components/common/Button'
 import Chip from '@/components/common/Chip'
 import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
-import { useUserStore } from '@/store/userStore'
 import type { locationType } from '@/types/memory'
 import { formatDateString } from '@/utils/date'
 import { compressImages, downloadBlob } from '@/utils/image'
@@ -26,6 +25,7 @@ interface Props {
   }
   saveEnabled?: boolean
   isLink?: boolean
+  pictures?: string[]
 }
 
 export default function MemoryInfo(props: Props) {
@@ -35,27 +35,23 @@ export default function MemoryInfo(props: Props) {
   const formattedStartTime = formatDateString(props.period.startTime || '')
   const formattedEndTime = formatDateString(props.period.endTime || '')
 
-  const { communityId } = useUserStore()
-
-  const { data: pictureData } = useMemoryImages(communityId, props.id)
-
   const handleSaveClick = useCallback(async () => {
-    if (!pictureData || pictureData.pictures.length === 0) {
+    if (!props.pictures?.length) {
       alert('저장할 사진이 없습니다.')
       return
     }
-    if (!(await confirm('기억의 모든 사진을 저장하시겠습니까?'))) {
+    if (!(await confirm(`'${props.title}'의 모든 사진을 저장하시겠습니까?`))) {
       return
     }
     try {
-      compressImages(pictureData.pictures).then(blob => {
+      compressImages(props.pictures).then(blob => {
         downloadBlob(blob, `memory_${props.id}_images.zip`)
       })
     } catch (error) {
       console.error('Error during image compression or download:', error)
       alert('사진 저장 중 오류가 발생했습니다. 다시 시도해주세요.')
     }
-  }, [pictureData, props.id, alert, confirm])
+  }, [props.pictures, props.id, alert, confirm, props.title])
 
   const renderMeta = () => {
     return (
@@ -86,9 +82,11 @@ export default function MemoryInfo(props: Props) {
         {props.saveEnabled ? (
           <>
             <div>{renderMeta()}</div>
-            <Chip
-              Icon={DownloadSquare}
-              label='사진 모두 저장'
+            <Button
+              icon={<DownloadSquare size={20} weight='Bold' />}
+              size='sm'
+              label='사진 저장'
+              type='secondary'
               onClick={handleSaveClick}
               customCss={chipCustomStyle}
             />
@@ -173,5 +171,10 @@ const linkStyle = (theme: Theme) =>
   })
 
 const chipCustomStyle = css({
-  padding: '6px 12px',
+  flexDirection: 'row',
+  gap: '4px',
+  fontWeight: '500',
+  fontSize: '14px',
+  borderWidth: '1px',
+  padding: '4px 8px',
 })

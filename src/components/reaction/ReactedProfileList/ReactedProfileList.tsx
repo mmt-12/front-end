@@ -1,8 +1,10 @@
 import { css, type Theme } from '@emotion/react'
 import { MagniferZoomIn } from '@solar-icons/react'
+import { Link } from 'react-router-dom'
 
 import type { CommentAuthor } from '@/api'
 import Profile from '@/components/member/Profile'
+import { ROUTES } from '@/routes/ROUTES'
 
 interface Props {
   name?: string
@@ -19,12 +21,19 @@ export default function ReactedProfileList({ name, authors }: Props) {
       </div>
       <div css={reactedProfilesStyle}>
         {authors.map(author => (
-          <Profile
+          <Link
+            to={ROUTES.GUEST_BOOK(author.id)}
             key={author.id}
-            {...author}
-            size='sm'
-            introduction={undefined}
-          />
+            className='lg'
+            css={profileWrapperStyle}
+          >
+            <Profile
+              key={author.id}
+              {...author}
+              size='sm'
+              introduction={undefined}
+            />
+          </Link>
         ))}
       </div>
     </div>
@@ -32,22 +41,29 @@ export default function ReactedProfileList({ name, authors }: Props) {
 }
 
 const reactionDetailStyle = css({
-  padding: 12,
+  padding: 4,
+  paddingBottom: 32,
 
   display: 'flex',
   flexDirection: 'column',
-  gap: 20,
+  gap: 12,
 })
 
 const reactionNameStyle = (theme: Theme) => ({
+  padding: '4px 12px',
+
   display: 'flex',
   alignItems: 'center',
-  gap: 8,
+  gap: 6,
   color: theme.colors.stone[500],
 })
 
 const reactedProfilesStyle = css({
   display: 'flex',
   flexDirection: 'column',
-  gap: '16px',
+  gap: '8px',
+})
+
+const profileWrapperStyle = css({
+  padding: '4px 8px',
 })

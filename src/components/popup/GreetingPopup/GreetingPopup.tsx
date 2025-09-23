@@ -5,8 +5,8 @@ import greetingMascot from '@/assets/images/mascot/greeting.jpeg'
 import Img from '@/components/common/Img'
 import { MEMBERS } from '@/consts/SSAFY_12_MEMBERS'
 import { useUserStore } from '@/store/userStore'
+import { signupTitleStyle } from '@/styles/auth'
 import { modalStyle } from '@/styles/modal'
-import { signupTitleStyle } from '@/styles/signupTitle'
 
 export default function GreetingPopup() {
   const userStore = useUserStore()

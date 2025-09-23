@@ -1,6 +1,7 @@
+import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 
-export const globalStyle = css({
+export const globalStyle = (theme: Theme) => css({
   '@font-face': [
     {
       fontFamily: 'Pretendard Variable',
@@ -79,4 +80,24 @@ export const globalStyle = css({
   '.stardust': {
     fontFamily: 'PFStardust, sans-serif',
   },
+
+  'button, a, .button': {
+    transition: 'transform 200ms ease, background-color 240ms ease',
+    borderRadius: 'calc(8px + 2%)',
+    ':active': {
+      transform: 'scale(0.95)',
+      backgroundColor: theme.colors.stone[100],
+    }
+  },
+  'button.lg, .button.lg, a.lg': {
+    ':active': {
+      transform: 'scale(0.97)'
+    }
+  },
+  '.still': {
+    ':active': {
+      transform: 'none',
+      backgroundColor: 'transparent',
+    }
+  }
 })

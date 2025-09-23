@@ -11,6 +11,7 @@ import useHeader from '@/hooks/useHeader'
 import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
+import { flexGap } from '@/styles/common'
 
 export default function PostRegisterPage() {
   useHeader({
@@ -53,7 +54,7 @@ export default function PostRegisterPage() {
   }
 
   return (
-    <div css={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+    <div css={flexGap(12)}>
       <div css={{ display: 'flex', alignItems: 'end', padding: '16px 20px' }}>
         {memory ? (
           <h1 css={{ display: 'inline-block', fontSize: '24px' }}>

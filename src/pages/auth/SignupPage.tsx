@@ -8,8 +8,8 @@ import InputField from '@/components/common/InputField'
 import { MEMBERS } from '@/consts/SSAFY_12_MEMBERS'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
+import { signupTitleStyle } from '@/styles/auth'
 import { flexGap } from '@/styles/common'
-import { signupTitleStyle } from '@/styles/signupTitle'
 import { dateToId, formatDate } from '@/utils/date'
 
 export default function SignupPage() {

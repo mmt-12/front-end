@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 
-import { useVoiceList } from '@/api'
+import { useVoiceList, type Comment } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
 import InputField from '@/components/common/InputField'
@@ -20,7 +20,11 @@ import type { Voice as VoiceType } from '@/types/api'
 import Voice from '../Voice'
 import VoiceRegisterModal from '../VoiceRegisterModal/VoiceRegisterModal'
 
-export default function VoicePickerModal() {
+export default function VoicePickerModal({
+  comments,
+}: {
+  comments: Comment[]
+}) {
   const { openModal, closeModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
   const { communityId, memberId } = useUserStore()
@@ -59,6 +63,9 @@ export default function VoicePickerModal() {
               key={`recent-${voice.id}`}
               {...voice}
               onClick={() => handleSelectVoice(voice)}
+              involved={
+                comments.find(comment => comment.id === voice.id)?.involved
+              }
             />
           ))
         ) : isLoading ? (
@@ -88,7 +95,13 @@ export default function VoicePickerModal() {
         >
           {isLoading
             ? Array.from({ length: 7 }).map((_, i) => (
-                <Skeleton key={i} width={150} height={34} radius={24} />
+                <Skeleton
+                  key={i}
+                  width={150}
+                  height={34}
+                  radius={24}
+                  css={{ flexGrow: 1 }}
+                />
               ))
             : voices.map(voice => (
                 <Voice

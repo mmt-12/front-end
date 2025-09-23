@@ -99,13 +99,13 @@ export default function GuestBookPage() {
                     message='아무도 방명록을 남기지 않았어요. 🥲'
                   />
                 )}
-                <WavyButton
-                  label='더보기'
-                  onClick={() => setMode('GUEST BOOK')}
-                />
               </div>
             )}
-            <WavyButton label='더보기' onClick={() => setMode('GUEST BOOK')} />
+            <WavyButton
+              label='더보기'
+              onClick={() => setMode('GUEST BOOK')}
+              customCss={{ marginTop: '12px' }}
+            />
           </Card>
         </>
       ) : (

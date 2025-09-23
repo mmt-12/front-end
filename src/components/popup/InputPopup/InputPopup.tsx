@@ -85,15 +85,9 @@ const buttonStyle = (theme: Theme) =>
     outline: `2px solid ${theme.colors.stone[400]}`,
     backgroundColor: theme.colors.white,
     cursor: 'pointer',
-
     transition:
       'outline 100ms ease-in-out, transform 120ms ease, background-color 160ms ease',
-
     '&:hover': {
       outline: `2px solid ${theme.colors.sky[400]}`,
-    },
-    ':active': {
-      transform: 'scale(0.98)',
-      backgroundColor: theme.colors.stone[50],
     },
   })

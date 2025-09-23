@@ -95,7 +95,7 @@ const imageWrapperStyle = (theme: Theme) =>
     position: 'relative',
     width: '100vw',
     maxWidth: theme.maxWidth,
-    maxHeight: `min(calc(${theme.maxWidth} - 200px), 100vw)`,
+    height: `min(calc(${theme.maxWidth} - 200px), 100vw)`,
 
     display: 'flex',
     justifyContent: 'center',

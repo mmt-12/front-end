@@ -26,7 +26,7 @@ export default function WavyBox({
           <feTurbulence
             type='turbulence'
             baseFrequency='0.06'
-            numOctaves='1'
+            numOctaves='3'
             seed='2'
             stitchTiles='stitch'
           />

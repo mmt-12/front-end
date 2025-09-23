@@ -9,24 +9,23 @@ interface Props {
   post: PostType
   onEmojiClick: (_e: React.MouseEvent, _emojiId: number) => void
   onVoiceClick: (_e: React.MouseEvent, _voiceId: number) => void
-  onTemporaryVoiceClick?: (
-    _e: React.MouseEvent,
-    _temporaryVoiceId: number,
-  ) => void
-  selectedReactionId?: number
+  onBubbleClick?: (_e: React.MouseEvent, _temporaryVoiceId: number) => void
+  selectedReactionUrl?: string
   link?: boolean
+  size?: 'sm' | 'md'
 }
 
 export default function Post({
   post,
   onEmojiClick,
   onVoiceClick,
-  onTemporaryVoiceClick = () => {},
-  selectedReactionId,
+  onBubbleClick = () => {},
+  selectedReactionUrl,
   link = false,
+  size = 'md',
 }: Props) {
   return (
-    <div css={[flexGap(10), { marginBottom: '32px' }]}>
+    <div css={[flexGap(6), { marginBottom: '32px' }]}>
       <div>
         <Border />
         <PostContent {...post} link={link} />
@@ -34,17 +33,20 @@ export default function Post({
       <EmojiList
         reactions={post.comments.emojis}
         onClick={onEmojiClick}
-        selectedId={selectedReactionId}
+        selectedUrl={selectedReactionUrl}
+        size={size}
       />
       <VoiceList
         reactions={post.comments.voices}
         onClick={onVoiceClick}
-        selectedId={selectedReactionId}
+        selectedUrl={selectedReactionUrl}
+        size={size}
       />
       <VoiceList
         reactions={post.comments.temporaryVoices}
-        onClick={onTemporaryVoiceClick}
-        selectedId={selectedReactionId}
+        onClick={onBubbleClick}
+        selectedUrl={selectedReactionUrl}
+        size={size}
       />
     </div>
   )

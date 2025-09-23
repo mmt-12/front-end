@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 
-import { useEmojiList } from '@/api'
+import { useEmojiList, type Comment } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
 import InputField from '@/components/common/InputField'
@@ -20,7 +20,11 @@ import type { Emoji as EmojiType } from '@/types/api'
 import Emoji from '../Emoji/Emoji'
 import EmojiRegisterModal from '../EmojiRegisterModal'
 
-export default function EmojiPickerModal() {
+export default function EmojiPickerModal({
+  comments,
+}: {
+  comments: Comment[]
+}) {
   const { openModal, closeModal } = useModal()
   const [searchKey, setSearchKey] = useState('')
   const { communityId, memberId } = useUserStore()
@@ -48,6 +52,12 @@ export default function EmojiPickerModal() {
     openModal(<EmojiRegisterModal />, slideDown)
   }
 
+  const getInvolved = useCallback(
+    (emojiId: number) =>
+      comments.find(comment => comment.id === emojiId)?.involved,
+    [comments],
+  )
+
   return (
     <BottomDrawer>
       <p css={spanStyle}>최근 사용</p>
@@ -58,9 +68,11 @@ export default function EmojiPickerModal() {
             ))
           : recentEmojis.map(emoji => (
               <Emoji
-                key={`recent-${emoji.id}`}
+                key={emoji.id}
                 {...emoji}
-                onClick={() => handleSelectEmoji(emoji)}
+                onClick={_e => handleSelectEmoji(emoji)}
+                involved={getInvolved(emoji.id)}
+                size='sm'
               />
             ))}
       </div>
@@ -93,6 +105,8 @@ export default function EmojiPickerModal() {
                 <Emoji
                   key={emoji.id}
                   {...emoji}
+                  involved={getInvolved(emoji.id)}
+                  size='sm'
                   onClick={() => handleSelectEmoji(emoji)}
                 />
               ))}
@@ -130,5 +144,5 @@ const emojiListStyle = css({
 
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fill, minmax(40px, 1fr))',
-  gap: '8px 18px',
+  gap: '14px 18px',
 })

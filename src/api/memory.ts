@@ -55,6 +55,23 @@ export function useMemoryList (communityId = 1, params?: MemoryListParams) {
       return api
         .get(`/v1/communities/${communityId}/memories?${searchParams}`)
         .then(r => r.data as MemoryListResponse)
+        .then(async memoryListResponse => {
+          // 각 pictures에 추가로 불러온 pictures 담기
+          memoryListResponse.memories = await Promise.all(memoryListResponse.memories.map(async (memory) => {
+            if (memory.pictures.length < memory.pictureAmount) {
+              const additionalPictures = await api
+                .get(`/v1/communities/${communityId}/memories/${memory.id}/images`)
+                .then(r => r.data as MemoryImagesResponse)
+                .then(res => res.pictures.slice(0, 30))
+              return {
+                ...memory,
+                pictures: [...memory.pictures, ...additionalPictures]
+              }
+            }
+            return memory
+          }))
+          return memoryListResponse
+        })
     },
     getNextPageParam: lastPage =>
       lastPage.hasNext ? lastPage.nextCursor : undefined,

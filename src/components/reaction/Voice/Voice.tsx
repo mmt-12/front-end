@@ -6,7 +6,6 @@ import Marquee from '@/components/common/Marquee'
 import type { IReaction } from '@/types/reaction'
 
 export default function Voice({
-  id,
   url: audioUrl,
   isActive = false,
   involved = false,
@@ -31,7 +30,7 @@ export default function Voice({
     }
   }
   return (
-    <div css={containerStyle} onClick={e => onClick?.(e, id)}>
+    <div css={containerStyle} onClick={onClick} className='button'>
       <div css={playButtonWrapperStyle(theme, involved)}>
         <button onClick={handleButtonClick} css={playButtonStyle}>
           {isPlaying ? (
@@ -45,6 +44,7 @@ export default function Voice({
             <p css={nameStyle}>{name}</p>
           </Marquee>
         </div>
+        <div css={shadowStyle(involved)}></div>
       </div>
       {isPost && <div css={activeBarStyle(theme, isActive)} />}
       <audio
@@ -64,7 +64,6 @@ const containerStyle = css({
   alignItems: 'center',
   justifyContent: 'center',
   flexShrink: 0,
-  gap: 6,
   flexGrow: 1,
 
   borderRadius: 24,
@@ -72,6 +71,8 @@ const containerStyle = css({
 
 const playButtonWrapperStyle = (theme: Theme, involved: boolean) =>
   css({
+    position: 'relative',
+
     width: '100%',
     padding: '3px 12px 3px 4px',
     display: 'flex',
@@ -81,7 +82,9 @@ const playButtonWrapperStyle = (theme: Theme, involved: boolean) =>
     borderRadius: '24px',
     backgroundColor: theme.colors.stone[600],
 
-    outline: involved ? `3px solid ${theme.colors.sky[300]}` : 'none',
+    border: involved ? `3px solid ${theme.colors.sky[300]}` : 'none',
+    filter: involved ? 'sepia(10%);' : 'none',
+    transition: 'border 180ms ease-out, filter 180ms ease-out',
   })
 
 const marqueeStyle = css({
@@ -109,7 +112,24 @@ const activeBarStyle = (theme: Theme, isActive: boolean) =>
   css({
     width: isActive ? 24 : 0,
     height: isActive ? 4 : 0,
+    marginTop: isActive ? 6 : 0,
+
     borderRadius: 2,
     backgroundColor: theme.colors.stone[300],
-    transition: 'height 0.2s ease-in-out, width 0.2s ease-in-out',
+    transition:
+      'margin 180ms ease-out, height 180ms ease-out, width 180ms ease-out',
+  })
+
+const shadowStyle = (involved: boolean) =>
+  css({
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    top: 0,
+    left: 0,
+
+    borderRadius: 16,
+    boxShadow: involved ? 'inset 0px 0px 8px 2px rgba(0, 0, 0, 0.25)' : 'none',
+    pointerEvents: 'none',
+    transition: 'box-shadow 180ms ease-out',
   })

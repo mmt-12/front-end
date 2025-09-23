@@ -18,10 +18,6 @@ export const Default: Story = {
     id: 1,
     url: '/test_voices/voice1.mp3',
     name: '하.하.하.하.하',
-    onClick: (e, id) => {
-      e.stopPropagation()
-      console.log(`Clicked on Voice with id: ${id}`)
-    },
   },
 }
 
@@ -32,10 +28,6 @@ export const Reacted: Story = {
     url: '/test_voices/voice2.mp3',
     name: '하.하.하.하.하',
     involved: true,
-    onClick: (e, id) => {
-      e.stopPropagation()
-      console.log(`Clicked on Voice with id: ${id}`)
-    },
   },
 }
 
@@ -45,10 +37,6 @@ export const WithAmount: Story = {
     id: 3,
     url: '/test_voices/voice3.mp3',
     name: '하.하.하.하.하',
-    onClick: (e, id) => {
-      e.stopPropagation()
-      console.log(`Clicked on Voice with id: ${id}`)
-    },
   },
 }
 
@@ -59,9 +47,9 @@ export const Active: Story = {
     url: '/test_voices/voice3.mp3',
     name: '하.하.하.하.하',
     isActive: true,
-    onClick: (e, id) => {
+    onClick: e => {
       e.stopPropagation()
-      console.log(`Clicked on Voice with id: ${id}`)
+      console.log(`Clicked on Voice`)
     },
   },
 }
