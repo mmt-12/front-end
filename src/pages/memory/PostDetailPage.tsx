@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import { usePost } from '@/api'
 import {
-  useDeleteComment,
+  useDeleteBubble,
   useToggleEmojiComment,
   useToggleVoiceComment,
 } from '@/api/post'
@@ -39,10 +39,11 @@ export default function PostDetailPage() {
     Number(postId),
     associateId,
   )
-  const { mutate: deleteBubble } = useDeleteComment(
+  const { mutate: deleteBubble } = useDeleteBubble(
     communityId,
     Number(memoryId),
     Number(postId),
+    associateId,
   )
 
   const initialSelectedId =
@@ -105,7 +106,7 @@ export default function PostDetailPage() {
       selectedReactionType.current === 'BUBBLE' &&
       selectedReactionId === id
     ) {
-      deleteBubble(id) // toggle off
+      deleteBubble({ bubbleId: id, comments: post.comments.temporaryVoices }) // toggle off
       return
     }
     selectedReactionType.current = 'BUBBLE'

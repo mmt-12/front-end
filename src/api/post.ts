@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-query'
 
 import { api } from '../utils/api'
-import type { Comment, Post, PostListResponse } from '../types/api'
+import type { BubbleComment, Comment, Post, PostListResponse } from '../types/api'
 
 // 포스트 상세 조회
 export function usePost (communityId = 1, memoryId: number, postId: number) {
@@ -317,6 +317,45 @@ export function useDeleteComment (
           `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/${commentId}`,
         )
         .then(r => r.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['post', communityId, memoryId, postId],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['posts', communityId, memoryId],
+      })
+    },
+  })
+}
+
+// 버블 삭제
+export function useDeleteBubble (
+  communityId = 1,
+  memoryId: number,
+  postId: number,
+  authorId: number
+) {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data: { bubbleId: number, comments: BubbleComment[] }) => {
+      const involved = data.comments.find(
+        bubble => bubble.id === data.bubbleId,
+      )?.authors.some(author => author.id === authorId)
+
+      const commentId = data.comments
+        .find(bubble => bubble.id === data.bubbleId)
+        ?.authors.find(author => author.id === authorId)?.commentId
+
+      if (!involved || !commentId) {
+        throw new Error('Cannot delete a bubble you are not involved in.')
+      }
+      return api
+        .delete(
+          `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/${commentId}`,
+        )
+        .then(r => r.data)
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['post', communityId, memoryId, postId],
