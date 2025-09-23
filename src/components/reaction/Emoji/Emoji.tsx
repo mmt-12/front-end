@@ -53,7 +53,7 @@ const imageWrapperStyle = (
     borderRadius: size === 'sm' ? 10 : size === 'md' ? 14 : 20,
     overflow: 'hidden',
 
-    border: `${involved ? (size === 'sm' ? '2.5px' : size === 'md' ? '3px' : '6px') : '0px'} solid ${theme.colors.sky[300]}`,
+    border: `${involved ? (size === 'sm' ? '3px' : size === 'md' ? '4px' : '6px') : '0px'} solid ${theme.colors.sky[400]}`,
     transition: 'border 180ms ease-out',
   })
 

@@ -14,6 +14,7 @@ export default function PostListItem(props: PostType) {
     communityId,
     Number(memoryId),
     props.id,
+    associateId,
   )
 
   const { mutate: toggleVoice } = useToggleVoiceComment(
@@ -24,13 +25,7 @@ export default function PostListItem(props: PostType) {
 
   const handleEmojiClick = (e: MouseEvent, id: number) => {
     e.stopPropagation()
-    const involved = props.comments.emojis.find(
-      emoji => emoji.id === id,
-    )?.involved
-    const commentId = props.comments.emojis
-      .find(emoji => emoji.id === id)
-      ?.authors.find(author => author.id === associateId)?.commentId
-    toggleEmoji({ id: commentId ?? id, involved: !!involved })
+    toggleEmoji({ emojiId: id, comments: props.comments.emojis })
   }
 
   const handleVoiceClick = (e: MouseEvent, id: number) => {

@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-query'
 
 import { api } from '../utils/api'
-import type { Post, PostListResponse } from '../types/api'
+import type { Comment, Post, PostListResponse } from '../types/api'
 
 // 포스트 상세 조회
 export function usePost (communityId = 1, memoryId: number, postId: number) {
@@ -187,24 +187,35 @@ export function useToggleEmojiComment (
   communityId = 1,
   memoryId: number,
   postId: number,
+  authorId: number
 ) {
+
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (data: { id: number, involved: boolean }) =>
-      data.involved ?
+    mutationFn: (data: { emojiId: number, comments: Comment[] }) => {
+      const involved = data.comments.find(
+        emoji => emoji.id === data.emojiId,
+      )?.involved
+
+      const commentId = data.comments
+        .find(emoji => emoji.id === data.emojiId)
+        ?.authors.find(author => author.id === authorId)?.commentId // TODO: userId
+
+      return (involved && commentId) ?
         api
           .delete(
-            `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/${data.id}`,
+            `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/${commentId}`,
           )
           .then(r => r.data)
         :
         api
           .post(
             `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/emoji`,
-            { emojiId: data.id },
+            { emojiId: data.emojiId },
           )
-          .then(r => r.data),
+          .then(r => r.data)
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['post', communityId, memoryId, postId],
@@ -220,24 +231,34 @@ export function useToggleVoiceComment (
   communityId = 1,
   memoryId: number,
   postId: number,
+  authorId: number
 ) {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (data: { id: number, involved: boolean }) =>
-      data.involved ?
+    mutationFn: (data: { voiceId: number, comments: Comment[] }) => {
+      const involved = data.comments.find(
+        voice => voice.id === data.voiceId,
+      )?.involved
+
+      const commentId = data.comments
+        .find(voice => voice.id === data.voiceId)
+        ?.authors.find(author => author.id === authorId)?.commentId // TODO: userId
+
+      return (involved && commentId) ?
         api
           .delete(
-            `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/${data.id}`,
+            `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/${commentId}`,
           )
           .then(r => r.data)
         :
         api
           .post(
             `/v1/communities/${communityId}/memories/${memoryId}/posts/${postId}/comments/voices`,
-            { voiceId: data.id },
+            { voiceId: data.voiceId },
           )
-          .then(r => r.data),
+          .then(r => r.data)
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['post', communityId, memoryId, postId],

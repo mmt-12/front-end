@@ -73,7 +73,6 @@ const containerStyle = css({
   alignItems: 'center',
   justifyContent: 'center',
   flexShrink: 0,
-  gap: 6,
   flexGrow: 1,
 
   borderRadius: 24,
@@ -121,11 +120,12 @@ const activeBarStyle = (theme: Theme, isActive: boolean) =>
   css({
     width: isActive ? 24 : 0,
     height: isActive ? 4 : 0,
-    marginTop: 4,
+    marginTop: isActive ? 6 : 0,
 
     borderRadius: 2,
     backgroundColor: theme.colors.stone[300],
-    transition: 'height 0.2s ease-in-out, width 0.2s ease-in-out',
+    transition:
+      'margin 180ms ease-out, height 180ms ease-out, width 180ms ease-out',
   })
 
 const shadowStyle = (involved: boolean) =>

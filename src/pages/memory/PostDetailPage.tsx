@@ -3,6 +3,11 @@ import { css, type Theme } from '@emotion/react'
 import { useParams } from 'react-router-dom'
 
 import { usePost } from '@/api'
+import {
+  useDeleteComment,
+  useToggleEmojiComment,
+  useToggleVoiceComment,
+} from '@/api/post'
 import Post from '@/components/memory/Post'
 import { PostListItemSkeleton } from '@/components/memory/PostListItem'
 import ReactBar from '@/components/memory/ReactBar/ReactBar'
@@ -13,7 +18,7 @@ import { flexGap } from '@/styles/common'
 
 export default function PostDetailPage() {
   const { memoryId, postId } = useParams()
-  const { communityId } = useUserStore()
+  const { communityId, associateId } = useUserStore()
 
   useHeader({
     rightItem: {
@@ -22,6 +27,23 @@ export default function PostDetailPage() {
   })
 
   const { data: post } = usePost(communityId, Number(memoryId), Number(postId))
+  const { mutate: toggleEmoji } = useToggleEmojiComment(
+    communityId,
+    Number(memoryId),
+    Number(postId),
+    associateId,
+  )
+  const { mutate: toggleVoice } = useToggleVoiceComment(
+    communityId,
+    Number(memoryId),
+    Number(postId),
+    associateId,
+  )
+  const { mutate: deleteBubble } = useDeleteComment(
+    communityId,
+    Number(memoryId),
+    Number(postId),
+  )
 
   const initialSelectedId =
     post?.comments.emojis[0]?.id ??
@@ -59,18 +81,33 @@ export default function PostDetailPage() {
 
   const onEmojiClick = (e: React.MouseEvent, id: number) => {
     e.stopPropagation()
+    if (selectedReactionType.current === 'EMOJI' && selectedReactionId === id) {
+      toggleEmoji({ emojiId: id, comments: post.comments.emojis }) // toggle off
+      return
+    }
     selectedReactionType.current = 'EMOJI'
     setSelectedReactionId(id)
   }
 
   const onVoiceClick = (e: React.MouseEvent, id: number) => {
     e.stopPropagation()
+    if (selectedReactionType.current === 'VOICE' && selectedReactionId === id) {
+      toggleVoice({ voiceId: id, comments: post.comments.voices }) // toggle off
+      return
+    }
     selectedReactionType.current = 'VOICE'
     setSelectedReactionId(id)
   }
 
   const onBubbleClick = (e: React.MouseEvent, id: number) => {
     e.stopPropagation()
+    if (
+      selectedReactionType.current === 'BUBBLE' &&
+      selectedReactionId === id
+    ) {
+      deleteBubble(id) // toggle off
+      return
+    }
     selectedReactionType.current = 'BUBBLE'
     setSelectedReactionId(id)
   }

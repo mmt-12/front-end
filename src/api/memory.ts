@@ -39,7 +39,7 @@ export function useCreateMemory (communityId = 1) {
 
 // 기억 목록 조회
 export function useMemoryList (communityId = 1, params?: MemoryListParams) {
-  const size = params?.size ?? 30
+  const size = params?.size ?? 10
   const { keyword, startTime, endTime } = params || {}
   return useInfiniteQuery({
     queryKey: ['memories', communityId, size, keyword, startTime, endTime],
@@ -55,6 +55,23 @@ export function useMemoryList (communityId = 1, params?: MemoryListParams) {
       return api
         .get(`/v1/communities/${communityId}/memories?${searchParams}`)
         .then(r => r.data as MemoryListResponse)
+        .then(async memoryListResponse => {
+          // 각 pictures에 추가로 불러온 pictures 담기
+          memoryListResponse.memories = await Promise.all(memoryListResponse.memories.map(async (memory) => {
+            if (memory.pictures.length < memory.pictureAmount) {
+              const additionalPictures = await api
+                .get(`/v1/communities/${communityId}/memories/${memory.id}/images`)
+                .then(r => r.data as MemoryImagesResponse)
+                .then(res => res.pictures)
+              return {
+                ...memory,
+                pictures: [...memory.pictures, ...additionalPictures]
+              }
+            }
+            return memory
+          }))
+          return memoryListResponse
+        })
     },
     getNextPageParam: lastPage =>
       lastPage.hasNext ? lastPage.nextCursor : undefined,
