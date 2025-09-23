@@ -5,19 +5,14 @@ import { PauseCircle, PlayCircle } from '@solar-icons/react'
 import Marquee from '@/components/common/Marquee'
 import type { IReaction } from '@/types/reaction'
 
-interface Props extends IReaction {
-  isPost?: boolean
-}
-
 export default function Voice({
-  id,
   url: audioUrl,
   isActive = false,
   involved = false,
   name = '',
   isPost = false,
   onClick,
-}: Props) {
+}: IReaction) {
   const audioRef = useRef<HTMLAudioElement>(null)
   const theme = useTheme()
   const [isPlaying, setIsPlaying] = useState(false)
@@ -35,11 +30,7 @@ export default function Voice({
     }
   }
   return (
-    <div
-      css={containerStyle}
-      onClick={e => onClick?.(e, id)}
-      className='button'
-    >
+    <div css={containerStyle} onClick={onClick} className='button'>
       <div css={playButtonWrapperStyle(theme, involved)}>
         <button onClick={handleButtonClick} css={playButtonStyle}>
           {isPlaying ? (

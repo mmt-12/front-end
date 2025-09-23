@@ -33,7 +33,7 @@ export default function MapPage() {
     },
   })
 
-  const { data } = useMemoryList(1)
+  const { data } = useMemoryList(1, { size: 100 })
   const memories = data?.pages.flatMap(page => page.memories) || []
   const [selectedMemory, setSelectedMemory] = useState<IMemoryInfo>()
   const [markers, setMarkers] = useState<{ [key: number]: Marker }>({})
@@ -158,7 +158,12 @@ export default function MapPage() {
           <MemoryInfo {...selectedMemory} description={undefined} />
           <div css={imagesListStyle}>
             {selectedMemory.pictures.slice(0, 3).map((image, index) => (
-              <Img key={index} src={image} alt={`Memory image ${index + 1}`} />
+              <Img
+                key={index}
+                src={image}
+                alt={`Memory image ${index + 1}`}
+                customCss={imageStyle}
+              />
             ))}
           </div>
         </Link>
@@ -190,11 +195,13 @@ const imagesListStyle = css({
   gap: '4px',
   borderRadius: '20px',
   overflow: 'hidden',
-  img: {
-    width: '100%',
-    aspectRatio: '1 / 1',
-    objectFit: 'cover',
-    overflow: 'hidden',
-    objectPosition: 'center',
-  },
+})
+
+const imageStyle = css({
+  width: '100%',
+  height: '100%',
+  aspectRatio: '1 / 1',
+  objectFit: 'cover',
+  overflow: 'hidden',
+  objectPosition: 'center',
 })

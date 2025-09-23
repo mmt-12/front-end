@@ -17,7 +17,7 @@ export default function MemoryListItem(props: Props) {
       to={ROUTES.MEMORY_DETAIL(props.id)}
       css={containerStyle}
       state={{ memory: props as IMemoryInfo }}
-      className='lg'
+      className='still'
     >
       <MemoryInfo
         {...props}

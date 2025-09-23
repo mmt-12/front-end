@@ -2,6 +2,7 @@ import { css, type Theme } from '@emotion/react'
 
 import { useAchievements } from '@/api'
 import Badge from '@/components/common/Badge'
+import NoContentFallback from '@/components/common/NoContentFallback'
 import BadgeListSkeleton from './BadgeList.Skeleton'
 
 interface Props {
@@ -19,20 +20,23 @@ export default function BadgeList({
 
   if (!data) return <BadgeListSkeleton isExpanded={isExpanded} />
 
-  const obtainedAchievements = data.achievements.filter(badge => badge.obtained)
+  const visibleBadges = data.achievements.filter(
+    badge => badge.type !== 'HIDDEN' && badge.obtained,
+  )
+
+  if (visibleBadges.length === 0) {
+    return (
+      <NoContentFallback size='block' message='아직 획득한 칭호가 없어요. 🥲' />
+    )
+  }
 
   if (!isExpanded) {
-    const visibleBadges = obtainedAchievements
-      .filter(badge => badge.type !== 'HIDDEN')
-      .slice(0, 4)
-
-    const hiddenCount =
-      obtainedAchievements.filter(badge => badge.type !== 'HIDDEN').length -
-      visibleBadges.length
+    const badgesToShow = visibleBadges.slice(0, 4)
+    const hiddenCount = visibleBadges.length - badgesToShow.length
 
     return (
       <div css={compactContainerStyle}>
-        {visibleBadges.map(badge => (
+        {badgesToShow.map(badge => (
           <Badge key={badge.id} id={badge.id} />
         ))}
         {hiddenCount > 0 && <div css={moreCountStyle}>+{hiddenCount}</div>}
@@ -42,18 +46,16 @@ export default function BadgeList({
 
   return (
     <div css={expandedContainerStyle}>
-      {obtainedAchievements
-        .filter(badge => badge.type !== 'HIDDEN')
-        .map(badge => (
-          <div css={medalInfoStyle} key={badge.id}>
-            <Badge key={badge.id} id={badge.id} />
-            <p css={conditionStyle}>
-              {badge.type === 'RESTRICTED' && !badge.obtained
-                ? '???'
-                : badge.criteria}
-            </p>
-          </div>
-        ))}
+      {visibleBadges.map(badge => (
+        <div css={medalInfoStyle} key={badge.id}>
+          <Badge key={badge.id} id={badge.id} />
+          <p css={conditionStyle}>
+            {badge.type === 'RESTRICTED' && !badge.obtained
+              ? '???'
+              : badge.criteria}
+          </p>
+        </div>
+      ))}
     </div>
   )
 }

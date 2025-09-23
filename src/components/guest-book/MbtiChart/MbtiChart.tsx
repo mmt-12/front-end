@@ -6,6 +6,7 @@ import * as echarts from 'echarts/core'
 import { SVGRenderer } from 'echarts/renderers'
 
 import { useMbtiTest } from '@/api'
+import NoContentFallback from '@/components/common/NoContentFallback'
 import { MBTI_COLOR, type MbtiType } from '@/consts/MBTI'
 import MbtiChartSkeleton from './MbtiChart.Skeleton'
 
@@ -24,8 +25,13 @@ export default function MbtiChart({ communityId, associateId }: Props) {
   const { data } = useMbtiTest(communityId, associateId)
   const chartRef = useRef(null)
 
+  const hasResult = useMemo(() => {
+    if (!data) return false
+    return Object.values(data).some(value => value > 0)
+  }, [data])
+
   const option = useMemo(() => {
-    if (!data) return null
+    if (!data || !hasResult) return null
     const labels = Object.keys(data)
     const values = Object.values(data)
     const total = values.reduce<number>((acc, v) => acc + v, 0)
@@ -83,7 +89,15 @@ export default function MbtiChart({ communityId, associateId }: Props) {
         },
       ],
     }
-  }, [data, theme])
+  }, [data, hasResult, theme])
+
+  if (!data) return <MbtiChartSkeleton />
+
+  if (!hasResult) {
+    return (
+      <NoContentFallback size='block' message='MBTI 검사 결과가 없어요. 🥲' />
+    )
+  }
 
   if (!option) return <MbtiChartSkeleton />
 

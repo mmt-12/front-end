@@ -7,11 +7,11 @@ import type { IReaction } from '@/types/reaction'
 import EmojiDetailModal from '../EmojiDetailModal'
 
 export default function Emoji({
-  id,
   url: imageUrl,
   size = 'md',
   isActive = false,
   involved = false,
+  isPost = false,
   onClick,
 }: IReaction) {
   const theme = useTheme()
@@ -47,17 +47,12 @@ export default function Emoji({
   }, [imageUrl, openModal, closeModal])
 
   return (
-    <div
-      onClick={e => onClick?.(e, id)}
-      css={containerStyle}
-      className='button'
-      ref={el}
-    >
+    <div onClick={onClick} css={containerStyle} className='button' ref={el}>
       <div css={imageWrapperStyle(theme, size, involved)}>
         <Img src={imageUrl} alt='Emoji' customCss={imageStyle} />
         <div css={shadowStyle(size, involved)}></div>
       </div>
-      <div css={activeBarStyle(theme, isActive)} />
+      {isPost && <div css={activeBarStyle(theme, isActive)} />}
     </div>
   )
 }

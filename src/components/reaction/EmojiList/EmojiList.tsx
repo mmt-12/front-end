@@ -13,6 +13,8 @@ export default function EmojiList({
   size,
 }: Props) {
   if (reactions.length === 0) return null
+  console.log(selectedUrl)
+  console.log(reactions)
   return (
     <div css={reactionsStyle(size)} className='no-scrollbar'>
       {reactions.map(emoji => (
@@ -22,6 +24,7 @@ export default function EmojiList({
           onClick={e => onClick(e, emoji.id)}
           isActive={emoji.url == selectedUrl}
           size={size}
+          isPost
         />
       ))}
     </div>

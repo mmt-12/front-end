@@ -89,7 +89,15 @@ export const globalStyle = (theme: Theme) => css({
       backgroundColor: theme.colors.stone[100],
     }
   },
-  'button.lg:active, .button.lg:active, a.lg:active': {
-    transform: 'scale(0.97)'
+  'button.lg, .button.lg, a.lg': {
+    ':active': {
+      transform: 'scale(0.97)'
+    }
+  },
+  '.still': {
+    ':active': {
+      transform: 'none',
+      backgroundColor: 'transparent',
+    }
   }
 })

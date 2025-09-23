@@ -18,9 +18,9 @@ export const Default: Story = {
     id: 1,
     url: '/test_images/image1.png',
     name: 'Smile',
-    onClick: (e, id) => {
+    onClick: e => {
       e.stopPropagation()
-      console.log(`Clicked on emoji with id: ${id}`)
+      console.log(`Clicked on emoji`)
     },
   },
 }
@@ -32,9 +32,9 @@ export const Reacted: Story = {
     url: '/test_images/image2.png',
     name: 'Laugh',
     involved: true,
-    onClick: (e, id) => {
+    onClick: e => {
       e.stopPropagation()
-      console.log(`Clicked on emoji with id: ${id}`)
+      console.log(`Clicked on emoji`)
     },
   },
 }
@@ -45,9 +45,9 @@ export const WithAmount: Story = {
     id: 3,
     url: '/test_images/image3.png',
     name: 'Heart',
-    onClick: (e, id) => {
+    onClick: e => {
       e.stopPropagation()
-      console.log(`Clicked on emoji with id: ${id}`)
+      console.log(`Clicked on emoji`)
     },
   },
 }
@@ -59,9 +59,9 @@ export const Active: Story = {
     url: '/test_images/image3.png',
     name: 'Heart',
     isActive: true,
-    onClick: (e, id) => {
+    onClick: e => {
       e.stopPropagation()
-      console.log(`Clicked on emoji with id: ${id}`)
+      console.log(`Clicked on emoji`)
     },
   },
 }
