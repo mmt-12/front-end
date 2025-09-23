@@ -1,7 +1,10 @@
+import { useEffect, useRef } from 'react'
 import { css, useTheme, type Theme } from '@emotion/react'
 
 import Img from '@/components/common/Img'
+import { useModal } from '@/hooks/useModal'
 import type { IReaction } from '@/types/reaction'
+import EmojiDetailModal from '../EmojiDetailModal'
 
 export default function Emoji({
   id,
@@ -12,11 +15,43 @@ export default function Emoji({
   onClick,
 }: IReaction) {
   const theme = useTheme()
+  const { openModal, closeModal } = useModal()
+  const isTouching = useRef(true)
+  const el = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleTouchStart = () => {
+      console.log('touch start', isTouching.current)
+      isTouching.current = true
+      setTimeout(() => {
+        if (isTouching.current) openModal(<EmojiDetailModal url={imageUrl} />)
+      }, 400)
+    }
+    const handleTouchEnd = () => {
+      console.log('touch end', isTouching.current)
+      if (isTouching.current) {
+        closeModal()
+      }
+      isTouching.current = false
+    }
+
+    const element = el.current
+    if (!element) return
+    element.addEventListener('touchstart', handleTouchStart)
+    element.addEventListener('touchend', handleTouchEnd)
+    return () => {
+      if (!element) return
+      element.removeEventListener('touchStart', handleTouchStart)
+      element.removeEventListener('touchend', handleTouchEnd)
+    }
+  }, [imageUrl, openModal, closeModal])
+
   return (
     <div
       onClick={e => onClick?.(e, id)}
       css={containerStyle}
       className='button'
+      ref={el}
     >
       <div css={imageWrapperStyle(theme, size, involved)}>
         <Img src={imageUrl} alt='Emoji' customCss={imageStyle} />
