@@ -3,13 +3,11 @@ import { css, useTheme, type Theme } from '@emotion/react'
 import { DownloadSquare, GalleryCircle, UserCircle } from '@solar-icons/react'
 import { Link } from 'react-router-dom'
 
-import { useMemoryImages } from '@/api'
 import rightArrow from '@/assets/images/icons/rightArrow.svg'
 import Button from '@/components/common/Button'
 import Chip from '@/components/common/Chip'
 import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
-import { useUserStore } from '@/store/userStore'
 import type { locationType } from '@/types/memory'
 import { formatDateString } from '@/utils/date'
 import { compressImages, downloadBlob } from '@/utils/image'
@@ -27,6 +25,7 @@ interface Props {
   }
   saveEnabled?: boolean
   isLink?: boolean
+  pictures?: string[]
 }
 
 export default function MemoryInfo(props: Props) {
@@ -36,12 +35,8 @@ export default function MemoryInfo(props: Props) {
   const formattedStartTime = formatDateString(props.period.startTime || '')
   const formattedEndTime = formatDateString(props.period.endTime || '')
 
-  const { communityId } = useUserStore()
-
-  const { data: pictureData } = useMemoryImages(communityId, props.id)
-
   const handleSaveClick = useCallback(async () => {
-    if (!pictureData || pictureData.pictures.length === 0) {
+    if (!props.pictures?.length) {
       alert('저장할 사진이 없습니다.')
       return
     }
@@ -49,14 +44,14 @@ export default function MemoryInfo(props: Props) {
       return
     }
     try {
-      compressImages(pictureData.pictures).then(blob => {
+      compressImages(props.pictures).then(blob => {
         downloadBlob(blob, `memory_${props.id}_images.zip`)
       })
     } catch (error) {
       console.error('Error during image compression or download:', error)
       alert('사진 저장 중 오류가 발생했습니다. 다시 시도해주세요.')
     }
-  }, [pictureData, props.id, alert, confirm, props.title])
+  }, [props.pictures, props.id, alert, confirm, props.title])
 
   const renderMeta = () => {
     return (

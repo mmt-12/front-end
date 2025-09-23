@@ -2,7 +2,7 @@ import { PenNewSquare } from '@solar-icons/react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { usePostList } from '@/api'
-import { useMemoryDetail } from '@/api/memory'
+import { useMemoryDetail, useMemoryImages } from '@/api/memory'
 import InfiniteScroll from '@/components/common/InfiniteScroll'
 import MemoryInfo from '@/components/memory/MemoryInfo'
 import MemoryInfoSkeleton from '@/components/memory/MemoryInfo/MemoryInfo.Skeleton'
@@ -33,11 +33,17 @@ export default function MemoryDetailPage() {
     usePostList(1, memoryId)
   const posts = data?.pages.flatMap(page => page.posts) || []
 
+  const { data: pictureData } = useMemoryImages(communityId, memoryId)
+
   return (
     <>
       <header css={{ padding: '4px' }}>
         {memory ? (
-          <MemoryInfo {...memory} saveEnabled />
+          <MemoryInfo
+            {...memory}
+            saveEnabled
+            pictures={pictureData?.pictures}
+          />
         ) : (
           <MemoryInfoSkeleton saveEnabled description />
         )}

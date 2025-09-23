@@ -39,7 +39,7 @@ export function useCreateMemory (communityId = 1) {
 
 // 기억 목록 조회
 export function useMemoryList (communityId = 1, params?: MemoryListParams) {
-  const size = params?.size ?? 10
+  const size = params?.size ?? 30
   const { keyword, startTime, endTime } = params || {}
   return useInfiniteQuery({
     queryKey: ['memories', communityId, size, keyword, startTime, endTime],
