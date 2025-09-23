@@ -53,6 +53,7 @@ export default function Voice({
             <p css={nameStyle}>{name}</p>
           </Marquee>
         </div>
+        <div css={shadowStyle(involved)}></div>
       </div>
       {isPost && <div css={activeBarStyle(theme, isActive)} />}
       <audio
@@ -80,6 +81,8 @@ const containerStyle = css({
 
 const playButtonWrapperStyle = (theme: Theme, involved: boolean) =>
   css({
+    position: 'relative',
+
     width: '100%',
     padding: '3px 12px 3px 4px',
     display: 'flex',
@@ -123,4 +126,18 @@ const activeBarStyle = (theme: Theme, isActive: boolean) =>
     borderRadius: 2,
     backgroundColor: theme.colors.stone[300],
     transition: 'height 0.2s ease-in-out, width 0.2s ease-in-out',
+  })
+
+const shadowStyle = (involved: boolean) =>
+  css({
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    top: 0,
+    left: 0,
+
+    borderRadius: 16,
+    boxShadow: involved ? 'inset 0px 0px 8px 2px rgba(0, 0, 0, 0.25)' : 'none',
+    pointerEvents: 'none',
+    transition: 'box-shadow 180ms ease-out',
   })

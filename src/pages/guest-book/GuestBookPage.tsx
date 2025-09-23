@@ -91,7 +91,11 @@ export default function GuestBookPage() {
                 ))}
               </div>
             )}
-            <WavyButton label='더보기' onClick={() => setMode('GUEST BOOK')} />
+            <WavyButton
+              label='더보기'
+              onClick={() => setMode('GUEST BOOK')}
+              customCss={{ marginTop: '12px' }}
+            />
           </Card>
         </>
       ) : (

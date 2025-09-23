@@ -62,6 +62,7 @@ export default function EmojiPickerModal({
                   {...emoji}
                   onClick={(_e, id) => handleSelectEmoji(id)}
                   involved={getInvolved(emoji.id)}
+                  size='sm'
                 />
               ))}
       </div>
@@ -92,6 +93,7 @@ export default function EmojiPickerModal({
                   {...emoji}
                   onClick={(_e, id) => handleSelectEmoji(id)}
                   involved={getInvolved(emoji.id)}
+                  size='sm'
                 />
               ))}
         </InfiniteScroll>
@@ -119,5 +121,5 @@ const emojiListStyle = css({
 
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fill, minmax(40px, 1fr))',
-  gap: '16px 18px',
+  gap: '14px 18px',
 })

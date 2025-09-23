@@ -20,6 +20,7 @@ export default function Emoji({
     >
       <div css={imageWrapperStyle(theme, size, involved)}>
         <Img src={imageUrl} alt='Emoji' customCss={imageStyle} />
+        <div css={shadowStyle(size, involved)}></div>
       </div>
       <div css={activeBarStyle(theme, isActive)} />
     </div>
@@ -34,7 +35,6 @@ const containerStyle = css({
   alignItems: 'center',
   justifyContent: 'center',
   flexShrink: 0,
-  borderRadius: '16px',
 })
 
 const imageWrapperStyle = (
@@ -43,18 +43,18 @@ const imageWrapperStyle = (
   involved: boolean,
 ) =>
   css({
-    width: size === 'sm' ? '48px' : size === 'md' ? '64px' : '120px',
-    height: size === 'sm' ? '48px' : size === 'md' ? '64px' : '120px',
+    position: 'relative',
+    width: size === 'sm' ? '52px' : size === 'md' ? '64px' : '120px',
+    height: size === 'sm' ? '52px' : size === 'md' ? '64px' : '120px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexShrink: 0,
-    borderRadius: '12px',
+    borderRadius: size === 'sm' ? 10 : size === 'md' ? 14 : 20,
     overflow: 'hidden',
 
-    border: `${involved ? '3px' : '0px'} solid ${theme.colors.sky[300]}`,
-    transition: 'outline 0.2s ease-in-out',
-    filter: involved ? 'sepia(10%);' : 'none',
+    border: `${involved ? (size === 'sm' ? '2.5px' : size === 'md' ? '3px' : '6px') : '0px'} solid ${theme.colors.sky[300]}`,
+    transition: 'border 180ms ease-out',
   })
 
 const imageStyle = css({
@@ -67,9 +67,24 @@ const activeBarStyle = (theme: Theme, isActive: boolean) =>
   css({
     width: isActive ? 24 : 0,
     height: isActive ? 4 : 0,
-    marginTop: 4,
+    marginTop: isActive ? 4 : 0,
 
     borderRadius: 2,
     backgroundColor: theme.colors.stone[300],
-    transition: 'height 0.2s ease-in-out, width 0.2s ease-in-out',
+    transition:
+      'margin 180ms ease-out, height 180ms ease-out, width 180ms ease-out',
+  })
+
+const shadowStyle = (size: 'sm' | 'md' | 'lg', involved: boolean) =>
+  css({
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    top: 0,
+    left: 0,
+
+    borderRadius: size === 'sm' ? 6 : size === 'md' ? 9 : 16,
+    boxShadow: involved ? 'inset 0px 0px 8px 2px rgba(0, 0, 0, 0.25)' : 'none',
+    pointerEvents: 'none',
+    transition: 'box-shadow 180ms ease-out',
   })

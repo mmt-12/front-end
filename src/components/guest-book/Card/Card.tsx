@@ -28,7 +28,11 @@ export default function Card({
       borderRadius={16}
       customCss={[containerStyle, customCss]}
     >
-      <div css={contentStyle} onClick={onClick} className='button lg'>
+      <div
+        css={contentStyle}
+        onClick={onClick}
+        className={onClick && 'button lg'}
+      >
         <div css={headerStyle}>
           {onButtonClick && <div css={sideAreaStyle} />}
           <p css={cardTitleStyle}>{`#${title}`}</p>
