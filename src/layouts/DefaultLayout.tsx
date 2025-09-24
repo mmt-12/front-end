@@ -5,7 +5,7 @@ import PageTransition from '@/components/common/PageTransition'
 import Header from '@/components/layout/Header'
 import NavBar from '@/components/layout/NavBar'
 import { fadeIn } from '@/styles/animation'
-import { withSafeAreaTop } from '@/styles/common'
+import { withSafeAreaBottom, withSafeAreaTop } from '@/styles/common'
 
 export default function DefaultLayout() {
   return (
@@ -22,9 +22,9 @@ export default function DefaultLayout() {
 }
 
 const mainStyle = css({
-  height: `calc(100vh - ${withSafeAreaTop(112)})`,
+  height: `calc(100vh - ${withSafeAreaTop(56)} - ${withSafeAreaBottom(56)})`,
   marginTop: withSafeAreaTop(56),
-  marginBottom: withSafeAreaTop(56),
+  marginBottom: withSafeAreaBottom(56),
   overflowY: 'scroll',
   overflowX: 'hidden',
 })
