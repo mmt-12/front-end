@@ -1,16 +1,22 @@
+import { css } from '@emotion/react'
 import { Outlet } from 'react-router-dom'
 
 import NavBar from '@/components/layout/NavBar'
-import { mainStyle } from '@/styles/layout'
+import { withSafeAreaTop } from '@/styles/common'
 
 export default function NavBarLayout() {
   return (
     <>
-      <main css={[mainStyle]}>
+      <main css={mainStyle}>
         <Outlet />
-        <div css={{ height: '56px', flexShrink: 0 }}></div>
       </main>
       <NavBar />
     </>
   )
 }
+
+const mainStyle = css({
+  height: `calc(100vh - ${withSafeAreaTop(56)})`,
+  marginBottom: withSafeAreaTop(56),
+  overflowY: 'scroll',
+})

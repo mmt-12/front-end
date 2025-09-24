@@ -14,7 +14,7 @@ import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 import { slideDown } from '@/styles/animation'
-import { SAFE_AREA_BOTTOM } from '@/styles/layout'
+import { SAFE_AREA_BOTTOM, withSafeAreaBottom } from '@/styles/common'
 import CreateButtonsModal from '../../modal/CreateButtonsModal/CreateButtonsModal'
 
 export default function NavBar() {
@@ -92,7 +92,7 @@ const navBarStyle = (theme: Theme) =>
     alignItems: 'center',
     backdropFilter: 'blur(3px)',
     backgroundColor: theme.colors.whiteBlur,
-    height: `calc(56px + ${SAFE_AREA_BOTTOM})`,
+    height: withSafeAreaBottom(56),
     zIndex: 10,
   })
 

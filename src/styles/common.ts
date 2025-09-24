@@ -21,3 +21,12 @@ export const flexGap = (
     flexDirection: direction,
     gap: `${gap}px`,
   })
+
+export const SAFE_AREA_TOP = 'env(safe-area-inset-top)'
+export const SAFE_AREA_BOTTOM = 'env(safe-area-inset-bottom)'
+
+export const withSafeAreaBottom = (value: string | number = '0px') =>
+  `calc(${typeof value === 'number' ? `${value}px` : value} + ${SAFE_AREA_BOTTOM})`
+
+export const withSafeAreaTop = (value: string | number = '0px') =>
+  `calc(${typeof value === 'number' ? `${value}px` : value} + ${SAFE_AREA_TOP})`

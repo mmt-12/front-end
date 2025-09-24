@@ -1,16 +1,6 @@
 import { css, type Theme } from '@emotion/react'
 
-export const SAFE_AREA_TOP = 'env(safe-area-inset-top)'
-export const SAFE_AREA_BOTTOM = 'env(safe-area-inset-bottom)'
-
-export const mainStyle = css({
-  width: '100%',
-  height: `calc(100vh - (56px + ${SAFE_AREA_TOP}))`,
-  paddingTop: `calc(56px + ${SAFE_AREA_TOP})`,
-  display: 'flex',
-  flexDirection: 'column',
-  overflowY: 'scroll',
-})
+import { SAFE_AREA_TOP, withSafeAreaTop } from './common'
 
 export const headerStyle = (theme: Theme) =>
   css({
@@ -18,7 +8,7 @@ export const headerStyle = (theme: Theme) =>
     top: 0,
     left: 0,
     width: '100%',
-    height: `calc(56px + ${SAFE_AREA_TOP})`,
+    height: withSafeAreaTop(56),
     padding: `${SAFE_AREA_TOP} 16px 0 16px`,
     display: 'flex',
     alignItems: 'center',
