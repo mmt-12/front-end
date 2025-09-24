@@ -1,4 +1,4 @@
-import { css, type Theme } from '@emotion/react'
+import { css } from '@emotion/react'
 import { Outlet } from 'react-router-dom'
 
 import { ModalProvider } from '@/contexts/ModalProvider'
@@ -13,9 +13,7 @@ export default function RootLayout() {
   )
 }
 
-const layoutContainerStyle = (theme: Theme) =>
-  css({
-    height: '100vh',
-    backgroundColor: theme.colors.bg,
-    overflowY: 'hidden',
-  })
+const layoutContainerStyle = css({
+  height: '100vh',
+  overflowY: 'hidden',
+})

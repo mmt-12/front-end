@@ -1,103 +1,105 @@
 import type { Theme } from '@emotion/react'
 import { css } from '@emotion/react'
 
-export const globalStyle = (theme: Theme) => css({
-  '@font-face': [
-    {
-      fontFamily: 'Pretendard Variable',
-      fontWeight: '45 92',
-      fontStyle: 'normal',
-      fontDisplay: 'swap',
-      src: `url('./woff2/PretendardVariable.woff2') format('woff2-variations')`,
+export const globalStyle = (theme: Theme) =>
+  css({
+    '@font-face': [
+      {
+        fontFamily: 'Pretendard Variable',
+        fontWeight: '45 92',
+        fontStyle: 'normal',
+        fontDisplay: 'swap',
+        src: `url('./woff2/PretendardVariable.woff2') format('woff2-variations')`,
+      },
+      {
+        fontFamily: 'PFStardust',
+        src: "url('@/assets/fonts/PFStardust.ttf') format('truetype')",
+      },
+      {
+        fontFamily: 'PressStart2P',
+        fontStyle: 'normal',
+        fontWeight: 400,
+        src: "url('https://fonts.gstatic.com/s/pressstart2p/v14/e3t4euO8T-267oIAQAu6jDQyK3nVivM.woff2') format('woff2')",
+      },
+    ],
+    html: {
+      fontFamily: 'Pretendard Variable, sans-serif',
     },
-    {
-      fontFamily: 'PFStardust',
-      src: "url('@/assets/fonts/PFStardust.ttf') format('truetype')",
+    body: {
+      padding: 0,
+      margin: 0,
+      backgroundColor: theme.colors.bg,
     },
-    {
-      fontFamily: 'PressStart2P',
-      fontStyle: 'normal',
-      fontWeight: 400,
-      src: "url('https://fonts.gstatic.com/s/pressstart2p/v14/e3t4euO8T-267oIAQAu6jDQyK3nVivM.woff2') format('woff2')",
+
+    a: {
+      textDecoration: 'none',
+      color: 'inherit',
     },
-  ],
-  html: {
-    fontFamily: 'Pretendard Variable, sans-serif',
-  },
-  body: {
-    padding: 0,
-    margin: 0,
-  },
 
-  a: {
-    textDecoration: 'none',
-    color: 'inherit',
-  },
-
-  button: {
-    backgroundColor: 'transparent',
-    border: 'none',
-    cursor: 'pointer',
-    padding: 0,
-    margin: 0,
-  },
-
-  p: {
-    margin: 0,
-    padding: 0,
-  },
-
-  h1: {
-    margin: 0,
-    padding: 0,
-  },
-
-  h2: {
-    margin: 0,
-    padding: 0,
-  },
-
-  li: {
-    listStyle: 'none',
-  },
-
-  ol: {
-    padding: 0,
-    margin: 0,
-  },
-  div: {
-    boxSizing: 'border-box',
-  },
-
-  '.no-scrollbar': {
-    '&::-webkit-scrollbar': {
-      display: 'none',
-    },
-    scrollbarWidth: 'none',
-    msOverflowStyle: 'none',
-  },
-
-  '.stardust': {
-    fontFamily: 'PFStardust, sans-serif',
-  },
-
-  'button, a, .button': {
-    transition: 'transform 200ms ease, background-color 240ms ease',
-    borderRadius: 'calc(8px + 2%)',
-    ':active': {
-      transform: 'scale(0.95)',
-      backgroundColor: theme.colors.stone[100],
-    }
-  },
-  'button.lg, .button.lg, a.lg': {
-    ':active': {
-      transform: 'scale(0.97)'
-    }
-  },
-  '.still': {
-    ':active': {
-      transform: 'none',
+    button: {
       backgroundColor: 'transparent',
-    }
-  }
-})
+      border: 'none',
+      cursor: 'pointer',
+      padding: 0,
+      margin: 0,
+    },
+
+    p: {
+      margin: 0,
+      padding: 0,
+    },
+
+    h1: {
+      margin: 0,
+      padding: 0,
+    },
+
+    h2: {
+      margin: 0,
+      padding: 0,
+    },
+
+    li: {
+      listStyle: 'none',
+    },
+
+    ol: {
+      padding: 0,
+      margin: 0,
+    },
+    div: {
+      boxSizing: 'border-box',
+    },
+
+    '.no-scrollbar': {
+      '&::-webkit-scrollbar': {
+        display: 'none',
+      },
+      scrollbarWidth: 'none',
+      msOverflowStyle: 'none',
+    },
+
+    '.stardust': {
+      fontFamily: 'PFStardust, sans-serif',
+    },
+
+    'button, a, .button': {
+      transition: 'transform 200ms ease, background-color 240ms ease',
+      borderRadius: 'calc(8px + 2%)',
+      ':active': {
+        transform: 'scale(0.95)',
+        backgroundColor: theme.colors.stone[100],
+      },
+    },
+    'button.lg, .button.lg, a.lg': {
+      ':active': {
+        transform: 'scale(0.97)',
+      },
+    },
+    '.still': {
+      ':active': {
+        transform: 'none',
+        backgroundColor: 'transparent',
+      },
+    },
+  })
