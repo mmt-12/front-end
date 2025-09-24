@@ -11,7 +11,7 @@ export default function Album({ children }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   return (
-    <div css={contianerStyle}>
+    <div key={children?.toString()} css={contianerStyle}>
       <div css={albumContainerStyle} className='no-scrollbar'>
         {Children.map(children, (child, index) => (
           <>

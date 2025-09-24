@@ -75,14 +75,14 @@ export default function ImageInputField({
         onChange={async e => {
           const files = Array.from(e.target.files || [])
           const length = images.length + files.length
-          if (length > maxLength) {
-            files.splice(0, length - maxLength)
-            alert(`최대 ${maxLength}장 씩만 업로드 합시다.`)
-          }
           const compressedFiles = await Promise.all(
             files.map(file => compressImage(file)),
           )
-          const newFiles = compressedFiles
+          const newFiles = compressedFiles.concat(images)
+          if (length > maxLength) {
+            newFiles.splice(0, length - maxLength)
+            alert(`최대 ${maxLength}장 씩만 업로드 합시다.`)
+          }
           onChange(newFiles)
         }}
       />
