@@ -14,7 +14,7 @@ import ReactBar from '@/components/memory/ReactBar/ReactBar'
 import ReactedProfileList from '@/components/reaction/ReactedProfileList/ReactedProfileList'
 import useHeader from '@/hooks/useHeader'
 import { useUserStore } from '@/store/userStore'
-import { flexGap } from '@/styles/common'
+import { flexGap, withSafeAreaBottom } from '@/styles/common'
 
 export default function PostDetailPage() {
   const { memoryId, postId } = useParams()
@@ -136,7 +136,7 @@ const reactBarStyle = (theme: Theme) =>
   css({
     zIndex: 20,
     position: 'fixed',
-    bottom: '24px',
+    bottom: withSafeAreaBottom(24),
     right: '0%',
     marginRight: `calc(calc(calc(100vw - min(${theme.maxWidth}, 100vw)) / 2) + 24px)`,
 
