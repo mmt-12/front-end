@@ -16,7 +16,7 @@ import {
 } from '@/store/recentReactionStore'
 import { useUserStore } from '@/store/userStore'
 import { slideDown } from '@/styles/animation'
-import type { Voice as VoiceType } from '@/types/api'
+import type { Reaction } from '@/types/api'
 import Voice from '../Voice'
 import VoiceRegisterModal from '../VoiceRegisterModal/VoiceRegisterModal'
 
@@ -30,7 +30,7 @@ export default function VoicePickerModal({
   const { communityId, memberId } = useUserStore()
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useVoiceList(communityId, { keyword: searchKey })
-  const voices: VoiceType[] = data?.pages.flatMap(page => page.voices) || []
+  const voices: Reaction[] = data?.pages.flatMap(page => page.voices) || []
 
   const { selectReaction } = useReactionPicker()
   const contextKey = createRecentReactionContextKey({ memberId, communityId })
@@ -40,7 +40,7 @@ export default function VoicePickerModal({
     ) || []
   const addRecentVoice = useRecentReactionStore(state => state.addRecentVoice)
 
-  const handleSelectVoice = (voice: VoiceType) => {
+  const handleSelectVoice = (voice: Reaction) => {
     addRecentVoice(voice, { memberId, communityId })
     selectReaction('VOICE', voice.id)
     closeModal()

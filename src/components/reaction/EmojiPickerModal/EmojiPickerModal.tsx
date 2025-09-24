@@ -16,7 +16,7 @@ import {
 } from '@/store/recentReactionStore'
 import { useUserStore } from '@/store/userStore'
 import { slideDown } from '@/styles/animation'
-import type { Emoji as EmojiType } from '@/types/api'
+import type { Reaction } from '@/types/api'
 import Emoji from '../Emoji/Emoji'
 import EmojiRegisterModal from '../EmojiRegisterModal'
 
@@ -33,7 +33,7 @@ export default function EmojiPickerModal({
       keyword: searchKey,
       size: 24,
     })
-  const emojis: EmojiType[] = data?.pages.flatMap(page => page.emojis) || []
+  const emojis: Reaction[] = data?.pages.flatMap(page => page.emojis) || []
 
   const { selectReaction } = useReactionPicker()
   const contextKey = createRecentReactionContextKey({ memberId, communityId })
@@ -43,7 +43,7 @@ export default function EmojiPickerModal({
     ) || []
   const addRecentEmoji = useRecentReactionStore(state => state.addRecentEmoji)
 
-  const handleSelectEmoji = (emoji: EmojiType) => {
+  const handleSelectEmoji = (emoji: Reaction) => {
     addRecentEmoji(emoji, { memberId, communityId })
     selectReaction('EMOJI', emoji.id)
     closeModal()

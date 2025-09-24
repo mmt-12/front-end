@@ -103,11 +103,7 @@ export interface Comment {
   involved: boolean
 }
 
-export interface BubbleComment {
-  id: number
-  url: string
-  authors: CommentAuthor[]
-}
+export type BubbleComment = Omit<Comment, 'name' | 'involved'>
 
 export interface Post {
   id: number
@@ -219,7 +215,7 @@ export interface ProfileImageListResponse {
   hasNext: boolean
 }
 
-export interface Voice {
+export interface Reaction {
   id: number
   name: string
   url: string
@@ -232,7 +228,7 @@ export interface Voice {
 }
 
 export interface VoiceListResponse {
-  voices: Voice[]
+  voices: Reaction[]
   hasNext: boolean
   nextCursor: number
 }
@@ -241,20 +237,9 @@ export interface CreateVoiceRequest {
   name: string
 }
 
-export interface Emoji {
-  id: number
-  name: string
-  url: string
-  involved: boolean
-  author: {
-    id: number
-    nickname: string
-    imageUrl: string | null
-  }
-}
 
 export interface EmojiListResponse {
-  emojis: Emoji[]
+  emojis: Reaction[]
   hasNext: boolean
   nextCursor: number
 }
