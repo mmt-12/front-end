@@ -6,7 +6,7 @@ import { ModalProvider } from '@/contexts/ModalProvider'
 export default function RootLayout() {
   return (
     <ModalProvider>
-      <div css={layoutContainerStyle}>
+      <div css={layoutContainerStyle} className='no-scrollbar'>
         <Outlet />
       </div>
     </ModalProvider>
