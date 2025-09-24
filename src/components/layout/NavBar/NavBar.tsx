@@ -84,6 +84,7 @@ const navBarStyle = (theme: Theme) =>
   css({
     position: 'fixed',
     bottom: 0,
+    paddingBottom: 'env(safe-area-inset-bottom)',
     width: '100%',
     maxWidth: theme.maxWidth,
     display: 'flex',
