@@ -1,6 +1,7 @@
 import { css, type Theme } from '@emotion/react'
 
 export const SAFE_AREA_TOP = 'env(safe-area-inset-top)'
+export const SAFE_AREA_BOTTOM = 'env(safe-area-inset-bottom)'
 
 export const mainStyle = css({
   width: '100%',
