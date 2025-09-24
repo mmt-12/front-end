@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import type { Emoji, Voice } from '@/types/api'
+import type { Reaction } from '@/types/api'
 
 type RecentReactionContext = {
   memberId: number
@@ -9,14 +9,14 @@ type RecentReactionContext = {
 }
 
 type RecentReactionCollection = {
-  emojis: Emoji[]
-  voices: Voice[]
+  emojis: Reaction[]
+  voices: Reaction[]
 }
 
 interface RecentReactionState {
   recentsByContext: Record<string, RecentReactionCollection>
-  addRecentEmoji: (_emoji: Emoji, _context: RecentReactionContext) => void
-  addRecentVoice: (_voice: Voice, _context: RecentReactionContext) => void
+  addRecentEmoji: (_emoji: Reaction, _context: RecentReactionContext) => void
+  addRecentVoice: (_voice: Reaction, _context: RecentReactionContext) => void
 }
 
 const MAX_RECENT_REACTIONS = 6

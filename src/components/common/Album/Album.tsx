@@ -11,7 +11,7 @@ export default function Album({ children }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   return (
-    <div css={contianerStyle}>
+    <div key={children?.toString()} css={contianerStyle}>
       <div css={albumContainerStyle} className='no-scrollbar'>
         {Children.map(children, (child, index) => (
           <>
@@ -26,12 +26,14 @@ export default function Album({ children }: Props) {
         ))}
       </div>
       <div css={dotContainerStyle}>
-        {Children.map(children, (_, index) => (
-          <div
-            css={dotStyle}
-            className={index === currentIndex ? 'active' : ''}
-          />
-        ))}
+        {Children.map(children, (child, index) =>
+          child ? (
+            <div
+              css={dotStyle}
+              className={index === currentIndex ? 'active' : ''}
+            />
+          ) : null,
+        )}
       </div>
     </div>
   )
