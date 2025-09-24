@@ -26,12 +26,14 @@ export default function Album({ children }: Props) {
         ))}
       </div>
       <div css={dotContainerStyle}>
-        {Children.map(children, (_, index) => (
-          <div
-            css={dotStyle}
-            className={index === currentIndex ? 'active' : ''}
-          />
-        ))}
+        {Children.map(children, (child, index) =>
+          child ? (
+            <div
+              css={dotStyle}
+              className={index === currentIndex ? 'active' : ''}
+            />
+          ) : null,
+        )}
       </div>
     </div>
   )
