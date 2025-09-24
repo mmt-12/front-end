@@ -14,6 +14,7 @@ import VoiceRegisterModal from '@/components/reaction/VoiceRegisterModal/VoiceRe
 import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { slideDown } from '@/styles/animation'
+import { withSafeAreaBottom } from '@/styles/common'
 
 export default function CreateButtonsModal() {
   const { openModal } = useModal()
@@ -57,7 +58,7 @@ export default function CreateButtonsModal() {
 
 const contentStyle = css({
   width: '100%',
-  padding: '0px 18px 24px 18px',
+  padding: `0px 18px ${withSafeAreaBottom(24)} 18px`,
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
   gap: '12px',

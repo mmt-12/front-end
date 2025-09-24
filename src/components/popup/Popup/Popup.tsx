@@ -4,6 +4,7 @@ import { ArrowLeft } from '@solar-icons/react'
 
 import HeaderItem from '@/components/layout/Header/HeaderItem'
 import { slideUp } from '@/styles/animation'
+import { withSafeAreaTop } from '@/styles/common'
 import { headerStyle } from '@/styles/layout'
 import { modalStyle } from '@/styles/modal'
 
@@ -26,20 +27,21 @@ export default function Popup({ title, children, onClose }: Props) {
       onClick={e => e.stopPropagation()}
       onScroll={e => e.stopPropagation()}
     >
-      <header css={headerStyle}>
+      <div css={headerStyle}>
         <HeaderItem onClick={onClose} icon={ArrowLeft} />
         <div>
           <span css={{ fontSize: '16px', fontWeight: 'bold' }}>{title}</span>
         </div>
 
         <HeaderItem onClick={() => {}} icon={null} />
-      </header>
+      </div>
       <div css={contentStyle}>{children}</div>
     </div>
   )
 }
 
 const contentStyle = css({
-  overflowY: 'auto',
-  height: 'calc(100vh - 60px)', // Adjust height to account for header
+  height: `calc(100vh - ${withSafeAreaTop(56)})`,
+  marginTop: withSafeAreaTop(56),
+  overflowY: 'scroll',
 })

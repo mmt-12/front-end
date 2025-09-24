@@ -16,6 +16,7 @@ import ClusteredMarker from '@/components/memoryMap/ClusteredMarker/ClusteredMar
 import MemoryMarker from '@/components/memoryMap/MemoryMarker/MemoryMarker'
 import useHeader from '@/hooks/useHeader'
 import { ROUTES } from '@/routes/ROUTES'
+import { withSafeAreaBottom } from '@/styles/common'
 import type { IMemoryInfo } from '@/types/memory'
 import { getDistanceBetween } from '@/utils/map'
 
@@ -175,7 +176,7 @@ export default function MapPage() {
 const memoryDetailStyle = (theme: Theme) =>
   css({
     position: 'fixed',
-    bottom: '64px',
+    bottom: withSafeAreaBottom(64),
     width: 'calc(100% - 32px)',
     maxWidth: `calc(${theme.maxWidth} - 64px)`,
     padding: '16px',

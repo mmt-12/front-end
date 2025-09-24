@@ -14,6 +14,7 @@ import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 import { slideDown } from '@/styles/animation'
+import { SAFE_AREA_BOTTOM, withSafeAreaBottom } from '@/styles/common'
 import CreateButtonsModal from '../../modal/CreateButtonsModal/CreateButtonsModal'
 
 export default function NavBar() {
@@ -84,14 +85,14 @@ const navBarStyle = (theme: Theme) =>
   css({
     position: 'fixed',
     bottom: 0,
-    paddingBottom: 'env(safe-area-inset-bottom)',
+    paddingBottom: SAFE_AREA_BOTTOM,
     width: '100%',
     maxWidth: theme.maxWidth,
     display: 'flex',
     alignItems: 'center',
     backdropFilter: 'blur(3px)',
     backgroundColor: theme.colors.whiteBlur,
-    height: '56px',
+    height: withSafeAreaBottom(56),
     zIndex: 10,
   })
 

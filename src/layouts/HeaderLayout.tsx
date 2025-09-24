@@ -4,13 +4,13 @@ import { Outlet } from 'react-router-dom'
 import PageTransition from '@/components/common/PageTransition'
 import Header from '@/components/layout/Header'
 import { slideInRight } from '@/styles/animation'
-import { SAFE_AREA_TOP } from '@/styles/layout'
+import { withSafeAreaTop } from '@/styles/common'
 
 export default function HeaderLayout() {
   return (
     <>
       <Header />
-      <main css={[mainStyle]}>
+      <main css={mainStyle}>
         <PageTransition keyframe={slideInRight}>
           <Outlet />
         </PageTransition>
@@ -18,8 +18,9 @@ export default function HeaderLayout() {
     </>
   )
 }
+
 const mainStyle = css({
-  height: `calc(100vh - (56px + ${SAFE_AREA_TOP}))`,
-  paddingTop: `calc(56px + ${SAFE_AREA_TOP})`,
+  height: `calc(100vh - ${withSafeAreaTop(56)})`,
+  marginTop: withSafeAreaTop(56),
   overflowY: 'scroll',
 })
