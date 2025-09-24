@@ -31,6 +31,7 @@ export default function EmojiPickerModal({
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useEmojiList(communityId, {
       keyword: searchKey,
+      size: 24,
     })
   const emojis: EmojiType[] = data?.pages.flatMap(page => page.emojis) || []
 

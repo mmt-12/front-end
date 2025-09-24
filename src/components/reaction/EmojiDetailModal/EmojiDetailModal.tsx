@@ -1,14 +1,27 @@
 import { css } from '@emotion/react'
 
 import Img from '@/components/common/Img'
+import { fadeIn } from '@/styles/animation'
 
 interface Props {
   url: string
 }
 
 export default function EmojiDetailModal({ url }: Props) {
-  return <Img src={url} alt='Emoji Detail' customCss={imageStyle} />
+  return (
+    <div css={wrapperStyle}>
+      <Img src={url} alt='Emoji Detail' customCss={imageStyle} />
+    </div>
+  )
 }
+
+const wrapperStyle = css({
+  position: 'fixed',
+  inset: 0,
+
+  animation: `${fadeIn} 160ms ease-in`,
+  willChange: 'transform, opacity',
+})
 
 const imageStyle = css({
   position: 'fixed',

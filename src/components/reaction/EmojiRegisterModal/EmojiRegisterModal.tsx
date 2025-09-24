@@ -36,8 +36,8 @@ export default function EmojiRegisterModal() {
 
     mutate(formData, {
       onSuccess: async () => {
-        await alert('이모지가 등록되었습니다.')
-        closeModal()
+        await closeModal()
+        alert('이모지가 등록되었습니다.')
       },
     })
   }

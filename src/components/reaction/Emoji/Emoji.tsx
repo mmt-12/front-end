@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { css, useTheme, type Theme } from '@emotion/react'
 
 import Img from '@/components/common/Img'
@@ -16,38 +16,28 @@ export default function Emoji({
 }: IReaction) {
   const theme = useTheme()
   const { openModal, closeModal } = useModal()
-  const isTouching = useRef(true)
-  const el = useRef<HTMLDivElement>(null)
+  const isModalOpen = useRef(false)
 
-  useEffect(() => {
-    const handleTouchStart = () => {
-      console.log('touch start', isTouching.current)
-      isTouching.current = true
-      setTimeout(() => {
-        if (isTouching.current) openModal(<EmojiDetailModal url={imageUrl} />)
-      }, 400)
-    }
-    const handleTouchEnd = () => {
-      console.log('touch end', isTouching.current)
-      if (isTouching.current) {
-        closeModal()
-      }
-      isTouching.current = false
-    }
+  const handleTouchStart = () => {
+    openModal(<EmojiDetailModal url={imageUrl} />)
+    isModalOpen.current = true
+  }
 
-    const element = el.current
-    if (!element) return
-    element.addEventListener('touchstart', handleTouchStart)
-    element.addEventListener('touchend', handleTouchEnd)
-    return () => {
-      if (!element) return
-      element.removeEventListener('touchStart', handleTouchStart)
-      element.removeEventListener('touchend', handleTouchEnd)
+  const handleTouchEnd = () => {
+    if (isModalOpen.current) {
+      closeModal()
+      isModalOpen.current = false
     }
-  }, [imageUrl, openModal, closeModal])
+  }
 
   return (
-    <div onClick={onClick} css={containerStyle} className='button' ref={el}>
+    <div
+      onClick={onClick}
+      onContextMenu={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      css={containerStyle}
+      className='button'
+    >
       <div css={imageWrapperStyle(theme, size, involved)}>
         <Img src={imageUrl} alt='Emoji' customCss={imageStyle} />
         <div css={shadowStyle(size, involved)}></div>
