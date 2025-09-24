@@ -129,7 +129,7 @@ export default function MbtiTest({
             {MBTI_TEST_DATA[currentQuestionIdx].choices.map(choice => (
               <WavyButton
                 isFullWidth
-                key={choice.code}
+                key={choice.text}
                 label={choice.text}
                 onClick={() => handleAnswer(choice.code)}
               />
