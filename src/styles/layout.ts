@@ -25,4 +25,5 @@ export const headerStyle = (theme: Theme) =>
     justifyContent: 'space-between',
     backgroundColor: theme.colors.white,
     borderBottom: `1px solid ${theme.colors.stone[150]}`,
+    zIndex: 20,
   })
