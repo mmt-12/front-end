@@ -69,6 +69,7 @@ const containerStyle = (theme: Theme) =>
     flexGrow: 1,
 
     backgroundColor: theme.colors.sky[50],
+    overflowY: 'scroll',
   })
 
 const memoryItemStyle = (theme: Theme) =>

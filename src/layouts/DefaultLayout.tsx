@@ -22,7 +22,7 @@ export default function DefaultLayout() {
 }
 
 const mainStyle = css({
-  height: `calc(100vh - ${withSafeAreaTop(56)} - ${withSafeAreaBottom(56)})`,
+  height: `calc(100vh - ${withSafeAreaTop(56)})`,
   marginTop: withSafeAreaTop(56),
   marginBottom: withSafeAreaBottom(56),
   overflowY: 'scroll',

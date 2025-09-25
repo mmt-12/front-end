@@ -128,6 +128,17 @@ export default function CalendarPicker({
     </div>
   )
 }
+const calendarWrapperStyle = css({
+  width: '100%',
+  padding: '4px',
+  margin: '0 auto',
+
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: 16,
+})
+
 
 const headerStyle = (theme: Theme) =>
   css({
@@ -164,14 +175,3 @@ const tableHeaderStyle = (theme: Theme) =>
     textAlign: 'center',
     color: theme.colors.stone[500],
   })
-
-const calendarWrapperStyle = css({
-  width: '100%',
-  padding: '4px',
-  margin: '0 auto',
-
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: 16,
-})
