@@ -28,6 +28,7 @@
     "jwt-decode": "^4.0.0",
     "prettier": "^3.6.2",
     "react": "^19.1.0",
+    "react-canvas-confetti": "^2.0.7",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.7.0",
     "storybook-addon-remix-react-router": "^5.0.0",
