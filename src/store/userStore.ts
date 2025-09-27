@@ -3,7 +3,6 @@ import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 
 import type { LoginResponse } from '@/api'
-import { api } from '@/utils/api'
 import { dateToId } from '@/utils/date'
 
 interface UserState {
@@ -32,7 +31,6 @@ export const useUserStore = create<UserState>()(
       communityId: 1,
 
       login: (userInfo: LoginResponse) => {
-        api.defaults.headers.common.Authorization = `Bearer ${userInfo.token.accessToken}`
         const payload = jwtDecode<TokenPayload>(userInfo.token.accessToken)
         console.log(payload)
         set({

@@ -101,6 +101,24 @@ export function useAchievements (communityId = 1, associateId: number) {
   })
 }
 
+// 업적 획득
+export function useAchieve (communityId = 1) {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (content: string) =>
+      api
+        .post(
+          `/v1/communities/${communityId}/achievements`,
+          { content }
+        )
+        .then(r => r.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['achievements', communityId] })
+    },
+  })
+}
+
 // 방명록 조회
 export function useGuestBookList (
   communityId = 1,

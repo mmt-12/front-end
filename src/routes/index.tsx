@@ -92,11 +92,11 @@ const router = createBrowserRouter([
               },
             ],
           },
+          {
+            path: ROUTES.TEST,
+            element: <Pages.TestPage />,
+          },
         ],
-      },
-      {
-        path: ROUTES.TEST,
-        element: <Pages.TestPage />,
       },
     ],
   },
