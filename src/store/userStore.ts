@@ -3,11 +3,9 @@ import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 
 import type { LoginResponse } from '@/api'
-import { api, removeToken } from '@/utils/api'
 import { dateToId } from '@/utils/date'
 
 interface UserState {
-  isLoggedIn: boolean
   isNew: boolean
   birthDate: string
   email: string
@@ -17,7 +15,6 @@ interface UserState {
   communityId: number
 
   login: (_userInfo: LoginResponse) => void
-  logout: () => void
   signup: (_birthDate: Date) => void
   stale: () => void
 }
@@ -25,7 +22,6 @@ interface UserState {
 export const useUserStore = create<UserState>()(
   persist(
     set => ({
-      isLoggedIn: false,
       isNew: false,
       birthDate: '',
       email: '',
@@ -35,23 +31,17 @@ export const useUserStore = create<UserState>()(
       communityId: 1,
 
       login: (userInfo: LoginResponse) => {
-        api.defaults.headers.common.Authorization = `Bearer ${userInfo.token.accessToken}`
         const payload = jwtDecode<TokenPayload>(userInfo.token.accessToken)
         console.log(payload)
         set({
-          isLoggedIn: true,
           email: userInfo.email,
           memberId: userInfo.memberId,
           associateId: payload.associateId,
           communityId: payload.communityId,
         })
       },
-      logout: () => {
-        set({ isLoggedIn: false })
-        removeToken()
-      },
       signup: (birthDate: Date) =>
-        set({ isLoggedIn: true, isNew: true, birthDate: dateToId(birthDate) }),
+        set({ isNew: true, birthDate: dateToId(birthDate) }),
       stale: () => set({ isNew: false }),
     }),
     {

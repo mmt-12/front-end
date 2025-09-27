@@ -18,6 +18,7 @@ export default function Badge({ id }: Props) {
       strokeWidth={1.5}
       backgroundColor={BADGES[id].backgroundColor}
       borderRadius={12}
+      customCss={css({ width: 'fit-content' })}
     >
       <div css={badgeStyle(BADGES[id].color)} className='stardust'>
         <Icon size={16} color={BADGES[id].color} weight='Bold' />
@@ -33,6 +34,7 @@ const badgeStyle = (color: string) =>
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
+    flexGrow: 0,
     fontSize: '12px',
     fontWeight: 800,
     gap: '4px',
