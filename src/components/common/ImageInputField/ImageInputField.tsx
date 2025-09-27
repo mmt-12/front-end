@@ -3,7 +3,6 @@ import { css, useTheme, type Theme } from '@emotion/react'
 import { CloseCircle, GalleryAdd } from '@solar-icons/react'
 
 import { useModal } from '@/hooks/useModal'
-import { compressImage } from '@/utils/image'
 import Album from '../Album'
 import Button from '../Button'
 import Img from '../Img'

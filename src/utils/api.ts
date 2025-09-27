@@ -30,22 +30,23 @@ export const removeToken = () => {
 }
 
 // Request interceptor - 자동으로 JWT 토큰 추가
-api.interceptors.request.use(
-  config => {
-    const token = getToken()
-    if (
-      token &&
-      !config.url?.includes('/sign-in') &&
-      !config.url?.includes('/redirect')
-    ) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
-  },
-  error => {
-    return Promise.reject(error)
-  },
-)
+// userStore.login에서 기본 헤더 설정하여 주석처리함
+// api.interceptors.request.use(
+//   config => {
+//     const token = getToken()
+//     if (
+//       token &&
+//       !config.url?.includes('/sign-in') &&
+//       !config.url?.includes('/redirect')
+//     ) {
+//       config.headers.Authorization = `Bearer ${token}`
+//     }
+//     return config
+//   },
+//   error => {
+//     return Promise.reject(error)
+//   },
+// )
 
 // Response interceptor - 토큰 자동 저장
 api.interceptors.response.use(
