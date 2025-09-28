@@ -27,7 +27,7 @@ export default function ErrorPage() {
 const containerStyle = (theme: Theme) =>
   css({
     width: '100%',
-    height: '100vh',
+    height: '100dvh',
 
     padding: '16px',
     display: 'flex',

@@ -41,7 +41,7 @@ export default function Popup({ title, children, onClose }: Props) {
 }
 
 const contentStyle = css({
-  height: `calc(100vh - ${withSafeAreaTop(56)})`,
+  height: `calc(100dvh - ${withSafeAreaTop(56)})`,
   marginTop: withSafeAreaTop(56),
   overflowY: 'scroll',
 })
