@@ -69,6 +69,8 @@ const containerStyle = (isRead: boolean) =>
     alignItems: 'center',
     gap: '20px',
     opacity: isRead ? 0.5 : 1,
+    backgroundColor: 'white',
+    borderRadius: '0 !important',
   })
 
 const iconWrapperStyle = (theme: Theme) =>
