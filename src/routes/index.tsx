@@ -6,7 +6,6 @@ import { ROUTES } from './ROUTES'
 
 const router = createBrowserRouter([
   {
-    path: '/',
     Component: () => <Layouts.RootLayout />,
     errorElement: <Pages.ErrorPage />,
     children: [
@@ -29,71 +28,75 @@ const router = createBrowserRouter([
         element: <Pages.LandingPage />,
       },
       {
-        path: '/',
-        Component: () => <Layouts.DefaultLayout />,
+        Component: () => <Layouts.AuthGuard />,
         children: [
           {
-            index: true,
-            element: <Navigate to={ROUTES.MEMORY_LIST} replace />,
+            Component: () => <Layouts.DefaultLayout />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to={ROUTES.MEMORY_LIST} replace />,
+              },
+              {
+                path: ROUTES.MEMORY_LIST,
+                element: <Pages.MemoryListPage />,
+              },
+              {
+                path: ROUTES.MAP,
+                element: <Pages.MapPage />,
+              },
+              {
+                path: ROUTES.CALENDAR,
+                element: <Pages.CalendarPage />,
+              },
+              {
+                path: ROUTES.GUEST_BOOK(':associateId'),
+                element: <Pages.GuestBookPage />,
+              },
+            ],
           },
           {
-            path: ROUTES.MEMORY_LIST,
-            element: <Pages.MemoryListPage />,
+            Component: () => <Layouts.HeaderLayout />,
+            children: [
+              {
+                path: ROUTES.NOTIFICATION_LIST,
+                element: <Pages.NotificationPage />,
+              },
+              {
+                path: ROUTES.EDIT_PROFILE,
+                element: <Pages.EditProfilePage />,
+              },
+              {
+                path: ROUTES.ADD_PROFILE_IMAGE(':associateId'),
+                element: <Pages.ProfileImageRegisterPage />,
+              },
+              {
+                path: ROUTES.MEMORY_REGISTER,
+                element: <Pages.MemoryRegisterPage />,
+              },
+              {
+                path: ROUTES.MEMORY_DETAIL(':memoryId'),
+                element: <Pages.MemoryDetailPage />,
+              },
+              {
+                path: ROUTES.POST_DETAIL(':memoryId', ':postId'),
+                element: <Pages.PostDetailPage />,
+              },
+              {
+                path: ROUTES.POST_REGISTER(':memoryId'),
+                element: <Pages.PostRegisterPage />,
+              },
+              {
+                path: ROUTES.MEMBER_LIST,
+                element: <Pages.MemberListPage />,
+              },
+            ],
           },
           {
-            path: ROUTES.MAP,
-            element: <Pages.MapPage />,
-          },
-          {
-            path: ROUTES.CALENDAR,
-            element: <Pages.CalendarPage />,
-          },
-          {
-            path: ROUTES.GUEST_BOOK(':associateId'),
-            element: <Pages.GuestBookPage />,
+            path: ROUTES.TEST,
+            element: <Pages.TestPage />,
           },
         ],
-      },
-      {
-        Component: () => <Layouts.HeaderLayout />,
-        children: [
-          {
-            path: ROUTES.NOTIFICATION_LIST,
-            element: <Pages.NotificationPage />,
-          },
-          {
-            path: ROUTES.EDIT_PROFILE,
-            element: <Pages.EditProfilePage />,
-          },
-          {
-            path: ROUTES.ADD_PROFILE_IMAGE(':associateId'),
-            element: <Pages.ProfileImageRegisterPage />,
-          },
-          {
-            path: ROUTES.MEMORY_REGISTER,
-            element: <Pages.MemoryRegisterPage />,
-          },
-          {
-            path: ROUTES.MEMORY_DETAIL(':memoryId'),
-            element: <Pages.MemoryDetailPage />,
-          },
-          {
-            path: ROUTES.POST_DETAIL(':memoryId', ':postId'),
-            element: <Pages.PostDetailPage />,
-          },
-          {
-            path: ROUTES.POST_REGISTER(':memoryId'),
-            element: <Pages.PostRegisterPage />,
-          },
-          {
-            path: ROUTES.MEMBER_LIST,
-            element: <Pages.MemberListPage />,
-          },
-        ],
-      },
-      {
-        path: ROUTES.TEST,
-        element: <Pages.TestPage />,
       },
     ],
   },

@@ -19,7 +19,6 @@ export const getToken = () => {
 }
 
 export const setToken = (token: { accessToken: string; refreshToken: string }) => {
-  console.log(token.accessToken)
   localStorage.setItem('accessToken', token.accessToken)
   localStorage.setItem('refreshToken', token.refreshToken)
 }

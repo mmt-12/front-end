@@ -7,8 +7,8 @@ export interface TokenInfo {
   grantType: string
   accessToken: string
   accessTokenExpiresAt: number
-  refreshToken: string | null
-  refreshTokenExpiresAt: number | null
+  refreshToken: string
+  refreshTokenExpiresAt: number
 }
 
 export interface LoginResponse {

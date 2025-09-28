@@ -1,24 +1,26 @@
+import { useAchieve } from '@/api'
 import Button from '@/components/common/Button'
+import NewBadgeModal from '@/components/modal/NewBadgeModal'
 import { useModal } from '@/hooks/useModal'
 
 export default function TestPage() {
-  const { confirm, alert } = useModal()
+  const { openModal } = useModal()
 
-  const handleAlert = async () => {
-    await alert('닫아주세요.')
-    console.log('Modal closed')
+  const handleEvent = async (
+    id: number,
+    type: 'HIDDEN' | 'OPEN' | 'RESTRICTED',
+  ) => {
+    openModal(<NewBadgeModal id={id} type={type} />)
   }
 
-  const handleConfirm = async () => {
-    const confirmed = await confirm('확인해주세요.')
-    console.log('Modal closed with', confirmed)
-  }
+  const { mutate: handleAchieve } = useAchieve()
+
   return (
     <>
-      HI
       <div>
-        <Button label='open alert' onClick={handleAlert} />
-        <Button label='open confirm' onClick={handleConfirm} />
+        <Button label='업적 달성!' onClick={() => handleEvent(1, 'HIDDEN')} />
+        <Button label='업적 달성!' onClick={() => handleEvent(2, 'OPEN')} />
+        <Button label='홈커밍획득' onClick={() => handleAchieve('HOME')} />
       </div>
     </>
   )
