@@ -1,14 +1,19 @@
-import { css, type Theme } from '@emotion/react'
+import { css, useTheme, type Theme } from '@emotion/react'
 import { Link, useNavigate, useRouteError } from 'react-router-dom'
 
 import errorImage from '@/assets/images/mascot/error.jpeg'
 import Button from '@/components/common/Button'
 import Img from '@/components/common/Img'
+import { useThemeColor } from '@/hooks/useThemeColor'
 import { ROUTES } from '@/routes/ROUTES'
 
 export default function ErrorPage() {
+  const theme = useTheme()
   const error = useRouteError() as Error
   const navigate = useNavigate()
+
+  useThemeColor(theme.colors.bg)
+
   return (
     <div css={containerStyle}>
       <h2>문제가 발생했어요.</h2>
