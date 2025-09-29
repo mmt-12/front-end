@@ -6,7 +6,7 @@ import type { Achievement } from './api'
 import type { Theme } from '@emotion/react'
 
 export interface IHeaderItem {
-  icon: Icon | null
+  icon: Icon | string | null
   onClick?: () => void
 }
 export interface IBaseInput {

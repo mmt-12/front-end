@@ -1,5 +1,5 @@
 // hooks/notification.ts
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { api } from '../utils/api'
 import type {
@@ -15,6 +15,8 @@ export interface NotificationListParams {
 // 알림 목록 조회
 export function useNotificationList (params?: NotificationListParams) {
   const size = params?.size ?? 10
+  const queryClient = useQueryClient()
+
   return useInfiniteQuery({
     queryKey: ['notifications', size],
     initialPageParam: params?.cursor,
@@ -25,7 +27,12 @@ export function useNotificationList (params?: NotificationListParams) {
 
       return api
         .get(`/v1/notifications?${searchParams}`)
-        .then(r => r.data as NotificationListResponse)
+        .then(r => {
+          queryClient.invalidateQueries({
+            queryKey: ['unread-notifications'],
+          })
+          return r.data as NotificationListResponse
+        })
     },
     getNextPageParam: lastPage =>
       lastPage.hasNext ? lastPage.nextCursor : undefined,
@@ -40,6 +47,6 @@ export function useUnreadNotifications () {
       api
         .get('/v1/notifications/unread')
         .then(r => r.data as UnreadNotificationResponse),
-    refetchInterval: 30000, // 30초마다 자동 갱신
+    refetchInterval: 5000, // 5초마다 자동 갱신
   })
 }

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo } from 'react'
-import { ArrowLeft, Bell } from '@solar-icons/react'
+import { ArrowLeft } from '@solar-icons/react'
 import { useNavigate } from 'react-router-dom'
 
-import { ROUTES } from '@/routes/ROUTES'
+import useNotificationHeaderItem from '@/components/notification/NotificationHeaderItem'
 import { useHeaderStore } from '@/store/headerStore'
 import type { IHeaderItem } from '@/types'
 
@@ -19,19 +19,13 @@ export default function useHeader({ routeName, leftItem, rightItem }: Props) {
   const setHeader = useHeaderStore(s => s.setHeader)
 
   const goBack = useCallback(() => navigate(-1), [navigate])
-  const goNotifications = useCallback(
-    () => navigate(ROUTES.NOTIFICATION_LIST),
-    [navigate],
-  )
 
   const defaultLeft = useMemo<IHeaderItem>(
     () => ({ icon: ArrowLeft, onClick: goBack }),
     [goBack],
   )
-  const defaultRight = useMemo<IHeaderItem>(
-    () => ({ icon: Bell, onClick: goNotifications }),
-    [goNotifications],
-  )
+
+  const defaultRight = useNotificationHeaderItem()
 
   useEffect(() => {
     setHeader({
