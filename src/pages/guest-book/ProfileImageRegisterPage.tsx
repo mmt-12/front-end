@@ -34,7 +34,7 @@ export default function ProfileImageRegisterPage() {
 
   const images = data?.pages.flatMap(page => page.profileImages) || []
 
-  const [newImages, setNewImages] = useState<File[]>([])
+  const [newImages, setNewImages] = useState<(File | string)[]>([])
 
   const handleImageClick = () => {}
 

@@ -8,9 +8,9 @@ import Button from '../Button'
 import Img from '../Img'
 
 interface Props {
-  images: File[]
+  images: (File | string)[]
   maxLength: number
-  onChange: (_files: File[]) => void
+  onChange: (_images: (File | string)[]) => void
 }
 
 export default function ImageInputField({
@@ -28,7 +28,9 @@ export default function ImageInputField({
         {images.map((image, index) => (
           <div key={index} css={imageWrapperStyle}>
             <Img
-              src={URL.createObjectURL(image)}
+              src={
+                typeof image === 'string' ? image : URL.createObjectURL(image)
+              }
               alt={`Album image ${index}`}
             />
             <CloseCircle
@@ -72,7 +74,7 @@ export default function ImageInputField({
         hidden
         multiple
         onChange={async e => {
-          const files = Array.from(e.target.files || [])
+          const files = Array.from(e.target.files || []) as (File | string)[]
           const length = images.length + files.length
           // const compressedFiles = await Promise.all(
           //   files.map(file => compressImage(file)),

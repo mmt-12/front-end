@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import { type Post as PostType } from '@/api'
 import { useToggleEmojiComment, useToggleVoiceComment } from '@/api/post'
-import Post from '@/components/memory/Post'
+import Post from '@/components/post/Post'
 import { useUserStore } from '@/store/userStore'
 
 export default function PostListItem(props: PostType) {

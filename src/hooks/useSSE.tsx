@@ -9,6 +9,7 @@ export default function useSSE() {
   const eventSource = useRef<EventSourcePolyfill | null>(null)
   const { openModal } = useModal()
   useEffect(() => {
+    if (eventSource.current) return
     console.log('SSE connecting...')
     eventSource.current = new EventSourcePolyfill(
       `${import.meta.env.VITE_API_BASE_URL}/v1/sse/subscribe`,
@@ -20,12 +21,8 @@ export default function useSSE() {
       },
     )
     eventSource.current.onmessage = function (event) {
-      console.log('New message:', event.data)
       const data = JSON.parse(event.data)
       openModal(<NewBadgeModal {...data.value} />)
-    }
-    eventSource.current.onerror = function (err) {
-      console.error('EventSource failed:', err)
     }
     eventSource.current.onopen = function () {
       console.log('Connection to server opened.')

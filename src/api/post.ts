@@ -8,6 +8,7 @@ import {
 
 import { api } from '../utils/api'
 import type { BubbleComment, Comment, Post, PostListResponse } from '../types/api'
+import { useModal } from '@/hooks/useModal'
 
 // 포스트 상세 조회
 export function usePost (communityId = 1, memoryId: number, postId: number) {
@@ -113,6 +114,7 @@ export function useUpdatePost (
 // 포스트 삭제
 export function useDeletePost (communityId = 1, memoryId: number) {
   const queryClient = useQueryClient()
+  const { alert } = useModal()
 
   return useMutation({
     mutationFn: (postId: number) =>
@@ -122,6 +124,7 @@ export function useDeletePost (communityId = 1, memoryId: number) {
         )
         .then(r => r.data),
     onSuccess: () => {
+      alert('포스트를 삭제했어요.')
       queryClient.invalidateQueries({
         queryKey: ['posts', communityId, memoryId],
       })

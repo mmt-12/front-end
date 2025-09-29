@@ -34,13 +34,40 @@ export const formatDateTime = (date: Date): string => {
   return `${year}.${month}.${day} ${hours}:${minutes}`
 }
 
+export const formatDateTimeRelative = (date: Date): string => {
+  const now = new Date()
+  const diffMs = now.getTime() - date.getTime()
+
+  // if future date
+  if (diffMs < 0) return date.toLocaleString()
+
+  const diffMinutes = Math.floor(diffMs / (1000 * 60))
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60))
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
+  const diffMonths = Math.floor(diffDays / 30)
+
+  if (diffMonths >= 1) {
+    return `${diffMonths}개월`
+  }
+  if (diffDays >= 1) {
+    return `${diffDays}일`
+  }
+  if (diffHours >= 1) {
+    return `${diffHours}시간`
+  }
+  if (diffMinutes >= 1) {
+    return `${diffMinutes}분`
+  }
+  return '방금'
+}
+
 export const formatDateRange = (startTime: Date, endTime?: Date): string => {
   const start = formatDate(startTime)
   const end = endTime ? formatDate(endTime) : start
   return start === end ? start : `${start} - ${end}`
 }
 
-export function formatTimeAgo(date: Date): string {
+export function formatTimeAgo (date: Date): string {
   const now = new Date()
   const diffMs = now.getTime() - date.getTime()
 
