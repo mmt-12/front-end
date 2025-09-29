@@ -5,7 +5,7 @@ export const modalStyle = (theme: Theme) =>
     position: 'fixed',
     inset: 0,
     width: '100vw',
-    height: '100vh',
+    height: '100dvh',
     margin: '0 auto',
     maxWidth: theme.maxWidth,
     overflowY: 'hidden',

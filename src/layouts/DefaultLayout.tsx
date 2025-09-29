@@ -14,6 +14,7 @@ export default function DefaultLayout() {
       <main css={mainStyle} className='no-scrollbar'>
         <PageTransition keyframe={fadeIn}>
           <Outlet />
+          <div css={{ height: withSafeAreaBottom(56), flexShrink: 0 }} />
         </PageTransition>
       </main>
       <NavBar />
@@ -22,9 +23,8 @@ export default function DefaultLayout() {
 }
 
 const mainStyle = css({
-  height: `calc(100vh - ${withSafeAreaTop(56)} - ${withSafeAreaBottom(56)})`,
-  marginTop: withSafeAreaTop(56),
-  marginBottom: withSafeAreaBottom(56),
+  height: `calc(100dvh - ${withSafeAreaTop(56)})`,
+  paddingTop: withSafeAreaTop(56),
   overflowY: 'scroll',
   overflowX: 'hidden',
 })

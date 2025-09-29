@@ -50,7 +50,7 @@ const containerStyle = css({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'space-between',
-  height: '100vh',
+  height: '100dvh',
 })
 
 const titlesStyle = css({

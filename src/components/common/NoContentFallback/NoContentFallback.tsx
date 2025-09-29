@@ -65,7 +65,7 @@ const containerStyle = (size: 'full' | 'block', theme: Theme) =>
     textAlign: 'center',
     gap: size === 'full' ? 24 : 16,
     padding: size === 'full' ? '64px 24px' : '32px 16px',
-    minHeight: size === 'full' ? 'calc(100vh - 240px)' : 'auto',
+    minHeight: size === 'full' ? 'calc(100dvh - 240px)' : 'auto',
     flexGrow: size === 'full' ? 1 : 0,
     margin: '0 auto',
     color: theme.colors.stone[500],

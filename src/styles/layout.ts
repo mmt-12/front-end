@@ -6,8 +6,8 @@ export const headerStyle = (theme: Theme) =>
   css({
     position: 'fixed',
     top: 0,
-    left: 0,
     width: '100%',
+    maxWidth: '720px',
     height: withSafeAreaTop(56),
     padding: `${SAFE_AREA_TOP} 16px 0 16px`,
     display: 'flex',

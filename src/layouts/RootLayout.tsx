@@ -14,6 +14,6 @@ export default function RootLayout() {
 }
 
 const layoutContainerStyle = css({
-  height: '100vh',
+  height: '100dvh',
   overflowY: 'hidden',
 })
