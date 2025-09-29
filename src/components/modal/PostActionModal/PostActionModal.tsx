@@ -15,17 +15,14 @@ interface Props {
 
 export default function PostActionModal({ memoryId, postId }: Props) {
   const communityId = useUserStore(s => s.communityId)
+  const { confirm, closeModal } = useModal()
   const { mutate: deletePost } = useDeletePost(communityId, memoryId)
-  const { confirm, alert } = useModal()
 
   const handleDeletePost = async () => {
+    await closeModal()
     if (!(await confirm('포스트를 삭제하시겠어요?'))) return
 
-    deletePost(postId, {
-      onSuccess: () => {
-        alert('포스트를 삭제했어요.')
-      },
-    })
+    deletePost(postId)
   }
 
   return (
