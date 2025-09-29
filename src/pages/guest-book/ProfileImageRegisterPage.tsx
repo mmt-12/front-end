@@ -34,7 +34,7 @@ export default function ProfileImageRegisterPage() {
 
   const images = data?.pages.flatMap(page => page.profileImages) || []
 
-  const [newImages, setNewImages] = useState<File[]>([])
+  const [newImages, setNewImages] = useState<(File | string)[]>([])
 
   const handleImageClick = () => {}
 
@@ -56,7 +56,7 @@ export default function ProfileImageRegisterPage() {
   return (
     <div css={flexGap(12)}>
       <ImageInputField
-        images={newImages.map(URL.createObjectURL)}
+        images={newImages}
         maxLength={1}
         onChange={setNewImages}
       />
