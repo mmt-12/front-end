@@ -42,7 +42,7 @@ export default function NotificationItem({
 
   return (
     <>
-      <Link to={url} css={containerStyle(isRead)} state={state}>
+      <Link to={url} css={containerStyle(isRead, theme)} state={state}>
         <div css={iconWrapperStyle}>
           <Icon weight='Bold' color={theme.colors.stone[500]} size={22} />
         </div>
@@ -59,7 +59,7 @@ export default function NotificationItem({
   )
 }
 
-const containerStyle = (isRead: boolean) =>
+const containerStyle = (isRead: boolean, theme: Theme) =>
   css({
     boxSizing: 'border-box',
     width: '100%',
@@ -69,8 +69,7 @@ const containerStyle = (isRead: boolean) =>
     alignItems: 'center',
     gap: '20px',
     opacity: isRead ? 0.5 : 1,
-    backgroundColor: 'white',
-    borderRadius: '0 !important',
+    backgroundColor: theme.colors.white,
   })
 
 const iconWrapperStyle = (theme: Theme) =>
