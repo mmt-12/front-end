@@ -34,6 +34,7 @@
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.7.0",
     "storybook-addon-remix-react-router": "^5.0.0",
+    "vite-plugin-svgr": "^4.5.0",
     "vite-tsconfig-paths": "^5.1.4",
     "zustand": "^5.0.6"
   },

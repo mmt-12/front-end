@@ -7,6 +7,8 @@ import { defineConfig } from 'vite'
 import { mockDevServerPlugin } from 'vite-plugin-mock-dev-server'
 import { VitePWA } from 'vite-plugin-pwa'
 import tsconfigPaths from 'vite-tsconfig-paths'
+import svgr from 'vite-plugin-svgr'
+
 
 const dirname =
   typeof __dirname !== 'undefined'
@@ -15,6 +17,7 @@ const dirname =
 
 export default defineConfig({
   plugins: [
+    svgr(),
     mockDevServerPlugin(),
     react({
       jsxImportSource: '@emotion/react',
