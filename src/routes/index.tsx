@@ -90,7 +90,6 @@ const router = createBrowserRouter([
                 path: ROUTES.POST_EDIT(':memoryId', ':postId'),
                 element: <Pages.PostEditPage />,
               },
-              {},
               {
                 path: ROUTES.MEMBER_LIST,
                 element: <Pages.MemberListPage />,
