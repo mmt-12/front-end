@@ -2,9 +2,9 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { ArrowLeft } from '@solar-icons/react'
 import { useNavigate } from 'react-router-dom'
 
-import useNotificationHeaderItem from '@/components/notification/NotificationHeaderItem'
 import { useHeaderStore } from '@/store/headerStore'
 import type { IHeaderItem } from '@/types'
+import useNotificationHeaderItem from './useNotificationHeaderItem'
 
 interface Props {
   routeName?: string
