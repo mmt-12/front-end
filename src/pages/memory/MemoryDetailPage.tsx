@@ -9,7 +9,7 @@ import MemoryInfo from '@/components/memory/MemoryInfo'
 import MemoryInfoSkeleton from '@/components/memory/MemoryInfo/MemoryInfo.Skeleton'
 import PostListItem, {
   PostListItemSkeleton,
-} from '@/components/memory/PostListItem'
+} from '@/components/post/PostListItem'
 import useHeader from '@/hooks/useHeader'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'

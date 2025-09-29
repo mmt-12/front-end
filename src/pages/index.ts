@@ -18,8 +18,9 @@ const MemoryListPage = lazy(() => import('@/pages/memory/MemoryListPage'))
 const MemoryRegisterPage = lazy(
   () => import('@/pages/memory/MemoryRegisterPage'),
 )
-const PostDetailPage = lazy(() => import('@/pages/memory/PostDetailPage'))
-const PostRegisterPage = lazy(() => import('@/pages/memory/PostRegisterPage'))
+const PostDetailPage = lazy(() => import('@/pages/post/PostDetailPage'))
+const PostRegisterPage = lazy(() => import('@/pages/post/PostRegisterPage'))
+const PostEditPage = lazy(() => import('@/pages/post/PostEditPage'))
 const NotificationPage = lazy(() => import('@/pages/NotificationPage'))
 const SignupPage = lazy(() => import('@/pages/auth/SignupPage'))
 
@@ -38,6 +39,7 @@ export {
   MemoryRegisterPage,
   PostDetailPage,
   PostRegisterPage,
+  PostEditPage,
   NotificationPage,
   SignupPage,
   TestPage,

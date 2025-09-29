@@ -56,7 +56,7 @@ export default function ProfileImageRegisterPage() {
   return (
     <div css={flexGap(12)}>
       <ImageInputField
-        images={newImages}
+        images={newImages.map(URL.createObjectURL)}
         maxLength={1}
         onChange={setNewImages}
       />

@@ -11,7 +11,6 @@ const ItemStyle = (theme: Theme) =>
     alignItems: 'center',
     justifyContent: 'center',
     color: theme.colors.stone[500],
-    borderRadius: '50%',
   })
 
 export default function HeaderItem({ icon, onClick }: IHeaderItem) {

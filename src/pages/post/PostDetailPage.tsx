@@ -8,9 +8,9 @@ import {
   useToggleEmojiComment,
   useToggleVoiceComment,
 } from '@/api/post'
-import Post from '@/components/memory/Post'
-import { PostListItemSkeleton } from '@/components/memory/PostListItem'
 import ReactBar from '@/components/memory/ReactBar/ReactBar'
+import Post from '@/components/post/Post'
+import { PostListItemSkeleton } from '@/components/post/PostListItem'
 import ReactedProfileList from '@/components/reaction/ReactedProfileList/ReactedProfileList'
 import useHeader from '@/hooks/useHeader'
 import { useUserStore } from '@/store/userStore'
