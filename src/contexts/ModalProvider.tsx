@@ -1,4 +1,10 @@
-import { createContext, useCallback, useState, type ReactNode } from 'react'
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useState,
+  type ReactNode,
+} from 'react'
 import { css, useTheme, type Keyframes, type Theme } from '@emotion/react'
 import { createPortal } from 'react-dom'
 import { useBlocker } from 'react-router-dom'
@@ -103,6 +109,15 @@ function ModalRenderer({ modals }: { modals: Modal[] }) {
     closeModal()
     return true
   })
+
+  useEffect(() => {
+    document.documentElement.style.overscrollBehavior =
+      modals.length > 0 ? 'none' : 'auto'
+
+    return () => {
+      document.documentElement.style.overscrollBehavior = 'none'
+    }
+  }, [modals.length])
 
   const modalRoot = document.getElementById('modal-root')
   if (!modalRoot || !modals.length) return null
