@@ -1,0 +1,181 @@
+export const COMMENTS = {
+  emojis: [
+    {
+      id: 1,
+      authors: [
+        {
+          id: 1,
+          imageUrl: '/test_images/image2.png',
+          nickname: '홍길동',
+          commentId: 5000,
+          createdAt: '2023-01-01T13:00:00Z',
+        },
+        {
+          id: 2,
+          imageUrl: '/test_images/image1.png',
+          nickname: '김철수',
+          commentId: 5001,
+          createdAt: '2023-01-01T14:00:00Z',
+        },
+        {
+          id: 3,
+          imageUrl: '/test_images/image3.png',
+          nickname: '이영희',
+          commentId: 5002,
+          createdAt: '2023-01-01T15:00:00Z',
+        },
+      ],
+      url: '/test_images/image1.png',
+      name: 'like',
+      involved: true,
+    },
+    {
+      id: 2,
+      authors: [
+        {
+          id: 4,
+          imageUrl: '/test_images/image4.png',
+          nickname: '홍길길',
+          commentId: 5004,
+          createdAt: '2023-01-01T13:00:00Z',
+        },
+        {
+          id: 5,
+          imageUrl: '/test_images/image5.png',
+          nickname: '김철철',
+          commentId: 5005,
+          createdAt: '2023-01-01T14:00:00Z',
+        },
+        {
+          id: 6,
+          imageUrl: '/test_images/image1.png',
+          nickname: '이영영',
+          commentId: 5006,
+          createdAt: '2023-01-01T15:00:00Z',
+        },
+      ],
+      url: '/test_images/image2.png',
+      name: 'smile',
+      involved: false,
+    },
+  ],
+  voices: [
+    {
+      id: 10000,
+      authors: [
+        {
+          id: 1,
+          imageUrl: '/test_images/image2.png',
+          nickname: '홍길동',
+          commentId: 5000,
+          createdAt: '2023-01-01T13:00:00Z',
+        },
+        {
+          id: 2,
+          imageUrl: '/test_images/image1.png',
+          nickname: '김철수',
+          commentId: 5001,
+          createdAt: '2023-01-01T14:00:00Z',
+        },
+        {
+          id: 3,
+          imageUrl: '/test_images/image3.png',
+          nickname: '이영희',
+          commentId: 5002,
+          createdAt: '2023-01-01T15:00:00Z',
+        },
+      ],
+      url: '/test_voices/voice1.mp3',
+      name: '하.하.하.하',
+      involved: true,
+    },
+    {
+      id: 10002,
+      authors: [
+        {
+          id: 7,
+          imageUrl: '/test_images/image6.png',
+          nickname: '이순신',
+          commentId: 5007,
+          createdAt: '2023-01-01T13:00:00Z',
+        },
+        {
+          id: 8,
+          imageUrl: '/test_images/image7.png',
+          nickname: '강감찬',
+          commentId: 5008,
+          createdAt: '2023-01-01T14:00:00Z',
+        },
+        {
+          id: 9,
+          imageUrl: '/test_images/image8.png',
+          nickname: '유관순',
+          commentId: 5009,
+          createdAt: '2023-01-01T15:00:00Z',
+        },
+      ],
+      url: '/test_voices/voice3.mp3',
+      name: '잘했어~',
+      involved: true,
+    },
+    {
+      id: 10003,
+      authors: [
+        {
+          id: 7,
+          imageUrl: '/test_images/image6.png',
+          nickname: '이순신',
+          commentId: 5007,
+          createdAt: '2023-01-01T13:00:00Z',
+        },
+      ],
+      url: '/test_voices/voice3.mp3',
+      name: '굿~',
+      involved: true,
+    },
+    {
+      id: 10004,
+      authors: [
+        {
+          id: 7,
+          imageUrl: '/test_images/image6.png',
+          nickname: '이순신',
+          commentId: 5007,
+          createdAt: '2023-01-01T13:00:00Z',
+        },
+      ],
+      url: '/test_voices/voice3.mp3',
+      name: '에프에프ㅔ으페으페으페ㅡ1!',
+      involved: false,
+    },
+    {
+      id: 10001,
+      authors: [
+        {
+          id: 4,
+          imageUrl: '/test_images/image4.png',
+          nickname: '홍길길',
+          commentId: 5004,
+          createdAt: '2023-01-01T13:00:00Z',
+        },
+        {
+          id: 5,
+          imageUrl: '/test_images/image5.png',
+          nickname: '김철철',
+          commentId: 5005,
+          createdAt: '2023-01-01T14:00:00Z',
+        },
+        {
+          id: 6,
+          imageUrl: '/test_images/image1.png',
+          nickname: '이영영',
+          commentId: 5006,
+          createdAt: '2023-01-01T15:00:00Z',
+        },
+      ],
+      url: '/test_voices/voice2.mp3',
+      name: '엉???',
+      involved: false,
+    },
+  ],
+}

@@ -1,0 +1,42 @@
+import type { IReaction } from '../../src/types/reaction'
+
+export const VOICES: IReaction[] = [
+  {
+    id: 1,
+    url: '/test_voices/voice1.mp3',
+    name: '하.하.하.하.하.',
+  },
+  {
+    id: 2,
+    url: '/test_voices/voice2.mp3',
+    name: '뭐라는거야~',
+  },
+  {
+    id: 3,
+    url: '/test_voices/voice3.mp3',
+    name: '인지용~?',
+  },
+]
+
+export const EMOJIS: IReaction[] = [
+  {
+    id: 10000,
+    url: '/test_images/image1.png',
+    name: 'like',
+  },
+  { id: 20000, url: '/test_images/image2.png', name: 'love' },
+  {
+    id: 30000,
+    url: '/test_images/image1.png',
+    name: 'haha',
+  },
+  {
+    id: 40000,
+    url: '/test_images/image1.png',
+    name: 'sad',
+  },
+  { id: 50000, url: '/test_images/image2.png', name: 'angry' },
+  { id: 60000, url: '/test_images/image1.png', name: 'surprised' },
+  { id: 70000, url: '/test_images/image1.png', name: 'neutral' },
+  { id: 110000, url: '/test_images/image3.png', name: 'confused' },
+]
