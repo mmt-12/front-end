@@ -47,13 +47,24 @@ export default function MemoryRegisterPage() {
       alert('제목과 날짜, 장소는 필수 입력 사항입니다.')
       return
     }
+
+    console.log(
+      'posting',
+      new Date(dateRange.startTime),
+      new Date(dateRange.endTime),
+    )
+
     createMemory(
       {
         title,
         description,
         period: {
-          startTime: new Date(dateRange.startTime),
-          endTime: new Date(dateRange.endTime),
+          startTime: new Date(
+            new Date(dateRange.startTime).getTime() + 1000 * 60 * 60 * 9,
+          ),
+          endTime: new Date(
+            new Date(dateRange.endTime).getTime() + 1000 * 60 * 60 * 9,
+          ),
         },
         location: {
           latitude: location.location.latitude,

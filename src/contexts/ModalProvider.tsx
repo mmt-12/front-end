@@ -47,7 +47,10 @@ function ModalProvider({ children }: { children: ReactNode }) {
             content,
             promiseResolver: resolve,
             closingKeyframe: options?.closingKeyframe || fadeOut,
-            dimmBackground: !!options?.dimmBackground,
+            dimmBackground:
+              options?.dimmBackground === undefined
+                ? true
+                : options.dimmBackground,
           },
         ])
       })
