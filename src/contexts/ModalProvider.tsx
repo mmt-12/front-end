@@ -12,7 +12,6 @@ import { useBlocker } from 'react-router-dom'
 import Loader from '@/components/common/Loader'
 import Alert from '@/components/modal/Alert'
 import Confirm from '@/components/modal/Confirm'
-import { useModal } from '@/hooks/useModal'
 import { fadeIn, fadeOut, slideDown } from '@/styles/animation'
 import type { Modal, ModalOption, ModalReturnType } from '@/types'
 
@@ -159,8 +158,8 @@ function ModalProvider({ children }: { children: ReactNode }) {
       }}
     >
       {children}
-      <ModalRenderer modals={modals} />
-      <ModalRenderer modals={overlays} />
+      <ModalRenderer modals={modals} closer={closeModal} />
+      <ModalRenderer modals={overlays} closer={closeOverlay} />
       {isPending && <Loader size='full' />}
     </ModalContext.Provider>
   )
@@ -168,9 +167,14 @@ function ModalProvider({ children }: { children: ReactNode }) {
 
 export { ModalProvider, ModalContext }
 
-function ModalRenderer({ modals }: { modals: Modal[] }) {
+function ModalRenderer({
+  modals,
+  closer,
+}: {
+  modals: Modal[]
+  closer: ModalCloserType
+}) {
   const theme = useTheme()
-  const { closeModal } = useModal()
 
   useEffect(() => {
     document.documentElement.style.overscrollBehavior =
@@ -189,7 +193,7 @@ function ModalRenderer({ modals }: { modals: Modal[] }) {
   return createPortal(
     <div
       css={backgroundStyle(theme, topModal)}
-      onClick={() => closeModal()}
+      onClick={() => closer()}
       data-testid='modal-background'
     >
       <div css={contentStyle(theme, topModal)}>{content}</div>

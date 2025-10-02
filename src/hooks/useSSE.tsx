@@ -9,7 +9,7 @@ export default function useSSE() {
   const eventSource = useRef<EventSourcePolyfill | null>(null)
   const { openOverlay } = useModal()
   useEffect(() => {
-    if (eventSource.current) return
+    // if (eventSource.current) return
     console.log('SSE connecting...')
     eventSource.current = new EventSourcePolyfill(
       `${import.meta.env.VITE_API_BASE_URL}/v1/sse/subscribe`,
