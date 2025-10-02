@@ -17,9 +17,11 @@ export default function EmojiRegisterModal() {
   const [emojiName, setEmojiName] = useState('')
   const [emojiImage, setEmojiImage] = useState<File | null>(null)
 
-  const { closeModal, alert } = useModal()
+  const { closeModal, alert, setPending } = useModal()
 
-  const { mutate } = useCreateEmoji(1)
+  const { mutate, isPending } = useCreateEmoji(1)
+
+  setPending(isPending)
 
   const handleSubmit = () => {
     if (!emojiImage) return alert('이모지 이미지를 선택해주세요.')
