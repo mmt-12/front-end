@@ -46,17 +46,12 @@ jobs:
         if: always()
         id: vars
         run: |
-          # Use relative /api so proxy handles scheme/host; maps key stays from secrets
+          # Use relative /api so proxy handles scheme/host
           echo "api=/api" >> $GITHUB_OUTPUT
-          if [ "${{ github.ref_name }}" = "main" ]; then
-            echo "maps=${{ secrets.PROD_VITE_GOOGLE_MAPS_API_KEY }}" >> $GITHUB_OUTPUT
-            echo "vap=${{ secrets.PROD_VITE_VAP_KEY }}" >> $GITHUB_OUTPUT
-            echo "firebase=${{ secrets.PROD_VITE_FIREBASE_API_KEY }}" >> $GITHUB_OUTPUT
-          else
-            echo "maps=${{ secrets.DEV_VITE_GOOGLE_MAPS_API_KEY }}" >> $GITHUB_OUTPUT
-            echo "vap=${{ secrets.DEV_VITE_VAP_KEY }}" >> $GITHUB_OUTPUT
-            echo "firebase=${{ secrets.DEV_VITE_FIREBASE_API_KEY }}" >> $GITHUB_OUTPUT
-          fi
+          # Use unified secrets for both branches
+          echo "maps=${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}" >> $GITHUB_OUTPUT
+          echo "vap=${{ secrets.VITE_VAP_KEY }}" >> $GITHUB_OUTPUT
+          echo "firebase=${{ secrets.VITE_FIREBASE_API_KEY }}" >> $GITHUB_OUTPUT
 
       # 도커 빌드 & 푸시 (Dockerfile 위치: docker/app/Dockerfile)
       - name: Build & Push
