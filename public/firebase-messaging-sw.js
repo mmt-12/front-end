@@ -38,20 +38,6 @@ function notificationToUrl(type, memoryId, postId, actorId) {
   return url
 }
 
-// function handleMessage(payload) {
-//   console.log(
-//     '[firebase-messaging-sw.js] Received background message ',
-//     payload,
-//   )
-//   // Customize notification here
-//   const notificationTitle = 'Background Message Title'
-//   const notificationOptions = {
-//     body: 'Background Message body.',
-//   }
-
-//   self.registration.showNotification(notificationTitle, notificationOptions)
-// }
-
 function handleMessage(payload) {
   console.log('Received a bg message: ', payload)
 
@@ -66,10 +52,9 @@ function handleMessage(payload) {
   console.log('notificationToUrl', url)
 
   // // Show notification when message received
-  self.registration.showNotification(title, {
-    body: payload.data.content,
-    icon: '/icon2.png',
-  })
+  // self.registration.showNotification(title, {
+  //   body: payload.notification.body,
+  // })
 
   self.addEventListener('notificationclick', event => {
     event.notification.close()
@@ -90,8 +75,6 @@ const firebaseConfig = {
 // Initialize messaging
 firebase.initializeApp(firebaseConfig)
 const messaging = firebase.messaging()
-
-messaging.onMessage(handleMessage)
 
 // Listen to bg messages
 messaging.onBackgroundMessage(handleMessage)
