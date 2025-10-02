@@ -41,7 +41,6 @@ function notificationToUrl(type, memoryId, postId, actorId) {
 function handleMessage(payload) {
   console.log('Received a bg message: ', payload)
 
-  const title = payload.data.title
   const url = notificationToUrl(
     payload.data.type,
     payload.data.memoryId,
@@ -49,12 +48,14 @@ function handleMessage(payload) {
     payload.data.actorId,
   )
 
+  const title = payload.notification.title
   console.log('notificationToUrl', url)
 
-  // // Show notification when message received
-  // self.registration.showNotification(title, {
-  //   body: payload.notification.body,
-  // })
+  // Show notification when message received
+  self.registration.showNotification(title, {
+    body: payload.notification.body,
+    badge: 'badge.png',
+  })
 
   self.addEventListener('notificationclick', event => {
     event.notification.close()
@@ -77,6 +78,7 @@ firebase.initializeApp(firebaseConfig)
 const messaging = firebase.messaging()
 
 // Listen to bg messages
+// messaging.onMessage(handleMessage)
 messaging.onBackgroundMessage(handleMessage)
 
 console.log('Firebase messaging service worker loaded 2')
