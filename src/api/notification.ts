@@ -1,5 +1,5 @@
 // hooks/notification.ts
-import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { api } from '../utils/api'
 import type {
@@ -48,5 +48,13 @@ export function useUnreadNotifications () {
         .get('/v1/notifications/unread')
         .then(r => r.data as UnreadNotificationResponse),
     refetchInterval: 5000, // 5초마다 자동 갱신
+  })
+}
+
+export function useRegisterFcmToken () {
+  return useMutation({
+    mutationKey: ['register-fcm-token'],
+    mutationFn: (token: string) =>
+      api.post('/v1/fcm', { token }),
   })
 }

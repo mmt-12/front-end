@@ -4,8 +4,10 @@ import { APIProvider } from '@vis.gl/react-google-maps'
 import Routes from '@/routes/index'
 import { globalStyle } from '@/styles/global'
 import { theme } from '@/styles/theme'
+import useFCM from './hooks/useFCM'
 
 function App() {
+  useFCM()
   return (
     <ThemeProvider theme={theme}>
       <Global styles={globalStyle} />
