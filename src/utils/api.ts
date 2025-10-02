@@ -75,7 +75,7 @@ const handleUnauthorized = async (response: AxiosResponse) => {
   const refreshToken = localStorage.getItem('refreshToken')
   if (refreshToken) {
     try {
-      const tokenResponse = await api.post('/v1/refresh-token', {
+      const tokenResponse = await api.post('/v1/auth/refresh', {
         refreshToken,
       })
       setToken(tokenResponse.data.token)
