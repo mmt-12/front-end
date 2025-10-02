@@ -10,7 +10,7 @@ export const ROUTES = {
   POST_EDIT: (memoryId: string | number, postId: string | number) => `/memory/${memoryId}/post/${postId}/edit`,
   MAP: '/map',
   CALENDAR: '/calendar',
-  GUEST_BOOK: (associateId: string | number) => `/guest-book/${associateId}`,
+  GUEST_BOOK: (associateId?: string | number) => `/guest-book/${associateId || 'me'}`,
   NOTIFICATION_LIST: '/notification',
   EDIT_PROFILE: '/edit-profile',
   ADD_PROFILE_IMAGE: (associateId: string | number) => `/add-profile-image/${associateId}`,

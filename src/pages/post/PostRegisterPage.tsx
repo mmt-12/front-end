@@ -19,15 +19,20 @@ export default function PostRegisterPage() {
 
   const navigate = useNavigate()
   const { communityId } = useUserStore()
-  const { alert } = useModal()
+  const { alert, setPending } = useModal()
 
   const memoryId = Number(useParams().memoryId)
 
   const { data: memory } = useMemoryDetail(communityId, memoryId)
-  const { mutate: registerPost } = useCreatePost(communityId, memoryId)
+  const { mutate: registerPost, isPending } = useCreatePost(
+    communityId,
+    memoryId,
+  )
 
   const [images, setImages] = useState<(File | string)[]>([])
   const [description, setDescription] = useState<string>('')
+
+  setPending(isPending)
 
   const handleSubmit = () => {
     if (images.length === 0) return alert('사진을 최소 1장 이상 등록해주세요.')

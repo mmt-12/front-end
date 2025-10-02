@@ -26,6 +26,7 @@
     "echarts": "^6.0.0",
     "echarts-for-react": "^3.0.2",
     "event-source-polyfill": "^1.0.31",
+    "firebase": "^12.3.0",
     "jszip": "^3.10.1",
     "jwt-decode": "^4.0.0",
     "prettier": "^3.6.2",

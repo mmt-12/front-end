@@ -36,7 +36,9 @@ export default function CreateButtonsModal() {
           size='md'
           label='이모티콘'
           icon={<SmileSquare weight='Bold' size={28} />}
-          onClick={() => openModal(<EmojiRegisterModal />, slideDown)}
+          onClick={() =>
+            openModal(<EmojiRegisterModal />, { closingKeyframe: slideDown })
+          }
         />
         <Button
           type='disabled'
@@ -49,7 +51,9 @@ export default function CreateButtonsModal() {
           size='md'
           label='보이스'
           icon={<Soundwave weight='Bold' size={28} />}
-          onClick={() => openModal(<VoiceRegisterModal />, slideDown)}
+          onClick={() =>
+            openModal(<VoiceRegisterModal />, { closingKeyframe: slideDown })
+          }
         />
       </div>
     </BottomDrawer>

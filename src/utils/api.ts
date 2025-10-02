@@ -51,7 +51,7 @@ api.interceptors.response.use(
   async response => {
     // 가짜 딜레이 추가 (개발용)
     if (import.meta.env.DEV) {
-      await delay(10)
+      await delay(500)
     }
     // 로그인 응답에서 토큰 저장
     if (response.data?.token) {
@@ -75,7 +75,7 @@ const handleUnauthorized = async (response: AxiosResponse) => {
   const refreshToken = localStorage.getItem('refreshToken')
   if (refreshToken) {
     try {
-      const tokenResponse = await api.post('/v1/refresh-token', {
+      const tokenResponse = await api.post('/v1/auth/refresh', {
         refreshToken,
       })
       setToken(tokenResponse.data.token)

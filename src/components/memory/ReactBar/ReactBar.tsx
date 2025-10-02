@@ -31,15 +31,19 @@ export default function ReactBar({
   const { openModal } = useModal()
 
   const handleBubbleClick = () => {
-    openModal(<BubbleInputModal />, slideDown)
+    openModal(<BubbleInputModal />, { closingKeyframe: slideDown })
   }
 
   const handleEmojiClick = () => {
-    openModal(<EmojiPickerModal comments={comments.emojis} />, slideDown)
+    openModal(<EmojiPickerModal comments={comments.emojis} />, {
+      closingKeyframe: slideDown,
+    })
   }
 
   const handleVoiceClick = () => {
-    openModal(<VoicePickerModal comments={comments.voices} />, slideDown)
+    openModal(<VoicePickerModal comments={comments.voices} />, {
+      closingKeyframe: slideDown,
+    })
   }
 
   return (

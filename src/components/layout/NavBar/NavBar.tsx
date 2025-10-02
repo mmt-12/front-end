@@ -21,7 +21,7 @@ export default function NavBar() {
   const { openModal } = useModal()
   const { associateId } = useUserStore()
   const handleAddButtonClick = () => {
-    openModal(<CreateButtonsModal />, slideDown)
+    openModal(<CreateButtonsModal />, { closingKeyframe: slideDown })
   }
   return (
     <>

@@ -6,6 +6,7 @@ import BottomButton from '@/components/common/BottomButton'
 import DateInputField from '@/components/common/DateInputField'
 import InputField from '@/components/common/InputField'
 import { MEMBERS } from '@/consts/SSAFY_12_MEMBERS'
+import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 import { signupTitleStyle } from '@/styles/auth'
@@ -19,7 +20,10 @@ export default function SignupPage() {
 
   const navigate = useNavigate()
   const userStore = useUserStore()
-  const { mutate: signup } = useSignUp()
+  const { mutate: signup, isPending } = useSignUp()
+  const { setPending } = useModal()
+
+  setPending(isPending)
 
   const isValid = useMemo(() => {
     if (!birthDate || !MEMBERS[dateToId(birthDate)]) return false

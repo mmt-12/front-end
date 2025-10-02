@@ -1,26 +1,30 @@
-import { useAchieve } from '@/api'
 import Button from '@/components/common/Button'
-import NewBadgeModal from '@/components/modal/NewBadgeModal'
+import NotificationModal from '@/components/modal/NotificationModal'
 import { useModal } from '@/hooks/useModal'
+import type { NotificationType } from '@/types/notification'
+
+const notification = {
+  type: 'GUESTBOOK' as NotificationType,
+  actorId: null,
+  postId: null,
+  memoryId: null,
+  title: '새로운 방명록이 도착했어요!',
+  content: '방명록을 확인해보세요.',
+}
 
 export default function TestPage() {
-  const { openModal } = useModal()
-
-  const handleEvent = async (
-    id: number,
-    type: 'HIDDEN' | 'OPEN' | 'RESTRICTED',
-  ) => {
-    openModal(<NewBadgeModal id={id} type={type} />)
+  const { openModal, alert } = useModal()
+  const handleClick = () => {
+    openModal(<NotificationModal {...notification} />, {
+      dimmBackground: false,
+    })
   }
-
-  const { mutate: handleAchieve } = useAchieve()
 
   return (
     <>
       <div>
-        <Button label='업적 달성!' onClick={() => handleEvent(1, 'HIDDEN')} />
-        <Button label='업적 달성!' onClick={() => handleEvent(2, 'OPEN')} />
-        <Button label='홈커밍획득' onClick={() => handleAchieve('HOME')} />
+        <Button label='업적 달성!' onClick={handleClick} />
+        <Button label='alert!' onClick={() => alert('!!!')} />
       </div>
     </>
   )

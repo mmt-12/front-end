@@ -23,14 +23,16 @@ export default function ProfileImageRegisterPage() {
     },
   })
 
-  const { alert } = useModal()
+  const { alert, setPending } = useModal()
   const { associateId } = useParams()
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useProfileImageList(1, Number(associateId), { size: 9 })
-  const { mutate: uploadProfileImages } = useCreateProfileImage(
+  const { mutate: uploadProfileImages, isPending } = useCreateProfileImage(
     1,
     Number(associateId),
   )
+
+  setPending(isPending)
 
   const images = data?.pages.flatMap(page => page.profileImages) || []
 
@@ -48,6 +50,7 @@ export default function ProfileImageRegisterPage() {
 
     uploadProfileImages(formData, {
       onSuccess: () => {
+        setNewImages([])
         alert('프로필 이미지가 등록되었습니다.')
       },
     })

@@ -50,7 +50,7 @@ export default function PostContent({
   const handlePostAction = () => {
     openModal(
       <PostActionModal memoryId={Number(memoryId)} postId={id} />,
-      slideDown,
+      { closingKeyframe: slideDown },
     )
   }
 

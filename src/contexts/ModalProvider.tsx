@@ -1,18 +1,25 @@
-import { createContext, useCallback, useState, type ReactNode } from 'react'
-import { css, useTheme, type Keyframes, type Theme } from '@emotion/react'
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useState,
+  type ReactNode,
+} from 'react'
+import { css, useTheme, type Theme } from '@emotion/react'
 import { createPortal } from 'react-dom'
 import { useBlocker } from 'react-router-dom'
 
+import Loader from '@/components/common/Loader'
 import Alert from '@/components/modal/Alert'
 import Confirm from '@/components/modal/Confirm'
 import { useModal } from '@/hooks/useModal'
 import { fadeIn, fadeOut, slideDown } from '@/styles/animation'
-import type { Modal, ModalReturnType } from '@/types'
+import type { Modal, ModalOption, ModalReturnType } from '@/types'
 
 interface ModalContextType {
   openModal: (
     _content: ReactNode,
-    _closingKeyframe?: Keyframes,
+    _options?: ModalOption,
   ) => Promise<ModalReturnType>
   closeModal: (
     _value: ModalReturnType,
@@ -21,6 +28,7 @@ interface ModalContextType {
   closeAllModals: () => Promise<void>
   confirm: (_message: string) => Promise<ModalReturnType>
   alert: (_message: string) => Promise<ModalReturnType>
+  setPending: (_isPending: boolean) => void
 }
 
 const ModalContext = createContext<ModalContextType | null>(null)
@@ -28,13 +36,19 @@ const ModalContext = createContext<ModalContextType | null>(null)
 function ModalProvider({ children }: { children: ReactNode }) {
   const theme = useTheme()
   const [modals, setModals] = useState<Modal[]>([])
+  const [isPending, setIsPending] = useState(false)
 
   const openModal = useCallback(
-    async (content: ReactNode, closingKeyframe: Keyframes = fadeOut) => {
+    async (content: ReactNode, options?: ModalOption) => {
       return new Promise<ModalReturnType>(resolve => {
         setModals(prev => [
           ...prev,
-          { content, promiseResolver: resolve, closingKeyframe },
+          {
+            content,
+            promiseResolver: resolve,
+            closingKeyframe: options?.closingKeyframe || fadeOut,
+            dimmBackground: !!options?.dimmBackground,
+          },
         ])
       })
     },
@@ -72,19 +86,33 @@ function ModalProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const confirm = async (message: string) => {
-    return openModal(<Confirm>{message}</Confirm>, slideDown)
+    return openModal(<Confirm>{message}</Confirm>, {
+      closingKeyframe: slideDown,
+    })
   }
 
   const alert = async (message: string) => {
-    return openModal(<Alert>{message}</Alert>, slideDown)
+    return openModal(<Alert>{message}</Alert>, { closingKeyframe: slideDown })
+  }
+
+  const setPending = (isPending: boolean) => {
+    setIsPending(isPending)
   }
 
   return (
     <ModalContext.Provider
-      value={{ openModal, closeModal, confirm, alert, closeAllModals }}
+      value={{
+        openModal,
+        closeModal,
+        confirm,
+        alert,
+        closeAllModals,
+        setPending,
+      }}
     >
       {children}
       <ModalRenderer modals={modals} />
+      {isPending && <Loader size='full' />}
     </ModalContext.Provider>
   )
 }
@@ -103,6 +131,15 @@ function ModalRenderer({ modals }: { modals: Modal[] }) {
     closeModal()
     return true
   })
+
+  useEffect(() => {
+    document.documentElement.style.overscrollBehavior =
+      modals.length > 0 ? 'none' : 'auto'
+
+    return () => {
+      document.documentElement.style.overscrollBehavior = 'none'
+    }
+  }, [modals.length])
 
   const modalRoot = document.getElementById('modal-root')
   if (!modalRoot || !modals.length) return null
@@ -128,7 +165,9 @@ const backgroundStyle = (theme: Theme, modal: Modal) =>
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.25)',
+    backgroundColor: modal.dimmBackground
+      ? 'rgba(0, 0, 0, 0.25)'
+      : 'transparent',
     zIndex: 30,
     display: 'flex',
     flexDirection: 'column',
