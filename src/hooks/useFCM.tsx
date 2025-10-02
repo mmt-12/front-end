@@ -44,8 +44,8 @@ export default function useFCM() {
     onMessage(messaging, payload => {
       console.log('Message received. ', payload)
       const notification = {
-        title: payload.data?.title || '',
-        content: payload.data?.content || '',
+        title: payload.notification?.title || '',
+        content: payload.notification?.body || '',
         actorId: Number(payload.data?.actorId) || 0,
         postId: Number(payload.data?.postId) || 0,
         memoryId: Number(payload.data?.memoryId) || 0,
