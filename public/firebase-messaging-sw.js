@@ -71,10 +71,10 @@ function handleMessage(payload) {
     icon: '/icon2.png',
   })
 
-  // self.addEventListener('notificationclick', event => {
-  //   event.notification.close()
-  //   event.waitUntil(clients.openWindow(url))
-  // })
+  self.addEventListener('notificationclick', event => {
+    event.notification.close()
+    event.waitUntil(clients.openWindow(url))
+  })
 }
 
 // Your web app's Firebase configuration
