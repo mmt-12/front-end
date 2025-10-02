@@ -1,4 +1,4 @@
-import { css, useTheme, type Theme } from '@emotion/react'
+import { css, useTheme, type Interpolation, type Theme } from '@emotion/react'
 import { Link } from 'react-router-dom'
 
 import Border from '@/components/common/Border'
@@ -9,6 +9,7 @@ import { notificationToIcon, notificationToUrl } from '@/utils/notification'
 
 interface Props extends INotification {
   isModal?: boolean
+  customCss?: Interpolation<Theme>
 }
 
 export default function NotificationItem({
@@ -21,6 +22,7 @@ export default function NotificationItem({
   postId,
   actorId,
   isModal = false,
+  customCss,
 }: Props) {
   const theme = useTheme()
 
@@ -30,7 +32,11 @@ export default function NotificationItem({
 
   return (
     <>
-      <Link to={url} css={containerStyle(isRead, theme)} state={state}>
+      <Link
+        to={url}
+        css={[containerStyle(isRead, theme), customCss]}
+        state={state}
+      >
         <div css={iconWrapperStyle}>
           <Icon weight='Bold' color={theme.colors.stone[500]} size={22} />
         </div>

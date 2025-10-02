@@ -5,7 +5,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { css, useTheme, type Keyframes, type Theme } from '@emotion/react'
+import { css, useTheme, type Theme } from '@emotion/react'
 import { createPortal } from 'react-dom'
 import { useBlocker } from 'react-router-dom'
 
@@ -14,12 +14,12 @@ import Alert from '@/components/modal/Alert'
 import Confirm from '@/components/modal/Confirm'
 import { useModal } from '@/hooks/useModal'
 import { fadeIn, fadeOut, slideDown } from '@/styles/animation'
-import type { Modal, ModalReturnType } from '@/types'
+import type { Modal, ModalOption, ModalReturnType } from '@/types'
 
 interface ModalContextType {
   openModal: (
     _content: ReactNode,
-    _closingKeyframe?: Keyframes,
+    _options?: ModalOption,
   ) => Promise<ModalReturnType>
   closeModal: (
     _value: ModalReturnType,
@@ -39,11 +39,16 @@ function ModalProvider({ children }: { children: ReactNode }) {
   const [isPending, setIsPending] = useState(false)
 
   const openModal = useCallback(
-    async (content: ReactNode, closingKeyframe: Keyframes = fadeOut) => {
+    async (content: ReactNode, options?: ModalOption) => {
       return new Promise<ModalReturnType>(resolve => {
         setModals(prev => [
           ...prev,
-          { content, promiseResolver: resolve, closingKeyframe },
+          {
+            content,
+            promiseResolver: resolve,
+            closingKeyframe: options?.closingKeyframe || fadeOut,
+            dimmBackground: !!options?.dimmBackground,
+          },
         ])
       })
     },
@@ -81,11 +86,13 @@ function ModalProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const confirm = async (message: string) => {
-    return openModal(<Confirm>{message}</Confirm>, slideDown)
+    return openModal(<Confirm>{message}</Confirm>, {
+      closingKeyframe: slideDown,
+    })
   }
 
   const alert = async (message: string) => {
-    return openModal(<Alert>{message}</Alert>, slideDown)
+    return openModal(<Alert>{message}</Alert>, { closingKeyframe: slideDown })
   }
 
   const setPending = (isPending: boolean) => {
@@ -158,7 +165,9 @@ const backgroundStyle = (theme: Theme, modal: Modal) =>
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.25)',
+    backgroundColor: modal.dimmBackground
+      ? 'rgba(0, 0, 0, 0.25)'
+      : 'transparent',
     zIndex: 30,
     display: 'flex',
     flexDirection: 'column',

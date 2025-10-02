@@ -47,7 +47,7 @@ export default function VoicePickerModal({
   }
 
   const handleRegisterVoiceClick = () => {
-    openModal(<VoiceRegisterModal />, slideDown)
+    openModal(<VoiceRegisterModal />, { closingKeyframe: slideDown })
   }
 
   return (

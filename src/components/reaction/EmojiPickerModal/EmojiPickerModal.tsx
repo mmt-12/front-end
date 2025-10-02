@@ -50,7 +50,7 @@ export default function EmojiPickerModal({
   }
 
   const handleRegisterEmojiClick = () => {
-    openModal(<EmojiRegisterModal />, slideDown)
+    openModal(<EmojiRegisterModal />, { closingKeyframe: slideDown })
   }
 
   const getInvolved = useCallback(

@@ -68,6 +68,12 @@ export type Modal = {
   promiseResolver: (_value: ModalReturnType) => void
   closingKeyframe: Keyframes
   isClosing?: boolean
+  dimmBackground: boolean
+}
+
+export type ModalOption = {
+  closingKeyframe?: Keyframes
+  dimmBackground?: boolean
 }
 
 export type ModalReturnType = void | null | IBaseInput | string | boolean | IArrayInput | ILocationInput | IDateRangeInput
