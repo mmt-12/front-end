@@ -30,10 +30,11 @@ export default function GuestBookPage() {
     null,
   )
   const [isClosing, setIsClosing] = useState(false)
-  const { associateId: stringId } = useParams()
+  const { associateId: associateIdParam } = useParams()
   const { communityId, associateId: myId } = useUserStore()
 
-  const associateId = Number(stringId)
+  const associateId =
+    associateIdParam === 'me' ? myId : Number(associateIdParam)
   const { data: profile } = useAssociateProfile(communityId, associateId)
   const { data: guestBookList, isLoading: guestBookListLoading } =
     useGuestBookList(communityId, associateId, { size: 4 })

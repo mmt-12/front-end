@@ -35,6 +35,7 @@ export default defineConfig({
       injectRegister: 'auto',
       devOptions: {
         enabled: true,
+        type: 'module',
       },
       manifest: false,
     }),

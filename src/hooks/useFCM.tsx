@@ -1,12 +1,16 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { initializeApp } from 'firebase/app'
-import { getMessaging, getToken } from 'firebase/messaging'
+import { getMessaging, getToken, onMessage } from 'firebase/messaging'
 
 import { useRegisterFcmToken } from '@/api'
+import NotificationModal from '@/components/modal/NotificationModal/NotificationModal'
+import type { NotificationType } from '@/types/notification'
+import { useModal } from './useModal'
 
 export default function useFCM() {
-  const token = useRef<string | null>(null)
+  const [token, setToken] = useState<string>('')
   const { mutate: registerToken } = useRegisterFcmToken()
+  const { openModal } = useModal()
 
   useEffect(() => {
     const firebaseConfig = {
@@ -37,26 +41,40 @@ export default function useFCM() {
       })
     }
 
+    onMessage(messaging, payload => {
+      console.log('Message received. ', payload)
+      const notification = {
+        title: payload.data?.title || '',
+        content: payload.data?.content || '',
+        actorId: Number(payload.data?.actorId) || 0,
+        postId: Number(payload.data?.postId) || 0,
+        memoryId: Number(payload.data?.memoryId) || 0,
+        type: (payload.data?.type || '') as NotificationType,
+      }
+      openModal(<NotificationModal {...notification} />)
+    })
+
     function saveToken() {
       const storageToken = localStorage.getItem('fcmToken')
       if (storageToken) {
         console.log('Loaded FCM Token:', storageToken)
-        token.current = storageToken
+        setToken(storageToken)
       } else {
         getToken(messaging, {
           vapidKey: import.meta.env.VITE_VAPID_KEY,
         }).then(newToken => {
           console.log('Fetched FCM Token:', newToken)
-          token.current = newToken
+          setToken(newToken)
         })
       }
     }
   }, [])
 
   useEffect(() => {
-    localStorage.setItem('fcmToken', token.current || '')
-    if (!token.current) return
-    registerToken(token.current)
+    console.log('setting token:', token)
+    localStorage.setItem('fcmToken', token || '')
+    if (!token) return
+    registerToken(token)
   }, [token, registerToken])
 
   return null
