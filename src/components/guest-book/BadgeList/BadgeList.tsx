@@ -91,6 +91,7 @@ const medalInfoStyle = css({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+  gap: 32,
 })
 
 const conditionStyle = (theme: Theme) =>
