@@ -1,14 +1,24 @@
+import { useEffect } from 'react'
 import { css, useTheme, type Theme } from '@emotion/react'
 import { QuestionCircle } from '@solar-icons/react'
+import { useNavigate } from 'react-router-dom'
 
 import kakaoIcon from '@/assets/images/icons/kakao.png'
 import mainMascot from '@/assets/images/mascot/main.png'
 import Img from '@/components/common/Img'
+import { ROUTES } from '@/routes/ROUTES'
+import { getToken } from '@/utils/api'
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 export default function LoginPage() {
   const theme = useTheme()
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (getToken()) {
+      navigate(ROUTES.MEMBER_LIST)
+    }
+  }, [navigate])
 
   return (
     <div css={containerStyle}>
