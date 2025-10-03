@@ -62,7 +62,7 @@ export default function useFCM() {
           const notification = {
             title: payload.notification?.title || '',
             content: payload.notification?.body || '',
-            actorId: Number(payload.data?.actorId) || 0,
+            actorId: Number(payload.data?.associateId) || 0,
             postId: Number(payload.data?.postId) || 0,
             memoryId: Number(payload.data?.memoryId) || 0,
             type: (payload.data?.type || '') as NotificationType,

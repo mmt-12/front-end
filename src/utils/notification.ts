@@ -13,10 +13,12 @@ import {
 import { ROUTES } from "@/routes/ROUTES"
 import type { NotificationType } from "@/types/notification"
 
-export function notificationToUrl (type: string, memoryId?: number | null, postId?: number | null, actorId?: number | null) {
+export function notificationToUrl (type: NotificationType, memoryId?: number | null, postId?: number | null, actorId?: number | null) {
   let url
   if (type === 'ACHIEVE') {
     url = ROUTES.GUEST_BOOK()
+  } else if (type === 'MEMORY' && memoryId) {
+    url = ROUTES.MEMORY_DETAIL(memoryId)
   } else if (type === 'REACTION' && memoryId && postId) {
     url = ROUTES.POST_DETAIL(memoryId, postId)
   } else if (type === 'POST' && memoryId && postId) {
@@ -47,6 +49,8 @@ export function notificationToIcon (
   let Icon
   if (type === 'ACHIEVE') {
     Icon = MedalStarCircle
+  } else if (type === 'MEMORY' && memoryId) {
+    Icon = FaceScanCircle
   } else if (type === 'REACTION' && memoryId && postId) {
     Icon = StickerSmileCircle
   } else if (type === 'POST' && memoryId && postId) {

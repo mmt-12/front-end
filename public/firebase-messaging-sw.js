@@ -13,10 +13,12 @@ const ROUTES = {
   NOTIFICATION_LIST: '/notification',
 }
 
-function notificationToUrl(type, memoryId, postId, actorId) {
+function notificationToUrl(type, memoryId, postId, associateId) {
   let url
   if (type === 'ACHIEVE') {
     url = ROUTES.GUEST_BOOK()
+  } else if (type === 'MEMORY' && memoryId) {
+    url = ROUTES.MEMORY_DETAIL(memoryId)
   } else if (type === 'REACTION' && memoryId && postId) {
     url = ROUTES.POST_DETAIL(memoryId, postId)
   } else if (type === 'POST' && memoryId && postId) {
@@ -27,10 +29,10 @@ function notificationToUrl(type, memoryId, postId, actorId) {
     url = ROUTES.GUEST_BOOK()
   } else if (type === 'NEWIMAGE') {
     url = ROUTES.GUEST_BOOK()
-  } else if (type === 'BIRTHDAY' && actorId) {
-    url = ROUTES.GUEST_BOOK(actorId)
-  } else if (type === 'ASSOCIATE' && actorId) {
-    url = ROUTES.GUEST_BOOK(actorId)
+  } else if (type === 'BIRTHDAY' && associateId) {
+    url = ROUTES.GUEST_BOOK(associateId)
+  } else if (type === 'ASSOCIATE' && associateId) {
+    url = ROUTES.GUEST_BOOK(associateId)
   } else {
     url = ROUTES.NOTIFICATION_LIST
   }
@@ -45,7 +47,7 @@ function handleMessage(payload) {
     payload.data.type,
     payload.data.memoryId,
     payload.data.postId,
-    payload.data.actorId,
+    payload.data.associateId,
   )
 
   const title = payload.notification.title
