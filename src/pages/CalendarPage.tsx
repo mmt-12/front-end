@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { useMemoryList } from '@/api'
 import CalendarPicker from '@/components/common/CalendarPicker'
@@ -19,25 +19,32 @@ export default function CalendarPage() {
   const [viewMonth, setViewMonth] = useState(today.getMonth())
   const [selectedDate, setSelectedDate] = useState<Date>()
 
-  const { data } = useMemoryList(1)
-  const memories = data?.pages.flatMap(page => page.memories) || []
+  const { data } = useMemoryList(1, { size: 1000 })
 
-  const dateMemoryMap = new Map<number, IMemoryInfo[]>()
-  memories.forEach(memory => {
-    const startTime = new Date(memory.period.startTime)
-    const endTime = new Date(memory.period.endTime)
-    for (
-      let date = startTime;
-      date <= endTime;
-      date.setDate(date.getDate() + 1)
-    ) {
-      const key = date.setHours(0, 0, 0, 0)
-      if (!dateMemoryMap.has(key)) {
-        dateMemoryMap.set(key, [])
+  const dateMemoryMap = useMemo(() => {
+    const memories = data?.pages.flatMap(page => page.memories) || []
+    const map = new Map<number, IMemoryInfo[]>()
+    memories.forEach(memory => {
+      const startDate = new Date(memory.period.startTime)
+      const endDate = new Date(memory.period.endTime)
+      for (
+        let date = startDate;
+        date <= endDate;
+        date.setDate(date.getDate() + 1)
+      ) {
+        const key = date.setHours(0, 0, 0, 0)
+        if (!map.has(key)) {
+          map.set(key, [])
+        }
+        map.get(key)?.push(memory)
       }
-      dateMemoryMap.get(key)?.push(memory)
-    }
-  })
+    })
+    return map
+  }, [data])
+
+  const memoryList = useMemo(() => {
+    return dateMemoryMap.get(selectedDate?.setHours(0, 0, 0, 0) || 0) || []
+  }, [dateMemoryMap, selectedDate])
 
   const getDayCellType = (date: Date) => {
     const key = date.setHours(0, 0, 0, 0)
@@ -61,12 +68,7 @@ export default function CalendarPage() {
         getDayCellType={getDayCellType}
         getIsSelected={date => selectedDate?.getTime() === date.getTime()}
       />
-      {memories.length > 0 && selectedDate && (
-        <CalendarMemoryList
-          memories={memories}
-          selectedDate={selectedDate}
-        />
-      )}
+      <CalendarMemoryList memories={memoryList} />
     </>
   )
 }

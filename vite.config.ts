@@ -46,6 +46,7 @@ export default defineConfig({
       '^/api': 'http://example.com/',
     },
     port: 3000,
+    allowedHosts: ['app.memento12.store']
   },
   test: {
     projects: [

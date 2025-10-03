@@ -7,7 +7,7 @@
     "dev": "vite --host --open",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "preview": "vite preview --port 3000 --host",
     "storybook": "storybook dev -p 6006",
     "test": "vitest",
     "test-storybook": "vitest --project=storybook"
