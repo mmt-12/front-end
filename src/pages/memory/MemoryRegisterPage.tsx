@@ -43,16 +43,13 @@ export default function MemoryRegisterPage() {
   const [participants, setParticipants] = useState<IArrayInput>()
 
   const handleSubmit = () => {
-    if (!title || !dateRange || !location) {
-      alert('제목과 날짜, 장소는 필수 입력 사항입니다.')
+    if (!title || !dateRange || !location || !participants) {
+      alert('제목과 날짜, 장소, 참여자는 필수 입력 사항입니다.')
       return
     }
 
-    console.log(
-      'posting',
-      new Date(dateRange.startTime),
-      new Date(dateRange.endTime),
-    )
+    const [sYear, sMonth, sDate] = dateRange.startTime.split('.').map(Number)
+    const [eYear, eMonth, eDate] = dateRange.endTime.split('.').map(Number)
 
     createMemory(
       {
@@ -60,10 +57,10 @@ export default function MemoryRegisterPage() {
         description,
         period: {
           startTime: new Date(
-            new Date(dateRange.startTime).getTime() + 1000 * 60 * 60 * 9,
+            new Date(sYear, sMonth, sDate).getTime() + 1000 * 60 * 60 * 9,
           ),
           endTime: new Date(
-            new Date(dateRange.endTime).getTime() + 1000 * 60 * 60 * 9,
+            new Date(eYear, eMonth, eDate).getTime() + 1000 * 60 * 60 * 9,
           ),
         },
         location: {
@@ -79,6 +76,10 @@ export default function MemoryRegisterPage() {
         onSuccess: async () => {
           await alert('기억이 생성되었습니다.')
           navigate(ROUTES.MEMORY_LIST)
+        },
+        onError: (error: Error) => {
+          console.log(error)
+          alert('기억 생성에 실패했습니다. 다시 시도해주세요.')
         },
       },
     )
