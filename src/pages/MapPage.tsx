@@ -9,7 +9,7 @@ import { Map, useMap } from '@vis.gl/react-google-maps'
 import { createRoot } from 'react-dom/client'
 import { Link } from 'react-router-dom'
 
-import { useMemoryList } from '@/api'
+import { useAchieve, useMemoryList } from '@/api'
 import Img from '@/components/common/Img'
 import MemoryInfo from '@/components/memory/MemoryInfo'
 import ClusteredMarker from '@/components/memoryMap/ClusteredMarker/ClusteredMarker'
@@ -26,6 +26,8 @@ const DEFAULT_LOCATION = {
   lng: 127.85464134447048,
 }
 
+const DEFAULT_ZOOM = 7.2
+
 export default function MapPage() {
   useHeader({
     routeName: '지도',
@@ -34,11 +36,13 @@ export default function MapPage() {
     },
   })
 
+  const { mutate: achieve } = useAchieve()
   const { data } = useMemoryList(1, { size: 100 })
   const memories = data?.pages.flatMap(page => page.memories) || []
   const [selectedMemory, setSelectedMemory] = useState<IMemoryInfo>()
   const [markers, setMarkers] = useState<{ [key: number]: Marker }>({})
   const [center, setCenter] = useState<google.maps.LatLng>()
+  const [zoom, setZoom] = useState<number>(DEFAULT_ZOOM)
 
   const map = useMap()
   const clusterer = useMemo(() => {
@@ -97,6 +101,19 @@ export default function MapPage() {
   }, [])
 
   useEffect(() => {
+    console.log(zoom)
+    if (zoom < 18 || center === undefined) return
+    console.log(center.lat(), center.lng())
+    const d = getDistanceBetween(
+      new google.maps.LatLng(37.50120983415434, 127.03956782331157),
+      center,
+    )
+    if (d < 50) {
+      achieve('HOME')
+    }
+  }, [center, zoom, achieve])
+
+  useEffect(() => {
     if (!clusterer) return
 
     clusterer.clearMarkers()
@@ -116,8 +133,13 @@ export default function MapPage() {
   const handleIdleEvent = () => {
     if (!map) return
     const center = map.getCenter()
-    if (!center) return
-    setCenter(center)
+    const zoom = map.getZoom()
+    if (center) {
+      setCenter(center)
+    }
+    if (zoom) {
+      setZoom(zoom)
+    }
   }
 
   return (
@@ -132,7 +154,7 @@ export default function MapPage() {
         mapId={'49ae42fed52588c3'}
         clickableIcons={false}
         defaultCenter={DEFAULT_LOCATION}
-        defaultZoom={7.2}
+        defaultZoom={DEFAULT_ZOOM}
         gestureHandling={'greedy'}
         disableDefaultUI={true}
         disableDoubleClickZoom
