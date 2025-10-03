@@ -65,7 +65,7 @@ export function useMemoryList (communityId = 1, params?: MemoryListParams) {
                 .then(res => res.pictures.slice(0, 30))
               return {
                 ...memory,
-                pictures: [...memory.pictures, ...additionalPictures]
+                pictures: additionalPictures
               }
             }
             return memory
