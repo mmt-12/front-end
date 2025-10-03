@@ -40,4 +40,5 @@ const badgeStyle = (color: string) =>
     gap: '4px',
     color,
     borderRadius: '20px',
+    whiteSpace: 'pre',
   })

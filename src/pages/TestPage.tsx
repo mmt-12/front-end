@@ -1,11 +1,12 @@
+import { useAchieve } from '@/api'
 import Button from '@/components/common/Button'
-import NewBadgeModal from '@/components/modal/NewBadgeModal'
 import { useModal } from '@/hooks/useModal'
 
 export default function TestPage() {
-  const { openOverlay, alert } = useModal()
+  const { alert } = useModal()
+  const { mutate: achieve } = useAchieve()
   const handleClick = () => {
-    openOverlay(<NewBadgeModal id={1} type='OPEN' />)
+    achieve('HOME')
   }
 
   return (
