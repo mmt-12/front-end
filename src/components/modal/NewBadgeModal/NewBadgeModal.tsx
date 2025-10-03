@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import type { Achievement } from '@/api'
 import Badge from '@/components/common/Badge'
 import Button from '@/components/common/Button'
+import { BADGES } from '@/consts/BADGES'
 import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
@@ -75,8 +76,8 @@ export default function NewBadgeModal({ id, type }: Props) {
           )}
         </div>
         <div css={badgePlaceholderStyle}></div>
-        <div css={[flexGap(20), { height: 120 }]}>
-          <p>칭호를 획득했습니다.</p>
+        <div css={[flexGap(20), { height: 120, alignItems: 'center' }]}>
+          <p css={{ fontSize: '1em' }}>{BADGES[id].criteria}</p>
           <Link
             to={ROUTES.GUEST_BOOK(associateId)}
             onClick={() => {

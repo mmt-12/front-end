@@ -22,6 +22,7 @@ export default function useSSE() {
       },
     )
     eventSource.current.onmessage = function (event) {
+      console.log(event)
       setIsConnected(true)
       const data = JSON.parse(event.data)
       openOverlay(<NewBadgeModal {...data.value} />)
