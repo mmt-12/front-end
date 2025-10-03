@@ -29,7 +29,7 @@ export default function SignupPage() {
 
   const isValid = useMemo(() => {
     if (!birthDate || !MEMBERS[dateToId(birthDate)]) return false
-    return name.length > 0 && password == '오렌지' && !!birthDate
+    return name.length > 0 && password.trim() === '오렌지' && !!birthDate
   }, [name, password, birthDate])
 
   return (
