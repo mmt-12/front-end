@@ -1,4 +1,4 @@
-import { PenNewSquare } from '@solar-icons/react'
+import { ArrowLeft, PenNewSquare } from '@solar-icons/react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { usePostList } from '@/api'
@@ -22,6 +22,7 @@ export default function MemoryDetailPage() {
 
   useHeader({
     routeName: memory?.title || '',
+    leftItem: { icon: ArrowLeft, onClick: () => navigate(ROUTES.MEMORY_LIST) },
     rightItem: {
       icon: PenNewSquare,
       onClick: () => {

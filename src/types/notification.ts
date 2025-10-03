@@ -11,7 +11,7 @@ export interface INotification {
 }
 
 export type NotificationType =
-  | 'ACHIEVE'
+  | 'ACHIEVE' | 'MEMORY'
   | 'REACTION'
   | 'POST'
   | 'GUESTBOOK'
