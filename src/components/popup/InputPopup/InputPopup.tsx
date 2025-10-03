@@ -45,7 +45,6 @@ export default function InputPopup<T extends IBaseInput>({
       <button
         onClick={async () => {
           const value = await openModal(modal)
-          console.log('openModal returned value', value)
           onChange(value as T)
         }}
         css={buttonStyle}

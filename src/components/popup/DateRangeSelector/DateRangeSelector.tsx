@@ -16,8 +16,6 @@ export default function DateRangeSelector() {
   const [startTime, setStartDate] = useState<Date>()
   const [endTime, setEndDate] = useState<Date>()
 
-  console.log({ startTime, endTime })
-
   const startDateString = startTime ? formatDate(startTime) : ''
   const endDateString = endTime ? formatDate(endTime) : ''
 

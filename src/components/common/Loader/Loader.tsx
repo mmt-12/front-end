@@ -8,7 +8,6 @@ interface Props {
 }
 
 export default function Loader({ customCss, size = 'sm' }: Props) {
-  console.log('Loader rendered')
   return (
     <div
       css={[loaderWrapperStyle(size), customCss]}

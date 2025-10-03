@@ -56,7 +56,18 @@ export default function MemoryInfo(props: Props) {
   const renderMeta = () => {
     return (
       <>
-        <p className='location'>{props.location.name}</p>
+        <p
+          className='location'
+          css={{
+            maxWidth: '240px',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}
+        >
+          {props.location.name ||
+            props.location.address.split(' ').splice(0, 3).join(' ')}
+        </p>
         {formattedStartTime !== undefined && (
           <p className='date'>
             {formattedStartTime}
