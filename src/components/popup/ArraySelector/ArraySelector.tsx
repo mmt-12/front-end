@@ -61,7 +61,7 @@ export default function ArraySelector({
         type='secondary'
         label='선택 완료'
         onClick={() => {
-          const returnItems = {
+          closeModal({
             items: selectedItems,
             render: () => (
               <>
@@ -72,8 +72,7 @@ export default function ArraySelector({
                 )}
               </>
             ),
-          }
-          closeModal(returnItems)
+          })
         }}
       />
     </>
