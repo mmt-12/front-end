@@ -101,9 +101,7 @@ export default function MapPage() {
   }, [])
 
   useEffect(() => {
-    console.log(zoom)
     if (zoom < 18 || center === undefined) return
-    console.log(center.lat(), center.lng())
     const d = getDistanceBetween(
       new google.maps.LatLng(37.50120983415434, 127.03956782331157),
       center,

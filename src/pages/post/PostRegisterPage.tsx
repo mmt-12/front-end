@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import type { AxiosError } from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { useCreatePost } from '@/api'
@@ -48,10 +49,22 @@ export default function PostRegisterPage() {
         type: 'application/json',
       }),
     )
+    console.log(
+      'size: ',
+      formData
+        .getAll('pictures')
+        .reduce((acc, file) => acc + (file as File).size, 0),
+      'bytes',
+    )
     registerPost(formData, {
       onSuccess: () => {
         navigate(ROUTES.MEMORY_DETAIL(memoryId))
         alert('포스트가 등록되었습니다.')
+      },
+      onError: err => {
+        if ((err as AxiosError).status === 413) {
+          alert('용량이 너무 커요. 용량을 줄여 다시 시도해주세요.')
+        }
       },
     })
   }
