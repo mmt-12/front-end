@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react'
 import { initializeApp } from 'firebase/app'
-import { getMessaging, getToken, onMessage } from 'firebase/messaging'
+import {
+  getMessaging,
+  getToken,
+  isSupported,
+  onMessage,
+} from 'firebase/messaging'
 
 import { useRegisterFcmToken } from '@/api'
 import NotificationModal from '@/components/modal/NotificationModal/NotificationModal'
@@ -13,6 +18,8 @@ export default function useFCM() {
   const { openModal } = useModal()
 
   useEffect(() => {
+    if (!openModal) return
+
     const firebaseConfig = {
       apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
       authDomain: 'memento-117c4.firebaseapp.com',
@@ -24,39 +31,52 @@ export default function useFCM() {
 
     const app = initializeApp(firebaseConfig)
 
-    const messaging = getMessaging(app)
-
-    if (!('Notification' in window)) {
-      console.log('This browser does not support notifications.')
-      return
-    }
-
-    if (Notification.permission === 'granted') {
-      saveToken()
-    } else {
-      Notification.requestPermission().then(permission => {
-        if (permission === 'granted') {
-          saveToken()
+    async function initMessaging() {
+      try {
+        // Check if messaging is supported
+        const supported = await isSupported()
+        if (!supported) {
+          console.warn('Firebase Messaging is not supported in this browser.')
+          return
         }
-      })
+
+        const messaging = getMessaging(app)
+
+        if (!('Notification' in window)) {
+          console.log('This browser does not support notifications.')
+          return
+        }
+
+        if (Notification.permission === 'granted') {
+          saveToken(messaging)
+        } else {
+          Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+              saveToken(messaging)
+            }
+          })
+        }
+
+        onMessage(messaging, payload => {
+          console.log('Message received: ', payload)
+          const notification = {
+            title: payload.notification?.title || '',
+            content: payload.notification?.body || '',
+            actorId: Number(payload.data?.actorId) || 0,
+            postId: Number(payload.data?.postId) || 0,
+            memoryId: Number(payload.data?.memoryId) || 0,
+            type: (payload.data?.type || '') as NotificationType,
+          }
+          openModal(<NotificationModal {...notification} />, {
+            dimmBackground: false,
+          })
+        })
+      } catch (error) {
+        console.error('Error initializing FCM:', error)
+      }
     }
 
-    onMessage(messaging, payload => {
-      console.log('Message received. ', payload)
-      const notification = {
-        title: payload.notification?.title || '',
-        content: payload.notification?.body || '',
-        actorId: Number(payload.data?.actorId) || 0,
-        postId: Number(payload.data?.postId) || 0,
-        memoryId: Number(payload.data?.memoryId) || 0,
-        type: (payload.data?.type || '') as NotificationType,
-      }
-      openModal(<NotificationModal {...notification} />, {
-        dimmBackground: false,
-      })
-    })
-
-    function saveToken() {
+    function saveToken(messaging: ReturnType<typeof getMessaging>) {
       const storageToken = localStorage.getItem('fcmToken')
       if (storageToken) {
         console.log('Loaded FCM Token:', storageToken)
@@ -64,19 +84,30 @@ export default function useFCM() {
       } else {
         getToken(messaging, {
           vapidKey: import.meta.env.VITE_VAPID_KEY,
-        }).then(newToken => {
-          console.log('Fetched FCM Token:', newToken)
-          setToken(newToken)
         })
+          .then(newToken => {
+            if (newToken) {
+              console.log('Fetched FCM Token:', newToken)
+              setToken(newToken)
+            } else {
+              console.warn('No registration token available.')
+            }
+          })
+          .catch(err => {
+            console.error('An error occurred while retrieving token:', err)
+          })
       }
     }
-  }, [])
+
+    initMessaging()
+  }, [openModal])
 
   useEffect(() => {
     console.log('setting token:', token)
-    localStorage.setItem('fcmToken', token || '')
-    if (!token) return
-    registerToken(token)
+    if (token) {
+      localStorage.setItem('fcmToken', token)
+      registerToken(token)
+    }
   }, [token, registerToken])
 
   return null

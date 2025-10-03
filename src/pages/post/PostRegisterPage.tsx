@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { useCreatePost } from '@/api'
@@ -32,7 +32,9 @@ export default function PostRegisterPage() {
   const [images, setImages] = useState<(File | string)[]>([])
   const [description, setDescription] = useState<string>('')
 
-  setPending(isPending)
+  useEffect(() => {
+    setPending(isPending)
+  }, [isPending, setPending])
 
   const handleSubmit = () => {
     if (images.length === 0) return alert('사진을 최소 1장 이상 등록해주세요.')

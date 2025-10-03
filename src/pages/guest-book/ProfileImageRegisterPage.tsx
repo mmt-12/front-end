@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useCreateProfileImage, useProfileImageList } from '@/api'
@@ -32,7 +32,9 @@ export default function ProfileImageRegisterPage() {
     Number(associateId),
   )
 
-  setPending(isPending)
+  useEffect(() => {
+    setPending(isPending)
+  }, [isPending, setPending])
 
   const images = data?.pages.flatMap(page => page.profileImages) || []
 

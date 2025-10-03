@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useSignUp } from '@/api'
@@ -23,7 +23,9 @@ export default function SignupPage() {
   const { mutate: signup, isPending } = useSignUp()
   const { setPending } = useModal()
 
-  setPending(isPending)
+  useEffect(() => {
+    setPending(isPending)
+  }, [isPending, setPending])
 
   const isValid = useMemo(() => {
     if (!birthDate || !MEMBERS[dateToId(birthDate)]) return false

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { css, useTheme } from '@emotion/react'
 import type { Theme } from '@emotion/react'
 import { GalleryAdd } from '@solar-icons/react'
@@ -21,7 +21,9 @@ export default function EmojiRegisterModal() {
 
   const { mutate, isPending } = useCreateEmoji(1)
 
-  setPending(isPending)
+  useEffect(() => {
+    setPending(isPending)
+  }, [isPending, setPending])
 
   const handleSubmit = () => {
     if (!emojiImage) return alert('이모지 이미지를 선택해주세요.')

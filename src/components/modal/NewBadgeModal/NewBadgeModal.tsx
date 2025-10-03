@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { css, keyframes, type Theme } from '@emotion/react'
 import Realistic from 'react-canvas-confetti/dist/presets/realistic'
 import { Link } from 'react-router-dom'
@@ -5,6 +6,7 @@ import { Link } from 'react-router-dom'
 import type { Achievement } from '@/api'
 import Badge from '@/components/common/Badge'
 import Button from '@/components/common/Button'
+import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 import { fadeIn } from '@/styles/animation'
@@ -21,6 +23,41 @@ export default function NewBadgeModal({ id, type }: Props) {
   }
 
   const associateId = useUserStore(s => s.associateId)
+  const { closeOverlay } = useModal()
+  useEffect(() => {
+    if (!('vibrate' in navigator)) return
+
+    const timeouts: NodeJS.Timeout[] = []
+    const intervals: NodeJS.Timeout[] = []
+
+    function vibrate() {
+      navigator.vibrate(
+        Array.from({ length: Math.random() * 6 + 1 }, (_, k) =>
+          k % 2 == 0 ? Math.random() * 100 + 30 : Math.random() * 20,
+        ).flat(),
+      )
+    }
+
+    function vibratPattern(timeout: number, interval: number) {
+      timeouts.push(
+        setTimeout(() => {
+          vibrate()
+          intervals.push(setInterval(vibrate, interval))
+        }, timeout),
+      )
+    }
+
+    vibratPattern(0, (10 / 3) * 1000)
+    vibratPattern(400, (10 / 2) * 1000)
+    vibratPattern(800, (10 / 1) * 1000)
+    vibratPattern(900, (10 / 2) * 1000)
+
+    return () => {
+      timeouts.forEach(clearTimeout)
+      intervals.forEach(clearInterval)
+      navigator.vibrate(0)
+    }
+  }, [])
 
   return (
     <>
@@ -40,7 +77,13 @@ export default function NewBadgeModal({ id, type }: Props) {
         <div css={badgePlaceholderStyle}></div>
         <div css={[flexGap(20), { height: 120 }]}>
           <p>칭호를 획득했습니다.</p>
-          <Link to={ROUTES.GUEST_BOOK(associateId)}>
+          <Link
+            to={ROUTES.GUEST_BOOK(associateId)}
+            onClick={() => {
+              closeOverlay()
+            }}
+            className='still'
+          >
             <Button label='내 방명록 가기' />
           </Link>
         </div>

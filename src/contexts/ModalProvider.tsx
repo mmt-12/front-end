@@ -12,23 +12,25 @@ import { useBlocker } from 'react-router-dom'
 import Loader from '@/components/common/Loader'
 import Alert from '@/components/modal/Alert'
 import Confirm from '@/components/modal/Confirm'
-import { useModal } from '@/hooks/useModal'
 import { fadeIn, fadeOut, slideDown } from '@/styles/animation'
 import type { Modal, ModalOption, ModalReturnType } from '@/types'
 
+type ModalOpenerType = (
+  _content: ReactNode,
+  _options?: ModalOption,
+) => Promise<ModalReturnType>
+
+type ModalCloserType = (_value: ModalReturnType) => Promise<void>
+
 interface ModalContextType {
-  openModal: (
-    _content: ReactNode,
-    _options?: ModalOption,
-  ) => Promise<ModalReturnType>
-  closeModal: (
-    _value: ModalReturnType,
-    _options?: { withoutRoute?: boolean },
-  ) => Promise<void>
+  openModal: ModalOpenerType
+  closeModal: ModalCloserType
   closeAllModals: () => Promise<void>
   confirm: (_message: string) => Promise<ModalReturnType>
   alert: (_message: string) => Promise<ModalReturnType>
   setPending: (_isPending: boolean) => void
+  openOverlay: ModalOpenerType
+  closeOverlay: ModalCloserType
 }
 
 const ModalContext = createContext<ModalContextType | null>(null)
@@ -36,18 +38,26 @@ const ModalContext = createContext<ModalContextType | null>(null)
 function ModalProvider({ children }: { children: ReactNode }) {
   const theme = useTheme()
   const [modals, setModals] = useState<Modal[]>([])
+  const [overlays, setOverlays] = useState<Modal[]>([])
   const [isPending, setIsPending] = useState(false)
 
-  const openModal = useCallback(
-    async (content: ReactNode, options?: ModalOption) => {
+  const modalOpener = useCallback(
+    async (
+      modalSetter: React.Dispatch<React.SetStateAction<Modal[]>>,
+      content: ReactNode,
+      options?: ModalOption,
+    ) => {
       return new Promise<ModalReturnType>(resolve => {
-        setModals(prev => [
+        modalSetter(prev => [
           ...prev,
           {
             content,
             promiseResolver: resolve,
             closingKeyframe: options?.closingKeyframe || fadeOut,
-            dimmBackground: !!options?.dimmBackground,
+            dimmBackground:
+              options?.dimmBackground === undefined
+                ? true
+                : options.dimmBackground,
           },
         ])
       })
@@ -55,9 +65,12 @@ function ModalProvider({ children }: { children: ReactNode }) {
     [],
   )
 
-  const closeModal = useCallback(
-    async (value: ModalReturnType) => {
-      setModals(prev => {
+  const modalCloser = useCallback(
+    async (
+      modalSetter: React.Dispatch<React.SetStateAction<Modal[]>>,
+      value: ModalReturnType,
+    ) => {
+      modalSetter(prev => {
         if (!prev.length) return prev
         const next = [...prev]
         next[next.length - 1] = {
@@ -70,7 +83,7 @@ function ModalProvider({ children }: { children: ReactNode }) {
       return new Promise<void>(resolve => {
         setTimeout(() => {
           resolve()
-          setModals(prev => {
+          modalSetter(prev => {
             if (!prev.length) return prev
             prev[prev.length - 1].promiseResolver(value)
             return prev.slice(0, -1)
@@ -79,6 +92,28 @@ function ModalProvider({ children }: { children: ReactNode }) {
       })
     },
     [theme.transition.duration.fg],
+  )
+
+  const openModal = useCallback(
+    async (content: ReactNode, options?: ModalOption) =>
+      modalOpener(setModals, content, options),
+    [setModals, modalOpener],
+  )
+
+  const closeModal = useCallback(
+    async (value: ModalReturnType) => modalCloser(setModals, value),
+    [setModals, modalCloser],
+  )
+
+  const openOverlay = useCallback(
+    async (content: ReactNode, options?: ModalOption) =>
+      modalOpener(setOverlays, content, options),
+    [setOverlays, modalOpener],
+  )
+
+  const closeOverlay = useCallback(
+    async (value: ModalReturnType) => modalCloser(setOverlays, value),
+    [setOverlays, modalCloser],
   )
 
   const closeAllModals = useCallback(async () => {
@@ -99,29 +134,6 @@ function ModalProvider({ children }: { children: ReactNode }) {
     setIsPending(isPending)
   }
 
-  return (
-    <ModalContext.Provider
-      value={{
-        openModal,
-        closeModal,
-        confirm,
-        alert,
-        closeAllModals,
-        setPending,
-      }}
-    >
-      {children}
-      <ModalRenderer modals={modals} />
-      {isPending && <Loader size='full' />}
-    </ModalContext.Provider>
-  )
-}
-
-export { ModalProvider, ModalContext }
-
-function ModalRenderer({ modals }: { modals: Modal[] }) {
-  const theme = useTheme()
-  const { closeModal, closeAllModals } = useModal()
   useBlocker(({ historyAction }) => {
     if (historyAction === 'PUSH') {
       closeAllModals()
@@ -131,6 +143,38 @@ function ModalRenderer({ modals }: { modals: Modal[] }) {
     closeModal()
     return true
   })
+
+  return (
+    <ModalContext.Provider
+      value={{
+        openModal,
+        closeModal,
+        confirm,
+        alert,
+        closeAllModals,
+        setPending,
+        openOverlay,
+        closeOverlay,
+      }}
+    >
+      {children}
+      <ModalRenderer modals={modals} closer={closeModal} />
+      <ModalRenderer modals={overlays} closer={closeOverlay} />
+      {isPending && <Loader size='full' />}
+    </ModalContext.Provider>
+  )
+}
+
+export { ModalProvider, ModalContext }
+
+function ModalRenderer({
+  modals,
+  closer,
+}: {
+  modals: Modal[]
+  closer: ModalCloserType
+}) {
+  const theme = useTheme()
 
   useEffect(() => {
     document.documentElement.style.overscrollBehavior =
@@ -149,7 +193,7 @@ function ModalRenderer({ modals }: { modals: Modal[] }) {
   return createPortal(
     <div
       css={backgroundStyle(theme, topModal)}
-      onClick={() => closeModal()}
+      onClick={() => closer()}
       data-testid='modal-background'
     >
       <div css={contentStyle(theme, topModal)}>{content}</div>
