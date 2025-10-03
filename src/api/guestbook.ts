@@ -335,3 +335,25 @@ export function useDeleteProfileImage (communityId = 1, associateId: number) {
     },
   })
 }
+
+export function useAttendance (communityId = 1) {
+  return useMutation({
+    mutationFn: () =>
+      api
+        .post(
+          `/v1/communities/${communityId}/achievements/attendance`,
+        )
+        .then(r => r.data),
+  })
+}
+
+export function useExclusive (communityId = 1) {
+  return useMutation({
+    mutationFn: () =>
+      api
+        .post(
+          `/v1/communities/${communityId}/achievements/exclusive`,
+        )
+        .then(r => r.data),
+  })
+}
