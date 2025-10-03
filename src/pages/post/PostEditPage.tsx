@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import type { AxiosError } from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { usePost, useUpdatePost } from '@/api'
@@ -66,6 +67,11 @@ export default function PostEditPage() {
       onSuccess: () => {
         navigate(ROUTES.MEMORY_DETAIL(memoryId))
         alert('포스트가 수정되었습니다.')
+      },
+      onError: err => {
+        if ((err as AxiosError).status === 413) {
+          alert('용량이 너무 커요. 용량을 줄여 다시 시도해주세요.')
+        }
       },
     })
   }
