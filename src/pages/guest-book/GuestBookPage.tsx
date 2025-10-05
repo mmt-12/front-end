@@ -37,7 +37,12 @@ export default function GuestBookPage() {
     associateIdParam === 'me' ? myId : Number(associateIdParam)
   const { data: profile } = useAssociateProfile(communityId, associateId)
   const { data: guestBookList, isLoading: guestBookListLoading } =
-    useGuestBookList(communityId, associateId, { size: 4 })
+    useGuestBookList(
+      communityId,
+      associateId,
+      { size: 4 },
+      { enabled: mode === null },
+    )
 
   const comments = guestBookList?.pages.flatMap(page => page.guestBooks) || []
 
