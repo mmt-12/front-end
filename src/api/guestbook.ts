@@ -6,7 +6,6 @@ import {
   useQueryClient,
 } from '@tanstack/react-query'
 
-import { api } from '@/utils/api'
 import type {
   AchievementListResponse,
   Associate,
@@ -18,6 +17,7 @@ import type {
   ProfileImageListResponse,
   UpdateAssociateRequest,
 } from '@/types/api'
+import { api } from '@/utils/api'
 
 export interface AssociateListParams {
   keyword?: string
@@ -36,7 +36,7 @@ export interface ProfileImageListParams {
 }
 
 // 프로필 조회
-export function useAssociateProfile (communityId = 1, associateId: number) {
+export function useAssociateProfile(communityId = 1, associateId: number) {
   return useQuery({
     queryKey: ['associate-profile', communityId, associateId],
     queryFn: () =>
@@ -47,7 +47,7 @@ export function useAssociateProfile (communityId = 1, associateId: number) {
 }
 
 // 참여자 목록 조회
-export function useAssociateList (
+export function useAssociateList(
   communityId = 1,
   params?: AssociateListParams,
 ) {
@@ -71,7 +71,7 @@ export function useAssociateList (
 }
 
 // 프로필 수정
-export function useUpdateAssociate (communityId = 1) {
+export function useUpdateAssociate(communityId = 1) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -89,7 +89,7 @@ export function useUpdateAssociate (communityId = 1) {
 }
 
 // 업적 조회
-export function useAchievements (communityId = 1, associateId: number) {
+export function useAchievements(communityId = 1, associateId: number) {
   return useQuery({
     queryKey: ['achievements', communityId, associateId],
     queryFn: () =>
@@ -102,16 +102,13 @@ export function useAchievements (communityId = 1, associateId: number) {
 }
 
 // 업적 획득
-export function useAchieve (communityId = 1) {
+export function useAchieve(communityId = 1) {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: (content: string) =>
       api
-        .post(
-          `/v1/communities/${communityId}/achievements`,
-          { content }
-        )
+        .post(`/v1/communities/${communityId}/achievements`, { content })
         .then(r => r.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['achievements', communityId] })
@@ -120,10 +117,11 @@ export function useAchieve (communityId = 1) {
 }
 
 // 방명록 조회
-export function useGuestBookList (
+export function useGuestBookList(
   communityId = 1,
   associateId: number,
   params?: GuestBookListParams,
+  options?: any,
 ) {
   const size = params?.size ?? 10
   return useInfiniteQuery({
@@ -143,11 +141,12 @@ export function useGuestBookList (
     getNextPageParam: lastPage =>
       lastPage.hasNext ? lastPage.nextCursor : undefined,
     refetchInterval: 1000,
+    ...options,
   })
 }
 
 // 방명록 일회용 보이스 생성
-export function useCreateGuestBookBubble (communityId = 1, associateId: number) {
+export function useCreateGuestBookBubble(communityId = 1, associateId: number) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -172,7 +171,7 @@ export function useCreateGuestBookBubble (communityId = 1, associateId: number) 
 }
 
 // 방명록 리액션 생성
-export function useCreateGuestBookReaction (
+export function useCreateGuestBookReaction(
   communityId = 1,
   associateId: number,
 ) {
@@ -195,7 +194,7 @@ export function useCreateGuestBookReaction (
 }
 
 // 방명록 텍스트 생성
-export function useCreateGuestBookText (communityId = 1, associateId: number) {
+export function useCreateGuestBookText(communityId = 1, associateId: number) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -215,7 +214,7 @@ export function useCreateGuestBookText (communityId = 1, associateId: number) {
 }
 
 // 방명록 삭제
-export function useDeleteGuestBook (communityId = 1, associateId: number) {
+export function useDeleteGuestBook(communityId = 1, associateId: number) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -234,7 +233,7 @@ export function useDeleteGuestBook (communityId = 1, associateId: number) {
 }
 
 // MBTI 조회
-export function useMbtiTest (communityId = 1, associateId: number) {
+export function useMbtiTest(communityId = 1, associateId: number) {
   return useQuery({
     queryKey: ['mbti-test', communityId, associateId],
     queryFn: () =>
@@ -247,7 +246,7 @@ export function useMbtiTest (communityId = 1, associateId: number) {
 }
 
 // MBTI 등록
-export function useCreateMbtiTest (communityId = 1, associateId: number) {
+export function useCreateMbtiTest(communityId = 1, associateId: number) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -267,7 +266,7 @@ export function useCreateMbtiTest (communityId = 1, associateId: number) {
 }
 
 // 프로필 이미지 조회
-export function useProfileImageList (
+export function useProfileImageList(
   communityId = 1,
   associateId: number,
   params?: ProfileImageListParams,
@@ -293,7 +292,7 @@ export function useProfileImageList (
 }
 
 // 프로필 이미지 등록
-export function useCreateProfileImage (communityId = 1, associateId: number) {
+export function useCreateProfileImage(communityId = 1, associateId: number) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -318,7 +317,7 @@ export function useCreateProfileImage (communityId = 1, associateId: number) {
 }
 
 // 프로필 이미지 등록 취소
-export function useDeleteProfileImage (communityId = 1, associateId: number) {
+export function useDeleteProfileImage(communityId = 1, associateId: number) {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -336,24 +335,20 @@ export function useDeleteProfileImage (communityId = 1, associateId: number) {
   })
 }
 
-export function useAttendance (communityId = 1) {
+export function useAttendance(communityId = 1) {
   return useMutation({
     mutationFn: () =>
       api
-        .post(
-          `/v1/communities/${communityId}/achievements/attendance`,
-        )
+        .post(`/v1/communities/${communityId}/achievements/attendance`)
         .then(r => r.data),
   })
 }
 
-export function useExclusive (communityId = 1) {
+export function useExclusive(communityId = 1) {
   return useMutation({
     mutationFn: () =>
       api
-        .post(
-          `/v1/communities/${communityId}/achievements/exclusive`,
-        )
+        .post(`/v1/communities/${communityId}/achievements/exclusive`)
         .then(r => r.data),
   })
 }
