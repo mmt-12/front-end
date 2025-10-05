@@ -86,6 +86,16 @@ const headerStyle = css({
   flexDirection: 'row',
   alignItems: 'center',
   gap: '8px',
+
+  [`@media (max-width: 390px)`]: {
+    zoom: 0.9,
+  },
+
+  [`@media (max-width: 350px)`]: {
+    flexDirection: 'column',
+    alignItems: 'start',
+    gap: 0,
+  },
 })
 
 const nameStyle = css({
@@ -103,6 +113,14 @@ const imageStyle = css({
   height: '115px',
   objectFit: 'cover',
   borderRadius: '8px',
+
+  [`@media (max-width: 390px)`]: {
+    zoom: 0.9,
+  },
+
+  [`@media (max-width: 360px)`]: {
+    zoom: 0.8,
+  },
 })
 
 const buttonStyle = (theme: Theme) =>
