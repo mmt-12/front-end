@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "kr.ai.memento.dev.twa",
+      "sha256_cert_fingerprints": [
+        "C8:5C:E7:45:6B:4D:1A:86:F1:E7:24:47:07:2F:75:C0:51:40:29:E7:C1:2F:71:67:28:61:B1:F3:0A:E3:F3:B4"
+      ]
+    }
+  }
+]
