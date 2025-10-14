@@ -50,6 +50,17 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
 
+      - name: Write .well-known/assetlinks.json
+        env:
+          ASSET_LINKS: ${{ env.ASSET_LINKS }}
+        run: |
+          mkdir -p public/.well-known
+          if [ -n "${ASSET_LINKS:-}" ]; then
+            printf '%s' "${ASSET_LINKS}" > public/.well-known/assetlinks.json
+          else
+            echo '{}' > public/.well-known/assetlinks.json
+          fi
+
       - name: Install & Build
         env:
           CI: "true"
@@ -131,6 +142,17 @@ jobs:
 
       - name: Enable Corepack
         run: corepack enable
+
+      - name: Write .well-known/assetlinks.json
+        env:
+          ASSET_LINKS: ${{ env.ASSET_LINKS }}
+        run: |
+          mkdir -p public/.well-known
+          if [ -n "${ASSET_LINKS:-}" ]; then
+            printf '%s' "${ASSET_LINKS}" > public/.well-known/assetlinks.json
+          else
+            echo '{}' > public/.well-known/assetlinks.json
+          fi
 
       - name: Install & Build
         env:
