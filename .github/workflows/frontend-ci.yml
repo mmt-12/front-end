@@ -1,126 +1,29 @@
-name: frontend-ci
+name: Frontend ci
 
 on:
   push:
-    branches: [ "develop", "main" ]
-
-permissions:
-  contents: read
-  packages: write
+    branches: ["**"]
+  pull_request:
 
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      # Buildx를 docker-container 드라이버로 활성화 (GHA 캐시 사용 가능)
-      - name: Set up Buildx
-        uses: docker/setup-buildx-action@v3
+      # Install pnpm first (required before using cache: 'pnpm')
+      - uses: pnpm/action-setup@v3
         with:
-          install: true
+          version: 9
+          run_install: false
 
-      # GHCR 로그인
-      - name: Docker login to GHCR
-        uses: docker/login-action@v3
+      # Now setup-node can cache pnpm store for you
+      - uses: actions/setup-node@v5
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 20
+          cache: pnpm
 
-      # 태그 정의: main -> prod, develop -> dev
-      - name: Set tags
-        id: tags
-        run: |
-          IMAGE=ghcr.io/mmt-12/memento-web
-          if [ "${{ github.ref_name }}" = "main" ]; then
-            CHAN=prod
-          else
-            CHAN=dev
-          fi
-          echo "image=$IMAGE" >> $GITHUB_OUTPUT
-          echo "chan=$CHAN"   >> $GITHUB_OUTPUT
-          echo "sha=${{ github.sha }}" >> $GITHUB_OUTPUT
+      # pnpm on CI defaults to --frozen-lockfile (pnpm >=6.10)
+      - run: pnpm install --frozen-lockfile
 
-      - name: Set build args (API base to relative path)
-        if: always()
-        id: vars
-        run: |
-          # Use relative /api so proxy handles scheme/host
-          echo "api=/api" >> $GITHUB_OUTPUT
-          # Use unified secrets for both branches
-          echo "maps=${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}" >> $GITHUB_OUTPUT
-          echo "vap=${{ secrets.VITE_VAP_KEY }}" >> $GITHUB_OUTPUT
-          echo "firebase=${{ secrets.VITE_FIREBASE_API_KEY }}" >> $GITHUB_OUTPUT
-
-      # 도커 빌드 & 푸시 (Dockerfile 위치: docker/app/Dockerfile)
-      - name: Build & Push
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ./docker/app/Dockerfile
-          platforms: linux/amd64
-          push: true
-          build-args: |
-            VITE_API_BASE_URL=${{ steps.vars.outputs.api || '' }}
-            VITE_GOOGLE_MAPS_API_KEY=${{ steps.vars.outputs.maps || '' }}
-            VITE_VAP_KEY=${{ steps.vars.outputs.vap || '' }}
-            VITE_FIREBASE_API_KEY=${{ steps.vars.outputs.firebase || '' }}
-          tags: |
-            ${{ steps.tags.outputs.image }}:${{ steps.tags.outputs.chan }}
-            ${{ steps.tags.outputs.image }}:${{ steps.tags.outputs.chan }}-${{ steps.tags.outputs.sha }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          # 프런트 빌드 시 필요한 값이 있다면 ARG로 전달
-          # build-args: |
-          #   VITE_API_BASE_URL=https://dev-api.yourdomain.com
-
-  deploy:
-    name: Deploy to self-hosted
-    needs: build-and-push
-    runs-on: self-hosted
-    steps:
-      - name: Set env/service from branch
-        id: env
-        run: |
-          if [ "${{ github.ref_name }}" = "main" ]; then
-            echo "env=prod" >> $GITHUB_OUTPUT
-            echo "service=prod-web" >> $GITHUB_OUTPUT
-          else
-            echo "env=dev" >> $GITHUB_OUTPUT
-            echo "service=dev-web" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Login GHCR (for private images)
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Ensure external network and infra services are up
-        run: |
-          # Ensure external proxy network exists (idempotent)
-          docker network inspect proxy-net >/dev/null 2>&1 || docker network create proxy-net
-          # Determine infra services based on env
-          if [ "${{ steps.env.outputs.env }}" = "prod" ]; then
-            INFRA_SVCS="prod-mysql prod-redis prod-minio"
-          else
-            INFRA_SVCS="dev-mysql dev-redis dev-minio"
-          fi
-          # Bring up infra services without touching volumes (idempotent)
-          docker compose -f /home/brokenfinger98/infra/${{ steps.env.outputs.env }}/docker-compose.yml up -d $INFRA_SVCS || true
-
-      - name: Pull image
-        run: |
-          test -f /home/brokenfinger98/infra/${{ steps.env.outputs.env }}/.env || (echo "Missing .env at /home/brokenfinger98/infra/${{ steps.env.outputs.env }}/.env" && exit 1)
-          docker compose -f /home/brokenfinger98/infra/${{ steps.env.outputs.env }}/docker-compose.yml config -q
-          docker compose -f /home/brokenfinger98/infra/${{ steps.env.outputs.env }}/docker-compose.yml pull ${{ steps.env.outputs.service }}
-
-      - name: Restart service (no deps)
-        run: |
-          docker compose -f /home/brokenfinger98/infra/${{ steps.env.outputs.env }}/docker-compose.yml up -d --no-deps ${{ steps.env.outputs.service }}
-
-concurrency:
-  group: fe-deploy-${{ github.ref_name }}
-  cancel-in-progress: true
+      - run: pnpm build

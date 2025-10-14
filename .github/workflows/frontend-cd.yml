@@ -1,0 +1,146 @@
+name: frontend-cd
+
+on:
+  push:
+    branches: ["develop", "main"]
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      env:
+        description: "Environment to deploy"
+        required: true
+        default: "dev"
+        type: choice
+        options: ["dev", "prod"]
+
+concurrency:
+  group: frontend-cd-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FRONTEND_WORKDIR: .
+
+jobs:
+  deploy_dev:
+    name: Deploy (dev)
+    runs-on: ubuntu-latest
+    environment: dev
+    if: github.event_name == 'workflow_dispatch' && inputs.env == 'dev' || github.ref == 'refs/heads/develop'
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_WORKDIR }}
+    env:
+      SSH_PORT: ${{ secrets.SSH_PORT }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+
+      - name: Install & Build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Pack archive
+        run: |
+          OUT="${FRONT_BUILD_DIR:-}"
+          if [ -z "$OUT" ]; then
+            if [ -d dist ]; then OUT=dist; elif [ -d build ]; then OUT=build; else OUT=dist; fi
+          fi
+          mkdir -p out
+          tar -C "$OUT" -czf out/frontend.tgz .
+
+      - name: Start ssh-agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add known_hosts (optional)
+        run: |
+          mkdir -p ~/.ssh
+          printf "%s\n" "${{ secrets.KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Prepare metadata
+        id: meta
+        run: echo "RELEASE_ID=$(date -u +%Y%m%d%H%M%S)-${GITHUB_SHA::7}-dev" >> $GITHUB_OUTPUT
+
+      - name: Upload archive via scp
+        run: |
+          scp -O \
+              -P "${SSH_PORT:-22}" \
+              out/frontend.tgz \
+              "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:/tmp/frontend.tgz.${{ steps.meta.outputs.RELEASE_ID }}"
+
+      - name: Run remote deploy (dev)
+        run: |
+          ssh -p "${SSH_PORT:-22}" \
+              "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" \
+              'bash -lc "
+                 set -euo pipefail;
+                 export PATH=\"/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:\$PATH\";
+                 mkdir -p ~/apps/frontend/releases/${{ steps.meta.outputs.RELEASE_ID }};
+                 ~/apps/frontend/deploy_frontend.sh dev ${{ steps.meta.outputs.RELEASE_ID }} 1
+               "'
+
+  deploy_prod:
+    name: Deploy (prod)
+    runs-on: ubuntu-latest
+    environment: prod
+    if: github.event_name == 'workflow_dispatch' && inputs.env == 'prod' || startsWith(github.ref,'refs/heads/main') || startsWith(github.ref,'refs/tags/v')
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_WORKDIR }}
+    env:
+      SSH_PORT: ${{ secrets.SSH_PORT }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+
+      - name: Install & Build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Pack archive
+        run: |
+          OUT="${FRONT_BUILD_DIR:-}"
+          if [ -z "$OUT" ]; then
+            if [ -d dist ]; then OUT=dist; elif [ -d build ]; then OUT=build; else OUT=dist; fi
+          fi
+          mkdir -p out
+          tar -C "$OUT" -czf out/frontend.tgz .
+
+      - name: Start ssh-agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add known_hosts (optional)
+        run: |
+          mkdir -p ~/.ssh
+          printf "%s\n" "${{ secrets.KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Prepare metadata
+        id: meta
+        run: echo "RELEASE_ID=$(date -u +%Y%m%d%H%M%S)-${GITHUB_SHA::7}-prod" >> $GITHUB_OUTPUT
+
+      - name: Upload archive via scp
+        run: |
+          scp -O \
+              -P "${SSH_PORT:-22}" \
+              out/frontend.tgz \
+              "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:/tmp/frontend.tgz.${{ steps.meta.outputs.RELEASE_ID }}"
+
+      - name: Run remote deploy (prod)
+        run: |
+          ssh -p "${SSH_PORT:-22}" \
+              "${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}" \
+              'bash -lc "
+                 set -euo pipefail;
+                 export PATH=\"/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:\$PATH\";
+                 mkdir -p ~/apps/frontend/releases/${{ steps.meta.outputs.RELEASE_ID }};
+                 ~/apps/frontend/deploy_frontend.sh prod ${{ steps.meta.outputs.RELEASE_ID }} 1
+               "'
