@@ -52,7 +52,7 @@ jobs:
 
       - name: Write .well-known/assetlinks.json
         env:
-          ASSET_LINKS: ${{ env.ASSET_LINKS }}
+          ASSET_LINKS: ${{ vars.ASSET_LINKS }}
         run: |
           mkdir -p public/.well-known
           if [ -n "${ASSET_LINKS:-}" ]; then
@@ -145,7 +145,7 @@ jobs:
 
       - name: Write .well-known/assetlinks.json
         env:
-          ASSET_LINKS: ${{ env.ASSET_LINKS }}
+          ASSET_LINKS: ${{ vars.ASSET_LINKS }}
         run: |
           mkdir -p public/.well-known
           if [ -n "${ASSET_LINKS:-}" ]; then
