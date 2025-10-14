@@ -114,20 +114,23 @@ jobs:
     env:
       SSH_PORT: ${{ secrets.SSH_PORT }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+          run_install: false
 
       - name: Setup Node 20 + pnpm
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 20
           cache: "pnpm"
           cache-dependency-path: ${{ env.FRONTEND_WORKDIR }}/pnpm-lock.yaml
+
       - name: Enable Corepack
         run: corepack enable
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
 
       - name: Install & Build
         env:
