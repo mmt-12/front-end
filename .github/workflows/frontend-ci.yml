@@ -2,125 +2,117 @@ name: frontend-ci
 
 on:
   push:
-    branches: [ "develop", "main" ]
-
-permissions:
-  contents: read
-  packages: write
-
-jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      # Buildx를 docker-container 드라이버로 활성화 (GHA 캐시 사용 가능)
-      - name: Set up Buildx
-        uses: docker/setup-buildx-action@v3
-        with:
-          install: true
-
-      # GHCR 로그인
-      - name: Docker login to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      # 태그 정의: main -> prod, develop -> dev
-      - name: Set tags
-        id: tags
-        run: |
-          IMAGE=ghcr.io/mmt-12/memento-web
-          if [ "${{ github.ref_name }}" = "main" ]; then
-            CHAN=prod
-          else
-            CHAN=dev
-          fi
-          echo "image=$IMAGE" >> $GITHUB_OUTPUT
-          echo "chan=$CHAN"   >> $GITHUB_OUTPUT
-          echo "sha=${{ github.sha }}" >> $GITHUB_OUTPUT
-
-      - name: Set build args (API base to relative path)
-        if: always()
-        id: vars
-        run: |
-          # Use relative /api so proxy handles scheme/host
-          echo "api=/api" >> $GITHUB_OUTPUT
-          # Use unified secrets for both branches
-          echo "maps=${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}" >> $GITHUB_OUTPUT
-          echo "vap=${{ secrets.VITE_VAP_KEY }}" >> $GITHUB_OUTPUT
-          echo "firebase=${{ secrets.VITE_FIREBASE_API_KEY }}" >> $GITHUB_OUTPUT
-
-      # 도커 빌드 & 푸시 (Dockerfile 위치: docker/app/Dockerfile)
-      - name: Build & Push
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ./docker/app/Dockerfile
-          platforms: linux/amd64
-          push: true
-          build-args: |
-            VITE_API_BASE_URL=${{ steps.vars.outputs.api || '' }}
-            VITE_GOOGLE_MAPS_API_KEY=${{ steps.vars.outputs.maps || '' }}
-            VITE_VAP_KEY=${{ steps.vars.outputs.vap || '' }}
-            VITE_FIREBASE_API_KEY=${{ steps.vars.outputs.firebase || '' }}
-          tags: |
-            ${{ steps.tags.outputs.image }}:${{ steps.tags.outputs.chan }}
-            ${{ steps.tags.outputs.image }}:${{ steps.tags.outputs.chan }}-${{ steps.tags.outputs.sha }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          # 프런트 빌드 시 필요한 값이 있다면 ARG로 전달
-          # build-args: |
-          #   VITE_API_BASE_URL=https://dev-api.yourdomain.com
-
-  deploy:
-    name: Deploy to self-hosted
-    needs: build-and-push
-    runs-on: self-hosted
-    steps:
-      - name: Set env/service from branch
-        id: env
-        run: |
-          if [ "${{ github.ref_name }}" = "main" ]; then
-            echo "env=prod" >> $GITHUB_OUTPUT
-            echo "service=prod-web" >> $GITHUB_OUTPUT
-          else
-            echo "env=dev" >> $GITHUB_OUTPUT
-            echo "service=dev-web" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Login GHCR (for private images)
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Ensure external network and infra services are up
-        run: |
-          # Ensure external proxy network exists (idempotent)
-          docker network inspect proxy-net >/dev/null 2>&1 || docker network create proxy-net
-          # Determine infra services based on env
-          if [ "${{ steps.env.outputs.env }}" = "prod" ]; then
-            INFRA_SVCS="prod-mysql prod-redis prod-minio"
-          else
-            INFRA_SVCS="dev-mysql dev-redis dev-minio"
-          fi
-          # Bring up infra services without touching volumes (idempotent)
-          docker compose -f /home/brokenfinger98/infra/${{ steps.env.outputs.env }}/docker-compose.yml up -d $INFRA_SVCS || true
-
-      - name: Pull image
-        run: |
-          test -f /home/brokenfinger98/infra/${{ steps.env.outputs.env }}/.env || (echo "Missing .env at /home/brokenfinger98/infra/${{ steps.env.outputs.env }}/.env" && exit 1)
-          docker compose -f /home/brokenfinger98/infra/${{ steps.env.outputs.env }}/docker-compose.yml config -q
-          docker compose -f /home/brokenfinger98/infra/${{ steps.env.outputs.env }}/docker-compose.yml pull ${{ steps.env.outputs.service }}
-
-      - name: Restart service (no deps)
-        run: |
-          docker compose -f /home/brokenfinger98/infra/${{ steps.env.outputs.env }}/docker-compose.yml up -d --no-deps ${{ steps.env.outputs.service }}
+    branches: ["develop", "main"]
+    tags: ["v*"]
+  pull_request:
+    branches: ["develop", "main"]
 
 concurrency:
-  group: fe-deploy-${{ github.ref_name }}
+  group: frontend-ci-${{ github.ref }}
   cancel-in-progress: true
+
+env:
+  FRONTEND_WORKDIR: . # change if your app is in a subfolder, e.g. web/
+
+jobs:
+  build_dev:
+    name: Build (dev)
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop' || (github.event_name == 'pull_request' && github.base_ref == 'develop')
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_WORKDIR }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+          run_install: false
+
+      - name: Setup Node 20 + pnpm
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: "pnpm"
+          cache-dependency-path: ${{ env.FRONTEND_WORKDIR }}/pnpm-lock.yaml
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install deps (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        env:
+          CI: "true"
+          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+          VITE_VAP_KEY: ${{ secrets.VITE_VAP_KEY }}
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+
+        run: pnpm run build
+
+      - name: Pack artifact (auto-detect dist|build or override FRONT_BUILD_DIR)
+        run: |
+          OUT="${FRONT_BUILD_DIR:-}"
+          if [ -z "$OUT" ]; then
+            if [ -d dist ]; then OUT=dist; elif [ -d build ]; then OUT=build; else OUT=dist; fi
+          fi
+          mkdir -p ../out
+          tar -C "$OUT" -czf ../out/frontend.tgz .
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dev
+          path: out/frontend.tgz
+          retention-days: 14
+
+  build_prod:
+    name: Build (prod)
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref,'refs/heads/main') || startsWith(github.ref,'refs/tags/v') || (github.event_name == 'pull_request' && github.base_ref == 'main')
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_WORKDIR }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+          run_install: false
+
+      - name: Setup Node 20 + pnpm
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: "pnpm"
+          cache-dependency-path: ${{ env.FRONTEND_WORKDIR }}/pnpm-lock.yaml
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install deps (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        env:
+          CI: "true"
+        run: pnpm run build
+
+      - name: Pack artifact (auto-detect dist|build or override FRONT_BUILD_DIR)
+        run: |
+          OUT="${FRONT_BUILD_DIR:-}"
+          if [ -z "$OUT" ]; then
+            if [ -d dist ]; then OUT=dist; elif [ -d build ]; then OUT=build; else OUT=dist; fi
+          fi
+          mkdir -p ../out
+          tar -C "$OUT" -czf ../out/frontend.tgz .
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frontend-prod
+          path: out/frontend.tgz
+          retention-days: 14
