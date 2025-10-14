@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  FRONTEND_WORKDIR: .
+  FRONTEND_WORKDIR: . # change if app lives elsewhere
 
 jobs:
   deploy_dev:
@@ -32,14 +32,34 @@ jobs:
     env:
       SSH_PORT: ${{ secrets.SSH_PORT }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 20 }
+      - uses: actions/checkout@v5
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+          run_install: false
+
+      - name: Setup Node 20 + pnpm
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: "pnpm"
+          cache-dependency-path: ${{ env.FRONTEND_WORKDIR }}/pnpm-lock.yaml
+
+      - name: Enable Corepack
+        run: corepack enable
 
       - name: Install & Build
+        env:
+          CI: "true"
+          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+          VITE_VAP_KEY: ${{ secrets.VITE_VAP_KEY }}
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
         run: |
-          npm ci
-          npm run build
+          pnpm install --frozen-lockfile
+          pnpm run build
 
       - name: Pack archive
         run: |
@@ -95,13 +115,31 @@ jobs:
       SSH_PORT: ${{ secrets.SSH_PORT }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 20 }
+
+      - name: Setup Node 20 + pnpm
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+          cache-dependency-path: ${{ env.FRONTEND_WORKDIR }}/pnpm-lock.yaml
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - name: Install & Build
+        env:
+          CI: "true"
+          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+          VITE_VAP_KEY: ${{ secrets.VITE_VAP_KEY }}
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+
         run: |
-          npm ci
-          npm run build
+          pnpm install --frozen-lockfile
+          pnpm run build
 
       - name: Pack archive
         run: |

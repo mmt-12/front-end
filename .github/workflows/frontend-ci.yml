@@ -1,29 +1,118 @@
-name: Frontend ci
+name: frontend-ci
 
 on:
   push:
-    branches: ["**"]
+    branches: ["develop", "main"]
+    tags: ["v*"]
   pull_request:
+    branches: ["develop", "main"]
+
+concurrency:
+  group: frontend-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FRONTEND_WORKDIR: . # change if your app is in a subfolder, e.g. web/
 
 jobs:
-  build:
+  build_dev:
+    name: Build (dev)
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop' || (github.event_name == 'pull_request' && github.base_ref == 'develop')
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_WORKDIR }}
     steps:
       - uses: actions/checkout@v5
 
-      # Install pnpm first (required before using cache: 'pnpm')
-      - uses: pnpm/action-setup@v3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
         with:
           version: 9
           run_install: false
 
-      # Now setup-node can cache pnpm store for you
-      - uses: actions/setup-node@v5
+      - name: Setup Node 20 + pnpm
+        uses: actions/setup-node@v5
         with:
           node-version: 20
-          cache: pnpm
+          cache: "pnpm"
+          cache-dependency-path: ${{ env.FRONTEND_WORKDIR }}/pnpm-lock.yaml
+      - name: Enable Corepack
+        run: corepack enable
 
-      # pnpm on CI defaults to --frozen-lockfile (pnpm >=6.10)
-      - run: pnpm install --frozen-lockfile
+      - name: Install deps (frozen lockfile)
+        run: pnpm install --frozen-lockfile
 
-      - run: pnpm build
+      - name: Build
+        env:
+          CI: "true"
+          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+          VITE_VAP_KEY: ${{ secrets.VITE_VAP_KEY }}
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+
+        run: pnpm run build
+
+      - name: Pack artifact (auto-detect dist|build or override FRONT_BUILD_DIR)
+        run: |
+          OUT="${FRONT_BUILD_DIR:-}"
+          if [ -z "$OUT" ]; then
+            if [ -d dist ]; then OUT=dist; elif [ -d build ]; then OUT=build; else OUT=dist; fi
+          fi
+          mkdir -p ../out
+          tar -C "$OUT" -czf ../out/frontend.tgz .
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dev
+          path: out/frontend.tgz
+          retention-days: 14
+
+  build_prod:
+    name: Build (prod)
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref,'refs/heads/main') || startsWith(github.ref,'refs/tags/v') || (github.event_name == 'pull_request' && github.base_ref == 'main')
+    defaults:
+      run:
+        working-directory: ${{ env.FRONTEND_WORKDIR }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+          run_install: false
+
+      - name: Setup Node 20 + pnpm
+        uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: "pnpm"
+          cache-dependency-path: ${{ env.FRONTEND_WORKDIR }}/pnpm-lock.yaml
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install deps (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        env:
+          CI: "true"
+        run: pnpm run build
+
+      - name: Pack artifact (auto-detect dist|build or override FRONT_BUILD_DIR)
+        run: |
+          OUT="${FRONT_BUILD_DIR:-}"
+          if [ -z "$OUT" ]; then
+            if [ -d dist ]; then OUT=dist; elif [ -d build ]; then OUT=build; else OUT=dist; fi
+          fi
+          mkdir -p ../out
+          tar -C "$OUT" -czf ../out/frontend.tgz .
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frontend-prod
+          path: out/frontend.tgz
+          retention-days: 14
