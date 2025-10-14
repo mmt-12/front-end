@@ -1,10 +1,14 @@
 {
+  "id": ".",
   "name": "Memento",
   "short_name": "Memento",
   "description": "역삼에서 함께한 추억과 그 이후의 이야기",
   "theme_color": "#FEFEFA",
   "background_color": "#FEFEFA",
   "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "icon1.png",
