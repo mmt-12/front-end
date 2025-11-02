@@ -2,7 +2,7 @@ name: frontend-ci
 
 on:
   push:
-    branches: ["develop", "main"]
+    branches: ["develop", "main", "fix/*"]
     tags: ["v*"]
   pull_request:
     branches: ["develop", "main"]
