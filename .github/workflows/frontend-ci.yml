@@ -18,7 +18,6 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
-    if: github.ref == 'refs/heads/develop' || (github.event_name == 'pull_request' && github.base_ref == 'develop')
     defaults:
       run:
         working-directory: ${{ github.workspace }}
