@@ -11,17 +11,11 @@ concurrency:
   group: frontend-ci-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  FRONTEND_WORKDIR: . # change if your app is in a subfolder, e.g. web/
-
 jobs:
   build_dev:
     name: Build (dev)
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/develop' || (github.event_name == 'pull_request' && github.base_ref == 'develop')
-    defaults:
-      run:
-        working-directory: ${{ env.FRONTEND_WORKDIR }}
     steps:
       - uses: actions/checkout@v5
 
@@ -36,7 +30,7 @@ jobs:
         with:
           node-version: 20
           cache: "pnpm"
-          cache-dependency-path: ${{ env.FRONTEND_WORKDIR }}/pnpm-lock.yaml
+          cache-dependency-path: ./pnpm-lock.yaml
       - name: Enable Corepack
         run: corepack enable
 
@@ -72,9 +66,6 @@ jobs:
     name: Build (prod)
     runs-on: ubuntu-latest
     if: startsWith(github.ref,'refs/heads/main') || startsWith(github.ref,'refs/tags/v') || (github.event_name == 'pull_request' && github.base_ref == 'main')
-    defaults:
-      run:
-        working-directory: ${{ env.FRONTEND_WORKDIR }}
     steps:
       - uses: actions/checkout@v5
 
@@ -89,7 +80,7 @@ jobs:
         with:
           node-version: 20
           cache: "pnpm"
-          cache-dependency-path: ${{ env.FRONTEND_WORKDIR }}/pnpm-lock.yaml
+          cache-dependency-path: ./pnpm-lock.yaml
 
       - name: Enable Corepack
         run: corepack enable
