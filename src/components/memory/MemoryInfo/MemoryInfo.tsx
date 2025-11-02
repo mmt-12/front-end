@@ -1,21 +1,29 @@
 import { useCallback } from 'react'
 import { css, useTheme, type Theme } from '@emotion/react'
-import { DownloadSquare, GalleryCircle, UserCircle } from '@solar-icons/react'
+import {
+  DownloadSquare,
+  GalleryCircle,
+  Settings,
+  UserCircle,
+} from '@solar-icons/react'
 import { Link } from 'react-router-dom'
 
 import rightArrow from '@/assets/images/icons/rightArrow.svg'
 import Button from '@/components/common/Button'
 import Chip from '@/components/common/Chip'
+import MemorySettingModal from '@/components/modal/MemorySettingModal'
 import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
-import type { locationType } from '@/types/memory'
+import { useUserStore } from '@/store/userStore'
+import type { IMember } from '@/types'
+import type { LocationType } from '@/types/memory'
 import { formatDateString } from '@/utils/date'
 import { compressImages, downloadBlob } from '@/utils/image'
 
 interface Props {
   id: number
   title: string
-  location: locationType
+  location: LocationType
   memberAmount: number
   pictureAmount?: number
   description?: string
@@ -23,14 +31,17 @@ interface Props {
     startTime?: string
     endTime: string
   }
-  saveEnabled?: boolean
+  showDetail?: boolean
   isLink?: boolean
   pictures?: string[]
+  author?: IMember
 }
 
 export default function MemoryInfo(props: Props) {
   const theme = useTheme()
-  const { alert, confirm } = useModal()
+  const { alert, confirm, openModal } = useModal()
+
+  const isAuthor = useUserStore(state => state.associateId) === props.author?.id
 
   const formattedStartTime = formatDateString(props.period.startTime || '')
   const formattedEndTime = formatDateString(props.period.endTime || '')
@@ -78,10 +89,26 @@ export default function MemoryInfo(props: Props) {
     )
   }
 
+  const handleSettingsClick = () => {
+    openModal(<MemorySettingModal memoryId={props.id} />)
+  }
+
   return (
     <div css={{ padding: '4px 8px' }}>
       <div css={titleRowStyle}>
-        <h2>{props.title}</h2>
+        <h2>
+          {props.title}
+          {isAuthor && props.showDetail && (
+            <Settings
+              className='button'
+              weight='Bold'
+              size={21}
+              color={theme.colors.stone[600]}
+              css={{ padding: 6 }}
+              onClick={handleSettingsClick}
+            />
+          )}
+        </h2>
         <div css={countChipsStyle}>
           <Chip Icon={UserCircle} label={props.memberAmount} />
           {props.pictureAmount !== undefined && (
@@ -89,8 +116,8 @@ export default function MemoryInfo(props: Props) {
           )}
         </div>
       </div>
-      <div css={metaRowStyle(theme, !!props.saveEnabled)}>
-        {props.saveEnabled ? (
+      <div css={metaRowStyle(theme, !!props.showDetail)}>
+        {props.showDetail ? (
           <>
             <div>{renderMeta()}</div>
             <Button
@@ -133,12 +160,15 @@ const titleRowStyle = (theme: Theme) =>
     h2: {
       fontSize: '20px',
       color: theme.colors.sky[600],
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px',
     },
   })
 
-const metaRowStyle = (theme: Theme, saveEnabled: boolean) =>
+const metaRowStyle = (theme: Theme, showDetail: boolean) =>
   css({
-    padding: saveEnabled ? '8px 0' : '4px 0',
+    padding: showDetail ? '8px 0' : '4px 0',
 
     display: 'flex',
     justifyContent: 'space-between',

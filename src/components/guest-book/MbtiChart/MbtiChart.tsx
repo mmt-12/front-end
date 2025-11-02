@@ -1,5 +1,7 @@
-import { lazy, useMemo, useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { useTheme } from '@emotion/react'
+// const EChartsReactCore = lazy(() => import('echarts-for-react/lib/core'))
+import EChartsReactCore from 'echarts-for-react/lib/core'
 import { PieChart } from 'echarts/charts'
 import { LegendComponent } from 'echarts/components'
 import * as echarts from 'echarts/core'
@@ -9,8 +11,6 @@ import { useMbtiTest } from '@/api'
 import NoContentFallback from '@/components/common/NoContentFallback'
 import { MBTI_COLOR, type MbtiType } from '@/consts/MBTI'
 import MbtiChartSkeleton from './MbtiChart.Skeleton'
-
-const EChartsReactCore = lazy(() => import('echarts-for-react/lib/core'))
 
 // 사용할 모듈 등록
 echarts.use([PieChart, LegendComponent, SVGRenderer])

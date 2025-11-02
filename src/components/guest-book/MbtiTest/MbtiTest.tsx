@@ -1,7 +1,8 @@
-import { lazy, useState } from 'react'
+import { useState } from 'react'
 import { css } from '@emotion/react'
 
 import { useCreateMbtiTest } from '@/api/guestbook'
+import MbtiChart from '@/components/guest-book/MbtiChart'
 import {
   MBTI_COLOR,
   MBTI_MODIFIER,
@@ -13,7 +14,7 @@ import { theme } from '@/styles/theme'
 import { calculateMbti, type MbtiScore } from '@/utils/mbti'
 import WavyButton from '../WavyButton/WavyButton'
 
-const MbtiChart = lazy(() => import('@/components/guest-book/MbtiChart'))
+// const MbtiChart = lazy(() => import('@/components/guest-book/MbtiChart'))
 
 interface Props {
   isMyPage: boolean

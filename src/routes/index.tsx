@@ -75,6 +75,10 @@ const router = createBrowserRouter([
                 element: <Pages.MemoryRegisterPage />,
               },
               {
+                path: ROUTES.MEMORY_EDIT(':memoryId'),
+                element: <Pages.MemoryEditPage />,
+              },
+              {
                 path: ROUTES.MEMORY_DETAIL(':memoryId'),
                 element: <Pages.MemoryDetailPage />,
               },

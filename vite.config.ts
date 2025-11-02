@@ -2,12 +2,17 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
-import { mockDevServerPlugin } from 'vite-plugin-mock-dev-server'
 import { VitePWA } from 'vite-plugin-pwa'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import svgr from 'vite-plugin-svgr'
+
+const ReactCompilerConfig = {
+  sources: (filename: string) => {
+    return filename.indexOf('src/') !== -1;
+  },
+};
 
 
 const dirname =
@@ -18,8 +23,10 @@ const dirname =
 export default defineConfig({
   plugins: [
     svgr(),
-    mockDevServerPlugin(),
     react({
+      babel: {
+        plugins: [["babel-plugin-react-compiler", ReactCompilerConfig]],
+      },
       jsxImportSource: '@emotion/react',
     }),
     VitePWA({

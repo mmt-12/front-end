@@ -5,6 +5,7 @@ export const ROUTES = {
   MEMORY_LIST: '/memory',
   MEMORY_DETAIL: (memoryId: string | number) => `/memory/${memoryId}`,
   MEMORY_REGISTER: '/memory/register',
+  MEMORY_EDIT: (memoryId: string | number) => `/memory/${memoryId}/edit`,
   POST_DETAIL: (memoryId: string | number, postId: string | number) => `/memory/${memoryId}/post/${postId}`,
   POST_REGISTER: (memoryId: string | number) => `/memory/${memoryId}/post/register`,
   POST_EDIT: (memoryId: string | number, postId: string | number) => `/memory/${memoryId}/post/${postId}/edit`,
