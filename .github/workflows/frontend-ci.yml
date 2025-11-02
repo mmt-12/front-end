@@ -30,7 +30,8 @@ jobs:
         with:
           node-version: 20
           cache: "pnpm"
-          cache-dependency-path: ./pnpm-lock.yaml
+          cache-dependency-path: pnpm-lock.yaml
+
       - name: Enable Corepack
         run: corepack enable
 
@@ -53,8 +54,8 @@ jobs:
           if [ -z "$OUT" ]; then
             if [ -d dist ]; then OUT=dist; elif [ -d build ]; then OUT=build; else OUT=dist; fi
           fi
-          mkdir -p ../out
-          tar -C "$OUT" -czf ../out/frontend.tgz .
+          mkdir -p out
+          tar -C "$OUT" -czf out/frontend.tgz .
 
       - uses: actions/upload-artifact@v4
         with:
@@ -80,7 +81,7 @@ jobs:
         with:
           node-version: 20
           cache: "pnpm"
-          cache-dependency-path: ./pnpm-lock.yaml
+          cache-dependency-path: pnpm-lock.yaml
 
       - name: Enable Corepack
         run: corepack enable
@@ -99,8 +100,8 @@ jobs:
           if [ -z "$OUT" ]; then
             if [ -d dist ]; then OUT=dist; elif [ -d build ]; then OUT=build; else OUT=dist; fi
           fi
-          mkdir -p ../out
-          tar -C "$OUT" -czf ../out/frontend.tgz .
+          mkdir -p out
+          tar -C "$OUT" -czf out/frontend.tgz .
 
       - uses: actions/upload-artifact@v4
         with:
