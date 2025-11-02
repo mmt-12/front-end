@@ -15,6 +15,9 @@ jobs:
   build_dev:
     name: Build (dev)
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
     if: github.ref == 'refs/heads/develop' || (github.event_name == 'pull_request' && github.base_ref == 'develop')
     defaults:
       run:
@@ -62,6 +65,9 @@ jobs:
   build_prod:
     name: Build (prod)
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
     if: startsWith(github.ref,'refs/heads/main') || startsWith(github.ref,'refs/tags/v') || (github.event_name == 'pull_request' && github.base_ref == 'main')
     defaults:
       run:
