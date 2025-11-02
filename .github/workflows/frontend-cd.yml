@@ -32,23 +32,16 @@ jobs:
     env:
       SSH_PORT: ${{ secrets.SSH_PORT }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
-          run_install: false
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
-      - name: Setup Node 20 + pnpm
-        uses: actions/setup-node@v5
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: ${{ matrix.node-version }}
           cache: "pnpm"
-          cache-dependency-path: ${{ env.FRONTEND_WORKDIR }}/pnpm-lock.yaml
-
-      - name: Enable Corepack
-        run: corepack enable
 
       - name: Write .well-known/assetlinks.json
         env:
@@ -69,7 +62,7 @@ jobs:
           VITE_VAP_KEY: ${{ secrets.VITE_VAP_KEY }}
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
         run: |
-          pnpm install --frozen-lockfile
+          pnpm install
           pnpm run build
 
       - name: Pack archive
@@ -125,23 +118,16 @@ jobs:
     env:
       SSH_PORT: ${{ secrets.SSH_PORT }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
-          run_install: false
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
-      - name: Setup Node 20 + pnpm
-        uses: actions/setup-node@v5
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: ${{ matrix.node-version }}
           cache: "pnpm"
-          cache-dependency-path: ${{ env.FRONTEND_WORKDIR }}/pnpm-lock.yaml
-
-      - name: Enable Corepack
-        run: corepack enable
 
       - name: Write .well-known/assetlinks.json
         env:
@@ -163,7 +149,7 @@ jobs:
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
 
         run: |
-          pnpm install --frozen-lockfile
+          pnpm install
           pnpm run build
 
       - name: Pack archive
