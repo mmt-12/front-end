@@ -22,7 +22,7 @@ env:
 
 jobs:
   deploy_dev:
-    name: Deploy (초dev)
+    name: Deploy (dev)
     runs-on: ubuntu-latest
     strategy:
       matrix:
