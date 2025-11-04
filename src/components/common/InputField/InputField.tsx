@@ -1,6 +1,6 @@
 import type { ChangeEvent } from 'react'
 import { css } from '@emotion/react'
-import type { Theme } from '@emotion/react'
+import type { Interpolation, Theme } from '@emotion/react'
 
 import { inputContainerStyle } from '@/styles/input'
 
@@ -12,6 +12,8 @@ interface Props {
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement>
   type?: 'input' | 'textarea'
   label?: string
+  placeholder?: string
+  customCss?: Interpolation<Theme>
 }
 
 export default function InputField({
@@ -20,6 +22,8 @@ export default function InputField({
   onKeyDown,
   type = 'input',
   label,
+  placeholder,
+  customCss,
 }: Props) {
   const inputProps = {
     css: inputStyle,
@@ -27,13 +31,25 @@ export default function InputField({
     onChange,
   }
 
+  console.log(customCss)
+
   return (
-    <div css={inputContainerStyle}>
+    <div css={[inputContainerStyle, customCss]}>
       {label && <label css={labelStyle}>{label}</label>}
       {type === 'textarea' ? (
-        <textarea rows={3} {...inputProps} onKeyDown={onKeyDown} />
+        <textarea
+          rows={3}
+          {...inputProps}
+          onKeyDown={onKeyDown}
+          placeholder={placeholder}
+        />
       ) : (
-        <input type='text' {...inputProps} onKeyDown={onKeyDown} />
+        <input
+          type='text'
+          {...inputProps}
+          onKeyDown={onKeyDown}
+          placeholder={placeholder}
+        />
       )}
     </div>
   )

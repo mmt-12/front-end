@@ -90,7 +90,7 @@ export default function MemoryInfo(props: Props) {
   }
 
   const handleSettingsClick = () => {
-    openModal(<MemorySettingModal memoryId={props.id} />)
+    openModal(<MemorySettingModal memoryId={props.id} title={props.title} />)
   }
 
   return (
