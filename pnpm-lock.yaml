@@ -75,8 +75,8 @@ importers:
         specifier: ^7.9.5
         version: 7.9.5(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       sam-react-modal:
-        specifier: 0.1.0
-        version: 0.1.0(eslint@9.39.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        specifier: link:../../sam-react-modal
+        version: link:../../sam-react-modal
       storybook-addon-remix-react-router:
         specifier: ^5.0.0
         version: 5.0.0(react-dom@19.2.0(react@19.2.0))(react-router@7.9.5(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)(storybook@9.1.16(@testing-library/dom@10.4.1)(prettier@3.6.2)(vite@7.1.12(@types/node@24.9.2)(terser@5.44.0)))
@@ -3519,12 +3519,6 @@ packages:
 
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
-
-  sam-react-modal@0.1.0:
-    resolution: {integrity: sha512-kqo0ITQheCZvsH5NZC40RRnUal7rbfekmQTLiZf8dkCxTqASSVH2XMWFG9ztLfIdZnvwzUHehXXTUsMRTmKmKQ==}
-    peerDependencies:
-      react: '>=17 || >=18'
-      react-dom: '>=17 || >=18'
 
   saxes@6.0.0:
     resolution: {integrity: sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==}
@@ -8065,14 +8059,6 @@ snapshots:
       is-regex: 1.2.1
 
   safer-buffer@2.1.2: {}
-
-  sam-react-modal@0.1.0(eslint@9.39.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
-    dependencies:
-      eslint-plugin-react: 7.37.5(eslint@9.39.0)
-      react: 19.2.0
-      react-dom: 19.2.0(react@19.2.0)
-    transitivePeerDependencies:
-      - eslint
 
   saxes@6.0.0:
     dependencies:

@@ -7,7 +7,7 @@ export const useModal = () => {
   const { openModal, closeModal } = useSamModal()
 
   const confirm = async (message: string) => {
-    return openModal(<Confirm>{message}</Confirm>)
+    return openModal(<Confirm key={'confirm'}>{message}</Confirm>)
   }
 
   const alert = async (message: string) => {

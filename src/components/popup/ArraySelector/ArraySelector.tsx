@@ -1,33 +1,36 @@
-import { useMemo, useState, type JSX } from 'react'
+import { useMemo, useState, type JSX, type ReactNode } from 'react'
 import { css } from '@emotion/react'
 
 import BottomButton from '@/components/common/BottomButton'
 import SearchBar from '@/components/common/SearchBar'
 import { useModal } from '@/hooks/useModal'
 import { flexGap } from '@/styles/common'
-import type { IArrayItem } from '@/types'
 import { filterByStringProp } from '@/utils/filter'
 import Item from './Item'
 
-interface Props {
-  items: IArrayItem[]
-  initialItems?: IArrayItem[]
+interface Props<T> {
+  items: (T & Searchable)[]
+  initialItems?: (T & Searchable)[]
   searchBarIcon: JSX.ElementType
-  renderPreview?: boolean
   multiple?: boolean
+  renderItem: (_item: T) => ReactNode
 }
 
-export default function ArraySelector({
+export type Searchable = {
+  label: string
+}
+
+export default function ArraySelector<T>({
   items,
   initialItems = [],
   searchBarIcon,
   multiple = false,
-  renderPreview = false,
-}: Props) {
+  renderItem,
+}: Props<T>) {
   const { closeModal } = useModal()
-  const [selectedItems, setSelectedItems] = useState<IArrayItem[]>(initialItems)
+  const [selectedItems, setSelectedItems] = useState<T[]>(initialItems)
   const [searchTerm, setSearchTerm] = useState('')
-  const searchedItems = useMemo(
+  const searchedItems = useMemo<T[]>(
     () => filterByStringProp(items, 'label', searchTerm),
     [items, searchTerm],
   )
@@ -40,14 +43,15 @@ export default function ArraySelector({
         count={items.length}
       />
       <ul css={[flexGap(16), listStyle]}>
-        {searchedItems.map(item => (
-          <ArraySelector.Item
-            key={item.id}
+        {searchedItems.map((item, index) => (
+          <Item
+            key={index}
             item={item}
-            isSelected={selectedItems.some(m => m.id === item.id)}
+            isSelected={selectedItems.some(m => m == item)}
+            render={renderItem}
             onSelect={item => {
-              if (selectedItems.some(m => m.id === item.id))
-                setSelectedItems(prev => prev.filter(m => m.id !== item.id))
+              if (selectedItems.some(m => m == item))
+                setSelectedItems(prev => prev.filter(m => m != item))
               else if (multiple) {
                 setSelectedItems(prev => [...prev, item])
               } else {
@@ -61,25 +65,12 @@ export default function ArraySelector({
         type='secondary'
         label='선택 완료'
         onClick={() => {
-          closeModal({
-            items: selectedItems,
-            render: () => (
-              <>
-                {renderPreview ? (
-                  selectedItems.map(m => m.render())
-                ) : (
-                  <span>{selectedItems.map(m => m.label).join(', ')}</span>
-                )}
-              </>
-            ),
-          })
+          closeModal(selectedItems)
         }}
       />
     </>
   )
 }
-
-ArraySelector.Item = Item
 
 const listStyle = css({
   padding: 16,

@@ -4,28 +4,24 @@ import type { Icon } from '@solar-icons/react/lib/types'
 
 import { useModal } from '@/hooks/useModal'
 import { inputContainerStyle } from '@/styles/input'
-import type {
-  IArrayInput,
-  IBaseInput,
-  IDateRangeInput,
-  ILocationInput,
-} from '@/types'
 import Popup from '../Popup'
 
-interface Props<T = IDateRangeInput | IArrayInput | ILocationInput> {
+interface Props<T> {
   label: string
   value?: T
   onChange: (_value: T) => void
   icon: Icon
   content: React.ReactNode
+  render: (_value?: T) => React.ReactNode
 }
 
-export default function InputPopup<T extends IBaseInput>({
+export default function InputPopup<T>({
   label,
   value,
   onChange,
   content,
   icon,
+  render,
 }: Props<T>) {
   const { openModal, closeModal } = useModal()
 
@@ -49,7 +45,7 @@ export default function InputPopup<T extends IBaseInput>({
         }}
         css={buttonStyle}
       >
-        <div>{value?.render()}</div>
+        <div>{render(value)}</div>
         {<Icon weight='Bold' size={24} color={theme.colors.stone[400]} />}
       </button>
     </div>

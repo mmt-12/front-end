@@ -43,6 +43,7 @@ export default function BottomModal({ children }: Props) {
 
   return (
     <div
+      key={children?.toString()}
       css={[containerBaseStyle, animationStyle]}
       onClick={e => e.stopPropagation()}
       ref={modalRef}

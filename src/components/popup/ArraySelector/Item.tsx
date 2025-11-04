@@ -1,19 +1,24 @@
+import type { ReactNode } from 'react'
 import { css, useTheme } from '@emotion/react'
 import { AddCircle, CheckCircle } from '@solar-icons/react'
 
-import type { IArrayItem } from '@/types'
-
-interface Props {
-  item: IArrayItem
+interface Props<T> {
+  item: T
   isSelected: boolean
-  onSelect: (_item: IArrayItem) => void
+  onSelect: (_item: T) => void
+  render: (_item: T) => ReactNode
 }
-export default function Item({ item, isSelected, onSelect }: Props) {
+export default function Item<T>({
+  item,
+  isSelected,
+  onSelect,
+  render,
+}: Props<T>) {
   const theme = useTheme()
   return (
-    <li key={item.id}>
+    <li>
       <label css={itemStyle} onClick={() => onSelect(item)}>
-        {item.render()}
+        {render(item)}
         {isSelected ? (
           <CheckCircle
             weight='Bold'

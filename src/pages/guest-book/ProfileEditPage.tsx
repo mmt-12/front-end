@@ -7,7 +7,12 @@ import {
 } from '@solar-icons/react'
 import { useNavigate } from 'react-router-dom'
 
-import { useAchievements, useAssociateProfile, useUpdateAssociate } from '@/api'
+import {
+  useAchievements,
+  useAssociateProfile,
+  useUpdateAssociate,
+  type Achievement,
+} from '@/api'
 import defaultImageUrl from '@/assets/images/mascot/default-profile.png'
 import Badge from '@/components/common/Badge'
 import BottomButton from '@/components/common/BottomButton'
@@ -26,7 +31,6 @@ import useStardust from '@/hooks/useStardust'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 import { flexGap } from '@/styles/common'
-import type { IArrayInput, IArrayItem } from '@/types'
 
 export default function EditProfilePage() {
   useStardust()
@@ -50,7 +54,7 @@ export default function EditProfilePage() {
   const [introduction, setIntroduction] = useState<string>('')
   const [badgeId, setBadgeId] = useState<number>()
 
-  const obtainedAchievements = useMemo(() => {
+  const badges = useMemo(() => {
     return achievements?.achievements.filter(badge => badge.obtained) || []
   }, [achievements])
 
@@ -81,26 +85,10 @@ export default function EditProfilePage() {
     )
   }
 
-  const badgeItems = useMemo(
-    () =>
-      obtainedAchievements.map(badge => ({
-        id: badge.id,
-        label: badge.name,
-        render: () => <Badge key={badge.id} id={badge.id} />,
-      })),
-    [obtainedAchievements],
+  const filteredBadgeItems = useMemo<Achievement[]>(
+    () => badges.filter(item => item.id === badgeId),
+    [badgeId, badges],
   )
-
-  const filteredBadgeItems = useMemo<IArrayItem[]>(
-    () => badgeItems.filter(item => item.id === badgeId),
-    [badgeId, badgeItems],
-  )
-
-  const arrayInput: IArrayInput = {
-    items: filteredBadgeItems,
-    render: () =>
-      filteredBadgeItems.map(item => <Badge id={item.id} key={item.id} />),
-  }
 
   const handleImageClick = async () => {
     await openModal(
@@ -154,20 +142,29 @@ export default function EditProfilePage() {
         value={name}
         onChange={e => setName(e.target.value)}
       />
-      <InputPopup
+      <InputPopup<Achievement[]>
         label='칭호'
         icon={RoundAltArrowRight}
-        value={arrayInput}
-        onChange={(value: IArrayInput) => {
+        value={filteredBadgeItems}
+        onChange={value => {
           if (!value) return
-          setBadgeId(value.items[0]?.id)
+          setBadgeId(value[0]?.id)
         }}
+        render={value =>
+          value?.map(item => <Badge id={item.id} key={item.id} />)
+        }
         content={
-          <ArraySelector
-            initialItems={filteredBadgeItems}
-            items={badgeItems}
+          <ArraySelector<Achievement>
+            initialItems={filteredBadgeItems.map(item => ({
+              ...item,
+              label: item.name,
+            }))}
+            items={badges.map(item => ({
+              ...item,
+              label: item.name,
+            }))}
             searchBarIcon={MedalRibbonStar}
-            renderPreview
+            renderItem={item => <Badge id={item.id} key={item.id} />}
           />
         }
       />

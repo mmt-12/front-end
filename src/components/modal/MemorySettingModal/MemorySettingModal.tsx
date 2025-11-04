@@ -16,25 +16,23 @@ interface Props {
 
 export default function MemorySettingModal(props: Props) {
   const navigate = useNavigate()
-  const { openModal, confirm, alert } = useModal()
+  const { openModal, alert } = useModal()
   const { mutateAsync: deleteMemory } = useDeleteMemory()
 
   const handleDeleteClick = async () => {
-    if (
-      (await openModal(
-        <Confirm
-          affirm={{ text: '기억 이름을 입력하세요.', answer: props.title }}
-        >
-          정말 기억을 삭제하시겠습니까?
-        </Confirm>,
-      )) &&
-      (await confirm(`${added을or를("'" + props.title + "'")} 삭제합니다.`))
-    ) {
+    const isConfirmed = await openModal(
+      <Confirm
+        affirm={{ text: '기억 이름을 입력하세요.', answer: props.title }}
+      >
+        정말 {added을or를(props.title, str => `'${str}'`)} 삭제하시겠습니까?
+      </Confirm>,
+    )
+    if (isConfirmed) {
       deleteMemory(Number(props.memoryId), {
         onSuccess: () => {
           console.log('Memory deleted')
-          alert('기억을 삭제했어요.')
           navigate(ROUTES.MEMORY_LIST)
+          alert('기억을 삭제했어요.')
         },
         onError: () => {
           alert('기억 삭제에 실패했어요. 잠시 후 다시 시도해주세요.')
