@@ -67,9 +67,7 @@ export default function useFCM() {
             memoryId: Number(payload.data?.memoryId) || 0,
             type: (payload.data?.type || '') as NotificationType,
           }
-          openModal(<NotificationModal {...notification} />, {
-            dimmBackground: false,
-          })
+          openModal(<NotificationModal {...notification} />)
         })
       } catch (error) {
         console.error('Error initializing FCM:', error)

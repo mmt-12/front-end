@@ -13,7 +13,6 @@ import EmojiRegisterModal from '@/components/reaction/EmojiRegisterModal'
 import VoiceRegisterModal from '@/components/reaction/VoiceRegisterModal/VoiceRegisterModal'
 import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
-import { slideDown } from '@/styles/animation'
 import { withSafeAreaBottom } from '@/styles/common'
 
 export default function CreateButtonsModal() {
@@ -36,9 +35,7 @@ export default function CreateButtonsModal() {
           size='md'
           label='이모티콘'
           icon={<SmileSquare weight='Bold' size={28} />}
-          onClick={() =>
-            openModal(<EmojiRegisterModal />, { closingKeyframe: slideDown })
-          }
+          onClick={() => openModal(<EmojiRegisterModal />)}
         />
         <Button
           type='disabled'
@@ -51,9 +48,7 @@ export default function CreateButtonsModal() {
           size='md'
           label='보이스'
           icon={<Soundwave weight='Bold' size={28} />}
-          onClick={() =>
-            openModal(<VoiceRegisterModal />, { closingKeyframe: slideDown })
-          }
+          onClick={() => openModal(<VoiceRegisterModal />)}
         />
       </div>
     </BottomDrawer>

@@ -24,7 +24,7 @@ export default function NewBadgeModal({ id, type }: Props) {
   }
 
   const associateId = useUserStore(s => s.associateId)
-  const { closeOverlay } = useModal()
+  const { closeModal } = useModal()
   useEffect(() => {
     if (!('vibrate' in navigator)) return
 
@@ -81,7 +81,7 @@ export default function NewBadgeModal({ id, type }: Props) {
           <Link
             to={ROUTES.GUEST_BOOK(associateId)}
             onClick={() => {
-              closeOverlay()
+              closeModal()
             }}
             className='still'
           >

@@ -8,7 +8,7 @@ import { useModal } from './useModal'
 export default function useSSE() {
   const [isConnected, setIsConnected] = useState(false)
   const eventSource = useRef<EventSourcePolyfill | null>(null)
-  const { openOverlay } = useModal()
+  const { openModal } = useModal()
 
   useEffect(() => {
     console.log('SSE connecting...')
@@ -25,7 +25,7 @@ export default function useSSE() {
       console.log(event)
       setIsConnected(true)
       const data = JSON.parse(event.data)
-      openOverlay(<NewBadgeModal {...data.value} />)
+      openModal(<NewBadgeModal {...data.value} />)
     }
     eventSource.current.onopen = function () {
       setIsConnected(true)
@@ -37,7 +37,7 @@ export default function useSSE() {
       setIsConnected(false)
       console.log('Connection to server closed.')
     }
-  }, [openOverlay])
+  }, [openModal])
 
   return isConnected
 }

@@ -13,7 +13,6 @@ import { NavLink } from 'react-router-dom'
 import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
-import { slideDown } from '@/styles/animation'
 import { SAFE_AREA_BOTTOM, withSafeAreaBottom } from '@/styles/common'
 import CreateButtonsModal from '../../modal/CreateButtonsModal/CreateButtonsModal'
 
@@ -21,7 +20,7 @@ export default function NavBar() {
   const { openModal } = useModal()
   const { associateId } = useUserStore()
   const handleAddButtonClick = () => {
-    openModal(<CreateButtonsModal />, { closingKeyframe: slideDown })
+    openModal(<CreateButtonsModal />)
   }
   return (
     <>
