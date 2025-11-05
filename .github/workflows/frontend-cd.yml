@@ -37,10 +37,10 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
           cache: "pnpm"
 
       - name: Write .well-known/assetlinks.json
@@ -62,7 +62,7 @@ jobs:
           VITE_VAP_KEY: ${{ secrets.VITE_VAP_KEY }}
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
         run: |
-          pnpm install
+          pnpm install --frozen-lockfile
           pnpm run build
 
       - name: Pack archive
@@ -123,10 +123,10 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
           cache: "pnpm"
 
       - name: Write .well-known/assetlinks.json
@@ -149,7 +149,7 @@ jobs:
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
 
         run: |
-          pnpm install
+          pnpm install --frozen-lockfile
           pnpm run build
 
       - name: Pack archive
