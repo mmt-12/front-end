@@ -29,7 +29,12 @@ export default function InputPopup<T>({
   const theme = useTheme()
 
   const modal = (
-    <Popup title={label} onClose={() => closeModal()}>
+    <Popup
+      title={label}
+      onClose={() => {
+        closeModal()
+      }}
+    >
       {content}
     </Popup>
   )

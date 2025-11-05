@@ -53,6 +53,7 @@ export interface Memory {
   pictureAmount: number
   pictures: string[]
   author: IMember
+  associates: IMember[]
 }
 
 export interface CreateMemoryRequest {

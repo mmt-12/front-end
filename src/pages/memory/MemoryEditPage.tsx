@@ -49,15 +49,7 @@ export default function MemoryEditPage() {
       },
       address: memory.location.address,
     })
-    // 참여 멤버 목록: 백엔드 api 수정 후 반영
-    // setParticipants({
-    //   items: memory.associates.map(associate => ({
-    //     id: associate.id,
-    //     nickname: associate.nickname,
-    //     imageUrl: associate.imageUrl,
-    //   })),
-    //   render: () => <></>,
-    // })
+    setParticipants(memory.associates)
   }, [memory])
 
   const handleSubmit = () => {
@@ -87,12 +79,12 @@ export default function MemoryEditPage() {
       },
       {
         onSuccess: async () => {
-          await alert('기억이 생성되었습니다.')
+          await alert('기억이 수정되었습니다.')
           navigate(ROUTES.MEMORY_LIST)
         },
         onError: (error: Error) => {
           console.log(error)
-          alert('기억 생성에 실패했습니다. 다시 시도해주세요.')
+          alert('기억 수정에 실패했습니다. 다시 시도해주세요.')
         },
       },
     )

@@ -28,9 +28,10 @@ export default function ArraySelector<T>({
   renderItem,
 }: Props<T>) {
   const { closeModal } = useModal()
-  const [selectedItems, setSelectedItems] = useState<T[]>(initialItems)
+  const [selectedItems, setSelectedItems] =
+    useState<(T & Searchable)[]>(initialItems)
   const [searchTerm, setSearchTerm] = useState('')
-  const searchedItems = useMemo<T[]>(
+  const searchedItems = useMemo<(T & Searchable)[]>(
     () => filterByStringProp(items, 'label', searchTerm),
     [items, searchTerm],
   )
@@ -47,11 +48,13 @@ export default function ArraySelector<T>({
           <Item
             key={index}
             item={item}
-            isSelected={selectedItems.some(m => m == item)}
+            isSelected={selectedItems.some(i => i.label == item.label)}
             render={renderItem}
             onSelect={item => {
-              if (selectedItems.some(m => m == item))
-                setSelectedItems(prev => prev.filter(m => m != item))
+              if (selectedItems.some(i => i == item))
+                setSelectedItems(prev =>
+                  prev.filter(i => i.label != item.label),
+                )
               else if (multiple) {
                 setSelectedItems(prev => [...prev, item])
               } else {
