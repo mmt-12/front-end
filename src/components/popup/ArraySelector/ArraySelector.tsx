@@ -48,7 +48,7 @@ export default function ArraySelector<T>({
           <Item
             key={index}
             item={item}
-            isSelected={selectedItems.some(i => i.label == item.label)}
+            isSelected={selectedItems.some(i => i.label === item.label)}
             render={renderItem}
             onSelect={item => {
               if (selectedItems.some(i => i == item))
