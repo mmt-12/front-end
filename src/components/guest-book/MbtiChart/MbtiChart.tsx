@@ -1,6 +1,5 @@
 import { useMemo, useRef } from 'react'
 import { useTheme } from '@emotion/react'
-// const EChartsReactCore = lazy(() => import('echarts-for-react/lib/core'))
 import EChartsReactCore from 'echarts-for-react/lib/core'
 import { PieChart } from 'echarts/charts'
 import { LegendComponent } from 'echarts/components'
