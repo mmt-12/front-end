@@ -49,7 +49,6 @@ function ModalProvider({ children }: { children: React.ReactNode }) {
         if (!ref?.current) return
         ref.current.classList.remove('fadeIn')
         ref.current.classList.add('fadeOut')
-        console.log('beforeClose called')
         return new Promise(resolve => {
           setTimeout(() => {
             resolve()
@@ -70,7 +69,7 @@ function BlockerWrapper({ children }: { children: React.ReactNode }) {
       closeAllModals()
       return false
     }
-    if (modals.length == 0) return false
+    if (modals.length === 0) return false
     closeModal()
     return true
   })
