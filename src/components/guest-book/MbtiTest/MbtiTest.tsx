@@ -14,8 +14,6 @@ import { theme } from '@/styles/theme'
 import { calculateMbti, type MbtiScore } from '@/utils/mbti'
 import WavyButton from '../WavyButton/WavyButton'
 
-// const MbtiChart = lazy(() => import('@/components/guest-book/MbtiChart'))
-
 interface Props {
   isMyPage: boolean
   name: string
