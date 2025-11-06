@@ -31,7 +31,6 @@ export default function InputField({
     onChange,
   }
 
-  console.log(customCss)
 
   return (
     <div css={[inputContainerStyle, customCss]}>
