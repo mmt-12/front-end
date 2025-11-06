@@ -51,9 +51,9 @@ export default function ArraySelector<T>({
             isSelected={selectedItems.some(i => i.label === item.label)}
             render={renderItem}
             onSelect={item => {
-              if (selectedItems.some(i => i == item))
+              if (selectedItems.some(i => i === item))
                 setSelectedItems(prev =>
-                  prev.filter(i => i.label != item.label),
+                  prev.filter(i => i.label !== item.label),
                 )
               else if (multiple) {
                 setSelectedItems(prev => [...prev, item])
