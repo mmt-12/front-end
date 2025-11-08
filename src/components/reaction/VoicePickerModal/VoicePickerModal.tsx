@@ -15,7 +15,6 @@ import {
   useRecentReactionStore,
 } from '@/store/recentReactionStore'
 import { useUserStore } from '@/store/userStore'
-import { slideDown } from '@/styles/animation'
 import type { Reaction } from '@/types/api'
 import Voice from '../Voice'
 import VoiceRegisterModal from '../VoiceRegisterModal/VoiceRegisterModal'
@@ -47,7 +46,7 @@ export default function VoicePickerModal({
   }
 
   const handleRegisterVoiceClick = () => {
-    openModal(<VoiceRegisterModal />, { closingKeyframe: slideDown })
+    openModal(<VoiceRegisterModal />)
   }
 
   return (

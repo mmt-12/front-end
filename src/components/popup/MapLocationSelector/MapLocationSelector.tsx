@@ -107,7 +107,6 @@ export default function MapLocationSelector() {
                 longitude:
                   selectedPlaceInfo?.location?.lng() || DEFAULT_LOCATION.lng,
               },
-              render: () => <span>{address}</span>,
             })
           }}
         />
@@ -131,7 +130,6 @@ export default function MapLocationSelector() {
                 latitude: cameraLocation?.lat() || DEFAULT_LOCATION.lat,
                 longitude: cameraLocation?.lng() || DEFAULT_LOCATION.lng,
               },
-              render: () => <span>{address}</span>,
             })
           }
         />

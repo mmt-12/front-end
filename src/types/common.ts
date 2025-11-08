@@ -1,5 +1,4 @@
-import type { ReactNode } from 'react'
-import type { Interpolation, Keyframes } from '@emotion/react'
+import type { Interpolation } from '@emotion/react'
 import type { Icon } from '@solar-icons/react/lib/types'
 
 import type { Achievement } from './api'
@@ -9,16 +8,13 @@ export interface IHeaderItem {
   icon: Icon | string | null
   onClick?: () => void
 }
-export interface IBaseInput {
-  render: () => ReactNode
+
+export interface IDateRangeInput {
+  startTime: Date
+  endTime: Date
 }
 
-export interface IDateRangeInput extends IBaseInput {
-  startTime: string
-  endTime: string
-}
-
-export interface ILocationInput extends IBaseInput {
+export interface ILocationInput {
   address: string
   location: {
     latitude: number
@@ -26,15 +22,6 @@ export interface ILocationInput extends IBaseInput {
   }
 }
 
-export interface IArrayItem extends IBaseInput {
-  id: number
-  label: string
-  selected?: boolean
-}
-
-export interface IArrayInput extends IBaseInput {
-  items: IArrayItem[]
-}
 
 export interface IMember {
   id: number
@@ -62,18 +49,3 @@ export interface IProfileImage {
   url: string
   register: boolean
 }
-
-export type Modal = {
-  content: ReactNode
-  promiseResolver: (_value: ModalReturnType) => void
-  closingKeyframe: Keyframes
-  isClosing?: boolean
-  dimmBackground: boolean
-}
-
-export type ModalOption = {
-  closingKeyframe?: Keyframes
-  dimmBackground?: boolean
-}
-
-export type ModalReturnType = void | null | IBaseInput | string | boolean | IArrayInput | ILocationInput | IDateRangeInput

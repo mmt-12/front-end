@@ -1,7 +1,7 @@
 export interface IMemoryInfo {
   id: number
   title: string
-  location: locationType
+  location: LocationType
   memberAmount: number
   pictureAmount: number
   pictures: string[]
@@ -12,7 +12,7 @@ export interface IMemoryInfo {
   }
 }
 
-export type locationType = {
+export type LocationType = {
   latitude: number
   longitude: number
   code: number

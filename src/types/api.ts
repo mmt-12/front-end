@@ -1,5 +1,5 @@
-import type { GuestBookCommentType } from './common'
-import type { locationType } from './memory'
+import type { GuestBookCommentType, IMember } from './common'
+import type { LocationType } from './memory'
 import type { NotificationType } from './notification'
 
 // types/api.ts
@@ -48,10 +48,12 @@ export interface Memory {
     startTime: string
     endTime: string
   }
-  location: locationType
+  location: LocationType
   memberAmount: number
   pictureAmount: number
   pictures: string[]
+  author: IMember
+  associates: IMember[]
 }
 
 export interface CreateMemoryRequest {
@@ -62,7 +64,7 @@ export interface CreateMemoryRequest {
   }
   description: string
   associates: number[]
-  location: locationType
+  location: LocationType
 }
 
 export interface MemoryListResponse {

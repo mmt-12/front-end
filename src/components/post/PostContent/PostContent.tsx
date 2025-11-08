@@ -10,7 +10,6 @@ import PostActionModal from '@/components/modal/PostActionModal'
 import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
-import { slideDown } from '@/styles/animation'
 import { formatDateTimeRelative } from '@/utils/date'
 
 interface Props extends Post {
@@ -48,10 +47,7 @@ export default function PostContent({
   )
 
   const handlePostAction = () => {
-    openModal(
-      <PostActionModal memoryId={Number(memoryId)} postId={id} />,
-      { closingKeyframe: slideDown },
-    )
+    openModal(<PostActionModal memoryId={Number(memoryId)} postId={id} />)
   }
 
   return (

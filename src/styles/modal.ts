@@ -1,4 +1,5 @@
 import { css, type Theme } from '@emotion/react'
+import { slideUp } from './animation'
 
 export const modalStyle = (theme: Theme) =>
   css({
@@ -13,4 +14,7 @@ export const modalStyle = (theme: Theme) =>
     zIndex: 31,
     flexDirection: 'column',
     justifyContent: 'flex-start',
+
+    animation: `${slideUp} 220ms cubic-bezier(0.22, 1, 0.36, 1)`,
+    willChange: 'transform, opacity',
   })

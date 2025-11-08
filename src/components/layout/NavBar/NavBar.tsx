@@ -13,7 +13,6 @@ import { NavLink } from 'react-router-dom'
 import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
-import { slideDown } from '@/styles/animation'
 import { SAFE_AREA_BOTTOM, withSafeAreaBottom } from '@/styles/common'
 import CreateButtonsModal from '../../modal/CreateButtonsModal/CreateButtonsModal'
 
@@ -21,37 +20,35 @@ export default function NavBar() {
   const { openModal } = useModal()
   const { associateId } = useUserStore()
   const handleAddButtonClick = () => {
-    openModal(<CreateButtonsModal />, { closingKeyframe: slideDown })
+    openModal(<CreateButtonsModal />)
   }
   return (
-    <>
-      <div css={navBarStyle}>
-        <Navigation
-          title='기억'
-          icon={<Box weight='Bold' size={24} />}
-          to={ROUTES.MEMORY_LIST}
-        />
-        <Navigation
-          title='지도'
-          icon={<PointOnMap weight='Bold' size={24} />}
-          to={ROUTES.MAP}
-        />
-        <button css={addButtonStyle} onClick={handleAddButtonClick}>
-          <AddCircle size={40} />
-        </button>
-        <Navigation
-          title='달력'
-          icon={<CalendarMinimalistic weight='Bold' size={24} />}
-          to={ROUTES.CALENDAR}
-        />
-        <Navigation
-          title='방명록'
-          icon={<BookBookmark weight='Bold' size={24} />}
-          to={ROUTES.GUEST_BOOK(associateId)}
-          stardust
-        />
-      </div>
-    </>
+    <div css={navBarStyle}>
+      <Navigation
+        title='기억'
+        icon={<Box weight='Bold' size={24} />}
+        to={ROUTES.MEMORY_LIST}
+      />
+      <Navigation
+        title='지도'
+        icon={<PointOnMap weight='Bold' size={24} />}
+        to={ROUTES.MAP}
+      />
+      <button css={addButtonStyle} onClick={handleAddButtonClick}>
+        <AddCircle size={40} />
+      </button>
+      <Navigation
+        title='달력'
+        icon={<CalendarMinimalistic weight='Bold' size={24} />}
+        to={ROUTES.CALENDAR}
+      />
+      <Navigation
+        title='방명록'
+        icon={<BookBookmark weight='Bold' size={24} />}
+        to={ROUTES.GUEST_BOOK(associateId)}
+        stardust
+      />
+    </div>
   )
 }
 

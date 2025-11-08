@@ -15,7 +15,6 @@ import {
   useRecentReactionStore,
 } from '@/store/recentReactionStore'
 import { useUserStore } from '@/store/userStore'
-import { slideDown } from '@/styles/animation'
 import type { Reaction } from '@/types/api'
 import Emoji from '../Emoji/Emoji'
 import EmojiRegisterModal from '../EmojiRegisterModal'
@@ -50,7 +49,7 @@ export default function EmojiPickerModal({
   }
 
   const handleRegisterEmojiClick = () => {
-    openModal(<EmojiRegisterModal />, { closingKeyframe: slideDown })
+    openModal(<EmojiRegisterModal />)
   }
 
   const getInvolved = useCallback(

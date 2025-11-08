@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
-import { useAssociateList, useCreateMemory } from '@/api'
+import { useAssociateList, useMemoryDetail, useUpdateMemory } from '@/api'
 import MemoryRegisterView from '@/components/memory/MemoryRegisterView'
 import useHeader from '@/hooks/useHeader'
 import { useModal } from '@/hooks/useModal'
@@ -9,9 +9,9 @@ import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 import type { IDateRangeInput, ILocationInput, IMember } from '@/types'
 
-export default function MemoryRegisterPage() {
+export default function MemoryEditPage() {
   useHeader({
-    routeName: '기억 생성',
+    routeName: '기억 수정',
     rightItem: {
       icon: null,
     },
@@ -20,7 +20,6 @@ export default function MemoryRegisterPage() {
   const { alert } = useModal()
   const navigate = useNavigate()
   const { communityId } = useUserStore()
-  const { mutate: createMemory } = useCreateMemory(communityId)
   const { data: memberData } = useAssociateList(communityId)
   const associates = memberData?.pages.flatMap(page => page.associates) || []
 
@@ -30,13 +29,36 @@ export default function MemoryRegisterPage() {
   const [location, setLocation] = useState<ILocationInput>()
   const [participants, setParticipants] = useState<IMember[]>()
 
+  const memoryId = Number(useParams().memoryId)
+
+  const { data: memory } = useMemoryDetail(communityId, memoryId)
+  const { mutate: updateMemory } = useUpdateMemory(communityId, memoryId)
+
+  useEffect(() => {
+    if (!memory) return
+    setTitle(memory.title)
+    setDescription(memory.description)
+    setDateRange({
+      startTime: new Date(memory.period.startTime),
+      endTime: new Date(memory.period.endTime),
+    })
+    setLocation({
+      location: {
+        latitude: memory.location.latitude,
+        longitude: memory.location.longitude,
+      },
+      address: memory.location.address,
+    })
+    setParticipants(memory.associates)
+  }, [memory])
+
   const handleSubmit = () => {
     if (!title || !dateRange || !location || !participants) {
       alert('제목과 날짜, 장소, 참여자는 필수 입력 사항입니다.')
       return
     }
 
-    createMemory(
+    updateMemory(
       {
         title,
         description,
@@ -57,12 +79,12 @@ export default function MemoryRegisterPage() {
       },
       {
         onSuccess: async () => {
-          await alert('기억이 생성되었습니다.')
+          await alert('기억이 수정되었습니다.')
           navigate(ROUTES.MEMORY_LIST)
         },
         onError: (error: Error) => {
           console.log(error)
-          alert('기억 생성에 실패했습니다. 다시 시도해주세요.')
+          alert('기억 수정에 실패했습니다. 다시 시도해주세요.')
         },
       },
     )
@@ -70,7 +92,7 @@ export default function MemoryRegisterPage() {
 
   return (
     <MemoryRegisterView
-      action='REGISTER'
+      action='EDIT'
       title={title}
       setTitle={setTitle}
       description={description}

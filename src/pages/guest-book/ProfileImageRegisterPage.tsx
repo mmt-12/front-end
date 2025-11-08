@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useCreateProfileImage, useProfileImageList } from '@/api'
@@ -23,7 +23,7 @@ export default function ProfileImageRegisterPage() {
     },
   })
 
-  const { alert, setPending } = useModal()
+  const { alert } = useModal()
   const { associateId } = useParams()
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useProfileImageList(1, Number(associateId), { size: 9 })
@@ -31,10 +31,6 @@ export default function ProfileImageRegisterPage() {
     1,
     Number(associateId),
   )
-
-  useEffect(() => {
-    setPending(isPending)
-  }, [isPending, setPending])
 
   const images = data?.pages.flatMap(page => page.profileImages) || []
 
@@ -59,25 +55,28 @@ export default function ProfileImageRegisterPage() {
   }
 
   return (
-    <div css={flexGap(12)}>
-      <ImageInputField
-        images={newImages}
-        maxLength={1}
-        onChange={setNewImages}
-      />
-      <InfiniteScroll
-        fetchNext={fetchNextPage}
-        hasNextPage={hasNextPage}
-        isFetchingNext={isFetchingNextPage}
-        loader={<Loader customCss={{ padding: 24 }} />}
-      >
-        {isLoading ? (
-          <ProfileImageListSkeleton />
-        ) : (
-          <ProfileImageList images={images} onImageClick={handleImageClick} />
-        )}
-      </InfiniteScroll>
-      <BottomButton label='등록' onClick={handleSubmit} />
-    </div>
+    <>
+      {isPending && <Loader size='full' />}
+      <div css={flexGap(12)}>
+        <ImageInputField
+          images={newImages}
+          maxLength={1}
+          onChange={setNewImages}
+        />
+        <InfiniteScroll
+          fetchNext={fetchNextPage}
+          hasNextPage={hasNextPage}
+          isFetchingNext={isFetchingNextPage}
+          loader={<Loader customCss={{ padding: 24 }} />}
+        >
+          {isLoading ? (
+            <ProfileImageListSkeleton />
+          ) : (
+            <ProfileImageList images={images} onImageClick={handleImageClick} />
+          )}
+        </InfiniteScroll>
+        <BottomButton label='등록' onClick={handleSubmit} />
+      </div>
+    </>
   )
 }

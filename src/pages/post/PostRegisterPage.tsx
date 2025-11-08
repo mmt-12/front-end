@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import type { AxiosError } from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { useCreatePost } from '@/api'
 import { useMemoryDetail } from '@/api/memory'
+import Loader from '@/components/common/Loader'
 import PostRegisterView from '@/components/post/PostRegisterView'
 import useHeader from '@/hooks/useHeader'
 import { useModal } from '@/hooks/useModal'
@@ -20,7 +21,7 @@ export default function PostRegisterPage() {
 
   const navigate = useNavigate()
   const { communityId } = useUserStore()
-  const { alert, setPending } = useModal()
+  const { alert } = useModal()
 
   const memoryId = Number(useParams().memoryId)
 
@@ -32,10 +33,6 @@ export default function PostRegisterPage() {
 
   const [images, setImages] = useState<(File | string)[]>([])
   const [description, setDescription] = useState<string>('')
-
-  useEffect(() => {
-    setPending(isPending)
-  }, [isPending, setPending])
 
   const handleSubmit = () => {
     if (images.length === 0) return alert('사진을 최소 1장 이상 등록해주세요.')
@@ -70,14 +67,17 @@ export default function PostRegisterPage() {
   }
 
   return (
-    <PostRegisterView
-      action='REGISTER'
-      memory={memory}
-      images={images}
-      setImages={setImages}
-      description={description}
-      setDescription={setDescription}
-      handleSubmit={handleSubmit}
-    />
+    <>
+      {isPending && <Loader size='full' />}
+      <PostRegisterView
+        action='REGISTER'
+        memory={memory}
+        images={images}
+        setImages={setImages}
+        description={description}
+        setDescription={setDescription}
+        handleSubmit={handleSubmit}
+      />
+    </>
   )
 }

@@ -42,13 +42,9 @@ export default function MemoryDetailPage() {
     <>
       <header css={{ padding: '4px' }}>
         {memory ? (
-          <MemoryInfo
-            {...memory}
-            saveEnabled
-            pictures={pictureData?.pictures}
-          />
+          <MemoryInfo {...memory} showDetail pictures={pictureData?.pictures} />
         ) : (
-          <MemoryInfoSkeleton saveEnabled description />
+          <MemoryInfoSkeleton showDetail description />
         )}
       </header>
       <InfiniteScroll
