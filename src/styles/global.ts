@@ -102,4 +102,9 @@ export const globalStyle = (theme: Theme) =>
         backgroundColor: 'transparent',
       },
     },
+    '.transparent': {
+      ':active': {
+        backgroundColor: 'transparent',
+      },
+    }
   })
