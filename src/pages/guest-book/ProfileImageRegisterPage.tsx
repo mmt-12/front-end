@@ -12,6 +12,7 @@ import ProfileImageList, {
 import useHeader from '@/hooks/useHeader'
 import { useModal } from '@/hooks/useModal'
 import useStardust from '@/hooks/useStardust'
+import { useUserStore } from '@/store/userStore'
 import { flexGap } from '@/styles/common'
 
 export default function ProfileImageRegisterPage() {
@@ -25,18 +26,18 @@ export default function ProfileImageRegisterPage() {
 
   const { alert } = useModal()
   const { associateId } = useParams()
+  const communityId = useUserStore(state => state.communityId)
+
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useProfileImageList(1, Number(associateId), { size: 9 })
   const { mutate: uploadProfileImages, isPending } = useCreateProfileImage(
-    1,
+    communityId,
     Number(associateId),
   )
 
   const images = data?.pages.flatMap(page => page.profileImages) || []
 
   const [newImages, setNewImages] = useState<(File | string)[]>([])
-
-  const handleImageClick = () => {}
 
   const handleSubmit = () => {
     if (newImages.length === 0) return
@@ -72,7 +73,7 @@ export default function ProfileImageRegisterPage() {
           {isLoading ? (
             <ProfileImageListSkeleton />
           ) : (
-            <ProfileImageList images={images} onImageClick={handleImageClick} />
+            <ProfileImageList images={images} />
           )}
         </InfiniteScroll>
         <BottomButton label='등록' onClick={handleSubmit} />

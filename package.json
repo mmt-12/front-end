@@ -35,7 +35,7 @@
     "react-canvas-confetti": "^2.0.7",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.5",
-    "sam-react-modal": "^0.1.1",
+    "sam-react-modal": "^0.1.11",
     "storybook-addon-remix-react-router": "^5.0.0",
     "vite-plugin-svgr": "^4.5.0",
     "vite-tsconfig-paths": "^5.1.4",
