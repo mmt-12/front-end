@@ -69,7 +69,6 @@ function BlockerWrapper({ children }: { children: React.ReactNode }) {
 
   useBlocker(({ historyAction, currentLocation }) => {
     if (currentLocation.pathname.includes('home') && historyAction === 'POP') {
-      console.log('trying to exit app')
       navigate(-(window.history.length - initialHistoryLength.current))
       return false
     }
