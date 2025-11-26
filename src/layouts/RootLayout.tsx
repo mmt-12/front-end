@@ -68,7 +68,11 @@ function BlockerWrapper({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate()
 
   useBlocker(({ historyAction, currentLocation }) => {
-    if (currentLocation.pathname.includes('home') && historyAction === 'POP') {
+    if (
+      currentLocation.pathname.includes('home') &&
+      historyAction === 'POP' &&
+      window.history.length !== initialHistoryLength.current
+    ) {
       navigate(-(window.history.length - initialHistoryLength.current))
       return true
     }
