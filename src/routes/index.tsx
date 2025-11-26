@@ -28,10 +28,15 @@ const router = createBrowserRouter([
         element: <Pages.LandingPage />,
       },
       {
+        index: true,
+        element: <Navigate to={ROUTES.MEMORY_LIST} replace />,
+      },
+      {
         Component: () => <Layouts.AuthGuard />,
         children: [
           {
             Component: () => <Layouts.DefaultLayout />,
+            path: ROUTES.HOME,
             children: [
               {
                 index: true,
