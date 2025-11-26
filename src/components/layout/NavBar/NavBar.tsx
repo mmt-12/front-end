@@ -63,6 +63,7 @@ function Navigation(props: INavigationProps) {
   return (
     <NavLink
       to={props.to}
+      replace={true}
       css={{
         width: '100%',
         fontFamily: props.stardust ? 'PFStardust' : 'Pretendard Variable',
