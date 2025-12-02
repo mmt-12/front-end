@@ -5,7 +5,7 @@ import type { Theme } from '@emotion/react'
 import BottomButton from '@/components/common/BottomButton'
 import CalendarPicker from '@/components/common/CalendarPicker/CalendarPicker'
 import { useModal } from '@/hooks/useModal'
-import { formatDate, formatDateRange } from '@/utils/date'
+import { formatDate } from '@/utils/date'
 
 export default function DateRangeSelector() {
   const today = new Date()
@@ -61,12 +61,11 @@ export default function DateRangeSelector() {
           type='secondary'
           onClick={() => {
             closeModal({
-              startTime: startDateString,
-              endTime: endDateString ? endDateString : startDateString,
-              render: () => <span>{formatDateRange(startTime, endTime)}</span>,
+              startTime,
+              endTime: endTime || startTime,
             })
           }}
-          label={`${formatDateRange(startTime, endTime)} 으로 설정`}
+          label={`${startDateString} - ${endDateString} 으로 설정`}
         ></BottomButton>
       ) : (
         <BottomButton label='날짜를 선택하세요.' type='disabled' />

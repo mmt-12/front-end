@@ -56,6 +56,7 @@ export default function ProfileImageSelector({
             images={images}
             onImageClick={profileImage => setImage(profileImage.url)}
             selectedImageUrl={image}
+            isMyProfile
           />
         ) : (
           <NoContentFallback

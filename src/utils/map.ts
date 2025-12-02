@@ -1,4 +1,4 @@
-export function getDistanceBetween(
+export function getDistanceBetween (
   latLng1: google.maps.LatLng,
   latLng2: google.maps.LatLng,
 ) {

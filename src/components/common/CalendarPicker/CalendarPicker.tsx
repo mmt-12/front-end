@@ -42,6 +42,10 @@ export default function CalendarPicker({
     calendarDays.push(new Date(viewYear, viewMonth, d))
   }
 
+  const handleYearChange = (delta: number) => {
+    setViewYear(viewYear + delta)
+  }
+
   const handleMonthChange = (delta: number) => {
     let newMonth = viewMonth + delta
     let newYear = viewYear
@@ -59,24 +63,41 @@ export default function CalendarPicker({
   return (
     <div css={calendarWrapperStyle}>
       <div css={headerStyle}>
-        <span css={headerTitleStyle}>
-          {viewYear}년 {viewMonth + 1}월
-        </span>
-        <div css={navigationStyle}>
-          <button onClick={() => handleMonthChange(-1)}>
-            <AltArrowLeft
-              weight='Linear'
-              size={24}
-              color={theme.colors.stone[400]}
-            />
-          </button>
-          <button onClick={() => handleMonthChange(1)}>
-            <AltArrowRight
-              weight='Linear'
-              size={24}
-              color={theme.colors.stone[400]}
-            />
-          </button>
+        <div css={headerTitleStyle}>
+          <div css={navigationStyle}>
+            <button onClick={() => handleYearChange(-1)}>
+              <AltArrowLeft
+                weight='Linear'
+                size={24}
+                color={theme.colors.stone[400]}
+              />
+            </button>
+            <span>{viewYear}년</span>
+            <button onClick={() => handleYearChange(1)}>
+              <AltArrowRight
+                weight='Linear'
+                size={24}
+                color={theme.colors.stone[400]}
+              />
+            </button>
+          </div>
+          <div css={navigationStyle}>
+            <button onClick={() => handleMonthChange(-1)}>
+              <AltArrowLeft
+                weight='Linear'
+                size={24}
+                color={theme.colors.stone[400]}
+              />
+            </button>
+            <span>{viewMonth + 1}월</span>
+            <button onClick={() => handleMonthChange(1)}>
+              <AltArrowRight
+                weight='Linear'
+                size={24}
+                color={theme.colors.stone[400]}
+              />
+            </button>
+          </div>
         </div>
       </div>
       <table css={tableStyle}>
@@ -142,6 +163,10 @@ const headerStyle = (theme: Theme) =>
 
 const headerTitleStyle = (theme: Theme) =>
   css({
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '100%',
     fontSize: 18,
     fontWeight: 600,
     color: theme.colors.stone[900],

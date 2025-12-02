@@ -8,7 +8,6 @@ import BubbleInputModal from '@/components/reaction/BubbleInputModal'
 import EmojiPickerModal from '@/components/reaction/EmojiPickerModal'
 import VoicePickerModal from '@/components/reaction/VoicePickerModal'
 import { useModal } from '@/hooks/useModal'
-import { slideDown } from '@/styles/animation'
 
 interface Props {
   iconSize: number
@@ -31,19 +30,15 @@ export default function ReactBar({
   const { openModal } = useModal()
 
   const handleBubbleClick = () => {
-    openModal(<BubbleInputModal />, { closingKeyframe: slideDown })
+    openModal(<BubbleInputModal />)
   }
 
   const handleEmojiClick = () => {
-    openModal(<EmojiPickerModal comments={comments.emojis} />, {
-      closingKeyframe: slideDown,
-    })
+    openModal(<EmojiPickerModal comments={comments.emojis} />)
   }
 
   const handleVoiceClick = () => {
-    openModal(<VoicePickerModal comments={comments.voices} />, {
-      closingKeyframe: slideDown,
-    })
+    openModal(<VoicePickerModal comments={comments.voices} />)
   }
 
   return (

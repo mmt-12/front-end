@@ -1,11 +1,18 @@
-import { useContext } from 'react'
+import { useModal as useSamModal } from 'sam-react-modal'
 
-import { ModalContext } from '@/contexts/ModalProvider'
+import Alert from '@/components/modal/Alert'
+import Confirm from '@/components/modal/Confirm'
 
 export const useModal = () => {
-  const ctx = useContext(ModalContext)
-  if (!ctx) {
-    throw new Error('useModal must be used within ModalProvider')
+  const { openModal, closeModal } = useSamModal()
+
+  const confirm = async (message: string) => {
+    return openModal(<Confirm key={'confirm'}>{message}</Confirm>)
   }
-  return ctx
+
+  const alert = async (message: string) => {
+    return openModal(<Alert>{message}</Alert>)
+  }
+
+  return { openModal, closeModal, confirm, alert }
 }

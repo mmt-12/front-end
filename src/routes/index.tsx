@@ -28,10 +28,15 @@ const router = createBrowserRouter([
         element: <Pages.LandingPage />,
       },
       {
+        index: true,
+        element: <Navigate to={ROUTES.MEMORY_LIST} replace />,
+      },
+      {
         Component: () => <Layouts.AuthGuard />,
         children: [
           {
             Component: () => <Layouts.DefaultLayout />,
+            path: ROUTES.HOME,
             children: [
               {
                 index: true,
@@ -73,6 +78,10 @@ const router = createBrowserRouter([
               {
                 path: ROUTES.MEMORY_REGISTER,
                 element: <Pages.MemoryRegisterPage />,
+              },
+              {
+                path: ROUTES.MEMORY_EDIT(':memoryId'),
+                element: <Pages.MemoryEditPage />,
               },
               {
                 path: ROUTES.MEMORY_DETAIL(':memoryId'),

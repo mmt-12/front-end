@@ -10,10 +10,11 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { MEMBERS } from 'mock/data/members'
 import { expect } from 'storybook/test'
 
+import type { Achievement } from '@/api'
 import Badge from '@/components/common/Badge'
 import Profile from '@/components/member/Profile'
 import { BADGES } from '@/consts/BADGES'
-import type { IArrayInput, IDateRangeInput, ILocationInput } from '@/types'
+import type { IDateRangeInput, ILocationInput, IMember } from '@/types'
 import ArraySelector from '../ArraySelector'
 import DateRangeSelector from '../DateRangeSelector'
 import MapLocationSelector from '../MapLocationSelector'
@@ -39,6 +40,7 @@ export const Date: Story = {
     onChange: value => console.log('Input changed:', value),
     icon: CalendarMinimalistic,
     content: <DateRangeSelector />,
+    render: () => <></>,
   },
   render: () => {
     const [dateRange, setDateRange] = useState<IDateRangeInput>()
@@ -49,6 +51,9 @@ export const Date: Story = {
         onChange={ds => setDateRange(ds as IDateRangeInput)}
         icon={CalendarMinimalistic}
         content={<DateRangeSelector />}
+        render={value => (
+          <span>{value ? `${value.startTime} - ${value.endTime}` : ''}</span>
+        )}
       />
     )
   },
@@ -60,6 +65,7 @@ export const Location: Story = {
     onChange: value => console.log('Input changed:', value),
     icon: Map,
     content: <MapLocationSelector />,
+    render: () => <></>,
   },
   render: () => {
     const [location, setLocation] = useState<ILocationInput>()
@@ -70,6 +76,7 @@ export const Location: Story = {
         onChange={setLocation}
         icon={Map}
         content={<MapLocationSelector />}
+        render={value => <span>{value?.address}</span>}
       />
     )
   },
@@ -80,35 +87,38 @@ export const Array: Story = {
     label: '배열 선택',
     onChange: value => console.log('Input changed:', value),
     icon: MedalRibbonStar,
+    render: () => <></>,
     content: (
       <ArraySelector
         searchBarIcon={MedalRibbonStar}
-        renderPreview
         items={Object.entries(BADGES).map(([id, badge]) => ({
           id: Number(id),
           label: badge.name,
-          render: () => <Badge id={Number(id)} />,
         }))}
+        renderItem={badge => <Badge id={Number(badge.id)} />}
       />
     ),
   },
   render: () => {
-    const [selectedItems, setSelectedItems] = useState<IArrayInput>()
+    const [selectedItems, setSelectedItems] = useState<Achievement[]>()
     return (
       <InputPopup
         label='배열 선택'
         value={selectedItems}
         onChange={setSelectedItems}
         icon={MedalRibbonStar}
+        render={value =>
+          value?.map(badge => <span key={badge.id}>{badge.name}</span>)
+        }
         content={
-          <ArraySelector
+          <ArraySelector<Achievement>
             searchBarIcon={MedalRibbonStar}
-            renderPreview
             items={Object.entries(BADGES).map(([id, badge]) => ({
               id: Number(id),
+              ...badge,
               label: badge.name,
-              render: () => <Badge id={Number(id)} />,
             }))}
+            renderItem={(badge: Achievement) => <Badge id={Number(badge.id)} />}
           />
         }
       />
@@ -121,35 +131,39 @@ export const MultipleArray: Story = {
     label: '다중 배열 선택',
     onChange: value => console.log('Input changed:', value),
     icon: UsersGroupTwoRounded,
+    render: () => <></>,
     content: (
       <ArraySelector
         searchBarIcon={UserRounded}
         multiple
         items={MEMBERS.map(member => ({
-          id: member.id,
+          ...member,
           label: member.nickname,
-          render: () => <Profile {...member} />,
         }))}
+        renderItem={member => <Profile {...member} />}
       />
     ),
   },
   render: () => {
-    const [selectedItems, setSelectedItems] = useState<IArrayInput>()
+    const [selectedItems, setSelectedItems] = useState<IMember[]>()
     return (
       <InputPopup
         label='다중 배열 선택'
         value={selectedItems}
         onChange={setSelectedItems}
         icon={UsersGroupTwoRounded}
+        render={value =>
+          value?.map(item => <span key={item.id}>{item.nickname}</span>)
+        }
         content={
-          <ArraySelector
+          <ArraySelector<IMember>
             searchBarIcon={UserRounded}
             multiple
             items={MEMBERS.map(member => ({
-              id: member.id,
+              ...member,
               label: member.nickname,
-              render: () => <Profile {...member} />,
             }))}
+            renderItem={member => <Profile {...member} />}
           />
         }
       />

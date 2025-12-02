@@ -4,12 +4,12 @@ import { Skeleton, SkeletonText } from '@/components/common/Skeleton'
 
 interface Props {
   description?: boolean
-  saveEnabled?: boolean
+  showDetail?: boolean
 }
 
 export default function MemoryInfoSkeleton({
   description = false,
-  saveEnabled = false,
+  showDetail = false,
 }: Props) {
   const theme = useTheme()
 
@@ -32,8 +32,8 @@ export default function MemoryInfoSkeleton({
           <Skeleton width={46} height={24} radius={24} />
         </div>
       </div>
-      <div css={metaRowStyle(theme, !!saveEnabled)}>
-        {saveEnabled ? (
+      <div css={metaRowStyle(theme, !!showDetail)}>
+        {showDetail ? (
           <>
             <div>{renderMeta()}</div>
             <Skeleton width={92} height={28} radius={24} />
@@ -63,9 +63,9 @@ const titleRowStyle = (theme: Theme) =>
     },
   })
 
-const metaRowStyle = (theme: Theme, saveEnabled: boolean) =>
+const metaRowStyle = (theme: Theme, showDetail: boolean) =>
   css({
-    padding: saveEnabled ? '8px 0' : '4px 0',
+    padding: showDetail ? '8px 0' : '4px 0',
 
     display: 'flex',
     justifyContent: 'space-between',

@@ -2,7 +2,7 @@ name: frontend-ci
 
 on:
   push:
-    branches: ["develop", "main"]
+    branches: ["develop", "main", "fix/*-action-test"]
     tags: ["v*"]
   pull_request:
     branches: ["develop", "main"]
@@ -11,36 +11,26 @@ concurrency:
   group: frontend-ci-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  FRONTEND_WORKDIR: . # change if your app is in a subfolder, e.g. web/
-
 jobs:
-  build_dev:
+  build:
     name: Build (dev)
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop' || (github.event_name == 'pull_request' && github.base_ref == 'develop')
     defaults:
       run:
-        working-directory: ${{ env.FRONTEND_WORKDIR }}
+        working-directory: ${{ github.workspace }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
-          run_install: false
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
-      - name: Setup Node 20 + pnpm
-        uses: actions/setup-node@v5
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "pnpm"
-          cache-dependency-path: ${{ env.FRONTEND_WORKDIR }}/pnpm-lock.yaml
-      - name: Enable Corepack
-        run: corepack enable
 
-      - name: Install deps (frozen lockfile)
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Build
@@ -59,60 +49,11 @@ jobs:
           if [ -z "$OUT" ]; then
             if [ -d dist ]; then OUT=dist; elif [ -d build ]; then OUT=build; else OUT=dist; fi
           fi
-          mkdir -p ../out
-          tar -C "$OUT" -czf ../out/frontend.tgz .
+          mkdir -p out
+          tar -C "$OUT" -czf out/frontend.tgz .
 
       - uses: actions/upload-artifact@v4
         with:
           name: frontend-dev
-          path: out/frontend.tgz
-          retention-days: 14
-
-  build_prod:
-    name: Build (prod)
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref,'refs/heads/main') || startsWith(github.ref,'refs/tags/v') || (github.event_name == 'pull_request' && github.base_ref == 'main')
-    defaults:
-      run:
-        working-directory: ${{ env.FRONTEND_WORKDIR }}
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
-          run_install: false
-
-      - name: Setup Node 20 + pnpm
-        uses: actions/setup-node@v5
-        with:
-          node-version: 20
-          cache: "pnpm"
-          cache-dependency-path: ${{ env.FRONTEND_WORKDIR }}/pnpm-lock.yaml
-
-      - name: Enable Corepack
-        run: corepack enable
-
-      - name: Install deps (frozen lockfile)
-        run: pnpm install --frozen-lockfile
-
-      - name: Build
-        env:
-          CI: "true"
-        run: pnpm run build
-
-      - name: Pack artifact (auto-detect dist|build or override FRONT_BUILD_DIR)
-        run: |
-          OUT="${FRONT_BUILD_DIR:-}"
-          if [ -z "$OUT" ]; then
-            if [ -d dist ]; then OUT=dist; elif [ -d build ]; then OUT=build; else OUT=dist; fi
-          fi
-          mkdir -p ../out
-          tar -C "$OUT" -czf ../out/frontend.tgz .
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: frontend-prod
           path: out/frontend.tgz
           retention-days: 14
