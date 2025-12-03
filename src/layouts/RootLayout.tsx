@@ -73,6 +73,7 @@ function BlockerWrapper({ children }: { children: React.ReactNode }) {
       historyAction === 'POP' &&
       window.history.length !== initialHistoryLength.current
     ) {
+      // ! TODO: 조건 다시 생각
       navigate(-(window.history.length - initialHistoryLength.current))
       return true
     }
