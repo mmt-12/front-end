@@ -15,8 +15,8 @@ export default function LandingPage() {
   useEffect(() => {
     if (data) {
       login(data)
-      if (data.memberId) navigate(ROUTES.MEMORY_LIST)
-      else navigate(ROUTES.SIGNUP)
+      if (data.memberId) navigate(ROUTES.MEMORY_LIST, { replace: true })
+      else navigate(ROUTES.SIGNUP, { replace: true })
     }
   }, [data, navigate, login])
 
