@@ -8,7 +8,6 @@ import Loader from '@/components/common/Loader'
 import PostRegisterView from '@/components/post/PostRegisterView'
 import useHeader from '@/hooks/useHeader'
 import { useModal } from '@/hooks/useModal'
-import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 
 export default function PostRegisterPage() {
@@ -54,9 +53,11 @@ export default function PostRegisterPage() {
       'bytes',
     )
     registerPost(formData, {
-      onSuccess: () => {
-        navigate(ROUTES.MEMORY_DETAIL(memoryId))
-        alert('포스트가 등록되었습니다.')
+      onSuccess: async () => {
+        setTimeout(() => {
+          alert('포스트가 등록되었습니다.')
+        }, 400)
+        navigate(-1)
       },
       onError: err => {
         if ((err as AxiosError).status === 413) {

@@ -7,7 +7,6 @@ import { useMemoryDetail } from '@/api/memory'
 import PostRegisterView from '@/components/post/PostRegisterView'
 import useHeader from '@/hooks/useHeader'
 import { useModal } from '@/hooks/useModal'
-import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 
 export default function PostEditPage() {
@@ -65,8 +64,10 @@ export default function PostEditPage() {
     )
     updatePost(formData, {
       onSuccess: () => {
-        navigate(ROUTES.MEMORY_DETAIL(memoryId))
-        alert('포스트가 수정되었습니다.')
+        setTimeout(() => {
+          alert('포스트가 수정되었습니다.')
+        }, 400)
+        navigate(-1)
       },
       onError: err => {
         if ((err as AxiosError).status === 413) {

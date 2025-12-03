@@ -16,7 +16,7 @@ export default function LoginPage() {
   const navigate = useNavigate()
   useEffect(() => {
     if (getToken()) {
-      navigate(ROUTES.MEMORY_LIST)
+      navigate(ROUTES.MEMORY_LIST, { replace: true })
     }
   }, [navigate])
 
