@@ -5,7 +5,6 @@ import { useAssociateList, useMemoryDetail, useUpdateMemory } from '@/api'
 import MemoryRegisterView from '@/components/memory/MemoryRegisterView'
 import useHeader from '@/hooks/useHeader'
 import { useModal } from '@/hooks/useModal'
-import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 import type { IDateRangeInput, ILocationInput, IMember } from '@/types'
 
@@ -79,8 +78,10 @@ export default function MemoryEditPage() {
       },
       {
         onSuccess: async () => {
-          await alert('기억이 수정되었습니다.')
-          navigate(ROUTES.MEMORY_LIST)
+          navigate(-1)
+          setTimeout(() => {
+            alert('기억이 수정되었습니다.')
+          }, 400)
         },
         onError: (error: Error) => {
           console.log(error)

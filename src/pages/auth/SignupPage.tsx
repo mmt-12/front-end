@@ -67,7 +67,7 @@ export default function SignupPage() {
                 onSuccess: res => {
                   userStore.signup(birthDate)
                   userStore.login(res)
-                  navigate(ROUTES.MEMORY_LIST)
+                  navigate(ROUTES.MEMORY_LIST, { replace: true })
                 },
               },
             )
