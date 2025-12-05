@@ -81,33 +81,27 @@ export default function MemoryRegisterView({
         content={<MapLocationSelector />}
         render={value => <span>{value?.address}</span>}
       />
-      {associates.length > 0 && (
-        <InputPopup
-          label='참여자'
-          value={participants}
-          onChange={ps => setParticipants(ps)}
-          icon={UsersGroupTwoRounded}
-          render={value => (
-            <span>{value?.map(p => p.nickname).join(', ')}</span>
-          )}
-          content={
-            <ArraySelector<IMember>
-              items={associates.map(associate => ({
-                ...associate,
-                label: associate.nickname,
-              }))}
-              renderItem={item => (
-                <Profile {...item} size='sm' introduction='' />
-              )}
-              initialItems={
-                participants?.map(p => ({ ...p, label: p.nickname })) || []
-              }
-              searchBarIcon={UserRounded}
-              multiple
-            />
-          }
-        />
-      )}
+      <InputPopup
+        label='참여자'
+        value={participants}
+        onChange={ps => setParticipants(ps)}
+        icon={UsersGroupTwoRounded}
+        render={value => <span>{value?.map(p => p.nickname).join(', ')}</span>}
+        content={
+          <ArraySelector<IMember>
+            items={associates.map(associate => ({
+              ...associate,
+              label: associate.nickname,
+            }))}
+            renderItem={item => <Profile {...item} size='sm' introduction='' />}
+            initialItems={
+              participants?.map(p => ({ ...p, label: p.nickname })) || []
+            }
+            searchBarIcon={UserRounded}
+            multiple
+          />
+        }
+      />
       <BottomButton
         label={action === 'EDIT' ? '수정' : '저장'}
         type='primary'

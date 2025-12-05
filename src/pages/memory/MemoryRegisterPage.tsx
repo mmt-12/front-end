@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useAssociateList, useCreateMemory } from '@/api'
@@ -18,7 +18,7 @@ export default function MemoryRegisterPage() {
 
   const { alert } = useModal()
   const navigate = useNavigate()
-  const { communityId } = useUserStore()
+  const { communityId, associateId } = useUserStore()
   const { mutate: createMemory } = useCreateMemory(communityId)
   const { data: memberData } = useAssociateList(communityId)
   const associates = memberData?.pages.flatMap(page => page.associates) || []
@@ -27,7 +27,19 @@ export default function MemoryRegisterPage() {
   const [description, setDescription] = useState('')
   const [dateRange, setDateRange] = useState<IDateRangeInput>()
   const [location, setLocation] = useState<ILocationInput>()
-  const [participants, setParticipants] = useState<IMember[]>()
+  const [participants, setParticipants] = useState<IMember[]>([])
+
+  // 유저를 참여 멤버 초기값으로 추가
+  useEffect(() => {
+    if (associates.length > 0) {
+      const newParticipants = [...participants]
+      const me = associates.find(a => a.id === associateId)
+      if (me) {
+        newParticipants.push(me)
+        setParticipants(newParticipants)
+      }
+    }
+  }, [associates])
 
   const handleSubmit = () => {
     if (!title || !dateRange || !location || !participants) {

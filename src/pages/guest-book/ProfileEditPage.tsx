@@ -93,7 +93,7 @@ export default function EditProfilePage() {
 
   const handleImageClick = async () => {
     await openModal(
-      <Popup title={'프로필'} onClose={() => closeModal()}>
+      <Popup title={'프로필'}>
         <ProfileImageSelector
           associateId={associateId}
           onSelect={(value: string) => {
