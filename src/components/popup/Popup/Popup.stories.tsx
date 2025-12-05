@@ -15,6 +15,5 @@ export const Default: Story = {
   args: {
     title: 'Popup Modal Title',
     children: <div>Popup Modal Content</div>,
-    onClose: () => console.log('Modal closed'),
   },
 }
