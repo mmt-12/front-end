@@ -2,6 +2,8 @@ import { css } from '@emotion/react'
 import { Outlet, useBlocker } from 'react-router-dom'
 import { ModalProvider, useModal } from 'sam-react-modal'
 
+import { useExitConfirmation } from '@/hooks/useExitConfirmation'
+
 export default function RootLayout() {
   return (
     <ModalProviderWrapper>
@@ -73,5 +75,8 @@ function BlockerWrapper({ children }: { children: React.ReactNode }) {
     closeModal()
     return true
   })
+
+  useExitConfirmation()
+
   return <>{children}</>
 }
