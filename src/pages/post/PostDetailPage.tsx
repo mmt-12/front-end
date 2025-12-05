@@ -1,7 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import { css, type Theme } from '@emotion/react'
-import { ArrowLeft } from '@solar-icons/react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import { usePost } from '@/api'
 import {
@@ -14,22 +13,16 @@ import Post from '@/components/post/Post'
 import { PostListItemSkeleton } from '@/components/post/PostListItem'
 import ReactedProfileList from '@/components/reaction/ReactedProfileList/ReactedProfileList'
 import useHeader from '@/hooks/useHeader'
-import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 import { flexGap, withSafeAreaBottom } from '@/styles/common'
 
 export default function PostDetailPage() {
   const { memoryId, postId } = useParams()
   const { communityId, associateId } = useUserStore()
-  const navigate = useNavigate()
 
   useHeader({
     rightItem: {
       icon: null,
-    },
-    leftItem: {
-      icon: ArrowLeft,
-      onClick: () => navigate(ROUTES.MEMORY_DETAIL(Number(memoryId))),
     },
   })
 

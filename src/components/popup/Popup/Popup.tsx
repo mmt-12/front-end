@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react'
 import { css } from '@emotion/react'
 import { ArrowLeft } from '@solar-icons/react'
+import { useNavigate } from 'react-router-dom'
 
 import HeaderItem from '@/components/layout/Header/HeaderItem'
 import { withSafeAreaTop } from '@/styles/common'
@@ -10,10 +11,10 @@ import { modalStyle } from '@/styles/modal'
 interface Props {
   title: string
   children: ReactNode
-  onClose: () => void
 }
 
-export default function Popup({ title, children, onClose }: Props) {
+export default function Popup({ title, children }: Props) {
+  const navigate = useNavigate()
   return (
     <div
       css={modalStyle}
@@ -21,7 +22,12 @@ export default function Popup({ title, children, onClose }: Props) {
       onScroll={e => e.stopPropagation()}
     >
       <div css={headerStyle}>
-        <HeaderItem onClick={onClose} icon={ArrowLeft} />
+        <HeaderItem
+          onClick={() => {
+            navigate(-1)
+          }}
+          icon={ArrowLeft}
+        />
         <div>
           <span css={{ fontSize: '16px', fontWeight: 'bold' }}>{title}</span>
         </div>

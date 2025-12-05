@@ -28,7 +28,6 @@ import ProfileImageSelector from '@/components/popup/ProfileImageSelector'
 import useHeader from '@/hooks/useHeader'
 import { useModal } from '@/hooks/useModal'
 import useStardust from '@/hooks/useStardust'
-import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 import { flexGap } from '@/styles/common'
 
@@ -78,8 +77,10 @@ export default function EditProfilePage() {
       },
       {
         onSuccess: async () => {
-          navigate(ROUTES.GUEST_BOOK(associateId))
-          alert('프로필이 수정되었습니다.')
+          setTimeout(() => {
+            alert('프로필이 수정되었습니다.')
+          }, 400)
+          navigate(-1)
         },
       },
     )
@@ -92,7 +93,7 @@ export default function EditProfilePage() {
 
   const handleImageClick = async () => {
     await openModal(
-      <Popup title={'프로필'} onClose={() => closeModal()}>
+      <Popup title={'프로필'}>
         <ProfileImageSelector
           associateId={associateId}
           onSelect={(value: string) => {

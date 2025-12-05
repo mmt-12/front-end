@@ -23,21 +23,12 @@ export default function InputPopup<T>({
   icon,
   render,
 }: Props<T>) {
-  const { openModal, closeModal } = useModal()
+  const { openModal } = useModal()
 
   const Icon = icon as Icon
   const theme = useTheme()
 
-  const modal = (
-    <Popup
-      title={label}
-      onClose={() => {
-        closeModal()
-      }}
-    >
-      {content}
-    </Popup>
-  )
+  const modal = <Popup title={label}>{content}</Popup>
 
   return (
     <div css={inputContainerStyle}>

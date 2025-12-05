@@ -1,15 +1,14 @@
-import { useRef } from 'react'
 import { css } from '@emotion/react'
-import { Outlet, useBlocker, useNavigate } from 'react-router-dom'
-import { ModalProvider as MP, useModal } from 'sam-react-modal'
+import { Outlet, useBlocker } from 'react-router-dom'
+import { ModalProvider, useModal } from 'sam-react-modal'
 
 export default function RootLayout() {
   return (
-    <ModalProvider>
+    <ModalProviderWrapper>
       <div css={layoutContainerStyle} className='no-scrollbar'>
         <Outlet />
       </div>
-    </ModalProvider>
+    </ModalProviderWrapper>
   )
 }
 
@@ -18,9 +17,9 @@ const layoutContainerStyle = css({
   overflowY: 'hidden',
 })
 
-function ModalProvider({ children }: { children: React.ReactNode }) {
+function ModalProviderWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <MP
+    <ModalProvider
       containerAttributes={{
         style: {
           display: 'flex',
@@ -58,21 +57,14 @@ function ModalProvider({ children }: { children: React.ReactNode }) {
       }}
     >
       <BlockerWrapper>{children}</BlockerWrapper>
-    </MP>
+    </ModalProvider>
   )
 }
 
 function BlockerWrapper({ children }: { children: React.ReactNode }) {
   const { closeModal, closeAllModals, modals } = useModal()
-  const initialHistoryLength = useRef(window.history.length)
-  const navigate = useNavigate()
 
-  useBlocker(({ historyAction, currentLocation }) => {
-    if (currentLocation.pathname.includes('home') && historyAction === 'POP') {
-      navigate(-(window.history.length - initialHistoryLength.current))
-      return true
-    }
-
+  useBlocker(({ historyAction }) => {
     if (historyAction === 'PUSH') {
       closeAllModals()
       return false
@@ -81,5 +73,6 @@ function BlockerWrapper({ children }: { children: React.ReactNode }) {
     closeModal()
     return true
   })
+
   return <>{children}</>
 }

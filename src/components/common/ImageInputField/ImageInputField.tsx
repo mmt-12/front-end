@@ -1,8 +1,10 @@
 import { useRef } from 'react'
 import { css, useTheme, type Theme } from '@emotion/react'
 import { CloseCircle, GalleryAdd } from '@solar-icons/react'
+import imageCompression from 'browser-image-compression'
 
 import { useModal } from '@/hooks/useModal'
+import ImageCropModal from '../../modal/ImageCropModal'
 import Album from '../Album'
 import Button from '../Button'
 import Img from '../Img'
@@ -20,7 +22,46 @@ export default function ImageInputField({
 }: Props) {
   const theme = useTheme()
   const inputRef = useRef<HTMLInputElement>(null)
-  const { alert, confirm } = useModal()
+  const { alert, confirm, openModal } = useModal()
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || [])
+    if (files.length === 0) return
+
+    if (maxLength === 1) {
+      const file = files[0]
+      try {
+        const correctedImage = await imageCompression(file, {
+          maxSizeMB: 2,
+          useWebWorker: true,
+        })
+        const imageSrc = URL.createObjectURL(correctedImage)
+
+        openModal(
+          <ImageCropModal
+            imageSrc={imageSrc}
+            onCrop={croppedImage => {
+              onChange([croppedImage])
+            }}
+          />,
+        )
+      } catch (error) {
+        console.error('이미지 처리 중 오류 발생:', error)
+        alert('이미지를 처리하는 중 오류가 발생했습니다.')
+      }
+    } else {
+      const newFiles = [...files, ...images]
+      if (newFiles.length > maxLength) {
+        newFiles.splice(0, newFiles.length - maxLength)
+        alert(`최대 ${maxLength}장 씩만 업로드 합시다.`)
+      }
+      onChange(newFiles)
+    }
+
+    if (inputRef.current) {
+      inputRef.current.value = ''
+    }
+  }
 
   return (
     <>
@@ -72,21 +113,8 @@ export default function ImageInputField({
         type='file'
         accept='image/*'
         hidden
-        multiple
-        onChange={async e => {
-          const files = Array.from(e.target.files || []) as (File | string)[]
-          const length = images.length + files.length
-          // const compressedFiles = await Promise.all(
-          //   files.map(file => compressImage(file)),
-          // )
-          // const newFiles = compressedFiles.concat(images)
-          const newFiles = files.concat(images)
-          if (length > maxLength) {
-            newFiles.splice(0, length - maxLength)
-            alert(`최대 ${maxLength}장 씩만 업로드 합시다.`)
-          }
-          onChange(newFiles)
-        }}
+        multiple={maxLength !== 1}
+        onChange={handleFileChange}
       />
     </>
   )
@@ -107,12 +135,10 @@ const imageWrapperStyle = (theme: Theme) =>
     width: '100vw',
     maxWidth: theme.maxWidth,
     height: `min(calc(${theme.maxWidth} - 200px), 100vw)`,
-
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexShrink: 0,
-
     overflow: 'hidden',
     scrollSnapAlign: 'center',
     backgroundColor: theme.colors.stone[150],

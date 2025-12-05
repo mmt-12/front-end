@@ -4,7 +4,7 @@ import Alert from '@/components/modal/Alert'
 import Confirm from '@/components/modal/Confirm'
 
 export const useModal = () => {
-  const { openModal, closeModal } = useSamModal()
+  const { openModal, closeModal, closeAllModals, modals } = useSamModal()
 
   const confirm = async (message: string) => {
     return openModal(<Confirm key={'confirm'}>{message}</Confirm>)
@@ -14,5 +14,5 @@ export const useModal = () => {
     return openModal(<Alert>{message}</Alert>)
   }
 
-  return { openModal, closeModal, confirm, alert }
+  return { openModal, closeModal, confirm, alert, closeAllModals, modals }
 }
