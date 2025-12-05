@@ -40,7 +40,10 @@ export default function ProfileImageRegisterPage() {
   const [newImages, setNewImages] = useState<(File | string)[]>([])
 
   const handleSubmit = () => {
-    if (newImages.length === 0) return
+    if (newImages.length === 0) {
+      alert('등록된 이미지가 없습니다.')
+      return
+    }
 
     const formData = new FormData()
     newImages.forEach(image => {
