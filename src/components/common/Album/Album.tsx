@@ -65,10 +65,6 @@ const albumContainerStyle = (theme: Theme) =>
       alignItems: 'center',
       backgroundColor: theme.colors.bg,
     },
-    img: {
-      width: '100%',
-      objectFit: 'cover',
-    },
   })
 
 const dotContainerStyle = css({
