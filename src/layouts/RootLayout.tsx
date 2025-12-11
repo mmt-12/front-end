@@ -2,7 +2,11 @@ import { css } from '@emotion/react'
 import { Outlet, useBlocker } from 'react-router-dom'
 import { ModalProvider, useModal } from 'sam-react-modal'
 
+import useHealthCheck from '@/hooks/useHealthCheck'
+
 export default function RootLayout() {
+  useHealthCheck()
+
   return (
     <ModalProviderWrapper>
       <div css={layoutContainerStyle} className='no-scrollbar'>

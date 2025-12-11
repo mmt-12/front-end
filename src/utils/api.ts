@@ -8,7 +8,6 @@ export const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-
 })
 
 // JWT 토큰 관리
