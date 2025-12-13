@@ -87,7 +87,7 @@ export default function ProfileImageSelector({
         )}
       </InfiniteScroll>
       <BottomButton
-        label='이미지 수정'
+        label='프로필 이미지 수정'
         onClick={() => {
           onSelect(image)
           closeModal()
