@@ -1,6 +1,5 @@
 import { useMemo, useRef, useState } from 'react'
 import { css, type Theme } from '@emotion/react'
-import { useParams } from 'react-router-dom'
 
 import { usePost } from '@/api'
 import {
@@ -9,6 +8,7 @@ import {
   useToggleVoiceComment,
 } from '@/api/post'
 import ReactBar from '@/components/memory/ReactBar/ReactBar'
+import Popup from '@/components/popup/Popup'
 import Post from '@/components/post/Post'
 import { PostListItemSkeleton } from '@/components/post/PostListItem'
 import ReactedProfileList from '@/components/reaction/ReactedProfileList/ReactedProfileList'
@@ -16,8 +16,12 @@ import useHeader from '@/hooks/useHeader'
 import { useUserStore } from '@/store/userStore'
 import { flexGap, withSafeAreaBottom } from '@/styles/common'
 
-export default function PostDetailPage() {
-  const { memoryId, postId } = useParams()
+interface Props {
+  memoryId: string
+  postId: number
+}
+
+export default function PostDetailPopup({ memoryId, postId }: Props) {
   const { communityId, associateId } = useUserStore()
 
   useHeader({
@@ -39,7 +43,6 @@ export default function PostDetailPage() {
     Number(postId),
     associateId,
   )
-
   const { mutate: deleteBubble } = useDeleteBubble(
     communityId,
     Number(memoryId),
@@ -74,13 +77,12 @@ export default function PostDetailPage() {
     }
   }, [post, selectedReactionId])
 
-  if (!post) {
+  if (!post)
     return (
       <div css={[flexGap(10), { marginBottom: '32px' }]}>
         <PostListItemSkeleton />
       </div>
     )
-  }
 
   const onEmojiClick = (e: React.MouseEvent, id: number) => {
     e.stopPropagation()
@@ -116,7 +118,7 @@ export default function PostDetailPage() {
   }
 
   return (
-    <>
+    <Popup title=''>
       <Post
         post={post}
         onEmojiClick={onEmojiClick}
@@ -130,7 +132,7 @@ export default function PostDetailPage() {
         customCss={reactBarStyle}
         comments={post?.comments}
       />
-    </>
+    </Popup>
   )
 }
 
