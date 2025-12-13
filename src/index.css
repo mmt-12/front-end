@@ -27,7 +27,7 @@ html {
   }
 }
 
-.fadeOut {
+div:has(>.fadeOut)>div {
   animation: fadeOut 0.3s forwards;
 }
 
