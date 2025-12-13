@@ -133,9 +133,9 @@ export default function EditProfilePage() {
             customCss={imageStyle}
           />
         </WavyBox>
-        <div css={buttonStyle}>
+        <button css={buttonStyle}>
           <PenNewSquare size={32} color='white' weight='Bold' />
-        </div>
+        </button>
       </div>
       <InputField
         label='이름'
@@ -197,9 +197,12 @@ const buttonStyle = (theme: Theme) =>
     position: 'absolute',
     bottom: '4px',
     right: '4px',
-    background: theme.colors.stone[700],
+    backgroundColor: theme.colors.stone[700],
     border: 'none',
     borderRadius: '14px',
     padding: '6px 6px 4px',
     boxShadow: '0 0 4px rgba(0, 0, 0, 0.15)',
+    ':active': {
+      backgroundColor: theme.colors.stone[700],
+    },
   })
