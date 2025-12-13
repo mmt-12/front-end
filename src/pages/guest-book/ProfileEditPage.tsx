@@ -46,7 +46,7 @@ export default function EditProfilePage() {
   const { data: achievements } = useAchievements(communityId, associateId)
 
   const theme = useTheme()
-  const { alert, openModal, closeModal } = useModal()
+  const { alert, openModal } = useModal()
 
   const [imagePath, setImagePath] = useState<string>('')
   const [name, setName] = useState<string>('')
@@ -98,7 +98,6 @@ export default function EditProfilePage() {
           associateId={associateId}
           onSelect={(value: string) => {
             setImagePath(value)
-            closeModal(value)
           }}
           value={imagePath}
         />

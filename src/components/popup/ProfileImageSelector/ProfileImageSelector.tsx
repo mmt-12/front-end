@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { css, useTheme } from '@emotion/react'
+import { css, useTheme, type Theme } from '@emotion/react'
+import { TrashBinMinimalistic2 } from '@solar-icons/react'
 
 import { useProfileImageList } from '@/api'
 import defaultImageUrl from '@/assets/images/mascot/default-profile.png'
@@ -12,6 +13,8 @@ import WavyBox from '@/components/guest-book/WavyBox'
 import ProfileImageList, {
   ProfileImageListSkeleton,
 } from '@/components/member/ProfileImageList'
+import { useModal } from '@/hooks/useModal'
+import { flexGap } from '@/styles/common'
 
 interface Props {
   associateId: number
@@ -30,8 +33,16 @@ export default function ProfileImageSelector({
     useProfileImageList(1, associateId, { size: 9 })
   const images = data?.pages.flatMap(page => page.profileImages) || []
   const isEmpty = !isLoading && images.length === 0
+  const { confirm, closeModal } = useModal()
+
+  const removeProfileImage = async () => {
+    if (await confirm('프로필 이미지를 삭제하시겠습니까?')) {
+      setImage(defaultImageUrl)
+    }
+  }
+
   return (
-    <>
+    <div css={flexGap(8)}>
       <div css={imageWrapperStyle}>
         <WavyBox
           strokeColor={theme.colors.stone[600]}
@@ -41,6 +52,11 @@ export default function ProfileImageSelector({
         >
           <Img src={image} alt='current profile' customCss={imageStyle} />
         </WavyBox>
+        {image !== defaultImageUrl && (
+          <div css={buttonStyle} onClick={removeProfileImage}>
+            <TrashBinMinimalistic2 size={28} color='white' weight='Bold' />
+          </div>
+        )}
       </div>
       <InfiniteScroll
         fetchNext={fetchNextPage}
@@ -65,15 +81,22 @@ export default function ProfileImageSelector({
           />
         )}
       </InfiniteScroll>
-      <BottomButton label='이미지 수정' onClick={() => onSelect(image)} />
-    </>
+      <BottomButton
+        label='이미지 수정'
+        onClick={() => {
+          onSelect(image)
+          closeModal()
+        }}
+      />
+    </div>
   )
 }
 
 const imageWrapperStyle = css({
   width: 'fit-content',
-  margin: 'auto',
-  padding: '32px 0',
+  margin: '32px auto',
+  position: 'relative',
+  display: 'inline-flex',
 })
 
 const imageStyle = css({
@@ -82,3 +105,15 @@ const imageStyle = css({
   objectFit: 'cover',
   borderRadius: '8px',
 })
+
+const buttonStyle = (theme: Theme) =>
+  css({
+    position: 'absolute',
+    bottom: '4px',
+    right: '4px',
+    background: theme.colors.stone[700],
+    border: 'none',
+    borderRadius: '14px',
+    padding: '6px 6px 4px',
+    boxShadow: '0 0 4px rgba(0, 0, 0, 0.15)',
+  })
