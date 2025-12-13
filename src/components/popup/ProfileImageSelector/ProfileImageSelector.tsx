@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { css, useTheme, type Theme } from '@emotion/react'
+import { css, useTheme } from '@emotion/react'
 import { TrashBinMinimalistic2 } from '@solar-icons/react'
 
 import { useProfileImageList } from '@/api'
@@ -14,6 +14,7 @@ import ProfileImageList, {
   ProfileImageListSkeleton,
 } from '@/components/member/ProfileImageList'
 import { useModal } from '@/hooks/useModal'
+import { absoluteButtonStyle } from '@/styles/absoluteButton'
 import { flexGap } from '@/styles/common'
 
 interface Props {
@@ -54,7 +55,7 @@ export default function ProfileImageSelector({
         </WavyBox>
         {image !== defaultImageUrl && (
           <button
-            css={buttonStyle(theme)}
+            css={absoluteButtonStyle}
             onClick={removeProfileImage}
             aria-label='delete current profile image'
           >
@@ -109,18 +110,3 @@ const imageStyle = css({
   objectFit: 'cover',
   borderRadius: '8px',
 })
-
-const buttonStyle = (theme: Theme) =>
-  css({
-    position: 'absolute',
-    bottom: '4px',
-    right: '4px',
-    backgroundColor: theme.colors.stone[700],
-    border: 'none',
-    borderRadius: '14px',
-    padding: '6px 6px 4px',
-    boxShadow: '0 0 4px rgba(0, 0, 0, 0.15)',
-    ':active': {
-      backgroundColor: theme.colors.stone[700],
-    },
-  })
