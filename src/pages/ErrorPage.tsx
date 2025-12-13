@@ -31,7 +31,7 @@ export default function ErrorPage() {
       </>
     )
   } else if (error.message) {
-    messageEl = <p>error.message</p>
+    messageEl = <p>{error.message}</p>
   }
 
   return (

@@ -17,5 +17,6 @@ export function useServerHealth () {
       api
         .get(`/v1/health`)
         .then(r => r.data as { status: string }),
+    retry: false
   })
 }
