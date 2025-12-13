@@ -12,7 +12,6 @@ import Popup from '@/components/popup/Popup'
 import Post from '@/components/post/Post'
 import { PostListItemSkeleton } from '@/components/post/PostListItem'
 import ReactedProfileList from '@/components/reaction/ReactedProfileList/ReactedProfileList'
-import useHeader from '@/hooks/useHeader'
 import { useUserStore } from '@/store/userStore'
 import { flexGap, withSafeAreaBottom } from '@/styles/common'
 
@@ -23,12 +22,6 @@ interface Props {
 
 export default function PostDetailPopup({ memoryId, postId }: Props) {
   const { communityId, associateId } = useUserStore()
-
-  useHeader({
-    rightItem: {
-      icon: null,
-    },
-  })
 
   const { data: post } = usePost(communityId, Number(memoryId), Number(postId))
   const { mutate: toggleEmoji } = useToggleEmojiComment(
