@@ -20,7 +20,7 @@ import PostEditPage from '@/pages/post/PostEditPage'
 import ProfileImageRegisterPage from '@/pages/guest-book/ProfileImageRegisterPage'
 
 import NotificationPage from '@/pages/NotificationPage'
-import SignupPage from '@/pages/auth/SignupPage'
+import SocialSignupPage from '@/pages/auth/SocialSignupPage'
 import { lazy } from 'react'
 
 const GuestBookPage = lazy(() => import('@/pages/guest-book/GuestBookPage'))
@@ -43,6 +43,6 @@ export {
   PostRegisterPage,
   PostEditPage,
   NotificationPage,
-  SignupPage,
+  SocialSignupPage,
   TestPage,
 }

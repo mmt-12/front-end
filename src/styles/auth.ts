@@ -5,7 +5,7 @@ export const signupTitleStyle = (theme: Theme) =>
     display: 'flex',
     flexDirection: 'column',
     padding: '0px 16px 20px 16px',
-    marginTop: '36px',
+    marginTop: '24px',
     gap: '8px',
     h1: {
       fontSize: 26,

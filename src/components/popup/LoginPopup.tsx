@@ -4,17 +4,21 @@ import { css, type Theme } from '@emotion/react'
 import Button from '@/components/common/Button'
 import InputField from '@/components/common/InputField'
 import Logo from '@/components/common/Logo/Logo'
+import { useModal } from '@/hooks/useModal'
 import { flexGap } from '@/styles/common'
 import HelpButton from '../common/HelpButton/HelpButton'
 import Popup from './Popup'
+import SignupPopup from './SignupPopup'
 
 export default function LoginPopup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error] = useState('승인 대기중인 회원이에요')
 
+  const { openModal } = useModal()
+
   return (
-    <Popup title='일반 로그인'>
+    <Popup title='로그인'>
       <div css={[flexGap(48), containerStyle]}>
         <Logo />
         <div css={flexGap(4)}>
@@ -37,7 +41,9 @@ export default function LoginPopup() {
             <Button
               label='회원가입'
               type='secondary'
-              onClick={() => {}}
+              onClick={() => {
+                openModal(<SignupPopup />)
+              }}
               customCss={buttonStyle}
             />
           </div>

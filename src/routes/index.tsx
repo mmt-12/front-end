@@ -19,7 +19,7 @@ const router = createBrowserRouter([
           },
           {
             path: ROUTES.SIGNUP,
-            element: <Pages.SignupPage />,
+            element: <Pages.SocialSignupPage />,
           },
           {
             path: ROUTES.LANDING,

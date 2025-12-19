@@ -29,7 +29,7 @@ export default function Popup({ title, children }: Props) {
           icon={ArrowLeft}
         />
         <div>
-          <span css={{ fontSize: '16px', fontWeight: 'bold' }}>{title}</span>
+          <span css={{ fontSize: '16px' }}>{title}</span>
         </div>
 
         <HeaderItem onClick={() => {}} icon={null} />
