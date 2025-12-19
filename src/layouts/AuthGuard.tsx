@@ -18,7 +18,7 @@ export default function AuthGuard() {
   useEffect(() => {
     if (!getToken()) {
       removeToken()
-      navigate(ROUTES.LOGIN)
+      navigate(ROUTES.ENTRANCE)
     }
   }, [location.pathname, navigate])
 

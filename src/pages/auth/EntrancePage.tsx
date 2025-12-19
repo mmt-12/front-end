@@ -1,18 +1,23 @@
 import { useEffect } from 'react'
-import { css, useTheme, type Theme } from '@emotion/react'
-import { QuestionCircle } from '@solar-icons/react'
+import { css } from '@emotion/react'
 import { useNavigate } from 'react-router-dom'
 
 import kakaoIcon from '@/assets/images/icons/kakao.png'
 import mainMascot from '@/assets/images/mascot/main.png'
+import Button from '@/components/common/Button'
+import HelpButton from '@/components/common/HelpButton/HelpButton'
 import Img from '@/components/common/Img'
+import Logo from '@/components/common/Logo/Logo'
+import LoginPopup from '@/components/popup/LoginPopup'
+import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
+import { flexGap } from '@/styles/common'
 import { getToken } from '@/utils/api'
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL
 
-export default function LoginPage() {
-  const theme = useTheme()
+export default function EntrancePage() {
+  const { openModal } = useModal()
   const navigate = useNavigate()
   useEffect(() => {
     if (getToken()) {
@@ -22,10 +27,7 @@ export default function LoginPage() {
 
   return (
     <div css={containerStyle}>
-      <div css={titlesStyle}>
-        <p css={subTitleStyle}>우리의 추억을 위한 공간</p>
-        <p css={titleStyle}>Memento</p>
-      </div>
+      <Logo subtitle />
       <div css={mascotWrapperStyle}>
         <Img
           src={mainMascot}
@@ -33,7 +35,12 @@ export default function LoginPage() {
           customCss={mascotStyle}
         />
       </div>
-      <div css={buttonsContainerStyle}>
+      <div css={[flexGap(20), { width: '100%' }]}>
+        <Button
+          label='일반 로그인'
+          onClick={() => openModal(<LoginPopup />)}
+          customCss={buttonStyle}
+        />
         <a
           href={`${BASE_URL}/v1/sign-in`}
           css={[buttonStyle, kakaoButtonStyle]}
@@ -41,15 +48,7 @@ export default function LoginPage() {
           <Img src={kakaoIcon} alt='kakao icon' customCss={kakaoIconStyle} />
           <p>카카오 로그인</p>
         </a>
-        <button css={buttonStyle}>
-          <QuestionCircle
-            weight='Bold'
-            size={24}
-            color={theme.colors.stone[400]}
-            width={16}
-          />
-          <span css={smallLabelStyle}>관리자에게 문의하기</span>
-        </button>
+        <HelpButton label='관리자에게 문의하기' />
       </div>
     </div>
   )
@@ -61,39 +60,12 @@ const containerStyle = css({
   alignItems: 'center',
   justifyContent: 'space-between',
   height: '100dvh',
-})
-
-const titlesStyle = css({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '108px 16px 4px 16px',
-})
-
-const subTitleStyle = css({ fontSize: 18, padding: 0, margin: 0 })
-
-const titleStyle = (theme: Theme) =>
-  css({
-    fontSize: '48px',
-    color: theme.colors.stone[700],
-    margin: '0',
-    fontFamily: 'Pacifico, cursive',
-  })
-
-const buttonsContainerStyle = css({
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '20px',
-  padding: '32px 0px',
+  padding: '40px 0px',
 })
 
 const buttonStyle = css({
-  width: 'calc(100% - 72px)',
-  maxWidth: '360px',
-  padding: '4px 20px',
+  width: 'calc(100% - 32px)',
+  height: '60px',
   margin: '0 16px',
   display: 'flex',
   flexDirection: 'row',
@@ -107,7 +79,6 @@ const kakaoButtonStyle = css({
   backgroundColor: '#FFEB3B',
   gap: '24px',
   fontSize: '16px',
-  height: '60px',
 })
 
 const mascotWrapperStyle = css({
@@ -126,10 +97,3 @@ const kakaoIconStyle = css({
   width: '24px',
   height: '24px',
 })
-
-const smallLabelStyle = (theme: Theme) =>
-  css({
-    color: theme.colors.stone[600],
-    fontSize: 13,
-    paddingTop: 2,
-  })

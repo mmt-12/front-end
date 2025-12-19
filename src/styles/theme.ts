@@ -32,7 +32,7 @@ export const theme = {
     white: '#FFFFFF',
     black: '#000000',
     red: '#FF9292',
-    danger: '#FF4D4D',
+    danger: '#F45858',
     blue: '#6AB9FF',
     yellow: '#FFCC00',
   },

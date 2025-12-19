@@ -10,22 +10,22 @@ const router = createBrowserRouter([
     errorElement: <Pages.ErrorPage />,
     children: [
       {
-        path: ROUTES.LOGIN,
+        path: ROUTES.ENTRANCE,
         Component: () => <Layouts.PlainLayout />,
         children: [
           {
             index: true,
-            element: <Pages.LoginPage />,
+            element: <Pages.EntrancePage />,
           },
           {
             path: ROUTES.SIGNUP,
             element: <Pages.SignupPage />,
           },
+          {
+            path: ROUTES.LANDING,
+            element: <Pages.LandingPage />,
+          },
         ],
-      },
-      {
-        path: ROUTES.LANDING,
-        element: <Pages.LandingPage />,
       },
       {
         index: true,

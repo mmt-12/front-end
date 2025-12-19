@@ -5,7 +5,7 @@ import CalendarPage from '@/pages/CalendarPage'
 import ErrorPage from '@/pages/ErrorPage'
 import EditProfilePage from '@/pages/guest-book/ProfileEditPage'
 
-import LoginPage from '@/pages/auth/LoginPage'
+import EntrancePage from '@/pages/auth/EntrancePage'
 import MapPage from '@/pages/MapPage'
 
 import MemoryDetailPage from '@/pages/memory/MemoryDetailPage'
@@ -33,7 +33,7 @@ export {
   GuestBookPage,
   MemberListPage,
   LandingPage,
-  LoginPage,
+  EntrancePage,
   MapPage,
   MemoryDetailPage,
   MemoryEditPage,

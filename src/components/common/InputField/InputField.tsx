@@ -10,7 +10,7 @@ interface Props {
     _value: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement>
-  type?: 'input' | 'textarea'
+  type?: string
   label?: string
   placeholder?: string
   customCss?: Interpolation<Theme>
@@ -20,7 +20,7 @@ export default function InputField({
   value,
   onChange,
   onKeyDown,
-  type = 'input',
+  type,
   label,
   placeholder,
   customCss,
@@ -30,7 +30,6 @@ export default function InputField({
     value,
     onChange,
   }
-
 
   return (
     <div css={[inputContainerStyle, customCss]}>
@@ -44,7 +43,7 @@ export default function InputField({
         />
       ) : (
         <input
-          type='text'
+          type={type === 'password' ? 'password' : 'text'}
           {...inputProps}
           onKeyDown={onKeyDown}
           placeholder={placeholder}

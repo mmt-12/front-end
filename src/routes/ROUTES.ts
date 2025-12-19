@@ -1,7 +1,7 @@
 export const ROUTES = {
-  LOGIN: '/login',
-  LANDING: '/landing',
-  SIGNUP: '/login/signup',
+  ENTRANCE: '/entrance',
+  LANDING: '/entrance/landing',
+  SIGNUP: '/entrance/signup',
   HOME: '/home',
   MEMORY_LIST: '/home/memory',
   MEMORY_DETAIL: (memoryId: string | number) => `/memory/${memoryId}`,
