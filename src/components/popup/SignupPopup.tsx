@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { css, type Theme } from '@emotion/react'
 import { Spacing } from 'sam-react-modal'
 
@@ -13,11 +13,20 @@ import SignupRequestCompletePopup from './SignupRequestCompletePopup'
 export default function SignupPopup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [passwordCheck, setPasswordCheck] = useState('')
   const [name, setName] = useState('')
   const [birthdate, setBirthdate] = useState(new Date())
   const [secretCode, setSecretCode] = useState('')
-  const [error] = useState('')
-  // const [error] = useState('비밀번호가 달라요.')
+
+  const error = useMemo(() => {
+    if (!email) return '이메일을 입력해주세요.'
+    if (!password) return '비밀번호를 입력해주세요.'
+    if (password !== passwordCheck) return '비밀번호가 일치하지 않습니다.'
+    if (!name) return '이름을 입력해주세요.'
+    if (!birthdate) return '생일을 입력해주세요.'
+    if (!secretCode) return '초대코드를 입력해주세요.'
+    return ''
+  }, [email, password, passwordCheck, name, birthdate, secretCode])
 
   const { openModal, closeModal } = useModal()
 
@@ -39,8 +48,8 @@ export default function SignupPopup() {
           <InputField
             label='비밀번호 확인'
             type='password'
-            value={password}
-            onChange={e => setPassword(e.target.value)}
+            value={passwordCheck}
+            onChange={e => setPasswordCheck(e.target.value)}
           />
           <Spacing height={24} />
           <InputField
@@ -86,9 +95,10 @@ const buttonStyle = {
   width: 'calc(100% - 32px)',
   margin: '4px 16px',
 }
+
 const errorStyle = (theme: Theme) =>
   css({
-    color: theme.colors.danger,
+    color: theme.colors.sky[500],
     textAlign: 'center',
     fontSize: '15px',
   })

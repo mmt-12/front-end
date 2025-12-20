@@ -14,7 +14,7 @@ const containerStyle = css({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: '32px 16px 16px 16px',
+  padding: '16px',
 })
 
 const titleStyle = (theme: Theme) =>

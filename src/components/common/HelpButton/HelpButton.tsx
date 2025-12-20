@@ -16,7 +16,7 @@ export default function HelpButton({ label }: Props) {
       css={buttonStyle}
       onClick={() => {
         alert(
-          '김지호, 유선우, 이중혁, 이정현, 최성환 <br /> 카카오톡으로 문의해주세요!',
+          '관리자(김지호, 유선우, 이중혁, 이정현, 최성환) 카카오톡으로 문의해주세요!',
         )
       }}
     >

@@ -60,7 +60,7 @@ const containerStyle = css({
   alignItems: 'center',
   justifyContent: 'space-between',
   height: '100dvh',
-  padding: '40px 0px',
+  padding: '52px 0px 40px 0px',
 })
 
 const buttonStyle = css({

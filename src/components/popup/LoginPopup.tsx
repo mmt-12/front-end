@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { css, type Theme } from '@emotion/react'
 
 import Button from '@/components/common/Button'
@@ -13,7 +13,14 @@ import SignupPopup from './SignupPopup'
 export default function LoginPopup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error] = useState('승인 대기중인 회원이에요')
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
+  const error = useMemo(() => {
+    if (!isSubmitted) return ''
+    if (!email) return '이메일을 입력해주세요.'
+    if (!password) return '비밀번호를 입력해주세요.'
+    return ''
+  }, [email, password])
 
   const { openModal } = useModal()
 
@@ -34,10 +41,16 @@ export default function LoginPopup() {
             onChange={e => setPassword(e.target.value)}
           />
         </div>
-        <div css={[flexGap(24), { width: '100%', padding: '12px 0px' }]}>
+        <div css={[flexGap(28), { width: '100%', padding: '20px 0px' }]}>
           <span css={errorStyle}>{error}</span>
           <div css={flexGap(8)}>
-            <Button label='로그인' onClick={() => {}} customCss={buttonStyle} />
+            <Button
+              label='로그인'
+              onClick={() => {
+                setIsSubmitted(true)
+              }}
+              customCss={buttonStyle}
+            />
             <Button
               label='회원가입'
               type='secondary'
@@ -55,7 +68,7 @@ export default function LoginPopup() {
 }
 
 const containerStyle = {
-  padding: '32px 0px',
+  padding: '16px 0px',
   height: '100%',
   justifyContent: 'space-between',
 }
@@ -69,4 +82,5 @@ const errorStyle = (theme: Theme) =>
     color: theme.colors.danger,
     textAlign: 'center',
     fontSize: '15px',
+    height: '20px',
   })
