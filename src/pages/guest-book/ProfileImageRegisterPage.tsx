@@ -66,6 +66,7 @@ export default function ProfileImageRegisterPage() {
           images={newImages}
           maxLength={1}
           onChange={setNewImages}
+          mode='crop'
         />
         <InfiniteScroll
           fetchNext={fetchNextPage}
