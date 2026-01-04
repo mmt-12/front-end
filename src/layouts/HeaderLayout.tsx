@@ -10,7 +10,7 @@ export default function HeaderLayout() {
   return (
     <>
       <Header />
-      <main css={mainStyle}>
+      <main css={mainStyle} className='no-scrollbar'>
         <PageTransition keyframe={slideInRight}>
           <Outlet />
           <div css={{ height: withSafeAreaBottom(0), flexShrink: 0 }} />
