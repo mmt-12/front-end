@@ -66,7 +66,6 @@ export default function EmojiRegisterModal() {
 const imageInputWrapperStyle = css({
   width: 'calc(100% - 32px)',
   overflow: 'hidden',
-  aspectRatio: '1 / 1',
   margin: '16px auto',
   button: {
     margin: '16px 0',

@@ -46,8 +46,7 @@ export default function ImageInputField({
       const newFiles = [...images, ...compressedFiles]
       if (newFiles.length > maxLength) {
         alert(`최대 ${maxLength}장까지만 업로드할 수 있습니다.`)
-        // Remove oldest images if exceeding maxLength
-        onChange(newFiles.slice(newFiles.length - maxLength))
+        onChange(newFiles.splice(0, newFiles.length - maxLength))
       } else {
         onChange(newFiles)
       }
@@ -136,7 +135,6 @@ const imageWrapperStyle = (theme: Theme) =>
     position: 'relative',
     width: '100%',
     maxWidth: theme.maxWidth,
-    aspectRatio: '1 / 1',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
