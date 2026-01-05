@@ -11,23 +11,41 @@ export interface TokenInfo {
   refreshTokenExpiresAt: number
 }
 
+export interface LoginRequest {
+  email: string
+  password: string
+}
+
 export interface LoginResponse {
   memberId?: number
   name?: string
-  kakaoId?: number
-  email?: string
   token: TokenInfo
 }
 
-export interface SignUpRequest {
+export interface SignupResponse { }
+
+export interface KakaoLoginResponse extends LoginResponse {
+  kakaoId?: number
+  email?: string
+}
+
+export interface CreateMemberRequest {
   name: string
   email: string
-  birthday: string
+  birthday: Date
+  secret: string
+}
+
+export interface SignupRequest extends CreateMemberRequest {
+  password: string
+  fcmToken: string
 }
 
 export interface UpdateMemberRequest {
   name: string
   email: string
+  birthday: Date
+  secret: string
 }
 
 export interface Community {
