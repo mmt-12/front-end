@@ -1,4 +1,4 @@
-import { Children, useState } from 'react'
+import { Children, useMemo, useState } from 'react'
 import { css, type Theme } from '@emotion/react'
 
 import Sentinel from '../Sentinel'
@@ -9,6 +9,7 @@ export interface Props {
 
 export default function Album({ children }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const validChildren = useMemo(() => Children.toArray(children), [children])
 
   return (
     <div key={children?.toString()} css={contianerStyle}>
@@ -25,16 +26,18 @@ export default function Album({ children }: Props) {
           </>
         ))}
       </div>
-      <div css={dotContainerStyle}>
-        {Children.map(children, (child, index) =>
-          child ? (
-            <div
-              css={dotStyle}
-              className={index === currentIndex ? 'active' : ''}
-            />
-          ) : null,
-        )}
-      </div>
+      {validChildren.length > 1 && (
+        <div css={dotContainerStyle}>
+          {Children.map(children, (child, index) =>
+            child ? (
+              <div
+                css={dotStyle}
+                className={index === currentIndex ? 'active' : ''}
+              />
+            ) : null,
+          )}
+        </div>
+      )}
     </div>
   )
 }

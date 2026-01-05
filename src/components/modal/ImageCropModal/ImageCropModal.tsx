@@ -4,18 +4,20 @@ import Cropper, { type Area } from 'react-easy-crop'
 
 import BottomDrawer from '@/components/modal/BottomDrawer'
 import { useModal } from '@/hooks/useModal'
-import getCroppedImg from '@/utils/image'
+import getCroppedImg, { getCroppedGif } from '@/utils/image'
 import BottomButton from '../../common/BottomButton'
 
 interface Props {
   imageSrc: string
+  imageType: string
   onCrop: (_image: File) => void
 }
 
-export default function ImageCropModal({ imageSrc, onCrop }: Props) {
+export default function ImageCropModal({ imageSrc, imageType, onCrop }: Props) {
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
+  const [isProcessing, setIsProcessing] = useState(false)
   const { closeModal } = useModal()
 
   const onCropComplete = useCallback(
@@ -26,10 +28,19 @@ export default function ImageCropModal({ imageSrc, onCrop }: Props) {
   )
 
   const handleCrop = async () => {
-    if (imageSrc && croppedAreaPixels) {
-      const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels)
-      onCrop(croppedImage)
-      closeModal()
+    if (imageSrc && croppedAreaPixels && !isProcessing) {
+      try {
+        setIsProcessing(true)
+        const croppedImage =
+          imageType === 'image/gif'
+            ? await getCroppedGif(imageSrc, croppedAreaPixels)
+            : await getCroppedImg(imageSrc, croppedAreaPixels)
+        onCrop(croppedImage)
+        closeModal()
+      } catch (e) {
+        console.error('Failed to crop image', e)
+        setIsProcessing(false)
+      }
     }
   }
 
@@ -46,7 +57,11 @@ export default function ImageCropModal({ imageSrc, onCrop }: Props) {
           onZoomChange={setZoom}
         />
       </div>
-      <BottomButton label='적용' onClick={handleCrop} />
+      <BottomButton
+        label={isProcessing ? '처리 중...' : '적용'}
+        onClick={handleCrop}
+        type={isProcessing ? 'disabled' : 'primary'}
+      />
     </BottomDrawer>
   )
 }
