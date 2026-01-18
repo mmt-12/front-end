@@ -1,6 +1,6 @@
 import { jwtDecode } from 'jwt-decode'
 import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
+import { createJSONStorage, persist } from 'zustand/middleware'
 
 import type { LoginResponse } from '@/api'
 import { dateToId } from '@/utils/date'
@@ -34,7 +34,6 @@ export const useUserStore = create<UserState>()(
         const payload = jwtDecode<TokenPayload>(userInfo.token.accessToken)
         console.log(payload)
         set({
-          email: userInfo.email,
           memberId: userInfo.memberId,
           associateId: payload.associateId,
           communityId: payload.communityId,

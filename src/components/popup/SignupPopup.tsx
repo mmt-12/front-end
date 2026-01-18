@@ -1,9 +1,12 @@
 import { useMemo, useState } from 'react'
 import { css, type Theme } from '@emotion/react'
+import type { AxiosError } from 'axios'
 import { Spacing } from 'sam-react-modal'
 
+import { useCheckEmailDuplicate, useSignup } from '@/api'
 import Button from '@/components/common/Button'
 import InputField from '@/components/common/InputField'
+import useFCM from '@/hooks/useFCM'
 import { useModal } from '@/hooks/useModal'
 import { flexGap } from '@/styles/common'
 import DateInputField from '../common/DateInputField'
@@ -17,6 +20,11 @@ export default function SignupPopup() {
   const [name, setName] = useState('')
   const [birthdate, setBirthdate] = useState(new Date())
   const [secretCode, setSecretCode] = useState('')
+
+  const token = useFCM()
+
+  const { data: emailCheck } = useCheckEmailDuplicate(email)
+  const { mutate: signUpMutate, error: signUpError } = useSignup()
 
   const error = useMemo(() => {
     if (!email) return '이메일을 입력해주세요.'
@@ -37,8 +45,13 @@ export default function SignupPopup() {
           <InputField
             label='이메일'
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={e => {
+              setEmail(e.target.value)
+            }}
           />
+          <span css={errorStyle}>
+            {emailCheck?.isDuplicate ? '이미 사용 중인 이메일입니다.' : ''}
+          </span>
           <InputField
             label='비밀번호'
             type='password'
@@ -68,13 +81,32 @@ export default function SignupPopup() {
             onChange={e => setSecretCode(e.target.value)}
           />
         </div>
-        <span css={errorStyle}>{error}</span>
+        <span css={errorStyle}>
+          {error || signUpError
+            ? (signUpError as AxiosError<{ message: string }>).response?.data
+                ?.message || '회원가입에 실패했습니다.'
+            : ''}
+        </span>
         <Button
           label='가입 요청'
           type={error ? 'disabled' : 'secondary'}
           onClick={async () => {
-            closeModal()
-            openModal(<SignupRequestCompletePopup />)
+            signUpMutate(
+              {
+                email,
+                password,
+                name,
+                birthday: birthdate,
+                secret: secretCode,
+                fcmToken: token,
+              },
+              {
+                onSuccess: () => {
+                  closeModal()
+                  openModal(<SignupRequestCompletePopup />)
+                },
+              },
+            )
           }}
           customCss={buttonStyle}
         />

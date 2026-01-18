@@ -22,11 +22,15 @@ export interface LoginResponse {
   token: TokenInfo
 }
 
-export interface SignupResponse { }
+export interface SignupResponse {}
 
 export interface KakaoLoginResponse extends LoginResponse {
   kakaoId?: number
   email?: string
+}
+
+export interface EmailCheckResponse {
+  isDuplicate: boolean
 }
 
 export interface CreateMemberRequest {
@@ -256,7 +260,6 @@ export interface VoiceListResponse {
 export interface CreateVoiceRequest {
   name: string
 }
-
 
 export interface EmojiListResponse {
   emojis: Reaction[]
