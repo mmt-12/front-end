@@ -82,10 +82,11 @@ export default function SignupPopup() {
           />
         </div>
         <span css={errorStyle}>
-          {error || signUpError
-            ? (signUpError as AxiosError<{ message: string }>).response?.data
-                ?.message || '회원가입에 실패했습니다.'
-            : ''}
+          {error ||
+            (signUpError
+              ? (signUpError as AxiosError<{ message: string }>).response?.data
+                  ?.message || '회원가입에 실패했습니다.'
+              : '')}
         </span>
         <Button
           label='가입 요청'
