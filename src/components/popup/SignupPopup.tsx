@@ -99,7 +99,7 @@ export default function SignupPopup() {
                 name,
                 birthday: birthdate,
                 secret: secretCode,
-                fcmToken: token,
+                ...(token ? { fcmToken: token } : {}),
               },
               {
                 onSuccess: () => {
