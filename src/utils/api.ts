@@ -84,6 +84,6 @@ const handleUnauthorized = async (response: AxiosResponse) => {
   }
   // 로그아웃 처리
   removeToken()
-  window.location.href = ROUTES.LOGIN
+  window.location.href = ROUTES.ENTRANCE
   return null
 }

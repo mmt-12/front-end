@@ -5,7 +5,7 @@ import CalendarPage from '@/pages/CalendarPage'
 import ErrorPage from '@/pages/ErrorPage'
 import EditProfilePage from '@/pages/guest-book/ProfileEditPage'
 
-import LoginPage from '@/pages/auth/LoginPage'
+import EntrancePage from '@/pages/auth/EntrancePage'
 import MapPage from '@/pages/MapPage'
 
 import MemoryDetailPage from '@/pages/memory/MemoryDetailPage'
@@ -20,7 +20,7 @@ import PostEditPage from '@/pages/post/PostEditPage'
 import ProfileImageRegisterPage from '@/pages/guest-book/ProfileImageRegisterPage'
 
 import NotificationPage from '@/pages/NotificationPage'
-import SignupPage from '@/pages/auth/SignupPage'
+import SocialSignupPage from '@/pages/auth/SocialSignupPage'
 import { lazy } from 'react'
 
 const GuestBookPage = lazy(() => import('@/pages/guest-book/GuestBookPage'))
@@ -33,7 +33,7 @@ export {
   GuestBookPage,
   MemberListPage,
   LandingPage,
-  LoginPage,
+  EntrancePage,
   MapPage,
   MemoryDetailPage,
   MemoryEditPage,
@@ -43,6 +43,6 @@ export {
   PostRegisterPage,
   PostEditPage,
   NotificationPage,
-  SignupPage,
+  SocialSignupPage,
   TestPage,
 }
