@@ -40,13 +40,19 @@ export default function LoginPopup() {
           <InputField
             label='이메일'
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={e => {
+              setEmail(e.target.value)
+              setLogInFailed(false)
+            }}
           />
           <InputField
             label='비밀번호'
             type='password'
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={e => {
+              setPassword(e.target.value)
+              setLogInFailed(false)
+            }}
           />
         </div>
         <div css={[flexGap(28), { width: '100%', padding: '20px 0px' }]}>
