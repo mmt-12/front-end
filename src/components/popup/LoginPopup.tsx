@@ -25,7 +25,7 @@ export default function LoginPopup() {
     if (!email) return '이메일을 입력해주세요.'
     if (!password) return '비밀번호를 입력해주세요.'
     return ''
-  }, [email, password])
+  }, [email, password, isSubmitted, logInFailed])
 
   const { openModal } = useModal()
   const { mutate: loginMutate } = useLogin()
