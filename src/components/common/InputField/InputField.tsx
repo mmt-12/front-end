@@ -10,7 +10,7 @@ interface Props {
     _value: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement>
-  type?: string
+  type?: 'input' | 'text' | 'password' | 'textarea'
   label?: string
   placeholder?: string
   customCss?: Interpolation<Theme>
