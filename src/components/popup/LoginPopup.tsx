@@ -21,11 +21,11 @@ export default function LoginPopup() {
 
   const error = useMemo(() => {
     if (!isSubmitted) return ''
-    if (logInFailed) return '이메일 또는 비밀번호가 올바르지 않습니다.'
     if (!email) return '이메일을 입력해주세요.'
     if (!password) return '비밀번호를 입력해주세요.'
+    if (logInFailed) return '이메일 또는 비밀번호가 올바르지 않습니다.'
     return ''
-  }, [email, password])
+  }, [email, password, isSubmitted, logInFailed])
 
   const { openModal } = useModal()
   const { mutate: loginMutate } = useLogin()
