@@ -13,6 +13,8 @@ import DateInputField from '../common/DateInputField'
 import Popup from './Popup'
 import SignupRequestCompletePopup from './SignupRequestCompletePopup'
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 export default function SignupPopup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -28,8 +30,7 @@ export default function SignupPopup() {
 
   const error = useMemo(() => {
     if (!email) return '이메일을 입력해주세요.'
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) return '올바른 이메일 형식이 아닙니다.'
+    if (!EMAIL_REGEX.test(email)) return '올바른 이메일 형식이 아닙니다.'
     if (!password) return '비밀번호를 입력해주세요.'
     if (password !== passwordCheck) return '비밀번호가 일치하지 않습니다.'
     if (!name) return '이름을 입력해주세요.'
