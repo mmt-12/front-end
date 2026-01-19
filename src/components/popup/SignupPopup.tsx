@@ -28,13 +28,14 @@ export default function SignupPopup() {
 
   const error = useMemo(() => {
     if (!email) return '이메일을 입력해주세요.'
+    if (emailCheck?.isDuplicate) return '이미 사용 중인 이메일입니다.'
     if (!password) return '비밀번호를 입력해주세요.'
     if (password !== passwordCheck) return '비밀번호가 일치하지 않습니다.'
     if (!name) return '이름을 입력해주세요.'
     if (!birthdate) return '생일을 입력해주세요.'
     if (!secretCode) return '초대코드를 입력해주세요.'
     return ''
-  }, [email, password, passwordCheck, name, birthdate, secretCode])
+  }, [email, emailCheck, password, passwordCheck, name, birthdate, secretCode])
 
   const { openModal, closeModal } = useModal()
 
@@ -49,9 +50,6 @@ export default function SignupPopup() {
               setEmail(e.target.value)
             }}
           />
-          <span css={errorStyle}>
-            {emailCheck?.isDuplicate ? '이미 사용 중인 이메일입니다.' : ''}
-          </span>
           <InputField
             label='비밀번호'
             type='password'
@@ -92,6 +90,8 @@ export default function SignupPopup() {
           label='가입 요청'
           type={error ? 'disabled' : 'secondary'}
           onClick={async () => {
+            if (error) return
+            
             signUpMutate(
               {
                 email,
