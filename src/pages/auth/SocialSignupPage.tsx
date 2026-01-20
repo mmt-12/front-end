@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import type { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 import { useKakaoSignup } from '@/api'
@@ -20,11 +21,11 @@ export default function SignupPage() {
 
   const navigate = useNavigate()
   const userStore = useUserStore()
-  const { mutate: signup, isPending } = useKakaoSignup()
+  const { mutate: signup, isPending, error } = useKakaoSignup()
 
   const isValid = useMemo(() => {
     if (!birthDate || !MEMBERS[dateToId(birthDate)]) return false
-    return name.length > 0 && secret.trim() === '오렌지' && !!birthDate
+    return true
   }, [name, secret, birthDate])
 
   return (
@@ -74,6 +75,10 @@ export default function SignupPage() {
             )
           }}
         />
+        {error
+          ? (error as AxiosError<{ message: string }>).response?.data
+              ?.message || '회원가입에 실패했습니다.'
+          : ''}
       </div>
     </>
   )
