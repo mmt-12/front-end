@@ -25,8 +25,8 @@ export default function SignupPage() {
 
   const isValid = useMemo(() => {
     if (!birthDate || !MEMBERS[dateToId(birthDate)]) return false
-    return true
-  }, [birthDate])
+    return name.length > 0
+  }, [birthDate, name])
 
   return (
     <>
