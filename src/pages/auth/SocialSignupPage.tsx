@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { css, type Theme } from '@emotion/react'
 import type { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
 
@@ -75,11 +76,22 @@ export default function SignupPage() {
             )
           }}
         />
-        {error
-          ? (error as AxiosError<{ message: string }>).response?.data
-              ?.message || '회원가입에 실패했습니다.'
-          : ''}
+
+        {!!error && (
+          <p role='alert' css={errorStyle}>
+            {(error as AxiosError<{ message: string }>).response?.data
+              ?.message || '회원가입에 실패했습니다.'}
+          </p>
+        )}
       </div>
     </>
   )
 }
+
+const errorStyle = (theme: Theme) =>
+  css({
+    color: theme.colors.danger,
+    textAlign: 'center',
+    fontSize: '15px',
+    height: '20px',
+  })
