@@ -1,4 +1,6 @@
 import { useMemo, useState } from 'react'
+import { css, type Theme } from '@emotion/react'
+import type { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 import { useKakaoSignup } from '@/api'
@@ -20,12 +22,12 @@ export default function SignupPage() {
 
   const navigate = useNavigate()
   const userStore = useUserStore()
-  const { mutate: signup, isPending } = useKakaoSignup()
+  const { mutate: signup, isPending, error } = useKakaoSignup()
 
   const isValid = useMemo(() => {
     if (!birthDate || !MEMBERS[dateToId(birthDate)]) return false
-    return name.length > 0 && secret.trim() === '오렌지' && !!birthDate
-  }, [name, secret, birthDate])
+    return name.length > 0
+  }, [birthDate, name])
 
   return (
     <>
@@ -67,14 +69,29 @@ export default function SignupPage() {
               {
                 onSuccess: res => {
                   userStore.signup(birthDate)
-                  userStore.login(res)
+                  userStore.socialLogin(res)
                   navigate(ROUTES.MEMORY_LIST, { replace: true })
                 },
               },
             )
           }}
         />
+
+        {!!error && (
+          <p role='alert' css={errorStyle}>
+            {(error as AxiosError<{ message: string }>).response?.data
+              ?.message || '회원가입에 실패했습니다.'}
+          </p>
+        )}
       </div>
     </>
   )
 }
+
+const errorStyle = (theme: Theme) =>
+  css({
+    color: theme.colors.danger,
+    textAlign: 'center',
+    fontSize: '15px',
+    height: '20px',
+  })

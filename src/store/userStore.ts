@@ -2,7 +2,7 @@ import { jwtDecode } from 'jwt-decode'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import type { LoginResponse } from '@/api'
+import type { KakaoLoginResponse, LoginResponse } from '@/api'
 import { dateToId } from '@/utils/date'
 
 interface UserState {
@@ -15,6 +15,7 @@ interface UserState {
   communityId: number
 
   login: (_userInfo: LoginResponse) => void
+  socialLogin: (_userInfo: KakaoLoginResponse) => void
   signup: (_birthDate: Date) => void
   stale: () => void
 }
@@ -32,8 +33,16 @@ export const useUserStore = create<UserState>()(
 
       login: (userInfo: LoginResponse) => {
         const payload = jwtDecode<TokenPayload>(userInfo.token.accessToken)
-        console.log(payload)
         set({
+          memberId: userInfo.memberId,
+          associateId: payload.associateId,
+          communityId: payload.communityId,
+        })
+      },
+      socialLogin: (userInfo: KakaoLoginResponse) => {
+        const payload = jwtDecode<TokenPayload>(userInfo.token.accessToken)
+        set({
+          email: userInfo.email,
           memberId: userInfo.memberId,
           associateId: payload.associateId,
           communityId: payload.communityId,
