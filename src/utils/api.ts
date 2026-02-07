@@ -8,7 +8,6 @@ export const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-
 })
 
 // JWT 토큰 관리
@@ -85,6 +84,6 @@ const handleUnauthorized = async (response: AxiosResponse) => {
   }
   // 로그아웃 처리
   removeToken()
-  window.location.href = ROUTES.LOGIN
+  window.location.href = ROUTES.ENTRANCE
   return null
 }

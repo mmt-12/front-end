@@ -14,7 +14,7 @@ export default function Alert({ children }: Props) {
   return (
     <BottomModal>
       <div css={[flexGap(24), containerStyle]}>
-        {children}
+        <span css={textStyle}>{children}</span>
         <Button label='확인' onClick={closeModal} />
       </div>
     </BottomModal>
@@ -24,4 +24,10 @@ export default function Alert({ children }: Props) {
 const containerStyle = css({
   padding: '6px',
   alignItems: 'center',
+})
+
+const textStyle = css({
+  textAlign: 'center',
+  lineHeight: 1.8,
+  textWrap: 'pretty',
 })

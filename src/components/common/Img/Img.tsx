@@ -59,6 +59,6 @@ export default function Img({
 
 const defaultStyle = (isLoaded: boolean) =>
   css({
-    objectFit: 'cover',
+    objectFit: 'contain',
     display: isLoaded ? 'block' : 'none',
   })

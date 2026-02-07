@@ -7,19 +7,15 @@ import {
   onMessage,
 } from 'firebase/messaging'
 
-import { useRegisterFcmToken } from '@/api'
 import NotificationModal from '@/components/modal/NotificationModal/NotificationModal'
 import type { NotificationType } from '@/types/notification'
 import { useModal } from './useModal'
 
 export default function useFCM() {
   const [token, setToken] = useState<string>('')
-  const { mutate: registerToken } = useRegisterFcmToken()
   const { openModal } = useModal()
 
   useEffect(() => {
-    if (!openModal) return
-
     const firebaseConfig = {
       apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
       authDomain: 'memento-117c4.firebaseapp.com',
@@ -100,13 +96,5 @@ export default function useFCM() {
     initMessaging()
   }, [openModal])
 
-  useEffect(() => {
-    console.log('setting token:', token)
-    if (token) {
-      localStorage.setItem('fcmToken', token)
-      registerToken(token)
-    }
-  }, [token, registerToken])
-
-  return null
+  return token
 }

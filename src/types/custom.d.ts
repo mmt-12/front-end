@@ -6,3 +6,5 @@ declare module '*.svg?react' {
 }
 
 declare module '*.css'
+
+declare module 'gif.js'

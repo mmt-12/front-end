@@ -1,4 +1,6 @@
 // import imageCompression from 'browser-image-compression'
+import GIF from 'gif.js'
+import { decompressFrames, parseGIF } from 'gifuct-js'
 import JSZip from 'jszip'
 import { type Area } from 'react-easy-crop'
 
@@ -81,6 +83,104 @@ export default async function getCroppedImg(
       }
       resolve(new File([blob], 'cropped.jpeg', { type: 'image/jpeg' }))
     }, 'image/jpeg')
+  })
+}
+
+export async function getCroppedGif(
+  imageSrc: string,
+  pixelCrop: Area,
+): Promise<File> {
+  const gifBlob = await fetch(imageSrc).then(res => res.blob())
+  const buffer = await gifBlob.arrayBuffer()
+  const gif = parseGIF(buffer)
+  const frames = decompressFrames(gif, true)
+
+  const gifEncoder = new GIF({
+    workers: 2,
+    quality: 10,
+    width: pixelCrop.width,
+    height: pixelCrop.height,
+    workerScript: '/gif.worker.js',
+  })
+
+  const tempCanvas = document.createElement('canvas')
+  const tempCtx = tempCanvas.getContext('2d')
+
+  if (!tempCtx) {
+    throw new Error('Canvas 2d context is null')
+  }
+
+  // Set canvas to full GIF size
+  tempCanvas.width = gif.lsd.width
+  tempCanvas.height = gif.lsd.height
+
+  // Helper to store previous frame state for disposalType === 3 (Restore to Previous)
+  let previousFrameData: ImageData | null = null
+
+  for (const frame of frames) {
+    const { width, height, top, left } = frame.dims
+
+    // Save current state for disposalType === 3
+    if (frame.disposalType === 3) {
+      previousFrameData = tempCtx.getImageData(
+        0,
+        0,
+        tempCanvas.width,
+        tempCanvas.height,
+      )
+    }
+
+    // Draw the current frame patch
+    const frameImageData = new ImageData(frame.patch, width, height)
+    const patchCanvas = document.createElement('canvas')
+    patchCanvas.width = width
+    patchCanvas.height = height
+    const patchCtx = patchCanvas.getContext('2d')
+
+    if (patchCtx) {
+      patchCtx.putImageData(frameImageData, 0, 0)
+      tempCtx.drawImage(patchCanvas, left, top)
+    }
+
+    // Create cropped frame
+    const croppedCanvas = document.createElement('canvas')
+    croppedCanvas.width = pixelCrop.width
+    croppedCanvas.height = pixelCrop.height
+    const croppedCtx = croppedCanvas.getContext('2d')
+
+    if (!croppedCtx) {
+      continue
+    }
+
+    croppedCtx.drawImage(
+      tempCanvas,
+      pixelCrop.x,
+      pixelCrop.y,
+      pixelCrop.width,
+      pixelCrop.height,
+      0,
+      0,
+      pixelCrop.width,
+      pixelCrop.height,
+    )
+
+    gifEncoder.addFrame(croppedCanvas, { delay: frame.delay })
+
+    // Handle disposal
+    if (frame.disposalType === 2) {
+      // Restore to background (clear the area)
+      tempCtx.clearRect(left, top, width, height)
+    } else if (frame.disposalType === 3 && previousFrameData) {
+      // Restore to previous
+      tempCtx.putImageData(previousFrameData, 0, 0)
+    }
+  }
+
+  return new Promise(resolve => {
+    gifEncoder.on('finished', (blob: Blob) => {
+      resolve(new File([blob], 'cropped.gif', { type: 'image/gif' }))
+    })
+    gifEncoder.render()
   })
 }
 

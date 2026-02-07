@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { css, useTheme, type Theme } from '@emotion/react'
+import { css, useTheme } from '@emotion/react'
 import {
   MedalRibbonStar,
   PenNewSquare,
@@ -29,6 +29,7 @@ import useHeader from '@/hooks/useHeader'
 import { useModal } from '@/hooks/useModal'
 import useStardust from '@/hooks/useStardust'
 import { useUserStore } from '@/store/userStore'
+import { absoluteButtonStyle } from '@/styles/absoluteButton'
 import { flexGap } from '@/styles/common'
 
 export default function EditProfilePage() {
@@ -46,7 +47,7 @@ export default function EditProfilePage() {
   const { data: achievements } = useAchievements(communityId, associateId)
 
   const theme = useTheme()
-  const { alert, openModal, closeModal } = useModal()
+  const { alert, openModal } = useModal()
 
   const [imagePath, setImagePath] = useState<string>('')
   const [name, setName] = useState<string>('')
@@ -98,7 +99,6 @@ export default function EditProfilePage() {
           associateId={associateId}
           onSelect={(value: string) => {
             setImagePath(value)
-            closeModal(value)
           }}
           value={imagePath}
         />
@@ -134,9 +134,9 @@ export default function EditProfilePage() {
             customCss={imageStyle}
           />
         </WavyBox>
-        <div css={buttonStyle}>
+        <button css={absoluteButtonStyle} aria-label='edit profile image'>
           <PenNewSquare size={32} color='white' weight='Bold' />
-        </div>
+        </button>
       </div>
       <InputField
         label='이름'
@@ -192,15 +192,3 @@ const imageStyle = css({
   objectFit: 'cover',
   borderRadius: '8px',
 })
-
-const buttonStyle = (theme: Theme) =>
-  css({
-    position: 'absolute',
-    bottom: '4px',
-    right: '4px',
-    background: theme.colors.stone[700],
-    border: 'none',
-    borderRadius: '14px',
-    padding: '6px 6px 4px',
-    boxShadow: '0 0 4px rgba(0, 0, 0, 0.15)',
-  })

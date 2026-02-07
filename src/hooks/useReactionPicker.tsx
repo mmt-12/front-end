@@ -4,13 +4,13 @@ import { useCreateGuestBookReaction } from '@/api'
 import { useCreateEmojiComment, useCreateVoiceComment } from '@/api/post'
 import { useUserStore } from '@/store/userStore'
 
-export function useReactionPicker () {
+export function useReactionPicker() {
   const { communityId } = useUserStore()
   const { memoryId, postId, associateId } = useParams()
   const entityId = Number(postId ?? associateId)
 
   const isPostDetailPage = useMatch('/memory/:memoryId/post/:postId')
-  const isGuestBookPage = useMatch('/guest-book/:associateId')
+  const isGuestBookPage = useMatch('/home/guest-book/:associateId')
 
   const { mutate: createEmojiComment, isPending: isEmojiPending } =
     useCreateEmojiComment(communityId, Number(memoryId), entityId)
@@ -26,11 +26,16 @@ export function useReactionPicker () {
     if (isPostDetailPage) {
       if (type === 'EMOJI') {
         createEmojiComment({ emojiId: reactionId })
+        console.log('createEmojiComment', reactionId)
       } else {
         createVoiceComment({ voiceId: reactionId })
+        console.log('createVoiceComment', reactionId)
       }
     } else if (isGuestBookPage) {
       createGuestBookReaction({ type, contentId: reactionId })
+      console.log('createGuestBookReaction', reactionId)
+    } else {
+      console.warn('Unknown page type for selecting reaction')
     }
   }
 

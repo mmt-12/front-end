@@ -1,14 +1,14 @@
 import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import { useLogin } from '@/api'
+import { useKakaoLogin } from '@/api'
 import Loader from '@/components/common/Loader'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 
 export default function LandingPage() {
   const [searchParams] = useSearchParams()
-  const { data } = useLogin(searchParams.get('code') || '')
+  const { data } = useKakaoLogin(searchParams.get('code') || '')
   const navigate = useNavigate()
   const login = useUserStore(s => s.login)
 

@@ -7,6 +7,7 @@ import Album from '@/components/common/Album'
 import Img from '@/components/common/Img'
 import Profile from '@/components/member/Profile'
 import PostActionModal from '@/components/modal/PostActionModal'
+import PostDetailPopup from '@/components/post/PostDetailPopup'
 import { useModal } from '@/hooks/useModal'
 import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
@@ -69,7 +70,13 @@ export default function PostContent({
         )}
       </header>
       {link ? (
-        <Link to={ROUTES.POST_DETAIL(memoryId, id)}>{postContent}</Link>
+        <div
+          onClick={() =>
+            openModal(<PostDetailPopup memoryId={memoryId} postId={id} />)
+          }
+        >
+          {postContent}
+        </div>
       ) : (
         postContent
       )}

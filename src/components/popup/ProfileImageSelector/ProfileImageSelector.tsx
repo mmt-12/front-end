@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { css, useTheme } from '@emotion/react'
+import { TrashBinMinimalistic2 } from '@solar-icons/react'
 
 import { useProfileImageList } from '@/api'
 import defaultImageUrl from '@/assets/images/mascot/default-profile.png'
@@ -12,6 +13,9 @@ import WavyBox from '@/components/guest-book/WavyBox'
 import ProfileImageList, {
   ProfileImageListSkeleton,
 } from '@/components/member/ProfileImageList'
+import { useModal } from '@/hooks/useModal'
+import { absoluteButtonStyle } from '@/styles/absoluteButton'
+import { flexGap } from '@/styles/common'
 
 interface Props {
   associateId: number
@@ -30,8 +34,16 @@ export default function ProfileImageSelector({
     useProfileImageList(1, associateId, { size: 9 })
   const images = data?.pages.flatMap(page => page.profileImages) || []
   const isEmpty = !isLoading && images.length === 0
+  const { confirm, closeModal } = useModal()
+
+  const removeProfileImage = async () => {
+    if (await confirm('프로필 이미지를 삭제하시겠습니까?')) {
+      setImage(defaultImageUrl)
+    }
+  }
+
   return (
-    <>
+    <div css={flexGap(8)}>
       <div css={imageWrapperStyle}>
         <WavyBox
           strokeColor={theme.colors.stone[600]}
@@ -41,6 +53,15 @@ export default function ProfileImageSelector({
         >
           <Img src={image} alt='current profile' customCss={imageStyle} />
         </WavyBox>
+        {image !== defaultImageUrl && (
+          <button
+            css={absoluteButtonStyle}
+            onClick={removeProfileImage}
+            aria-label='delete current profile image'
+          >
+            <TrashBinMinimalistic2 size={28} color='white' weight='Bold' />
+          </button>
+        )}
       </div>
       <InfiniteScroll
         fetchNext={fetchNextPage}
@@ -65,15 +86,22 @@ export default function ProfileImageSelector({
           />
         )}
       </InfiniteScroll>
-      <BottomButton label='이미지 수정' onClick={() => onSelect(image)} />
-    </>
+      <BottomButton
+        label='프로필 이미지 수정'
+        onClick={() => {
+          onSelect(image)
+          closeModal()
+        }}
+      />
+    </div>
   )
 }
 
 const imageWrapperStyle = css({
   width: 'fit-content',
-  margin: 'auto',
-  padding: '32px 0',
+  margin: '32px auto',
+  position: 'relative',
+  display: 'inline-flex',
 })
 
 const imageStyle = css({

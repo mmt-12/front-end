@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react'
+import { css, type Theme } from '@emotion/react'
+import type { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-import { useSignUp } from '@/api'
+import { useKakaoSignup } from '@/api'
 import BottomButton from '@/components/common/BottomButton'
 import DateInputField from '@/components/common/DateInputField'
 import InputField from '@/components/common/InputField'
@@ -11,21 +13,21 @@ import { ROUTES } from '@/routes/ROUTES'
 import { useUserStore } from '@/store/userStore'
 import { signupTitleStyle } from '@/styles/auth'
 import { flexGap } from '@/styles/common'
-import { dateToId, formatDate } from '@/utils/date'
+import { dateToId } from '@/utils/date'
 
 export default function SignupPage() {
   const [name, setName] = useState('')
-  const [password, setPassword] = useState('')
+  const [secret, setSecret] = useState('')
   const [birthDate, setBirthDate] = useState<Date>()
 
   const navigate = useNavigate()
   const userStore = useUserStore()
-  const { mutate: signup, isPending } = useSignUp()
+  const { mutate: signup, isPending, error } = useKakaoSignup()
 
   const isValid = useMemo(() => {
     if (!birthDate || !MEMBERS[dateToId(birthDate)]) return false
-    return name.length > 0 && password.trim() === '오렌지' && !!birthDate
-  }, [name, password, birthDate])
+    return name.length > 0
+  }, [birthDate, name])
 
   return (
     <>
@@ -48,8 +50,8 @@ export default function SignupPage() {
         />
         <InputField
           label='암호 - 우리반 반장님이 뱉은 주스는?'
-          value={password}
-          onChange={e => setPassword(e.target.value)}
+          value={secret}
+          onChange={e => setSecret(e.target.value)}
         />
         <BottomButton
           label='입장하기'
@@ -59,21 +61,37 @@ export default function SignupPage() {
 
             signup(
               {
-                birthday: formatDate(birthDate, '-'),
+                birthday: birthDate,
                 name,
+                secret,
                 email: userStore.email,
               },
               {
                 onSuccess: res => {
                   userStore.signup(birthDate)
-                  userStore.login(res)
+                  userStore.socialLogin(res)
                   navigate(ROUTES.MEMORY_LIST, { replace: true })
                 },
               },
             )
           }}
         />
+
+        {!!error && (
+          <p role='alert' css={errorStyle}>
+            {(error as AxiosError<{ message: string }>).response?.data
+              ?.message || '회원가입에 실패했습니다.'}
+          </p>
+        )}
       </div>
     </>
   )
 }
+
+const errorStyle = (theme: Theme) =>
+  css({
+    color: theme.colors.danger,
+    textAlign: 'center',
+    fontSize: '15px',
+    height: '20px',
+  })
