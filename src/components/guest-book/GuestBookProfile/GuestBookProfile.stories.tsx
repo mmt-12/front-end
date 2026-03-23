@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { PROFILE } from 'mock/data/guestBook'
-import { withRouter } from 'storybook-addon-remix-react-router'
 
 import GuestBookProfile from './GuestBookProfile'
 
@@ -15,7 +14,6 @@ const meta = {
     introduction: PROFILE.introduction,
     birthday: PROFILE.birthday,
   },
-  decorators: [withRouter],
 } satisfies Meta<typeof GuestBookProfile>
 
 export default meta

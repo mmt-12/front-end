@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { NOTIFICATIONS } from 'mock/data/notifications'
-import { withRouter } from 'storybook-addon-remix-react-router'
 
 import NotificationItem from '.'
 
@@ -9,7 +8,6 @@ const meta = {
   component: NotificationItem,
   tags: ['autodocs'],
   args: NOTIFICATIONS[1],
-  decorators: [withRouter],
 } satisfies Meta<typeof NotificationItem>
 
 export default meta

@@ -48,7 +48,10 @@ export const AllBadges: Story = {
       // 해당 id의 Badge 가져오기
       const badge = canvas.getByTestId(`badge-${id}`)
       expect(badge).toBeInTheDocument()
-      expect(badge).toHaveStyle('font-family: PFStardust, sans-serif')
+      expect(badge).toHaveStyle({
+        fontFamily: 'PFStardust, sans-serif',
+        color: BADGES[id].color,
+      })
 
       //Badge의 텍스트 일치하는지 확인
       expect(badge).toHaveTextContent(BADGES[id].name)
@@ -58,7 +61,6 @@ export const AllBadges: Story = {
       expect(wavyWrapper).toBeInTheDocument()
       expect(wavyWrapper).toHaveStyle({
         zIndex: '1',
-        color: BADGES[id].color,
       })
       if (!wavyWrapper) return
 

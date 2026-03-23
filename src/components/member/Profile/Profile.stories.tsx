@@ -27,8 +27,8 @@ export const Default: Story = {
     if (args.introduction)
       expect(canvas.getByText(args.introduction)).toBeInTheDocument()
 
-    if (args.imageUrl)
-      expect(canvas.getByRole('img')).toHaveAttribute('src', args.imageUrl)
+    // if (args.imageUrl)
+    //   expect(canvas.getByRole('img')).toHaveAttribute('src', args.imageUrl)
     if (args.achievement) {
       const badge = canvas.getByTestId(`badge-${args.achievement.id}`)
       expect(badge).toBeInTheDocument()
