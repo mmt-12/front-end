@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { css, type Theme } from '@emotion/react'
 import { useParams } from 'react-router-dom'
 
@@ -13,12 +13,18 @@ import Post from '@/components/post/Post'
 import { PostListItemSkeleton } from '@/components/post/PostListItem'
 import ReactedProfileList from '@/components/reaction/ReactedProfileList/ReactedProfileList'
 import useHeader from '@/hooks/useHeader'
+import { usePostIdStore } from '@/store/postIdStore'
 import { useUserStore } from '@/store/userStore'
 import { flexGap, withSafeAreaBottom } from '@/styles/common'
 
 export default function PostDetailPage() {
   const { memoryId, postId } = useParams()
   const { communityId, associateId } = useUserStore()
+  const { setPostId } = usePostIdStore()
+
+  useEffect(() => {
+    setPostId(Number(postId))
+  }, [postId])
 
   useHeader({
     rightItem: {

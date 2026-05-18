@@ -1,10 +1,13 @@
+/// <reference types="vite/client" />
+
 import { Global, ThemeProvider } from '@emotion/react'
 import type { Preview } from '@storybook/react-vite'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { APIProvider } from '@vis.gl/react-google-maps'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { ModalProvider } from 'sam-react-modal'
 import { INITIAL_VIEWPORTS } from 'storybook/viewport'
 
-import { ModalProvider } from '../src/contexts/ModalProvider'
 import { globalStyle } from '../src/styles/global'
 import { theme } from '../src/styles/theme'
 import { storybookStyle } from './style.ts'
@@ -27,7 +30,7 @@ const preview: Preview = {
     viewport: { value: 'galaxys9', isRotated: false },
   },
   decorators: [
-    Story => (
+    (Story, context) => (
       <ThemeProvider theme={theme}>
         <Global styles={[globalStyle, storybookStyle]} />
         <APIProvider
@@ -35,7 +38,14 @@ const preview: Preview = {
         >
           <QueryClientProvider client={queryClient}>
             <ModalProvider>
-              <Story />
+              <MemoryRouter initialEntries={[context.parameters.route || '/']}>
+                <Routes>
+                  <Route
+                    path={context.parameters.path || '/'}
+                    element={<Story />}
+                  />
+                </Routes>
+              </MemoryRouter>
             </ModalProvider>
           </QueryClientProvider>
         </APIProvider>

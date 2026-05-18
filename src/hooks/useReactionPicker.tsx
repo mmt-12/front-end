@@ -2,14 +2,16 @@ import { useMatch, useParams } from 'react-router-dom'
 
 import { useCreateGuestBookReaction } from '@/api'
 import { useCreateEmojiComment, useCreateVoiceComment } from '@/api/post'
+import { usePostIdStore } from '@/store/postIdStore'
 import { useUserStore } from '@/store/userStore'
 
 export function useReactionPicker() {
   const { communityId } = useUserStore()
-  const { memoryId, postId, associateId } = useParams()
-  const entityId = Number(postId ?? associateId)
+  const { memoryId, associateId } = useParams()
+  const { postId } = usePostIdStore()
+  const entityId = associateId ? Number(associateId) : postId
 
-  const isPostDetailPage = useMatch('/memory/:memoryId/post/:postId')
+  const isPostDetailPage = useMatch('/memory/:memoryId')
   const isGuestBookPage = useMatch('/home/guest-book/:associateId')
 
   const { mutate: createEmojiComment, isPending: isEmojiPending } =
