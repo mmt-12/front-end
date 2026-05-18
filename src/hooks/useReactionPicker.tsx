@@ -9,7 +9,7 @@ export function useReactionPicker() {
   const { memoryId, postId, associateId } = useParams()
   const entityId = Number(postId ?? associateId)
 
-  const isPostDetailPage = useMatch('/memory/:memoryId/post/:postId')
+  const isPostDetailPage = useMatch('/memory/:memoryId')
   const isGuestBookPage = useMatch('/home/guest-book/:associateId')
 
   const { mutate: createEmojiComment, isPending: isEmojiPending } =
