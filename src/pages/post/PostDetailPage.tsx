@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { css, type Theme } from '@emotion/react'
 import { useParams } from 'react-router-dom'
 
@@ -22,7 +22,9 @@ export default function PostDetailPage() {
   const { communityId, associateId } = useUserStore()
   const { setPostId } = usePostIdStore()
 
-  setPostId(Number(postId))
+  useEffect(() => {
+    setPostId(Number(postId))
+  }, [postId])
 
   useHeader({
     rightItem: {

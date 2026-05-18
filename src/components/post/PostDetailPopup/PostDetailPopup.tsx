@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { css, type Theme } from '@emotion/react'
 
 import { usePost } from '@/api'
@@ -25,7 +25,9 @@ export default function PostDetailPopup({ memoryId, postId }: Props) {
   const { communityId, associateId } = useUserStore()
   const { setPostId } = usePostIdStore()
 
-  setPostId(Number(postId))
+  useEffect(() => {
+    setPostId(Number(postId))
+  }, [postId])
 
   const { data: post } = usePost(communityId, Number(memoryId), Number(postId))
   const { mutate: toggleEmoji } = useToggleEmojiComment(
