@@ -13,12 +13,16 @@ import Post from '@/components/post/Post'
 import { PostListItemSkeleton } from '@/components/post/PostListItem'
 import ReactedProfileList from '@/components/reaction/ReactedProfileList/ReactedProfileList'
 import useHeader from '@/hooks/useHeader'
+import { usePostIdStore } from '@/store/postIdStore'
 import { useUserStore } from '@/store/userStore'
 import { flexGap, withSafeAreaBottom } from '@/styles/common'
 
 export default function PostDetailPage() {
   const { memoryId, postId } = useParams()
   const { communityId, associateId } = useUserStore()
+  const { setPostId } = usePostIdStore()
+
+  setPostId(Number(postId))
 
   useHeader({
     rightItem: {
